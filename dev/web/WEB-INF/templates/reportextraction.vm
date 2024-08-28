@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: Feature Version Manager :: Update Features</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+<script>
+	window.confirm = function()
+	{
+    return true;
+	}
+</script>
+</head>
+<script language="JavaScript">
+#if ($undetermined_path)
+window.onload = function(){
+	alert("Default Path is selected since configured path is incorrect.");
+}
+#end
+#if ($emptyConfigPath)
+window.onload = function()
+{
+alert("Default Path is selected since configured path is empty.");
+}
+#end
+</script>
+<body bgcolor="#ffffff">
+<table border="0">
+        <tr valign=top>
+                <td width=220>#parse( "main_menu.vm" )</td>
+                <td width=800><font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ReportExtraction">Report
+                Extraction</a>             
+                <hr />
+		<form method=post action=$req.getContextPath()/servlet/ReportExtraction onSubmit="return filterFields();">
+                 <table border=0>
+                 <tr>
+                <td class="basichlp" colspan="7">This page will allow you to extract the Report Package <br /></td>
+				 </tr>
+		</table>
+<br />
+      <font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Software Path</b></font></div> 
+
+<table border="0">
+        <tr>
+                <td></td>
+				 </tr>
+		</table>
+
+
+      <table border="1">
+     <tr valign=top><td style="background-color: #B3B3FF;">
+      <b>DEFAULT PATH</b></td><td >$defaultPath</td></tr>
+       <tr valign=top><td style="background-color: #B3B3FF;">
+     <b>CONFIGURED PATH</b></td><td><input type="text" style="width: 550px;font-size: 10;" name="featurepath" value="$upgradePath">
+	 <input OnClick="return check();" type="submit" style="font-size: 11;float: right;" name="submitPath" value="Submit">
+    </td></tr>
+     </table>
+	 
+	<table> 
+	    <td> </td>
+		<tr> </tr>
+		<td align="centre" colspan="4"><font size="-1">
+		<div style="text-align:centre">
+		<input type="submit" style="font-size: 11;" name="Extract Package" value="Extract Package" onSubmit="return filterFields();">
+		</div>
+		</font></td>
+	    </tr>
+    </table>
+                                                                            
+ 
+#if($successful)
+<br><br>
+<font face="Verdana,Helvetica,Arial" size="1" color="green"><center><b>  Report Extracted Successfully to /eniq/sw/installer/boreports</b></center></font>
+<br><br>
+#end 
+#if($unsuccessful)
+<br><br>
+<font face="Verdana,Helvetica,Arial" size="1" color="green"><center><b> Reports Extracted to /eniq/sw/installer/boreports.</b></center></font>
+<font face="Verdana,Helvetica,Arial" size="1" color="red"><center><b>Extraction Failed for $failurecount Reports. Please check in $logFile</b></center></font>
+<br><br>
+#end 
+#if($unsuccessmsg)
+<br><br>
+<font face="Verdana,Helvetica,Arial" size="1" color="red"><center><b>Report Extraction Failed. Please refer $logFile</b></center></font>
+<br><br>
+#end  
+
+
+
+
+#parse( "footer.vm" )
+
+</body>
+</html>
+
+

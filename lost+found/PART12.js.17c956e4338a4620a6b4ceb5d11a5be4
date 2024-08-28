@@ -1,0 +1,62 @@
+var C12=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">12 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_tnp5\"></a><a name=\"CHAPTER12\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Update NAS User Credentials on ENIQ</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"If the password for <tt class=\"file-path\">master</tt> or/and <tt class=\"file-path\">support</tt> user is changed to NAS (SFS/VA). User must\n" +
+"update the following file with the new passwords on ENIQ server:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"file-path\">/eniq/installation/config/ssh_input_file</tt></p>\n" +
+"\n" +
+"<p>\n" +
+"These steps must be run on the following servers in deployment:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics Standalone Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Readers Server</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Log on as <tt class=\"file-path\">root</tt> user in the\n" +
+"ENIQ server. Change directory to <tt class=\"file-path\">/eniq/installation/config</tt>.<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/installation/config</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Take a backup copy of the <tt class=\"file-path\">ssh_input_file</tt>file.<p>\n" +
+"<tt class=\"input\"><b># cp -p ssh_input_file ssh_input_file.preupdate</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Execute the following commands to update the file with\n" +
+"correct user password:\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">If master user password is changed:<p>\n" +
+"<tt class=\"input\"><b># sed -e 's|'R_PW_M=\\\"&lt;old_master_pwd&gt;\\\"'|'R_PW_M=\\\"&lt;new_master_pwd&gt;\\\"'|g'\n" +
+"ssh_input_file &gt; ssh_input_file.tmp &amp;&amp; mv ssh_input_file.tmp\n" +
+"ssh_input_file</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;old_master_pwd&gt;</tt> refers to the previous\n" +
+"password of master user,</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;new_master_pwd&gt;</tt> refers to the new\n" +
+"password of master user.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">If support user password is changed:<p>\n" +
+"<tt class=\"input\"><b># sed -e 's|'R_PW_S=\\\"&lt;old_support_pwd&gt;\\\"'|'R_PW_S=\\\"&lt;new_support_pwd&gt;\\\"'|g'\n" +
+"ssh_input_file &gt; ssh_input_file.tmp &amp;&amp; mv ssh_input_file.tmp\n" +
+"ssh_input_file</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;old_support_pwd&gt;</tt> refers to the previous\n" +
+"password of support user,</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;new_support_pwd&gt;</tt> refers to the new\n" +
+"password of support user.</p>\n" +
+"</li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Verify the <tt class=\"file-path\">ssh_input_file</tt> to\n" +
+"check if the password is correctly updated:\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">For master user, execute this command:<p>\n" +
+"<tt class=\"input\"><b># cat ssh_input_file | grep \"R_PW_M=\"</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">For support user, execute this command:<p>\n" +
+"<tt class=\"input\"><b># cat ssh_input_file | grep \"R_PW_S=\"</b></tt></p>\n" +
+"</li></ul></li></ol>\n" +
+"\n"+
+"</div>\n";
+

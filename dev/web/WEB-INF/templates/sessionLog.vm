@@ -1,0 +1,531 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Session Logs</title>
+<link rel="stylesheet" type="text/css"
+href="../css/admin.css" />
+#include( "calendar_js.txt" )
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script language="javaScript">
+<!-- Begin
+
+function dissable(){
+  document.log.selectedpack.removeAttribute("readOnly");  
+  document.log.selectedpack.disabled=true; 
+  document.log.selectedpack.value="--not functional--";
+  document.log.source.disabled=true; 
+  document.log.source.value="--not functional--";
+  document.log.a_filename.disabled=true; 
+  document.log.a_filename.value="--not functional--";
+  document.log.a_status.disabled=true; 
+  document.log.search.disabled=true; 
+}
+
+function disableAll()
+{
+#if ($loggerui.getValue() != "0" && $loggerui.getValue() != "1" && $loggerui.getValue() != "2" && $loggerui.getValue() != "3" && $loggerui.getValue() != "4")
+  dissable();
+#else
+  #if ($loggerui.getValue() == "0")
+    dissable();
+    document.log.a_filename.disabled=false; 
+    document.log.a_filename.value= "$a_filename";
+    document.log.a_status.disabled=false;
+    document.log.source.disabled=false; 
+    document.log.source.value="$source";
+    document.log.search.disabled=false; 
+  #elseif ($loggerui.getValue() == "1")  
+    dissable();
+    document.log.selectedpack.disabled=false; 
+    
+    document.log.selectedpack.value="$selectedpack";
+    document.log.a_status.disabled=false;
+    document.log.source.disabled=false; 
+    document.log.source.value="$source";
+    document.log.search.disabled=false; 
+    document.log.a_status.disabled=true;
+  #elseif ($loggerui.getValue() == "2")  
+    dissable();   
+    document.log.search.disabled=false;
+    document.log.selectedpack.disabled=false; 
+    
+    document.log.selectedpack.value="$selectedpack";
+  #elseif ($loggerui.getValue() == "3")  
+	  //dissable();   
+		document.log.selectedpack.disabled=false;
+          document.log.source.disabled=false; 
+          document.log.source.value="$source";
+          document.log.a_filename.disabled=false; 
+          document.log.a_filename.value="$a_filename";
+          #if ($selectedpack == "DVTP" || $selectedpack == "GPEH_")
+      		document.log.a_status.disabled=false;
+		  #else
+		  	document.log.a_status.disabled=true;
+		  #end
+          document.log.search.disabled=false; 
+  #elseif ($loggerui.getValue() == "4")  
+	  //dissable();
+	  	document.log.selectedpack.disabled=false;
+          document.log.source.disabled=false; 
+          document.log.source.value="$source";
+          document.log.a_filename.disabled=false; 
+          document.log.a_filename.value="$a_filename";
+		  #if ($selectedpack == "DVTP" || $selectedpack == "GPEH_")
+      		document.log.a_status.disabled=false;
+		  #else
+		  	document.log.a_status.disabled=true;
+		  #end
+	
+          document.log.search.disabled=false; 
+	 
+
+  #end
+#end
+}
+
+
+
+
+
+function toggleInputForSelectedPack(selectedTable){
+	//this is a default decleration
+	var inputDeclaration = "<input type=\"text\" name=\"selectedpack\" value=\"$selectedpack\" />";
+	
+	
+	//we need to provide select instead of input
+	
+	if(selectedTable == '3' || selectedTable == '4'){
+		inputDeclaration = "";
+		inputDeclaration += "<select name=\"selectedpack\" onchange=\"javascript:toggleStatusDisplay();\">";
+    	#if ($selectedpack == "SGEH" || $selectedpack =="")
+			inputDeclaration += "<option value=\"SGEH\" selected>SGEH</option>";
+			inputDeclaration += "<option value=\"MSS\">MSS</option>";
+			inputDeclaration += "<option value=\"DVTP\">GSN CDR</option>";
+			inputDeclaration += "<option value=\"GPEH_\">GPEH</option>";
+			inputDeclaration += "<option value=\"GSM_\">GSM</option>";
+			inputDeclaration += "<option value=\"LTE_\">LTE</option>";
+		#elseif ($selectedpack == "DVTP")
+			inputDeclaration += "<option value=\"SGEH\">SGEH</option>";
+			inputDeclaration += "<option value=\"MSS\">MSS</option>";
+			inputDeclaration += "<option value=\"DVTP\" selected>GSN CDR</option>";
+			inputDeclaration += "<option value=\"GPEH_\">GPEH</option>";
+			inputDeclaration += "<option value=\"GSM_\">GSM</option>";
+			inputDeclaration += "<option value=\"LTE_\">LTE</option>";
+		#elseif ($selectedpack == "MSS")
+			inputDeclaration += "<option value=\"SGEH\">SGEH</option>";
+			inputDeclaration += "<option value=\"MSS\" selected>MSS</option>";
+			inputDeclaration += "<option value=\"DVTP\">GSN CDR</option>";
+			inputDeclaration += "<option value=\"GPEH_\">GPEH</option>";
+			inputDeclaration += "<option value=\"GSM_\">GSM</option>";
+			inputDeclaration += "<option value=\"LTE_\">LTE</option>";
+		#elseif ($selectedpack == "GPEH_")
+			inputDeclaration += "<option value=\"SGEH\">SGEH</option>";
+			inputDeclaration += "<option value=\"MSS\">MSS</option>";
+			inputDeclaration += "<option value=\"DVTP\">GSN CDR</option>";
+			inputDeclaration += "<option value=\"GPEH_\" selected>GPEH</option>";
+			inputDeclaration += "<option value=\"GSM_\">GSM</option>";
+			inputDeclaration += "<option value=\"LTE_\">LTE</option>";
+		#elseif ($selectedpack == "GSM_")
+			inputDeclaration += "<option value=\"SGEH\">SGEH</option>";
+			inputDeclaration += "<option value=\"MSS\">MSS</option>";
+			inputDeclaration += "<option value=\"DVTP\">GSN CDR</option>";
+			inputDeclaration += "<option value=\"GPEH_\">GPEH</option>";
+			inputDeclaration += "<option value=\"GSM_\" selected>GSM</option>";
+			inputDeclaration += "<option value=\"LTE_\">LTE</option>";
+		#elseif ($selectedpack == "LTE_")
+			inputDeclaration += "<option value=\"SGEH\">SGEH</option>";
+			inputDeclaration += "<option value=\"MSS\">MSS</option>";
+			inputDeclaration += "<option value=\"DVTP\">GSN CDR</option>";
+			inputDeclaration += "<option value=\"GPEH_\">GPEH</option>";
+			inputDeclaration += "<option value=\"GSM_\">GSM</option>";
+			inputDeclaration += "<option value=\"LTE_\"  selected>LTE</option>";	
+		#end
+		inputDeclaration += "</select>";
+	
+	}
+	
+	var selectedpackFormElement = document.getElementById("selectedpackFormElement");
+	
+	//here we should check, if it contains input or select
+	selectedpackFormElement.innerHTML = "";
+	selectedpackFormElement.innerHTML = inputDeclaration;
+}
+
+function toggleStatusDisplay(){
+	var selectedTableValue = document.log.selectedtable.value;
+	if(selectedTableValue == '3' || selectedTableValue == '4'){
+		document.log.a_status.value="OK";
+    	if(document.log.selectedpack.value == "DVTP" || document.log.selectedpack.value == "GPEH_"){
+    		document.log.a_status.disabled=false;
+    	}
+		//only DVTP and GPEH_ are using the OK/ERROR statuses
+		else{
+			document.log.a_status.disabled=true;
+		}
+	}
+	else if(selectedTableValue == '0'){
+		document.log.a_status.disabled=false;
+		document.log.a_status.value="OK";
+	}
+	else{
+		document.log.a_status.value="";
+		document.log.a_status.disabled=true;
+	}
+}
+
+function makeSelection()
+{
+
+	toggleInputForSelectedPack(document.log.selectedtable.value);
+  if (document.log.selectedtable.value == '0'){
+    dissable();
+    document.log.a_filename.disabled=false; 
+    document.log.a_filename.value="";
+    document.log.a_status.disabled=false;
+    document.log.source.disabled=false; 
+    document.log.source.value="";
+    document.log.search.disabled=false; 
+  }else if (document.log.selectedtable.value == '1'){
+    dissable();
+    document.log.selectedpack.disabled=false; 
+    
+    document.log.selectedpack.value="";
+    document.log.source.disabled=false; 
+    document.log.source.value="";
+    document.log.search.disabled=false; 
+  }else if (document.log.selectedtable.value == '2'){
+    dissable();   
+    document.log.search.disabled=false;
+    document.log.selectedpack.disabled=false; 
+    
+    document.log.selectedpack.value="";
+  }else if (document.log.selectedtable.value == '3' || document.log.selectedtable.value == '4' ){
+    document.log.selectedpack.disabled=false; 
+    document.log.selectedpack.readOnly="true";
+    document.log.source.disabled=false; 
+    document.log.source.value="";
+    document.log.a_filename.disabled=false; 
+    document.log.a_filename.value="";
+    document.log.a_status.disabled=true; 
+    document.log.search.disabled=false; 
+  }else {
+  dissable();
+  }
+
+  document.log.start_hour.disabled=false; 
+  document.log.end_hour.disabled=false;
+  toggleStatusDisplay();
+  
+}
+//-->
+
+</script>
+</head>
+
+<body bgcolor="#ffffff" onload="javascript:disableAll();">
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ETLSessionLog">Session Logs</a></font>
+<hr />
+									  <font size="1" face="Verdana, Helvetica, Arial">Session logs shows logs from selected session. 
+									  Every log has general parameters and specified parameters. Maximum 200 rows are shown.
+									  Filters and their usage is described below:<br /><br />
+								
+								<u>General parameters:</u><br>
+									  <li>Start/End date/time(Which date logs are shown)</li>
+	  <li>Log name(Adapter,Loader and Aggregator)</li><br>
+			<u>Specified parameters for adapter:</u><br>
+	  <li>Source(Which source one wishes to browse logs)</li>
+	  <li>Filename(Which filename one wishes to browse logs)</li>
+		  <li>Status(Which status one wishes to browse logs)</li>
+		<br>
+					<u>Specified parameters for loader:</u><br>  
+		  		  	  <li>Typename(Which measurement type one wishes to browse logs)</li>
+	  <li>Source(Which source one wishes to browse logs)</li>
+	<br>
+						<u>Specified parameters for aggregator:</u><br>    
+	  	  <li>Typename(Which measurement type one wishes to browse logs)</li>
+<br>
+</font>
+	
+<FORM name="log" METHOD=POST ACTION="ETLSessionLog" onSubmit="return filterFields();">
+<br>
+<table border=0>
+<tr><td class="basic" colspan="4">Select date from which you wish to fetch session logs.</td></tr>
+<tr><td class="basic" colspan="4">&nbsp;</td></tr>
+<tr><td class="basic">Start date:</td><td class="basic">#parse( "cal_select_1.vm" )</td><td class="basic">hour:</td><td>
+<select name="start_hour">
+#set ($counter = [0..23])
+<option selected>$start_hour</option>
+#foreach( $index in $counter )
+  <option >$index</option>
+#end
+</select>
+</td></tr>
+<tr><td class="basic">End date:</td><td class="basic">#parse( "cal_select_2.vm" )</td><td class="basic">hour:</td><td>
+<select name="end_hour">
+#set ($counter = [0..23])
+<option selected>$end_hour</option>
+#foreach( $index in $counter )
+  <option >$index</option>
+#end   
+</select>
+</td></tr>
+<tr><td class="basic">Log name:</td>
+<td class="basic">
+<SELECT name="selectedtable" onchange="javascript:makeSelection();">
+	<option value="empty"> </option>
+	#if ($loggerui.getValue() == "0")
+	<option value="0" selected>Adapter</option>
+	#else
+	<option value="0">Adapter</option>
+	#end
+	#if ($loggerui.getValue() == "1")
+	<option value="1" selected>Loader</option>
+	#else
+	<option value="1">Loader</option>
+	#end
+	#if ($loggerui.getValue() == "2")
+	<option value="2" selected>Aggregator</option>
+	#else
+	<option value="2">Aggregator</option>
+	#end
+    #if ($mzInformation)
+	#if ($loggerui.getValue() == "3")
+	<option value="3" selected>MG Processing</option>
+	#else
+	<option value="3">MG Processing</option>
+	#end
+	#if ($loggerui.getValue() == "4")
+	<option value="4" selected>MG Preprocessing</option>
+	#else
+	<option value="4">MG Preprocessing</option>
+	#end
+	#end
+</SELECT>
+
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+
+<!--
+FILENAME - Freetext like
+INTERFACE_NAME (SOURCE) - Freetext like
+STATUS - Selection list [OK,ERROR]
+-->
+<td class="basic">Typename:</td>
+<td class="basic">
+	<p id="selectedpackFormElement">
+	#if ($loggerui.getValue() == "0" || $loggerui.getValue() == "1" || $loggerui.getValue() == "2")
+		<input type="text" name="selectedpack" value="$selectedpack" />
+	#elseif($loggerui.getValue() == "3" || $loggerui.getValue() == "4")
+		<select name="selectedpack" onchange="javascript:toggleStatusDisplay();">
+    	#if ($selectedpack == "SGEH" || $selectedpack == "")
+			<option value="SGEH" selected>SGEH</option>
+			<option value="MSS">MSS</option>
+			<option value="DVTP">GSN CDR</option>
+			<option value="GPEH_">GPEH</option>
+			<option value="GSM_">GSM</option>
+			<option value="LTE_">LTE</option>
+		#elseif ($selectedpack == "DVTP")
+			<option value="SGEH">SGEH</option>
+			<option value="MSS">MSS</option>
+			<option value="DVTP" selected>GSN CDR</option>
+			<option value="GPEH_">GPEH</option>
+			<option value="GSM_">GSM</option>
+			<option value="LTE_">LTE</option>
+		#elseif ($selectedpack == "MSS")
+			<option value="SGEH">SGEH</option>
+			<option value="MSS" selected>MSS</option>
+			<option value="DVTP">GSN CDR</option>
+			<option value="GPEH_">GPEH</option>
+			<option value="GSM_">GSM</option>
+			<option value="LTE_">LTE</option>
+		#elseif ($selectedpack == "GPEH_")
+			<option value="SGEH">SGEH</option>
+			<option value="MSS">MSS</option>
+			<option value="DVTP">GSN CDR</option>
+			<option value="GPEH_" selected>GPEH</option>
+			<option value="GSM_">GSM</option>
+			<option value="LTE_">LTE</option>
+		#elseif ($selectedpack == "GSM_")
+			<option value="SGEH">SGEH</option>
+			<option value="MSS">MSS</option>
+			<option value="DVTP">GSN CDR</option>
+			<option value="GPEH_">GPEH</option>
+			<option value="GSM_" selected>GSM</option>
+			<option value="LTE_">LTE</option>
+		#elseif ($selectedpack == "LTE_")
+			<option value="SGEH">SGEH</option>
+			<option value="MSS">MSS</option>
+			<option value="DVTP">GSN CDR</option>
+			<option value="GPEH_">GPEH</option>
+			<option value="GSM_">GSM</option>
+			<option value="LTE_" selected>LTE</option>
+		#end
+		</select>
+	#else
+		<input type="text" name="selectedpack" value="$selectedpack" />
+	#end
+	</p>
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td class="basic">Source:</td><td class="basic"><input type="text" name="source" value="$source" /></td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<!-- adapter -->
+<td class="basic">Filename:</td>
+<td class="basic"><input type="text" name="a_filename" value="$a_filename" /></td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+
+<td class="basic">Status:</td>
+<td class="basic">
+#if($loggerui.getValue() == "3" || $loggerui.getValue() == "4")
+	#if($selectedpack == "SGEH" || $selectedpack == "MSS"
+		|| $selectedpack == "GSM_"
+		|| $selectedpack == "LTE_"
+		|| $selectedpack == "")
+		<select disabled="disabled" name="a_status">
+	#elseif($selectedpack == "DVTP" || $selectedpack == "GPEH_")
+		<select name="a_status">
+	#end
+#else
+	<select disabled="disabled" name="a_status">
+#end
+#if($a_status == "" || $a_status == "OK")
+	<option value="OK" selected>OK</option>
+	<option value="ERROR">ERROR</option>
+#else
+	<option value="OK">OK</option>
+	<option value="ERROR" selected>ERROR</option>
+#end
+</select>
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr><td colspan="4"><INPUT name="search" value="Search" style="font-size: 11;" TYPE="submit"></td></tr>
+</table>
+</FORM>
+<br><br>
+
+<hr>
+
+<table border="1" width="800" cellpadding="1" cellspacing="1">	
+		
+		#if ($toomany != " ")
+		<tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Row count exceeded $toomany -rows. Please, redefine your search parameters.</font></b>
+		</tr>
+		#end
+		#if ($results.size() > 0)
+			#if($loggerui.getValue() == "0" || $loggerui.getValue() == "3" || $loggerui.getValue() == "4")
+			<tr bgcolor="#B3B3FF"><!--condition panel with FileName SessionStartTime SessionEndTime Source Status  -->
+					<td width="280" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Filename</strong></font></td>
+					<td width="180" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>SessionStartTime</strong></font></td> 
+					<td width="150" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>SessionEndTime</strong></font></td> 
+					<td width="50"><font face="Verdana,Helvetica,Arial" size="1"><strong>Source</strong></font></td> 
+					#if($loggerui.getValue() == "0")
+					<td width="20"><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> 
+					#else
+						#if($loggerui.getValue() == "3" || $loggerui.getValue() == "4")
+							<td width="20"><font face="Verdana,Helvetica,Arial" size="1"><strong>Duration(millis)</strong></font></td> 
+						#end	
+					#end		
+			</tr>
+			#else
+				<tr bgcolor="#B3B3FF"><!--condition panel with Typename Datatime Timelevel Rowcount SessionStartTime SessionEndTime Source Status -->
+					<td width="200"><font face="Verdana,Helvetica,Arial" size="1"><strong>Typename</strong></font></td> 
+					<td width="160"><font face="Verdana,Helvetica,Arial" size="1"><strong>Datatime</strong></font></td> 
+					<td width="60"><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel</strong></font></td> 
+					<td width="50"><font face="Verdana,Helvetica,Arial" size="1"><strong>Rowcount</strong></font></td> 
+					<td width="140"><font face="Verdana,Helvetica,Arial" size="1"><strong>SessionStartTime</strong></font></td> 
+					<td width="140"><font face="Verdana,Helvetica,Arial" size="1"><strong>SessionEndTime</strong></font></td> 
+					<td width="30"><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> 
+				</tr>
+			#end
+		#else
+			#if ($isSearch)
+				#if($vsize == "0")
+				<tr>
+					<td colspan="7">
+					   <font face="Verdana,Helvetica,Arial" size="2"><b>No session logs found.</b></font>
+					</td>
+				</tr>
+				#end
+			#end
+		#end
+	
+	#foreach ($oneset in $results)
+		#if($loggerui.getValue() == "3" || $loggerui.getValue() == "4")
+		<tr>
+			<td width="20%" nowrap><font face="Verdana,Helvetica,Arial" size="1">
+			<a href="#" onclick="window.open('ETLSessionLog?wfname=$!oneset.get(7)&selectedtable=$!loggerui.getValue()&logger=mz&batch_id=$!oneset.get(5)&session_id=$!oneset.get(6)','','scrollbars=yes,menubar=no,height=800,width=850,resizable=yes,toolbar=no,location=no,status=no');">$!oneset.get(0)</a></font></td> <!-- -->
+			<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</font></td>
+			<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(2)</font></td>
+			<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(3)</font></td>
+			
+			<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(8)</font></td>
+			
+		</tr>
+		#else
+			#if($loggerui.getValue() == "0")
+			<tr>
+				<td width="20%" nowrap><font face="Verdana,Helvetica,Arial" size="1">
+				<a href="#" onclick="window.open('ETLSessionLog?logger=adapter&batch_id=$!oneset.get(5)&session_id=$!oneset.get(6)','','scrollbars=yes,menubar=no,height=800,width=850,resizable=yes,toolbar=no,location=no,status=no');">$!oneset.get(0)</a></font></td> <!-- -->
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</font></td>
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(2)</font></td>
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(3)</font></td>
+				
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(4)</font></td>
+				
+			</tr>
+			#else
+				#if ($loggerui.getValue() == "1")
+				  #set($logger = "loader")
+				#else
+				  #set($logger = "aggregator")
+				#end
+			<tr>
+				<td width="20%"><font face="Verdana,Helvetica,Arial" size="1">
+				#if ($logger == "loader")  
+				  <a href="#" onclick="window.open('ETLSessionLog?logger=$logger&batch_id=$!oneset.get(8)&session_id=$!oneset.get(9)','','scrollbars=yes,menubar=no,height=600,width=850,resizable=yes,toolbar=no,location=no,status=no');">$!oneset.get(0)</a></font></td> <!-- -->
+				#else
+				 $!oneset.get(0)</a></font></td>
+				#end
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</font></td> 
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(2)</font></td> 
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(3)</font></td>
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(4)</font></td>
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(5)</font></td>
+				<td nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(7)</font></td> 
+			</tr>
+			#end
+		#end	
+	#end
+</table>
+<br />
+
+</td>
+
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+	<title>Ericsson Network IQ Show Source RowCounts</title>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body bgcolor="#ffffff">
+<table border="0">
+<tr valign=top><td width=220>
+		#parse( "main_menu.vm" )
+	</td>
+	<td width=800>
+		<table border=1>
+			<tr>
+				<td><font face="Verdana,Helvetica,Arial" size="1"><b>Data Source</b></font></td>
+				<td><font face="Verdana,Helvetica,Arial" size="1">$source</font></td>
+			</tr>
+			<tr>
+				<td><font face="Verdana,Helvetica,Arial" size="1"><b>Time Level</b></font></td>
+				<td><font face="Verdana,Helvetica,Arial" size="1">$details</font></td>
+			</tr>
+			<tr>
+				<td><font face="Verdana,Helvetica,Arial" size="1"><b>Data Time</b></font></td>
+				<td><font face="Verdana,Helvetica,Arial" size="1">$datatime</font></td>
+			</tr>
+		</table>
+<br>
+<a href="javascript:history.go(-1)"><font face="Verdana,Helvetica,Arial" size="1">Back</font></a>&nbsp;
+<br>					
+		#if ($message.length() > 0)
+		 <font size="2">
+			<b>$message</b>
+		 </font>
+		#else
+		<br>
+		<table border=1>
+			<tr>
+				<td bgcolor=#B3B3FF> 
+					<font face="Verdana,Helvetica,Arial" size="1">
+						<b>Measurement type</b>
+					</font>
+				</td>
+				<td bgcolor=#B3B3FF>
+					<font face="Verdana,Helvetica,Arial" size="1">
+						<b>Package count</b>
+					</font>
+				</td>
+				<td bgcolor=#B3B3FF>
+					<font face="Verdana,Helvetica,Arial" size="1">
+						<b>Distinct datatimes</b>
+					</font>
+				</td>
+				<td bgcolor=#B3B3FF>
+					<font face="Verdana,Helvetica,Arial" size="1">
+						<b>Row count</b>
+					</font>
+				</td>
+			</tr>
+			#foreach ($row in $source_rowcount)
+			<tr onmouseover="this.style.background='#C0C0C0';" onmouseout="this.style.background='#FFFFFF';">
+				<td>
+					<font face="Verdana,Helvetica,Arial" size="1">
+	<a href="$req.getContextPath()/servlet/ShowLoadings?year_1=$year_1&month_1=$month_1&day_1=$day_1&type=$type&subtype=$row.getTypename()&details=$details&request_type=rowcounts&filter=$filter&filter2=$filter2">$row.getTypename()</a>
+					</font>
+				</td>
+				<td>
+					<font face="Verdana,Helvetica,Arial" size="1">
+						$row.getRowcount()
+					</font>
+				</td>
+				<td>
+					<font face="Verdana,Helvetica,Arial" size="1">
+						$row.getDatatimes()
+					</font>
+				</td>
+				<td>
+					<font face="Verdana,Helvetica,Arial" size="1">
+						$row.getRowsum()
+					</font>
+				</td>
+			</tr>
+			#end
+		</table>
+		#end
+	</td>
+</tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

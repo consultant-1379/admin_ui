@@ -1,0 +1,45 @@
+
+<html>
+<head><title>Ericsson Network IQ :: System Monitoring :: FM Alarm</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+
+</head>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="FMAlarm">FM Alarm</a></font>
+<hr />
+<table border="1">
+		<tr><td colspan="8" class="basic">ENM FM Alarm</td></tr>
+		<tr><td class="midhdr">ENMHostname</td><td class="midhdr">ErrorDetail</td><td class="midhdr">AlarmName</td><td class="midhdr">ManagedObjectInstance</td><td class="midhdr">ObjectOfReference</td><td class="midhdr">OssName</td><td class="midhdr">ReportTitle</td><td class="midhdr">EventTime</td></tr>
+		#foreach($row in $FMAlarmHandling)
+			<tr>
+				<td class="basic">$row.get(0)</td>
+				<td class="basic">$row.get(1)</td>
+				<td class="basic">$row.get(2)</td>
+				<td class="basic">$row.get(3)</td>
+				<td class="basic">$row.get(4)</td>
+				<td class="basic">$row.get(5)</td>
+				<td class="basic">$row.get(6)</td>
+				<td class="basic">$row.get(7)</td>
+			</tr>
+		#end
+
+	</table>
+
+
+	
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

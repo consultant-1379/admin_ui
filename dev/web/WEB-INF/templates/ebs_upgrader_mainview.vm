@@ -1,0 +1,106 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: Configuration :: EBS Upgrader</title>
+  <!-- This is for evaluation..-->
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="shortcut icon" href="../img/eric.ico">
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+
+<td width=800>
+
+<font size="1" face="Verdana, Helvetica, Arial">Configuration &nbsp;&gt;&gt;&nbsp;<a href="EbsUpgradeManager">Ebs Upgrader</a></font>
+<hr />
+
+#parse( "ebs_upgrader_errors.vm" )
+
+  ##CHECK IF THE EBS PLUGIN IS ENABLED...
+  #if( $isEbsEnabled )
+    
+    ##ENABLED (NORMAL) STATE...
+
+    ##CHECK IF THE EBSSERVICE IS AVAILABLE
+    #if( $isEbsAvailable )
+
+       #if( $viewAction == 'action_get_details' )
+
+        #parse( "ebs_upgrader_statusevent_list.vm" )
+
+       #else
+
+         #parse( "ebs_upgrader_showupgrades_part.vm" )
+         
+         #parse( "ebs_upgrader_refresh_status.vm" )
+         
+		 <p><a href="/universeupdateinstaller/">Universe Update Installer</a></p>
+      
+      
+       #end
+    
+    #else
+      <p>Ebs service is unavailable because of technical problems (ex. engineRMI-connection...). See logs for more detailed information.</p>
+    #end
+    ##...CHECK IF THE EBSSERVICE IS AVAILABLE
+    
+    #else
+    
+    ##DISABLED STATE
+    <p>This feature is not enabled!</p>
+  #end
+  ##...CHECK IF THE EBS PLUGIN IS ENABLED
+
+
+
+
+
+
+
+
+#*
+
+ ##HANDLE ACTIONS...
+      #if( $viewAction=='action_run_upgrade' )
+         ##<p>viewAction IF RUN</p>
+         
+         #if( $isSetStarted=='true' )
+            <p>Upgrader set is started successfully!</p>
+            #parse( "ebs_upgrader_refresh_status.vm" )
+         #else
+            ##Upgrader set is NOT started!
+         #end
+         
+      #elseif ( $viewAction=='action_get_upgrade_status')
+         ##<p>viewAction ELSE IF status</p>
+         
+         #parse( "ebs_upgrader_refresh_status.vm" )
+         
+      #else
+        ##<p>viewAction ELSE</p>
+      
+        #if( $newUpgradeAvailable=='true' )
+            #parse( "ebs_upgrader_showupgrades_part.vm" )
+            #parse( "ebs_upgrader_refresh_status.vm" )
+        #else
+            <p>There aren't new EBS upgrades available.</p>
+        #end
+        
+      #end
+      ##...HANDLE ACTIONS  
+
+*#
+</td>
+
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

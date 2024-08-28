@@ -1,0 +1,9 @@
+#if( $errors.size()>0 )
+<ul>     
+      #foreach( $error in $errors )
+        <li>$error.toString()</li>
+      #end
+</ul>      
+ #else
+   <!-- NO STATUS EVENTS -->
+ #end

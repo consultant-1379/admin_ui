@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Node Assignment Tool</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+<script>
+#if ($ERROR)
+window.onload = function(){	
+	alert("This is a SECONDARY server");
+}
+#else
+
+	
+	#if ($unassignedNodes > 0 )
+	window.onload = function(){
+		alert("There are $unassignedNodes Unassigned nodes! Click on Unassigned Nodes to view the nodes.");
+	}
+	#end
+</script>
+	</head>
+	
+	<body bgcolor="#ffffff" >
+	<table border="0">
+	<tr valign=top>
+	<!-- main menu -->
+	<td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	<!-- the body -->
+	<td width=800>
+	<font size="1" face="Verdana, Helvetica, Arial">ENM Interworking &nbsp;&gt;&gt;&nbsp;<a href="NodeAssignmentTool">Node Assignment Tool</a></font>
+	<hr />
+	<table style="width:550;" border=0>
+				<tr>
+					<td class="basichlp" colspan="3" ><font size="1">
+						Node Assignment Tool facilitates the user to view the nodes assigned to all the ENIQ-S servers connected to PRIMARY .
+						It also provides the user to define and view the Policies required for assigning nodes.</font>
+					</td>
+				</tr>
+	</table>			
+	<br><br>
+	<table border="0" width="100%" cellpadding="0"
+		cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+		<tr>
+	
+			<td class="systemstatustab" align="center" colspan="2" height="30"><font
+				face="Verdana, Helvetica, Arial" size="3">NODE ASSIGNMENT TOOL</font></td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+	
+		<tbody>
+			<!-- Starts-->
+			<tr>
+				<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+	            </td>
+				
+				<td valign="center" align="center" bgcolor="#eef9fd" height="30"
+					width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="1">
+				</td>
+				<td valign="top" width="72%">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%"
+					bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+					<tbody>
+					<tr>
+					<td colspan="3" height="50">
+								
+								<font face="Verdana, Helvetica, Arial" size="2" color="#000099" font-weight="bold">
+									<a class="a_bold" href="AssignedNodes">Assigned Nodes</a> 
+								</font>
+							</td>
+						</tr>
+						<tr>
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial" size="1">
+								<h>Total Number of Assigned Nodes : $assignedNodes <h> <br>
+								</font>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+				</td>
+			</tr>
+			<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="30" style="border-bottom : 1px solid #FFFFFF;">
+			#if ($unassignedNodes > 0 )
+					<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end		
+	            </td>
+				
+				<td valign="center" align="center" bgcolor="#eef9fd" height="30"
+					width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="1">
+				</td>
+				<td valign="top" width="72%">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%"
+					bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+					<tbody>
+					<tr>
+						<td colspan="3" height="50">
+								
+								<font face="Verdana, Helvetica, Arial" size="2" color="#000099" font-weight="bold">
+									<a class="a_bold" href="UnAssignedNodes">Unassigned Nodes</a> 
+								</font>
+							</td>
+						</tr>
+						<tr>
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial" size="1">
+								<h>Total Number of Unassigned Nodes : $unassignedNodes <h> <br>
+								</font>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table border="0" width="100%" cellpadding="0"
+		cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+		<tr>
+			<td class="systemstatustab" align="center" colspan="2" height="30"><font
+				face="Verdana, Helvetica, Arial" size="3" >POLICY REFINEMENT TOOL</font></td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+		<tbody>
+			<!-- Starts-->
+			<tr>
+				<td bgcolor="#adc0e6" align="center" height="30" width="30" style="border-bottom : 1px solid #FFFFFF;">
+	            </td>
+				
+				<td valign="center" align="center" bgcolor="#eef9fd" height="30"
+					width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="1">
+				</td>
+				<td valign="top" width="72%">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%"
+					bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+					<tbody>
+					<tr>
+							<td colspan="3" height="50">
+								
+								<font face="Verdana, Helvetica, Arial" size="2" color="#000099" font-weight="bold">
+									<a class="a_bold" href="PolicyAssignment">Policy & Criteria Configuration</a> 
+								</font>
+							</td>
+						</tr>
+						<tr>
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial" size="1">
+								<h>Click to Configure the Policies and Criteria<h> <br>
+								</font>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+				</td>
+			</tr>
+			<tr>
+			<td class="systemstatustab" align="center" height="30" colspan="2"><font
+				face="Verdana, Helvetica, Arial" size="3"></font></td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+		</tbody>
+		</table>
+		</td>
+			</tr>
+					</tbody>
+					
+				</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	#parse( "footer.vm" )
+	</table>
+	
+	</body>
+<script>
+#end
+</script>
+</html>

@@ -1,0 +1,243 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: FLS Testing</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+<script>
+function confirmation(){
+	let a = confirm("Clear button will reset the configured granularity to its current configured granularity and not to its default granularity." );
+	console.log(a);
+	if(a === true)
+		document.getElementById("flsForm").submit();
+}
+function checkRefresh()
+{
+	// Get the time now and convert to UTC seconds
+	var today = new Date();
+	var now = today.getUTCSeconds();
+
+	// Get the cookie
+	var cookie = document.cookie;
+	var cookieArray = cookie.split('; ');
+
+	// Parse the cookies: get the stored time
+	for(var loop=0; loop < cookieArray.length; loop++)
+	{
+		var nameValue = cookieArray[loop].split('=');
+		// Get the cookie time stamp
+		if( nameValue[0].toString() == 'SHTS' )
+		{
+			var cookieTime = parseInt( nameValue[1] );
+		}
+		// Get the cookie page
+		else if( nameValue[0].toString() == 'SHTSP' )
+		{
+			var cookieName = nameValue[1];
+		}
+	}
+	if( cookieName && cookieTime && cookieName == escape(location.href) && Math.abs(now - cookieTime) < 5 )
+	{
+		// Refresh detected
+		#if($NoChange)
+			document.getElementById("flsForm").submit();
+		#end
+		#if($updateStatus)
+			document.getElementById("flsForm").submit();
+		#end
+		#if($back_flag)
+			document.getElementById("flsForm").submit();
+		#end
+	}
+}
+
+function prepareForRefresh()
+{
+	if( refresh_prepare > 0 )
+	{
+		// Turn refresh detection on so that if this
+		// page gets quickly loaded, we know it's a refresh
+		var today = new Date();
+		var now = today.getUTCSeconds();
+		document.cookie = 'SHTS=' + now + ';';
+		document.cookie = 'SHTSP=' + escape(location.href) + ';';
+	}
+	else
+	{
+		// Refresh detection has been disabled
+		document.cookie = 'SHTS=;';
+		document.cookie = 'SHTSP=;';
+	}
+}
+function disableRefreshDetection()
+{
+	// The next page will look like a refresh but it actually
+	// won't be, so turn refresh detection off.
+	refresh_prepare = 0;
+
+	// Also return true so this can be placed in onSubmits
+	// without fear of any problems.
+	return true;
+} 
+// By default, turn refresh detection on
+var refresh_prepare = 1;
+</script>
+
+</script>
+<body bgcolor="#ffffff" onLoad="checkRefresh();" onUnload="prepareForRefresh();">
+	<table border=0>
+		<tr valign=top>
+			<td width=220>#parse( "main_menu.vm" )</td>
+			<td width=800><font size="1" face="Verdana, Helvetica, Arial">
+			<form method=post id="flsForm" action="$req.getContextPath()/servlet/FLSGranularityConfiguration" onSubmit="disableRefreshDetection()">FLS Granularity Configuration&nbsp;&gt;&gt;&nbsp;<a href="FLSGranularityConfiguration">Granularity Configuration</a>             
+            <hr/>
+			#if(!$flag)
+				#if($errorMessage)
+				<font style="font-size: 15;">Granularity Configuration not available.
+					To populate data click here:<br><br>
+					<input type="submit" style="font-size: 12;float: left; background-color: #B3B3FF;" name="flsScript" value="Click Here" /><br>
+					#if($scriptError)
+						<p>Node Type Granularity script not found.</p>
+					#end
+				</font>
+				#elseif (!$dataNotFoundError)
+				<font style="font-size: 15;">Granularity Configuration not available.
+					To populate data click here:<br><br>
+					<input type="submit" style="font-size: 12;float: left; background-color: #B3B3FF;" name="flsScript" value="Click Here" />
+					#if($scriptError)
+						<p>Node Type Granularity script not found.</p>
+					#end
+				</font>
+				#else
+					<table class="myt" style="width:1000;">
+					<tr>
+						<td>
+							<font size="2" face="Verdana, Helvetica, Arial">
+							<h3><b>Note:</b></h3>
+							<ul>
+								<li>ENIQ Statistics must be integrated in FLS mode to ENM.</li>
+								<li>Configured granularity must be in alignment with measurement initiation on ENM. No files will be returned from ENM, if there is a misalignment.</li>
+								<li>The clear button resets the configured granularity to its current configured granularity and not to its default granularity.</li>
+								
+								<li>Shared-CNF Node-Type is applicable for all the Cloud Native Network Functions.</li>
+							</ul>
+							<br>
+							</font>
+						</td>
+					</tr>
+					</table>
+					#if($NoChange)
+						<h3 style="color:red">No Changes have been made to Configured Granularity.</h3>
+					#end
+					#if($updateStatus)
+						<h3 style="color:green">Granularity configuration changed successfully.</h3>
+					#end
+					<table border="1" width="850" align="center">
+						<tr>
+							<td class="midhdr" style="text-align:center">Technology</td>
+							<td class="midhdr" style="text-align:center">Node Type</td>
+							<td class="midhdr" style="text-align:center">Default Granularity</td>
+							<td class="midhdr" style="text-align:center">Configured Granularity</td>
+						</tr>
+						#foreach ( $technology in $TableData.keySet())
+						
+							#set($granuList = $TableData.get($technology))
+							#set($nodeSize = $granuList.size())
+							#set($count = false)
+							#foreach($set in $granuList)
+							
+							#set($nodeType = $set.getNodeType())
+							#set($defGranu = $set.getDefGranularity())
+							#set($confGranu = $set.getConfGranularity())
+								<tr>
+									#if(!$count)
+										<b><td nowrap class="basic" style="text-align:center" rowspan=$nodeSize>$technology</td></b>
+										#set($count = true)
+									#end
+										<td class="basic">
+											$nodeType	
+										</td>
+										<td class="basic">
+											$defGranu
+										</td>
+										<td class="basic">
+											<select name="$technology::$nodeType::$defGranu"> 
+												#foreach ($level in $TimeData)
+													#if ($level == $confGranu) 
+														<option selected value="$level">$level</option>
+													#else
+														<option value="$level" >$level</option> 
+													#end
+												#end
+											</select>
+										</td>
+								</tr>
+							#end
+						#end
+					</table><br>
+					<input type="button" style="font-size: 12;float: left;font-weight: bold; background-color: #B3B3FF; margin-left:73px;" name="reset" onclick="confirmation()" value="Clear"/>
+					<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF; margin-right:73px;" name="continue" value="Continue" />	
+				#end
+			#else
+					<table class="myt" style="width:950;">
+					<tr>
+						<td>
+							<font size="2" face="Verdana, Helvetica, Arial">
+							<h3><b>Note:</b></h3>
+							<ul style="color:red;">
+								<li>By clicking on Submit button, the configured granularity for the displayed Node-types will be changed.</li>
+							</ul>
+							<br><br>
+							</font>
+						</td>
+					</tr>
+					</table>
+					<table border="1">
+						<tr>
+							<td class="midhdr" style="text-align:center">Technology</td>
+							<td class="midhdr" style="text-align:center">Node Type</td>
+							<td class="midhdr" style="text-align:center">Current Configured Granularity</td>
+							<td class="midhdr" style="text-align:center">Configured Granularity</td>
+						</tr>
+						#foreach ( $technology in $changedList.keySet())
+						
+							#set($granuList = $changedList.get($technology))
+							#set($nodeSize = $granuList.size())
+							#set($count = false)
+							#foreach($set in $granuList)
+							
+							#set($nodeType = $set.getNodeType())
+							#set($defGranu = $set.getDefGranularity())
+							#set($confGranu = $set.getConfGranularity())
+								<tr>
+									#if(!$count)
+										<td nowrap class="basic" rowspan=$nodeSize>$technology</td>
+										#set($count = true)
+									#end
+										<td class="basic">
+											$nodeType	
+										</td>
+										<td class="basic">
+											$defGranu
+										</td>
+										<td class="basic">
+											$confGranu
+										</td>
+								</tr>
+								<input style="display: none" name="$technology::$nodeType::$defGranu" value="$confGranu">
+							#end
+						#end
+					</table><br>
+					<input type="submit" style="font-size: 12;float: left;font-weight: bold; background-color: #B3B3FF;" name="back" value="Back" />
+					<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" name="submit" value="Submit" />
+					</form>
+			#end
+			#parse( "footer.vm" )
+			</font>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

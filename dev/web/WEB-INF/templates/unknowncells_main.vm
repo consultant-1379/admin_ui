@@ -1,0 +1,237 @@
+<html>
+<head>
+  <title>Ericsson Network IQ :: Configuration :: Unmatched Topology</title>
+
+  <link rel="shortcut icon" href="../img/eric.ico">
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="stylesheet" type="text/css" href="../css/TablePager.css">
+
+</head>
+
+<body bgcolor="#ffffff">
+
+<table border="0">
+  <tr valign=top>
+    <td width=220>
+      #parse( "main_menu.vm" )
+    </td>
+    <td width=800>
+	  #parse("unmatched_topology_breadcrumb.vm")
+	  #if ($errormsg != "")
+          #parse("unmatched_topology_error.vm")
+	  #else
+        <form name="input" id="main_form" action=$req.getContextPath()/servlet/UnmatchedTopologyManager method=post>
+          <font face="Verdana, Helvetica, Arial" size=-1>
+			<fieldset>
+				<legend>Network Type</legend>
+				<label>
+					<input type="radio" name="network_type" value="_2G"
+						#if ($network_type == '_2G') checked #end
+							onClick="submitForm(this.form, '_2G'); return true;"/>
+				</label>2G
+				<label>
+					<input type="radio" name="network_type" value="_3G"
+						#if ($network_type == '_3G') checked #end
+							onClick="submitForm(this.form, '_3G'); return true;"/>
+				</label>3G (Core)
+				<label>
+					<input type="radio" name="network_type" value="_3G_RAN"
+						#if ($network_type == '_3G_RAN') checked #end
+							onClick="submitForm(this.form, '_3G_RAN'); return true;"/>
+				</label>3G (RAN)
+				<label>
+					<input type="radio" name="network_type" value="_4G"
+						#if ($network_type == '_4G') checked #end
+							onClick="submitForm(this.form, '_4G'); return true;"/>
+				</label>4G
+			</fieldset>
+            <br/>
+            #if ( $unmatched_topology_items )
+				#if ( $network_type != "_4G" && $network_type != "_3G_RAN" )
+					<fieldset>
+						<legend>Select Controller</legend>
+						Available: <select id="pselect" name="parentSelection" style="width:200px;" onChange = "disableTextInputField()" #if (!$parent_list) disabled #end>
+								<option value="">    </option>
+								#foreach( $parent in $parent_list)
+									<option value="$parent">$parent</option>
+								#end
+						</select>
+
+						New: <input id="pselectText" name="parentSelectionText" type="text" />
+					</fieldset>
+				#end
+            <br/>
+			<fieldset>
+				<legend>Filter Data</legend>
+				<select id="filterSelection" name="filterSelection" />
+					#if ( $network_type == "_4G" )
+						<option value="">Cell Id</option>
+						<option value="">MCC</option>
+						<option value="">MNC</option>
+						<option value="">TAC</option>
+						<option value="">SGSN</option>
+						<option value="">SGSN IP Address</option>
+						<option value="">FIRST SEEN</option>
+					#elseif ( $network_type == "_3G_RAN" )
+						<option value="">CID</option>
+						<option value="">rncId</option>
+						<option value="">MCC</option>
+						<option value="">MNC</option>
+						<option value="">FIRST SEEN</option>
+					#else
+						<option value="">Access Area</option>
+						<option value="">MCC</option>
+						<option value="">MNC</option>
+						<option value="">LAC</option>
+						<option value="">RAC</option>
+						<option value="">SGSN</option>
+						<option value="">SGSN IP Address</option>
+						<option value="">FIRST SEEN</option>
+					#end
+				</select>
+				<input id="filter_FilterText" type="text">
+				<input id="filterRecords" type="button" value="Filter" onclick="tablePager.filterByField(document.input.filterSelection.selectedIndex, 'filter_FilterText'); return false;">
+				<input type="button" value="Reset" onclick="tablePager.reset();">
+			</fieldset>
+			<br/>
+			 <select id="itemSelection" name="itemSelection" onchange="selectItems();">
+					<option value="">--Select--</option>
+					<option value="All" >All</option>
+					<option value="None">None</option>
+			  </select>
+			  <input type="hidden" id="cellsToReparent" name="cellsToReparent"/>
+			  <input type="submit" value="Connect" #if (!$parent_list) disabled #end onclick="return checkForm();"/>
+
+              <div id="tabledata"></div>
+              <div id="navbar"></div>
+            #else
+               #if ($network_type != "")
+				  <p>No unmatched #if ( $network_type == "_4G" ) 4G #elseif($network_type == "_3G") 3G (Core) #elseif($network_type == "_3G_RAN") 3G (RAN)  #else 2G #end topology records found.</p>
+			   #else
+			      <p>Please select a Network Type.</p>
+			   #end
+            #end
+          </font>
+        </form>
+	  #end
+    </td>
+  </tr>
+  #parse( "footer.vm" )
+</table>
+<script type="text/javascript" src="../javascript/TablePager.js"></script>
+<script type="text/javascript">
+#if ($unmatched_topology_items)
+#if ( $network_type == "_4G" )
+   // Create unmatched topology dynamic table
+    var tableId = "cellTable";
+    var tableHeaders = ["Select", "CELL ID", "MCC", "MNC", "TAC","SGSN-MME", "First Seen"];
+    var tablePager = new TablePager(tableId, 15,6);
+
+   try {
+   	 tablePager.initSelectableTable($unmatched_topology_items, tableHeaders);
+   } catch(e) {
+     alert('Error creating table '+e);
+   }
+   
+#elseif ( $network_type == "_3G_RAN" )
+   // Create unmatched topology dynamic table
+    var tableId = "cellTable";
+    var tableHeaders = ["Select", "CID", "rncId", "MCC", "MNC", "First Seen"];
+    var tablePager = new TablePager(tableId, 15,5);
+
+   try {
+   	 tablePager.initSelectableTable($unmatched_topology_items, tableHeaders);
+   } catch(e) {
+     alert('Error creating table '+e);
+   }
+
+
+#else
+ 	// Create unmatched topology dynamic table
+   var tableId = "cellTable";
+   var tableHeaders = ["Select", "Access Area ID", "MCC", "MNC", "LAC", "RAC", "SGSN", "First Seen"];
+   var tablePager = new TablePager(tableId, 15,7);
+
+   try {
+   	 tablePager.initSelectableTable($unmatched_topology_items, tableHeaders);
+   } catch(e) {
+     alert('Error creating table '+e);
+   }
+#end
+#end
+
+   function submitForm(form, type){
+     form.reset();
+     form.action='$req.getContextPath()/servlet/UnmatchedTopologyManager?network_type=' + type;
+     form.submit();
+   }
+
+   function disableTextInputField(){
+     var x=document.getElementById("pselectText");
+     var y=document.getElementById("pselect");
+     if ( y.value !== "" ){
+       x.disabled = true;
+       return true;
+     } else{
+       x.disabled=false;
+     }
+   }
+#if ( $network_type == "_4G" || $network_type == "_3G_RAN"  )
+    function checkForm() {
+	 // Encodes all checked items into a delimited
+	 // string in hidden form input
+	 tablePager.getSelectedCells('cellsToReparent');
+
+	 // We can check this input item to see if any selections were made
+	 //
+     var selectedCells = document.getElementById('cellsToReparent');
+	 if (selectedCells.value === null || selectedCells.value.length === 0) {
+	    alert('Please select unmatched topology item(s) for connection');
+		return false;
+	 }
+
+
+	 return true;
+  }
+#else
+  function checkForm() {
+	 // Check that we have selected something to connect to
+	 var newControllerSelected=document.getElementById("pselectText");
+     var existingControllerSelected=document.getElementById("pselect");
+     if((newControllerSelected.value === null || newControllerSelected.value.length === 0) &&
+	    (existingControllerSelected.value === null || existingControllerSelected.value.length === 0 )){
+	    alert('Please select or create a controller to connect to');
+        return false;
+     }
+
+	 // Encodes all checked items into a delimited
+	 // string in hidden form input
+	 tablePager.getSelectedCells('cellsToReparent');
+
+	 // We can check this input item to see if any selections were made
+	 //
+     var selectedCells = document.getElementById('cellsToReparent');
+	 if (selectedCells.value === null || selectedCells.value.length === 0) {
+	    alert('Please select unmatched topology item(s) for connection');
+		return false;
+	 }
+
+
+	 return true;
+  }
+#end
+
+  function selectItems(obj){
+	  var selection = document.getElementById('itemSelection');
+	  var selectedIndex = selection.selectedIndex;
+	  if (selectedIndex === 1) {
+	  	 tablePager.selectAllCells();
+	  } else if (selection.selectedIndex === 2) {
+	     tablePager.deselectAllCells();
+	  }
+	  return true;
+  }
+
+</script>
+</body>
+</html>

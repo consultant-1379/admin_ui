@@ -1,0 +1,3784 @@
+var C35=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><a name=\"chl-ES_troubleshooting\"></a><span class=\"CHAPNUMBER\">35 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_pavy\"></a><a name=\"CHAPTER35\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"This chapter describes some possible problems that can occur in\n" +
+"ENIQ and presents possible solutions.</p>\n" +
+"\n" +
+"<p><a name=\"trblshooting\"></a>\n" +
+"Contact Ericsson Customer Support for additional\n" +
+"assistance.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ox6r\"></a><a name=\"CHAPTER35.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Log Collector Tool</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Log Collector tool is used to consolidate different log files of\n" +
+"ENIQ Statistics belonging to a particular date into a zip file. This\n" +
+"zip file helps in troubleshooting issues.</p>\n" +
+"\n" +
+"<p>\n" +
+"Log Collector tool is started manually by following these steps:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Log on to Coordinator server as root</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Enter the following command:<p>\n" +
+"<tt class=\"input\"><b>{root} #:bash /eniq/installation/core_install/eniq_log_collector/bin/log_collector.bsh</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Enter the date in ddmmyyyy format, for which logs must\n" +
+"be collected.<p>\n" +
+"Example: 09112016 indicates 9 November 2016.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">The script may take some time to execute, depending on\n" +
+"size of the logs. At the end of the execution of the script, a zip\n" +
+"file log_collector_&lt;TimeStamp&gt; is created at path <tt class=\"input\"><b>/eniq/log/log_collector/</b></tt>.<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>If Log Collector Tool is not able to create zip file with\n" +
+"this message, then execute these steps: <br /><br /><strong class=\"MEDEMPH\">Message:</strong> <br />Cannot create zip file as the size of zip file log_collector_&lt;TimeStamp&gt;.zip\n" +
+"is &lt;n&gt; MB. <br />Maximum Zip file size mentioned in the configuration\n" +
+"file is 200 MB. <br />Please modify MAX_ZIP_SIZE in the configuration\n" +
+"file.<br /><br /><strong class=\"MEDEMPH\">Steps:</strong> </dd></dl><br />\n" +
+"<ol type=\"a\">\n" +
+"\n" +
+"<li class=\"substep\">Modify the parameter <em class=\"LOWEMPH\">MAX_ZIP_SIZE</em> in the configuration file to attain the required memory size. The\n" +
+"required memory size must be a number more than the memory &lt;n&gt;\n" +
+"MB displayed in the message.<br /><tt class=\"input\"><b>/eniq/installation/core_install/eniq_log_collector/config/log_collector.cfg</b></tt>\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\">Save the configuration file.\n" +
+"</li>\n" +
+"</ol></li></ol>\n" +
+"<p>\n" +
+"The following table lists the log files and their locations:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE25\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 25 &nbsp;&nbsp; Logs Collected by Log Collector Tool</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p><strong class=\"MEDEMPH\">S NO.</strong></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><strong class=\"MEDEMPH\">LOG NAME</strong></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><strong class=\"MEDEMPH\">LOG LOCATION</strong></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p><strong class=\"MEDEMPH\">SERVER</strong></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>1</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>adminui.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p> <tt class=\"input\"><b>/eniq/log/sw_log/adminui/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>2</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>catalina.out</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/adminui/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>3</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>connectd.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/connectd/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>4</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>engine&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>5</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>engine-PriorityQueue&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>6</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>error-&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>7</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>start_engine_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>8</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>stop_engine_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>9</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>start_webserver_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>10</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>stop_webserver_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>11</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>sqlerror-&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>12</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>FileSystemCheck-&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>13</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>file-&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>14</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>failed_loader_file&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/engine/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>15</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>start_repdb_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/asa/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>16</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>stopt_repdb_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/asa/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>17</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>start_rmiregistry_&lt;DATE&gt;_&lt;Time&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/rmiregistry/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>18</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>stop_rmiregistry_&lt;DATE&gt;_&lt;Time&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/rmiregistry/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>19</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>start_scheduler_&lt;DATE&gt;_&lt;Time&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/scheduler/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>20</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>stop_scheduler_&lt;DATE&gt;_&lt;Time&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/scheduler/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>21</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>start_dwhdb_&lt;DATE&gt;_&lt;Time&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/iq/dwhdb/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>22</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>stop_dwhdb_&lt;DATE&gt;_&lt;Time&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/iq/dwhdb/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>23</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>dwhdb.iqmsg</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>24</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>backup_repdb_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/asa/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>25</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>restore_repdb_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/asa/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>26</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>EngineAdmin-&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/EngineAdmin/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>27</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>manage_features.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/feature_management_log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>28</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>dwhdb.*.srvlog</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>29</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>dwhdb.*.stderr</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>30</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>dwh_reader_*.iqmsg</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Reader</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>31</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>dwh_reader_*.*.srvlog</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Reader</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>32</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>dwh_reader_*.*.stderr</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Reader</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>33</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>clean_roll_snap.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/rolling_snapshot_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>34</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>prep_roll_snap.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/rolling_snapshot_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>35</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>save_conf_data.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/backup_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>36</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>cleanup_iq_logs.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/cleanup_iq_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>37</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>esm_&lt;Hostname&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/esm/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>38</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>hostsync.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/hostsync/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>39</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>manage_eniq_services.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/eniq_services_log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>40</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>manage_fs_snapshot.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/snapshot_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>41</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>manage_nas_snapshot.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/snapshot_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>42</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>manage_san_snapshot.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/snapshot_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>43</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>NASd.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/NASd</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>44</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>setup_ssh_FileStore_&lt;DATE&gt;_&lt;TIME&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/ericsson/storage/log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>45</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>nas.screen_&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/ericsson/storage/log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>46</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>nas.cmd_&lt;DATE&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/ericsson/storage/log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>47</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>&lt;Hostname&gt;_status.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/cleanup_log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>48</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>prep_eniq_snapshots.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/log/sw_log/rolling_snapshot_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>49</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>prep_eniq_backup.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/backup_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>50</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>get_fs_backup_list.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/backup_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>51</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>clean_backup.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/backup_logs/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>52</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>services_debug_log.&lt;DATE&gt;</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/eniq_services_log/debug_log/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>53</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>backup.syb</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/local_logs/iq/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>54</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>messages</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p>/var/log/</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>55</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>rhel_linux_upgrade.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p>/eniq/local_logs/upgrade/</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>56</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p>journalctl_logs</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p>/var/log/</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+"The following table lists the configuration files collected by\n" +
+"Log Collector tool:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE26\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 26 &nbsp;&nbsp; Configuration files collected by Log Collector\n" +
+"Tool</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"8%\">\n" +
+"\n" +
+"<p><strong class=\"MEDEMPH\">S NO.</strong></p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"30%\">\n" +
+"\n" +
+"<p><strong class=\"MEDEMPH\">CONFIGURATION FILE NAME</strong></p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"48%\">\n" +
+"\n" +
+"<p><strong class=\"MEDEMPH\">CONFIGURATION FILE LOCATION</strong></p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"13%\">\n" +
+"\n" +
+"<p><strong class=\"MEDEMPH\">SERVER</strong></p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>1</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>static.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>2</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>niq.ini</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>3</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>SunOS.ini</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/installation/config/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>4</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>dwhdb.cfg</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/database/dwh_main/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>5</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>repdb.cfg</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/database/rep_main/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>6</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>dwhdb.cfg</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/database/dwh_reader/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>7</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>eniq_status</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/admin/version/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>8</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>eniq_history</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/admin/version/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>9</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>alarmcfg.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/runtime/tomcat/webapps/alarmcfg/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>10</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>licensingLogging.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>11</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>versiondb.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>12</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>engineLogging.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>13</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>schedulerLogging.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>14</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>adminui.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/runtime/apache-tomcat-8.5.42/webapps/adminui/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>15</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>ETLCServer.properties</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/sw/conf/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"8%\">\n" +
+"<p>16</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>storage.ini</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"48%\">\n" +
+"<p><tt class=\"input\"><b>/eniq/installation/config/</b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"13%\">\n" +
+"<p>All Blades</p>\n" +
+"</td></tr></table>\n" +
+"\n"+
+"</div>\n";
+
+var C35_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"troublechapter\"></a><span class=\"CHAPNUMBER\">35.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"troubleshooting\"></a><a name=\"CHAPTER35.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting Ericsson Network IQ</a></span></h2>\n" +
+"\n" +
+"<p><a name=\"DailyAggregation\"></a>\n" +
+"The table lists the potential issues and actions to perform to\n" +
+"solve them:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE27\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 27 &nbsp;&nbsp; Troubleshooting ENIQ</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"25%\">\n" +
+"\n" +
+"<p>Description</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"20%\">\n" +
+"\n" +
+"<p>Cause</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"55%\">\n" +
+"\n" +
+"<p>Action</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>AdminUI is not available at<br /><tt class=\"file-path\">http://<i class=\"var\">&lt;YourLoaderServerIP&gt;</i>: 8080/adminui/</tt></p><br />\n" +
+"<p><b class=\"object\">&lt;YourLoaderServerIP&gt;</b> refers to Coordinator\n" +
+"Blade IP in Multi-Blade deployment.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>ENIQ Web Server process is not running.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Ensure that the ENIQ Web Server process is running. <br /><tt class=\"input\"><b>/eniq/sw/bin/webserver status</b></tt></p><br />\n" +
+"<p>In a Multi-Blade deployment, execute the command on the Coordinator\n" +
+"Blade.</p><br />\n" +
+"<p>If the process is stopped, start the process by executing <br /><tt class=\"input\"><b>/eniq/sw/bin/webserver start</b></tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>No data is loaded.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>This can occur because of the following:</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>There are no files in the mounted OSS-RC directories,\n" +
+"or in the <tt class=\"LITERALMONO\">/eniq/data/pmdata</tt> directory on ENIQ Server</p>\n" +
+"</li>\n" +
+"<li><p>An ENIQ process is down.</p>\n" +
+"</li>\n" +
+"<li><p>System is in maintenance mode (execution profile is\n" +
+"in NoLoads).</p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>If using OSS-RC, check that PM mediators collect data\n" +
+"files from the Network Elements, and that symbolic links are created\n" +
+"under the following directories on OSS-RC: <tt class=\"LITERALMONO\">/var/opt/ericsson/pmData/</tt> x86 servers. <br />The same links appear under the <tt class=\"LITERALMONO\">/eniq/data/pmdata</tt> directory on ENIQ Server. <br />Check the status of <tt class=\"file-path\">scheduler</tt>, <tt class=\"file-path\">engine</tt>, <tt class=\"file-path\">dwhdb</tt>, and <tt class=\"file-path\">repdb</tt>.</p>\n" +
+"</li>\n" +
+"<li><p>If using OSS-RC, check that PM mediators are collecting\n" +
+"data, NFS/SSH mount is working.</p>\n" +
+"</li>\n" +
+"<li><p>Check the DWHDB filling ratio (this information is stored\n" +
+"in <tt class=\"file-path\">/eniq/log/sw_log/iq/dwhdb_usage.log</tt>.<br />The filling ratio log file is created by default. <br />If the ratio\n" +
+"is over 90%, the database is considered full, and ENIQ is switched\n" +
+"to maintenance mode. <br />If the DWHDBs filling ratio has been over\n" +
+"90% but no recent log entries are found (filling ratio has dropped\n" +
+"below 90%), switch ENIQ back to normal mode. Type on the command line:<br /><tt class=\"input\"><b>engine -e changeProfile Normal</b></tt></p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Database is full.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The database is too small for the amount of data.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Contact Ericsson Customer Support.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p><strong class=\"MEDEMPH\">Engine does not start: ''ERROR: Fault starting eniq-engine''</strong>.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Engine is in a failed state, because:</p><br />\n" +
+"<p>Engine script fails to work.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">or</strong></p><br />\n" +
+"<p>Database is full.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>See <a href='javascript:parent.parent.parent.showAnchor(\"correctiveMain\")' class=\"link\"> Corrective Maintenance</a> section.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Server has no free disk space.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Old snapshot is consuming unnecessary disc space.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">or</strong></p><br />\n" +
+"<p>ENIQ logging has been left on detailed level.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">or </strong></p><br />\n" +
+"<p>ENIQ has been receiving faulty data which is not cleared out from <tt class=\"file-path\">/eniq/data/rejected/ /eniq/data/etldata/*/failed</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Remove unnecessary snapshots if such exist.</p><br />\n" +
+"<p>Remove unnecessary log files and decrease the logging level.</p><br />\n" +
+"<p>Delete unnecessary faulty data and check the data mediation.</p><br />\n" +
+"<p>After the removals, stop all ENIQ processes and start them again.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Monitoring is showing deactivated measurement types.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">or</strong></p><br />\n" +
+"<p>Monitoring is showing deleted measurement types.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Monitored types are not updated.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>When you set a type as inactive using AdminUI, by default,\n" +
+"the type is no longer monitored after three days.</p><br />\n" +
+"<p>The default value can be changed by changing the UpdateMonitoring\n" +
+"property of the DWH_MONITOR Tech Pack. The <tt class=\"file-path\">lookahead</tt> value shows the number of days from today (the default is 2). To\n" +
+"change the value, contact Ericsson Customer Support.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">or</strong></p><br />\n" +
+"<p>The System gets measurement types from data stream dynamically\n" +
+"after a day and monitoring is built upon these measurement types.\n" +
+"If you delete a measurement type, but the data stream includes measurements\n" +
+"of the deleted type, the type you deleted continues to be displayed\n" +
+"in monitoring.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>After loading late data, AdminUI does not show data that\n" +
+"is older than three days.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>By default, the data which is more than three days old\n" +
+"is not updated in AdminUI.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>After loading late data, in AdminUI, click <b class=\"object\">ETLC\n" +
+"Set Scheduling</b>.</p>\n" +
+"</li>\n" +
+"<li><p>From <b class=\"object\">Set type</b>, select <tt class=\"input\"><b><i class=\"var\">Maintenance</i></b></tt> and from <b class=\"object\">Package</b>, select <tt class=\"input\"><b><i class=\"var\">DWH_MONITOR</i></b></tt>.</p>\n" +
+"</li>\n" +
+"<li><p>Select <b class=\"object\">UpdateFirstLoadings</b> and click<b class=\"object\">Start.</b></p>\n" +
+"</li>\n" +
+"</ul><br />\n" +
+"<p>Running this set updates the data loadings for AdminUI from the\n" +
+"previous 30 days.</p><br />\n" +
+"<p>This operation takes a long time if there is a large amount of\n" +
+"data.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Engine, Scheduler, DWH database, or ETL database displays\n" +
+"a red light in AdminUI Loader status view.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The service is stopped.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Ensure that the service with the red light is running by\n" +
+"following the instructions in <a href='javascript:parent.parent.parent.showAnchor(\"ShutdownDWH\")' class=\"link\"> Shutdown\n" +
+"Eniq Services</a> guide.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Sets are dropped from queue.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Sets are dropped from the queue when it reaches the maximum\n" +
+"priority (15). This occurs in a backlog situation.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>No action is required.</p><br />\n" +
+"<p>If this problem occurs frequently, contact Ericsson Customer Support.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Performance problems in RNC Tech Pack with DC_E_RAN_UCELL_V_PMRES\n" +
+"measurement.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Data storage method.</p><br />\n" +
+"<p>If there is a large amount of data stored, 15 minute time window\n" +
+"is exceeded causing system backlog.</p><br />\n" +
+"<p>Previously disabled counters are enabled after Tech Pack upgrade.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Disable the following UCELL_V_PMRES counters that are enabled\n" +
+"by default: pmRes7, pmRes8, pmRes9, pmRes10, pmRes11, pmRes12 </p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Log on ENIQ server or in a Multi-Blade deployment on\n" +
+"the Engine Blade as <tt class=\"file-path\">dcuser</tt>.</p>\n" +
+"</li>\n" +
+"<li><p>Change profile to NoLoads:<br /> <tt class=\"input\"><b>engine -e changeProfile\n" +
+"NoLoads</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Navigate to ENIQ admin directory: <br /><tt class=\"input\"><b>cd /eniq/admin/bin</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Run the following script to disable counters:<br /> <tt class=\"input\"><b>./disableCounters.bsh</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Navigate to root directory<br /> <tt class=\"input\"><b>cd /</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Reload engine configurations:<br /> <tt class=\"input\"><b>engine -e\n" +
+"reloadConfig</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Change the profile back to normal:<br /> <tt class=\"input\"><b>engine\n" +
+"-e changeProfile Normal</b></tt></p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>DIM tables are empty for all corresponding Vector Measurement\n" +
+"counters.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">or</strong></p><br />\n" +
+"<p>DC_RELEASE column not populated for DIM table related to the individual\n" +
+"vector counters. (<br />Example: <tt class=\"file-path\">DIM_E_RBS_NODEBFUNCTION_V_pmCapacityNodeBDlCe</tt>)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The <tt class=\"file-path\">DWHM_StorageTimeUpdate </tt> set\n" +
+"which updates these tables does not run correctly for the TP during\n" +
+"installation/upgrade of the TP.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Run the DWHM_StorageTimeUpdate Set for the TP from the\n" +
+"AdminUI. <br />Follow steps:</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Go to <b class=\"object\">ETLC Set Scheduling</b> in AdminUI.</p>\n" +
+"</li>\n" +
+"<li><p>Select <b class=\"object\">Set Type</b> as Tech Pack and <b class=\"object\">Package</b> as the TP for which you want to run the set.</p>\n" +
+"</li>\n" +
+"<li><p>Start the DWHM_StorageTimeUpdate set for the TP. <br />Example: <tt class=\"file-path\">DWHM_StorageTimeUpdate_DIM_ E_RBS</tt></p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Upgrade fails if <tt class=\"file-path\">dcuser</tt> is not\n" +
+"able to SSH to localhost without password</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">Or</strong> ExecutionProfiler set fails on running the ENIQ\n" +
+"Expansion procedure.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>In the <tt class=\"file-path\">/eniq/home/dcuser/.ssh/directory</tt>, the files <tt class=\"file-path\">id_rsa.pub</tt> and <tt class=\"file-path\">authorized_keys</tt> have different contents.</p><br />\n" +
+"<p>To log in through SSH, both files must have the same contents.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Before the upgrade check the permissions of the <tt class=\"file-path\">authorized_keys</tt> file. If permissions are set to <tt class=\"file-path\">root</tt> change the permissions to <tt class=\"file-path\">dcuser,</tt> then continue the upgrade.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p><tt class=\"file-path\">/eniq/home</tt> FS is full</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Unnecessary data in <tt class=\"file-path\">/eniq/home</tt> FS</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Delete unnecessary data from <tt class=\"file-path\">/eniq/home</tt> FS as extension of <tt class=\"file-path\">/eniq/home</tt> is not\n" +
+"supported and it is already optimized.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>The following parsing errors are seen:</p><br />\n" +
+"<p><tt class=\"output\">...is not supported in binary output mode</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The parsing is because the JVM cache is not updated properly\n" +
+"after upgrade.</p><br />\n" +
+"<p>The JVM cache is holding some data related to the process for\n" +
+"a complete session. So if the cache is not refreshed when the JVM\n" +
+"is restarted/not restarted, then this error occurs.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Restart of ENIQ services is required to get parsing working\n" +
+"again.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>DWHDB goes into a failed state frequently.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The database size is configured less in the server than\n" +
+"what is recommended for ENIQ, because of which database is full. The\n" +
+"connection to the database is lost frequently and hence the database\n" +
+"is going into a failed state.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Dimension the database according to the hardware dimension\n" +
+"tools provided.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Automatic aggregation not happening for TP after upgrade.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>This issue is caused by the following:</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p> The Monitored Type is active at that moment, but in <tt class=\"file-path\">Log_AggregationRules</tt> monitored type was not present.\n" +
+"As a result when UpdateMonitoring is triggered, the set not updated\n" +
+"the Log_AggregationStatus table. </p>\n" +
+"</li>\n" +
+"<li><p> During AutomaticAggregation, we check the Status column\n" +
+"of Log_AggregationStatus table, which is either LOADED or BLOCKED,\n" +
+"if the aggregation needs to run.</p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Do the following to reaggregate data:</p><br />\n" +
+"<p>In AdminUI, click Reaggregation.</p><br />\n" +
+"<p>Select the time level, start time, end time, and Tech Pack.</p><br />\n" +
+"<p>Click List to get a list of measurement types to be reaggregated.\n" +
+"Select the measurement types to be reaggregated and click Aggregate.</p><br />\n" +
+"<p>  To run AutomaticREAggregation: In AdminUI, click ETLC Set Scheduling.\n" +
+"Select set type as 'Maintenance' and Package as 'DWH_MONITOR'. Click\n" +
+"start AutomaticREAggregation.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>After init 6, File parsing and Loading stopped.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>ENIQ services did not start in proper order after init\n" +
+"6.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Restart the ENIQ services. See <a href='javascript:parent.parent.parent.showAnchor(\"restartEniqServices\")' class=\"xref\">Section  13.7</a>.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Discrepancy in <tt class=\"file-path\">PERIOD_DURATION</tt> value between DAY and RAW tables.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The <tt class=\"file-path\">PERIOD_DURATION</tt> values for\n" +
+"DAY tables are fetched from <tt class=\"file-path\">DIM_TIMELEVEL</tt>.</p><br />\n" +
+"<p>In <tt class=\"file-path\">DIM_TIMELEVEL</tt>, for column <tt class=\"file-path\">TABLELEVEL=DAY</tt> , the <tt class=\"file-path\">DURATIONMIN</tt> value is set to default value as 1440.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>To get the accurate values for PERIOD_DURATION use DATACOVERAGE\n" +
+"column from DAY table as it calculates (sum of (PERIOD_DURATION) from\n" +
+"RAW), when a comparison of PERIOD_DURATION needs to be done between\n" +
+"RAW and DAY tables.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Few Loaders stuck in priority queue and not moving to execution\n" +
+"slot for around 3 ROPs.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Alarm interface was also scheduled with 168 reports then\n" +
+"which is a possible reason for the issue. Alarm reports are disabled\n" +
+"and issue not seen again.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Disable the reports or reduced the no of reports to be\n" +
+"fetched at a time to 5-10.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Engine loading stops frequently because of the engine stoppage\n" +
+"happens frequently.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>This is because the JVM cache is not updated properly after\n" +
+"upgrade which results in loading error. The JVM cache is holding some\n" +
+"data related to the process for a complete session. So if the cache\n" +
+"is not refreshed when the JVM is restarted/not restarted, then the\n" +
+"said error occurs.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Restart of ENIQ services is required to get Loading working\n" +
+"again.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>While defining the Monitoring rules, if MINSOURCE value\n" +
+"is greater than the sourcecount, it labels the data of the respective\n" +
+"ROP as CHECK_FAILED.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>ENIQ expects <tt class=\"file-path\">Minsource</tt> less\n" +
+"than <tt class=\"file-path\">Sourcecount</tt> to have incoming data\n" +
+"marked as loaded.</p><br />\n" +
+"<p>If the mentioned condition is FALSE, ENIQ marks the data as CHECK_FAILED.\n" +
+"According to the normal ENIQ behavior the data is picked up during\n" +
+"the re-aggregation time, which runs around at 19:00 hrs daily.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Before applying any monitoring rule, check the sourcecount\n" +
+"values from ShowLoadings in AdminUI first then define the monitoring\n" +
+"rule on respective Tech Pack. MinSource value is configured less than\n" +
+"SourceCount value.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Normally, during NAS fail over or SFS/VA Reboot, the ENIQ\n" +
+"services are automatically restarted and do not require manual intervention.\n" +
+"In rare cases, the ENIQ services could be in a continuous failed state.</p><br />\n" +
+"<p>See <a href='javascript:parent.parent.parent.showAnchor(\"EniqServices\")' class=\"xref\">Section  35.2.2</a>.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Symantec Fault</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Ensure that the NASd and NAS-online services are in active\n" +
+"state and sentinel is in online state:</p><br />\n" +
+"<p><tt class=\"input\"><b>NASd.service</b></tt></p><br />\n" +
+"<p><tt class=\"input\"><b>NAS-online.service</b></tt></p><br />\n" +
+"<p><tt class=\"input\"><b>licensing-sentinel.service</b></tt></p><br />\n" +
+"<p>After these are online, then services recover themselves.</p><br />\n" +
+"<p> If services remain inactive/failed, reboot the server by running <tt class=\"input\"><b>init 6</b></tt> in the ENIQ Statistics (standalone) server.</p><br />\n" +
+"<p>For a Multi-Blade, run <tt class=\"input\"><b>init 6</b></tt> in the following\n" +
+"order</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>ENIQ Statistics Coordinator Server</p>\n" +
+"</li>\n" +
+"<li><p>ENIQ Statistics Engine Server</p>\n" +
+"</li>\n" +
+"<li><p>ENIQ Statistics Reader_1 Server</p>\n" +
+"</li>\n" +
+"<li><p>ENIQ Statistics Reader_2 Server</p>\n" +
+"</li>\n" +
+"</ul><br />\n" +
+"<p>Then restart the services as mentioned in the section <a href='javascript:parent.parent.parent.showAnchor(\"restartEniqServices\")' class=\"xref\">Section  13.7</a>.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>ENIQ FS is in read-only mode.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>If any ENIQ FS on SFS/VA reaches the defined threshold\n" +
+"limit (depends on the configuration), then the FS is in read-only\n" +
+"mode and ENIQ functionality is lost.</p><br />\n" +
+"<p>All ENIQ services are down until FS is cleaned up. After the FS\n" +
+"is cleaned up, the services are restarted and the functionality is\n" +
+"recovered.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>To clear unwanted files, follow these steps:</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Logon the NAS console and cleanup the unwanted files.<br /><sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote27-1\")'>(1)</a></sup></p>\n" +
+"</li>\n" +
+"<li><p>Restart NAS service. See <a href='javascript:parent.parent.parent.showAnchor(\"NasdRestart\")' class=\"xref\">Section  11.3</a>. <br /><sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote27-2\")'>(2)</a></sup></p>\n" +
+"</li>\n" +
+"<li><p>Restart all the ENIQ services. See <a href='javascript:parent.parent.parent.showAnchor(\"restartall\")' class=\"xref\">Section  35.7.3</a>.</p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Symbolic links are not deleted even though the file parsing\n" +
+"has happened correctly. While loading, the following warning message\n" +
+"gets printed in the Loader Engine log of the particular TP: <tt class=\"output\">Move with memory copy failed, deleting the temporary file</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>While loading, the loader picks up the temporary ASCII\n" +
+"or binary file from the output file path as defined in the TP interface.\n" +
+"But if the TP cache is not refreshed correctly, then the temporary\n" +
+"file does not get created correctly in the correct path leading to\n" +
+"the warning message.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Refresh the TP cache by reactivating the interface by following\n" +
+"the process. For the MB server, run the steps from the Coordinator\n" +
+"Blade as <tt class=\"input\"><b>dcuser</b></tt>.</p><br />\n" +
+"<p><tt class=\"input\"><b>cd /eniq/sw/installer</b></tt></p><br />\n" +
+"<p>Run the command as <tt class=\"input\"><b>./activate_interface -o <i class=\"var\">&lt;OSS_NAME&gt;</i> -i <i class=\"var\">&lt;interface name&gt;</i></b></tt></p><br />\n" +
+"<p>Example: <tt class=\"input\"><b>./activate_interface -o eniq_oss_1 -i INTF_DC_E_BULK_CM</b></tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>When NAS goes inactive state and returns in active state,\n" +
+"ENIQ tries to start all the services automatically. But the engine,\n" +
+"though enabled, behaves abnormally by affecting the parsing and loading.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>After the NAS comes in active state, all the services try\n" +
+"to come in active state sequentially. But if the services are not\n" +
+"in active state a sequence, that is, engine coming up before repdb,\n" +
+"leads to failure in refreshing the transformations required for parsing.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>If transformations do not get updated when engine restarts\n" +
+"after NAS comes in active state, then engine needs to be restarted\n" +
+"again to update the transformations correctly.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p><b class=\"object\">::java.lang.ExceptionInInitializationError</b> error while launching techpackide/universeupdateinstaller</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>There is jar signing issue from 16B as all the packages\n" +
+"are unsigned.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p><b class=\"object\">java.policy</b> file in JAVA installed path\n" +
+"be updated with the lines.<br /> To launch universeupdateinstaller/techpackide\n" +
+"package when delivered as unsigned packages<br /><b class=\"object\"> grant { permission\n" +
+"java.security.AllPermission; };</b> <br />For example: C:\\Program\n" +
+"Files\\Java\\jre8\\lib\\security\\java.policy </p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>If the security settings blocks an application from running\n" +
+"with an out-of-date or expired version of java.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Security settings</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Change the <b class=\"object\">java security</b> settings in <b class=\"object\">control panel</b>. Follow the steps.</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Go to <b class=\"object\">Control Panel &gt; Java &gt; Security</b></p>\n" +
+"</li>\n" +
+"<li><p>Click <tt class=\"file-path\">Edit Site List...</tt></p>\n" +
+"</li>\n" +
+"<li><p>Add URL to this list.. <br />Example: <tt class=\"file-path\">https://<i class=\"var\">&lt;server_ip&gt;</i>:<i class=\"var\">&lt;port&gt;</i>/universeupdateinstaller/</tt></p>\n" +
+"</li>\n" +
+"<li><p>Click <tt class=\"file-path\">ADD</tt> then click <tt class=\"file-path\">OK</tt>.</p>\n" +
+"</li>\n" +
+"</ul><br />\n" +
+"<p>This is applicable for both EBSMANAGER and Techpackide.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>During initial install, the warning is shown in engine\n" +
+"logs:</p><br />\n" +
+"<p><tt class=\"file-path\">WARNING org.apache.velocity : Could not create file\n" +
+"appender 'velocity.log'    java.io.FileNotFoundException: velocity.log\n" +
+"(No such file or directory).</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>During initial Install, <strong class=\"MEDEMPH\">DWHMonitor</strong> raises <strong class=\"MEDEMPH\">FileNotFoundException</strong> exception.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>This does not have any impact, so it is ignored.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Data loading into the database table stops with the following\n" +
+"information message in the log file: &lt;Blade_Host_Name&gt;_status_log[_#&lt;number&gt;@&lt;Timestamp&gt;]\n" +
+"present at /eniq/log/cleanup_log: <br /><br />INFO: Partition size limit\n" +
+"exceeds for filesystems:<br />&lt;FileSystemName&gt;<br /><br /> Setting\n" +
+"engine to no load<br /><br />where, <br />[_#&lt;number&gt;@&lt;Timestamp&gt;]\n" +
+"is optional <br />&lt;FileSystemName&gt; is the name of the filesystem\n" +
+"whose utilization exceeds the threshold limit.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>If the utilization of LV/NAS file system reaches more than\n" +
+"90% or utilization of Root File System reaches more than 95% on any\n" +
+"of the Blades of the ENIQ Stats server, engine profile changes to\n" +
+"NoLoads at 1 AM.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Clean up the directory for which the file system utilization\n" +
+"is more than 90% (for Root File System, threshold is 95%).</p>\n" +
+"</li>\n" +
+"<li><p>After the LV/NAS file system utilization is less than\n" +
+"90% and Root File System utilization is less than 95%, do the following:</p>\n" +
+"</li>\n" +
+"<li><p>Log on to ENIQ Stats Coordinator server as <tt class=\"input\"><b>dcuser</b></tt>.</p>\n" +
+"</li>\n" +
+"<li><p>Use the following command:<br /><tt class=\"input\"><b> # engine -e getCurrentProfile</b></tt> <br /><tt class=\"output\">It appear as NoLoads.</tt></p>\n" +
+"</li>\n" +
+"<li><p>To set engine profile to Normal, use the command: <br /><tt class=\"input\"><b># engine -e changeProfile Normal</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Verify the current profile using the following command: <br /><tt class=\"input\"><b># engine -e getCurrentProfile </b></tt><br /><tt class=\"output\">It appear\n" +
+"as Normal.</tt></p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>''<strong class=\"MEDEMPH\">04:00:40 SEVERE 1.Aggregator Error while initializing\n" +
+"aggregation due to an SQL exception JZ006: Caught IOException: java.net.SocketTimeoutException:\n" +
+"Read timed out use getCause() to see the error chain</strong>'' Error\n" +
+"seen during aggregation.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>In <em class=\"LOWEMPH\">eniq/sw/conf</em>, static.properties <em><strong class=\"HIGHEMPH\">statsdefaultQueryTimeOutInMins</strong></em> value is set to <strong class=\"MEDEMPH\">300 minutes</strong>. This means that any query can run up to a max\n" +
+"of 300min (5 hrs) for completing its execution.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>The value of <em><strong class=\"HIGHEMPH\">statsdefaultQueryTimeOutInMins</strong></em> can be increased to higher value in multiples of <strong class=\"MEDEMPH\">60 minutes</strong> to avoid the aggregates from failing with time-out exception.</p><br />\n" +
+"<p>After updating the value, restart all the services.</p><br />\n" +
+"<p>Log on to the server as <tt class=\"input\"><b>dcuser</b></tt>: <tt class=\"file-path\">#\n" +
+"su &ndash; dcuser</tt></p><br />\n" +
+"<p>1) Increase the value of the parameter <em><strong class=\"HIGHEMPH\">statsdefaultQueryTimeOutInMins</strong></em> in static.properties under <em class=\"LOWEMPH\">/eniq/sw/conf</em><br />2) Restart all the services <br /><tt class=\"file-path\"># cd /eniq/admin/bin</tt><br /><tt class=\"file-path\"># bash ./manage_deployment_services.bsh -a restart\n" +
+"-s ALL</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>''ERROR: All IQ large memory has been used, allocation\n" +
+"cancelled'' seen in /eniq/local_logs/iq/dwhdb.iqmsg.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>This error message is raised if the customized queries\n" +
+"are trying to fetch huge amount of data, which in-turn may consume\n" +
+"significant IQ memory.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Customized queries should be used optimally to avoid out\n" +
+"of memory issue.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>During database restart and ENIQ service, the following\n" +
+"error message is displayed on the ENIQ log files: <br /><strong class=\"MEDEMPH\">java.sql.SQLException: [Sybase][JDBC Driver][Sybase\n" +
+"IQ] connection was terminated.</strong></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>During database restart, database clients receive the error\n" +
+"messages which are logged in the ENIQ logs.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Since this does not have any impact, ignore the errors.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Data older than three days, must be aggregated manually.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>By default, the data which is more than three days old\n" +
+"must be aggregated manually.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Run the Reaggregation in batches to reduce performance\n" +
+"degradation. For more details, see <a href='javascript:parent.parent.parent.showAnchor(\"Reaggregation\")' class=\"link\"> 5.2.6\n" +
+"Reaggregating data</a>.</p><br />\n" +
+"<p>This operation takes a long time if there is a large amount of\n" +
+"data.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>More than 100% ENIQ CPU use causes major ENIQ degradation.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>The server takes more time for building contiguous large\n" +
+"pages because free memory space is low.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Log on to the server using <strong class=\"MEDEMPH\">root</strong> user.</p>\n" +
+"</li>\n" +
+"<li><p>Edit <strong class=\"MEDEMPH\">/etc/system </strong>file: <tt class=\"file-path\">vi\n" +
+"/etc/system</tt></p>\n" +
+"</li>\n" +
+"<li><p>Add the following line: <br />   <tt class=\"file-path\">set pg_contig_disable\n" +
+"= 0x1</tt></p>\n" +
+"</li>\n" +
+"<li><p>Reboot the server.</p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>AlarmCFG is not available at <br /><tt class=\"file-path\">https://<i class=\"var\">YourLoaderServerIP</i>:8443/alarmcfg/</tt>.</p><br />\n" +
+"<p>In a Multi-Blade deployment, it is IP address of the Coordinator\n" +
+"Blade.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>BO SDK APIs are not loaded properly in Web Server Service.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Restart Web Server.</p>\n" +
+"</li>\n" +
+"<li><p>Run command as <tt class=\"file-path\">dcuser</tt>.</p>\n" +
+"</li>\n" +
+"<li><p>In a Multi-Blade deployment, execute the command on\n" +
+"the Coordinator Blade:</p>\n" +
+"</li>\n" +
+"</ul><br />\n" +
+"<p><tt class=\"input\"><b>{dcuser}# /eniq/sw/bin/webserver restart</b></tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>During Initial Install following BIOS level warning is\n" +
+"seen <tt class=\"file-path\">510- The installed number of DIMMs on one or more\n" +
+"processors results in an unbalanced memory configuration across memory\n" +
+"controllers. This may result in non-optional memory performance.<br />Action: Consult documentation for memory population guidelines.</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Unbalanced Memory Configuration</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>If user sees this BIOS level warning as part of Server\n" +
+"Startup, Power On or Reboot, it can be ignored.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>The use of the database filesystems is showing more than\n" +
+"90% for cost effective and compact Rack deployment</p><br />\n" +
+"<p>#df -hk|grep dbspace</p><br />\n" +
+"<p>/dev/mapper/eniq_stats_pool-dwh_main_dbspace 1427509896 1383734724\n" +
+"43758788 97% /eniq/database/dwh_main_dbspace</p><br />\n" +
+"<p>/dev/mapper/eniq_stats_pool-dwh_temp_dbspace 316493992 291208360\n" +
+"25269248 93% /eniq/database/dwh_temp_dbspace</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>This is expected. LVM are thick provisioned on Rack and\n" +
+"so each file system is dimensioned individually in RHEL (as compared\n" +
+"to sharing zpool among FS in case of ENIQ on Solaris). Database files\n" +
+"would consume nearly entire space in dwh_main_dbspace and dwh_temp_dbspace\n" +
+"filesystem as those files are reserved explicitly for IQ use.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>No action required. It can be ignored.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>In Multi-Blade Capacity license value automatically gets\n" +
+"changed from 8 to 2 over the sentinel service restart. Due to this,\n" +
+"ENGINE service does not start and impacts data loading.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>lservrc file contains multiple entries for same licence\n" +
+"which causes the issue.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>Login into the server as root user into Coordinator Blade.</p><br />\n" +
+"<ul class=\"unoL\">\n" +
+"<li><p>Take a back of sentinel file. <br /><tt class=\"input\"><b>{root}# cp\n" +
+"/eniq/sentinel/lic/lservrc /eniq/sentinel/lic/lservrc_orgn</b></tt><br /></p>\n" +
+"</li>\n" +
+"<li><p>Remove all the entries of the capacity license from\n" +
+"the /eniq/sentinel/lic/lservrc<br /><tt class=\"input\"><b> {root}# cat /eniq/sentinel/lic/lservrc\n" +
+"| grep -v\" &lt; CXC_NO_OF_CAPACITY_LIC &gt;\" &gt;&gt; /var/tmp/lservrc</b></tt><br />Where &lt; CXC_NO_OF_CAPACITY_LIC &gt;is the CXC number of capacity\n" +
+"licence. <br /><tt class=\"input\"><b>{root}# cp /var/tmp/lservrc /eniq/sentinel/lic/lservrc</b></tt> <br /> </p>\n" +
+"</li>\n" +
+"<li><p>Switch to dcuser and apply the correct capacity license\n" +
+"on the server. <br /><tt class=\"input\"><b>{dcuser} # su &ndash; dcuser</b></tt> <br /><tt class=\"input\"><b>{dcuser} # /eniq/sw/bin/licmgr -install &lt;PATH_TO_CAPACITY_LICENSES_FILE&gt;</b></tt><br />Where &lt;PATH_TO_CAPACITY_LICENSES_FILE&gt; is the directory path\n" +
+"and file name of the file containing the capacity licenses.<br /> <tt class=\"input\"><b>{dcuser} # exit</b></tt></p>\n" +
+"</li>\n" +
+"<li><p>Restart sentinel service. <br /><tt class=\"input\"><b>{root}# systemctl\n" +
+"restart licensing-sentinel.service</b></tt><sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote27-3\")'>(3)</a></sup></p>\n" +
+"</li>\n" +
+"<li><p>Restart licmgr and engine services. Run the following\n" +
+"command as a root user:<sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote27-4\")'>(4)</a></sup> <br /><tt class=\"input\"><b>{root}# systemctl restart eniq-licmgr.service</b></tt> <br /><tt class=\"input\"><b>{root}# systemctl restart eniq-engine.service</b></tt> <sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote27-5\")'>(5)</a></sup></p>\n" +
+"</li>\n" +
+"</ul>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Any error or exception thrown in DWH_MONITOR engine logs\n" +
+"related to log_aggregationrule table. </p><br />\n" +
+"<p>The following is the procedure to check the log:</p><br />\n" +
+"<p>/eniq/log/sw_log/engine/DWH_MONITOR/engine-&lt;timestamp&gt;.log</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Aggregation sets triggered around 0700 Hrs.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"55%\">\n" +
+"<p>No action need to be performed.</p>\n" +
+"</td></tr></table><p class=\"tnote\"><a name=\"tnote27-1\">(1) &nbsp;</a>The user needs to NAS directly as support user and clean\n" +
+"up the problem directory on the NAS server itself.<br /></p><p class=\"tnote\"><a name=\"tnote27-2\">(2) &nbsp;</a>NAS service has dependency with Sentinel service,\n" +
+"which also needs to be in operational state.<br /></p><p class=\"tnote\"><a name=\"tnote27-3\">(3) &nbsp;</a> Wait till sentinel\n" +
+"gets restarted. The user can check sentinel service using <strong class=\"MEDEMPH\">''services\n" +
+"-s sentinel''</strong>. <br /></p><p class=\"tnote\"><a name=\"tnote27-4\">(4) &nbsp;</a> Clear service (if any) from maintenance.<br /></p><p class=\"tnote\"><a name=\"tnote27-5\">(5) &nbsp;</a> Wait till services gets restarted. The user can check services\n" +
+"using <strong class=\"MEDEMPH\">''services -s &lt;SERVICE_NAME&gt;''</strong>.<br /></p><br />\n" +
+"\n"+
+"</div>\n";
+
+var C35_2_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"DailyAggregationNot\"></a><span class=\"CHAPNUMBER\">35.2.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_tm1d\"></a><a name=\"CHAPTER35.2.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Daily Aggregation\n" +
+"Is Happening Very Late</a></span></h3>\n" +
+"\n" +
+"<p class=\"titled-block\">Cause</p><p>\n" +
+"ENIQ triggers the aggregation for incomplete data only if last\n" +
+"loading of data happened 1.5 hours before.</p>\n" +
+"<p>\n" +
+"If the data loading pattern is late and continuous without having\n" +
+"a 1.5 hour gap between two consecutive loadings, then ENIQ does not\n" +
+"trigger initial aggregation.</p>\n" +
+"\n" +
+"<p class=\"titled-block\">Action</p><p>\n" +
+"Do the following to trigger an initial aggregation at a fixed time\n" +
+"with the available data (the data loaded by that time) for a particular\n" +
+"Tech Pack:</p>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Log on ENIQ server or in a Multi-Blade deployment on the\n" +
+"Engine Blade as <tt class=\"file-path\">dcuser</tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Edit the file:<br /><tt class=\"input\"><b>/eniq/sw/conf/static.properties</b></tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Add entries to the static.properties and save it. <br /><tt class=\"input\"><b>AggregationStartTP=<i class=\"var\">&lt;tp_name&gt;</i></b></tt><br /><tt class=\"input\"><b>aggStartTime=<i class=\"var\">&lt;HH:mm:ss&gt;</i></b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Change profile to NoLoads:<br /> <tt class=\"input\"><b>engine -e changeProfile\n" +
+"NoLoads</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Reload engine configurations:<br /> <tt class=\"input\"><b>engine -e reloadConfig</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Change the profile back to normal:<br /> <tt class=\"input\"><b>engine\n" +
+"-e changeProfile Normal</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Example:<p>\n" +
+"If static.properties has entries:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>AggregationStartTP=DC_E_ERBS</b></tt> <br /> <tt class=\"input\"><b>aggStartTime=04:00:00</b></tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">The parameters must not contain spaces(DC_E_ERBS, 04:00:00).\n" +
+"ENIQ triggers the initial aggregation for DC_E_ERBS Tech Pack around\n" +
+"04:00:00 am with the available data (if aggregation is not started\n" +
+"by that time).</li>\n" +
+"<li class=\"UNORD\">This feature works only with the Tech Pack defined in\n" +
+"static.properties. For others, aggregation works in the normal way.</li></ul></dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C35_2_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"EniqServices\"></a><span class=\"CHAPNUMBER\">35.2.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_9kz6\"></a><a name=\"CHAPTER35.2.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ Services\n" +
+"in a Continuous Failed State during NAS Failover or SFS/VA Reboot</a></span></h3>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Normally, during a NAS fail over or an SFS/VA reboot, the\n" +
+"ENIQ services are automatically restarted and do not require manual\n" +
+"intervention.<p>\n" +
+"In rare circumstances, the ENIQ services can be in a continuous\n" +
+"failed state.</p>\n" +
+"</dd></dl><br />\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Manually clearing the service status from a failed state\n" +
+"also does not push the service into an inactive state.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Check the service Systemd logs to check if the messages\n" +
+"are seen repeatedly.<p>\n" +
+"<tt class=\"output\">systemd[1]: Unit eniq-&lt;service_name&gt;.service entered\n" +
+"failed state.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">systemd[1]: eniq-&lt;service_name&gt;.service failed.</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Check /eniq/local_logs/NASd/NASd.log for warnings.<p>\n" +
+"<tt class=\"output\">&lt;YYYY-Mon-Date&gt;:: Warning:: NAS filesystems failed to\n" +
+"respond within 20 seconds.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Waiting 10 seconds before retry number 3. This will allowthe\n" +
+"NAS to failover and recover before inactive services</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">&lt;YYYY-Mon-Date&gt;:: Warning:: NAS filesystems failed to\n" +
+"respond within 20 seconds.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Waiting 10 seconds before retry number 4. This will allow\n" +
+"the NAS to failover and recover before inactive services.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">&lt;YYYY-Mon-Date&gt;:: INFO:: inactive called for NAS-online.service.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">&lt;YYYY-Mon-Date&gt;:: WARNING:: NAS filesystems unavailable;\n" +
+"NAS milestone is in inactive stage</tt></p>\n" +
+"</li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_royb\"></a><a name=\"CHAPTER35.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting IQ Memory Issues</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"If the system faces any memory related issues, which are affecting\n" +
+"either the performance or any data loading, it is recommended to use\n" +
+"ENIQ Statistics solution architects to analyze the current memory\n" +
+"configuration of the server based on the deployment as specified in <a href='javascript:parent.parent.parent.showAnchor(\"tbl-ramconfiguration\")' class=\"xref\"> Table 28</a>.</p>\n" +
+"\n" +
+"<p>\n" +
+"In 17B, the internal memory use within ENIQ Statistics is increased.\n" +
+"As a result, several ENIQ Statistics servers will require additional\n" +
+"RAM in 17B. Affected server configurations is updated as specified\n" +
+"in <a href='javascript:parent.parent.parent.showAnchor(\"tbl-ramconfiguration\")' class=\"xref\"> Table 28</a>.</p>\n" +
+"\n" +
+"<p>\n" +
+"Except for the largest Multi-Blade deployment Config-E, existing\n" +
+"HP Gen8 server configurations is supported in 17B provided ENIQ Statistics\n" +
+"does not experience any memory related issues. <br />As an example,\n" +
+"if ENIQ is handling very low volumes, additional RAM is not required.</p>\n" +
+"\n" +
+"<p>\n" +
+"See <a href='javascript:parent.parent.parent.showAnchor(\"ErrorMessagesNew\")' class=\"link\"> Section 29.3.1 </a>on how\n" +
+"to check if ENIQ Statistics is experiencing any of the following memory\n" +
+"related issues: Insufficient Buffer, IQ Large Memory and Main Buffer.\n" +
+"Where RAM is not increased, these memory checks are repeated regularly,\n" +
+"especially if the ENIQ load changes. When an issue is observed, RAM\n" +
+"must be increased.</p>\n" +
+"\n" +
+"<p>\n" +
+"ENIQ Statistics is robust enough to recover from most memory related\n" +
+"issues. There is a delay in data availability, but it recovers. The\n" +
+"data is not lost. This robustness is not a long-term solution and\n" +
+"RAM must be increased.</p>\n" +
+"\n" +
+"<p>\n" +
+"The following <a name=\"tbl-ramconfiguration\" href='javascript:parent.parent.parent.showAnchor(\"tbl-ramconfiguration\")' class=\"xref\"> Table 28</a> summarizes\n" +
+"the RAM configuration for ENIQ Statistics deployments from 17B:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE28\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 28 &nbsp;&nbsp; RAM configuration for ENIQ Statistics Deployments in 17B</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"center\" valign=\"top\" width=\"36%\" rowspan=\"2\">\n" +
+"\n" +
+"<p>ENIQ Deployment</p></th>\n" +
+"<th align=\"center\" valign=\"top\" width=\"29%\" rowspan=\"2\">\n" +
+"\n" +
+"<p>ENIQ Server</p></th>\n" +
+"<th align=\"center\" valign=\"top\" width=\"25%\" colspan=\"2\">\n" +
+"\n" +
+"<p>17B Memory Requirement</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"center\" valign=\"top\" width=\"17%\">\n" +
+"\n" +
+"<p>HP Gen 9 server</p></th>\n" +
+"<th align=\"center\" valign=\"top\" width=\"19%\">\n" +
+"\n" +
+"<p>HP Gen 8 server</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"36%\">\n" +
+"<p>Single Blade (Config A) </p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>ENIQ Statistics</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>256G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>256G</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"36%\">\n" +
+"<p>Single-Blade (Config C) </p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>ENIQ Statistics</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>512G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>256G *</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"36%\" rowspan=\"4\">\n" +
+"<p>Multi-Blade (Config\n" +
+"D) </p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>256G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>128G</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Engine</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>256G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>128G</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Reader 1</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>512G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>256G *</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Reader 2</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>512G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>256G *</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"36%\" rowspan=\"4\">\n" +
+"<p>Multi-Blade (Config\n" +
+"E) </p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Coordinator</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>256G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>256G</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Engine</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>256G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>256G</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Reader 1</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>512G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>Replace with Gen 9 and 512G **</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"center\" width=\"29%\">\n" +
+"<p>Reader 2</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"17%\">\n" +
+"<p>512G</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"19%\">\n" +
+"<p>Replace with Gen 9 and 512G **</p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+"* 256G is supported for this server provided there are no memory\n" +
+"related issues but increasing to 512G is still recommended.</p>\n" +
+"\n" +
+"<p>\n" +
+"** 512G is mandatory. PDU also recommends replacing the Gen 8 server\n" +
+"with a Gen 9 server.</p>\n" +
+"\n" +
+"<p>\n" +
+"Mixing Gen 8 and Gen 9 Blades in a Multi-Blade ENIQ Statistics\n" +
+"deployment is supported.</p>\n" +
+"\n" +
+"<p>\n" +
+"For any queries, contact OSS PLM Support (<a href=\"mailto:oss.plm.support@ericsson.com\">oss.plm.support@ericsson.com</a>).</p>\n" +
+"\n" +
+"<p>\n" +
+"<strong class=\"MEDEMPH\"><a name=\"ErrorMessagesNew\"></a>29.3.1 Error Messages</strong></p>\n" +
+"\n" +
+"<p>\n" +
+"Run the following three checks to determine if ENIQ Statistics\n" +
+"is experiencing &ldquo;Insufficient Buffer&rdquo;, &ldquo;IQ Large\n" +
+"Memory&rdquo; or &ldquo;Main Buffer&rdquo; issues, indicating that\n" +
+"more RAM is required.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>These memory checks provide a point in time indication of\n" +
+"whether ENIQ Statistics servers require more memory. These checks\n" +
+"are repeated regularly as there is no future guarantee.</dd></dl><br />\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Check Insufficient Buffer:<p>\n" +
+"Replace &lt;log_2_check&gt; with the engine log file.</p>\n" +
+"<p>\n" +
+"Example: /eniq/log/sw_log/engine/engine-2017_02_12.log</p>\n" +
+"<p>\n" +
+"{dcuser} #: grep -i \"SQL Anywhere Error -1009134\" &lt;log_2_check&gt;\n" +
+"| grep -v \"jdbc\" | grep Reason | awk '{print $1\" \"$2\" \"$7\" \"$8\" \"$9\"\n" +
+"\"$10}'</p>\n" +
+"<p>\n" +
+"Example Output</p>\n" +
+"<p>\n" +
+"12.02 03:33:37 Reason: Error while loading <br />12.02 03:34:24\n" +
+"Reason: Error while loading <br />12.02 03:49:13 Reason: Error while\n" +
+"loading</p>\n" +
+"<p>\n" +
+"It is not uncommon for a small number of loads to fail during aggregations.\n" +
+"If the command returns more than three Errors or returns any failure\n" +
+"outside of aggregation times, it means that the deployment is facing\n" +
+"memory issues.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Check Main Buffer:<p>\n" +
+"{dcuser} #: for i, in $(find /eniq/local_logs/iq -name \"dwh*.iqmsg*\";\n" +
+"find /eniq/log/sw_log/iq -name \"dwh*.iqmsg*\"); do echo \"$(grep \"Bufman:\n" +
+"All buffer cache pages are in use\" $i | awk '{print \"\"$2\" \"$3\"\"$4}'\n" +
+"| sort | uniq | awk '{print$1}' | uniq -c) \"; done | sort -k 2</p>\n" +
+"<p>\n" +
+"Example Output <br />1902 02/12 <br />199 02/13 <br />1884 02/13 <br />1066 02/14 <br />Any occurrence observed here, confirms that the\n" +
+"deployment is facing memory issues.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Check IQ Large Memory:<p>\n" +
+"{dcuser} #: for i, in $(find /eniq/local_logs/iq -name \"dwh*.iqmsg*\";\n" +
+"find /eniq/log/sw_log/iq &ndash;name \"dwh*.iqmsg*\"); do echo \"$(grep\n" +
+"\"SQL Anywhere Error -1013130\" $i | awk '{print /\"\"$2\" \"$3\" \"$4}' |\n" +
+"sort | uniq | awk '{print $1}'| uniq -c) \"; done | sort -k 2</p>\n" +
+"<p>\n" +
+"Example Output<br /> 5 04/04<br /> 4 04/05<br /> 5 04/06</p>\n" +
+"<p>\n" +
+"Any occurrence observed here, confirms that the deployment is facing\n" +
+"memory issues.</p>\n" +
+"</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C35_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_akax\"></a><a name=\"CHAPTER35.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting Licensing</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"If the user cannot use the License Manager to view ENIQ licenses\n" +
+"or features, check the following:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">A valid license exists for the feature</li>\n" +
+"<li class=\"UNORD\">For a Multi-Blade deployment, ensure that License Manager\n" +
+"is running on the Coordinator Blade</li>\n" +
+"<li class=\"UNORD\"><tt class=\"LITERALMONO\">/eniq/sentinel/etc/sentinel.env</tt> host\n" +
+"has the correct IP address for the <tt class=\"file-path\">LSHOST</tt> variable</li></ul>\n" +
+"<p>\n" +
+"If licensing still does not work as planned, inspect the licensing\n" +
+"log files for more information.</p>\n" +
+"\n" +
+"<p>\n" +
+"If licenses are not retrieved from the license server, the License\n" +
+"Manager appends an error code to the error message. The error codes\n" +
+"are explained in <a name=\"tbl-licerrors\" href='javascript:parent.parent.parent.showAnchor(\"errorcodetable\")' class=\"xref\"> Table 29</a><a name=\"errorcodetable\"></a>.</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE29\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 29 &nbsp;&nbsp; License Manager Error Codes</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"36%\">\n" +
+"\n" +
+"<p>Error</p></th>\n" +
+"<th align=\"center\" valign=\"top\" width=\"11%\">\n" +
+"\n" +
+"<p>Value</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"53%\">\n" +
+"\n" +
+"<p>Description</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_SUCCESS</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>0</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license server operation was successful.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_BADHANDLE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>1</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Handle given to method represents a bad context.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_INSUFFICIENTUNITS 2</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>2</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Not enough resources to satisfy LSRequest.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_LICENSESYSNOTAVAILABLE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>3</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>License system itself is unavailable.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_LICENSETERMINATED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>4</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LSUpdate failed; license expired because of a time-out.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_NOAUTHORIZATIONAVAILABLE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>5</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>License server does not recognize this feature name.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_NOLICENSESAVAILABLE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>6</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>License server has no more license keys for this feature.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_NORESOURCES</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>7</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Insufficient resources (such as memory).</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_NO_NETWORK</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>8</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Network communication problems encountered.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_NO_MSG_TEXT</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>9</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Unable to retrieve message text.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_UNKNOWN_STATUS</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>10</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Unknown code passed.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_BAD_INDEX</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>11</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Invalid index - internal use only.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_NO_MORE_UNITS</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>12</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Additional license keys/units requested are unavailable.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_LICENSE_EXPIRED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>13</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Licensing agreement for this feature has expired.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>LS_BUFFER_TOO_SMALL</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>14</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Buffer provided to method is too small.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_LICENSE_GIVEN</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>15</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Other internal error not listed in this table.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_APP_UNAMED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>16</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>No feature name provided with method.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_HOST_UNKNOWN</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>17</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>License server host is not on the network.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_SERVER_FILE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>18</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Client not initialized with name of license server host.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_SERVER_RUNNING</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>19</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>No license server is running on remote host.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_APP_NODE_LOCKED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>20</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Node locked feature cannot be issued float license key.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_KEY_TO_RETURN</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>21</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LSrelease called before license key was issued.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_RETURN_FAILED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>22</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LSrelease failed to return the issued license key.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_MORE_CLIENTS</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>23</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LSgetClientInfo has no more clients to report.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_MORE_FEATURES</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>24</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LSgetFeatureInfo has no more features to report.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_CALLING_ERROR</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>25</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Error in calling a LicenseServ function.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_INTERNAL_ERROR</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>26</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LicenseServ internal error.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_SEVERE_INTERNAL_ERROR</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>27</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>LicenseServ severe internal error.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_SERVER_RESPONSE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>28</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>License server not responding because of unknown condition.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_USER_EXCLUDED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>29</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>User/machine is excluded by group reservations.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_UNKNOWN_SHARED_ID</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>30</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Supplied sharing criteria is unknown.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_RESPONSE_TO_BROADCAST</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>31</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>No license servers responded to VLSwhere.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_SUCH_FEATURE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>32</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>License server does not recognize the given feature.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_ADD_LIC_FAILED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>33</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Dynamic license addition failed.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_DELETE_LIC_FAILED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>34</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Dynamic license deletion failed.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_LOCAL_UPDATE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>35</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Last update was done locally.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_REMOTE_UPDATE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>36</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Last update was done by the LicenseServ license server.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_VENDORIDMISMATCH</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>37</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license system has resources that could satisfy the\n" +
+"request, but the vendor code of the requesting application does not\n" +
+"match with that of the application licensed by lserv.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_MULTIPLE_VENDORID_FOUND</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>38</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license system has multiple licenses for the same feature/version\n" +
+"and it is not clear from the operation which licenses the requestor\n" +
+"is interested in.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_BAD_SERVER_MESSAGE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>39</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>An error has occurred in decrypting (or decoding) a network\n" +
+"message at the client end. Probably an incompatible or unknown server\n" +
+"or a version mismatch.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_CLK_TAMP_FOUND</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>40</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license server found evidence of tampering of the system\n" +
+"clock and it cannot service the request since the license for this\n" +
+"feature is set as time tamper proof.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_LEADER_NOT_PRESENT</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>41</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The leader of the redundant license server pool is not\n" +
+"known.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NON_REDUNDANT_SRVR</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>42</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The contacted license server is not a redundant license\n" +
+"server.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_SERVER_SYNC_IN_PROGRESS</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>43</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>When contacted, redundant license servers are busy synchronizing\n" +
+"information.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NON_REDUNDANT_FEATURE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>44</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>This feature does not support license server redundancy.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_DIFF_LIB_VER</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>45</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The client and license server libraries do not match.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_SERVER_ALREADY_PRESENT</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>46</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license server is already in the redundant license\n" +
+"server pool.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_SERVER_NOT_PRESENT</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>47</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license server contacted is not in the redundant license\n" +
+"server pool.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_BAD_HOSTNAME</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>48</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Could not resolve the license server name.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NOT_AUTHORIZED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>49</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The user is not authorized to do this operation.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_SERVER_FILE_SYNC</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>50</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Redundant license server synchronization of information\n" +
+"is in progress.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_CONF_FILE_ERROR</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>51</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>There is an error in the configuration file.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_POOL_FULL</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>52</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The redundant server pool already has the maximum number\n" +
+"of license servers it can handle.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_ONLY_SERVER</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>53</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license server removed is the only one in the redundant\n" +
+"license server pool.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_MAJORITY_RULE_FAILURE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>54</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Most of the license servers in the redundant license server\n" +
+"pool are not running.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_PLACED_IN_QUEUE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>55</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The user was placed into the license queue.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_CLIENT_NOT_AUTHORIZED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>56</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The client is not authorized to perform this operation.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_SUCH_CLIENT</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>57</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The requested client is not present in the license queue.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_MSG_TO_LEADER</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>58</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The message has been forwarded to the leader; this is not\n" +
+"an error.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NOT_SUPPORTED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>59</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The license server does not support this API. The license\n" +
+"server is probably an old version.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_BAD_DISTRIBUTION_CRIT</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>60</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The specified distribution criteria is not valid</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_TRIAL_LIC_EXHAUSTED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>61</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>The trial license period has expired.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NO_TRIAL_INFO</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>62</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>No Trial use info exists on the server.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_TRIAL_INFO_FAILED</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>63</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Trial use query failed.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_NOMORE_QUEUE_RESOURCES</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>64</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Could not queue the client because the queue is full.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_INVALID_LICENSE</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>65</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Invalid license string.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>VLS_DUPLICATE_LICENSE 66</p>\n" +
+"</td>\n" +
+"<td align=\"center\" width=\"11%\">\n" +
+"<p>66</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"53%\">\n" +
+"<p>Cannot add license as it is already added.</p>\n" +
+"</td></tr></table>\n" +
+"\n"+
+"</div>\n";
+
+var C35_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"troublepartition\"></a><span class=\"CHAPNUMBER\">35.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_dhed\"></a><a name=\"CHAPTER35.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting\n" +
+"Partition Issues</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Problematic partitions are labeled INSANE. There is no automatic\n" +
+"notification of INSANE partitions. Check the logs, AdminUI, or the\n" +
+"database manually. </p>\n" +
+"\n" +
+"<p>\n" +
+"INSANE data is not part of Measurement Type database view, therefore\n" +
+"data in an INSANE partition is not displayed in the AdminUI.</p>\n" +
+"\n" +
+"<p>\n" +
+"The user can suspect INSANE data, if:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">Data is loading and aggregating for all other measurement\n" +
+"types for the node.</li>\n" +
+"<li class=\"UNORD\">Data is loaded into the table but is not displayed in\n" +
+"AdminUI, for example, when the user selects <b>Show Aggregations</b>.</li>\n" +
+"<li class=\"UNORD\">The data in the partition is not displayed in the Measurement\n" +
+"Type database view.</li></ul>\n" +
+"<p>\n" +
+"There are various causes for insane data, such as:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">The partition contains data that does not meet the time\n" +
+"constraints set for that partition in the DWHPartition table.</li>\n" +
+"<li class=\"UNORD\">The column structure in the existing partition does\n" +
+"not equal the partition definition in the DWH Repository &ndash; DWHPartition,\n" +
+"DWHColumn, tables. There are various reasons for this:\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">Invalid data type</li>\n" +
+"<li class=\"UNORD\">Invalid column name</li>\n" +
+"<li class=\"UNORD\">Data size does not match</li>\n" +
+"<li class=\"UNORD\">Missing column</li></ul></li>\n" +
+"<li class=\"UNORD\">The partition does not have any limits (start and end\n" +
+"time) defined in the DWHPartition table.</li>\n" +
+"<li class=\"UNORD\">A new partition already contains data.</li>\n" +
+"<li class=\"UNORD\">SIMPLE partition type has an end date defined. The value\n" +
+"is null.</li></ul>\n" +
+"\n"+
+"</div>\n";
+
+var C35_5_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">35.5.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_d3qb\"></a><a name=\"CHAPTER35.5.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Solving Insane Partition Issues</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"There is no automatic recovery from an INSANE partition. The fix\n" +
+"for an INSANE partition depends on the cause of it.</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">If the partition has data in it that is older than the\n" +
+"start time or newer than the end time, move the data that is outside\n" +
+"the limits to the correct partition, if it is available.</li>\n" +
+"<li class=\"UNORD\">If the column structure does not match the partition\n" +
+"definition, that is, there is a column name mismatch between SYSCOLUMNS\n" +
+"and DWHCOLUMN.<p>\n" +
+"Following steps are executed as part of workaround:</p>\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">Login as dcuser.</li>\n" +
+"<li class=\"UNORD\">Login to repdb as dwhrep (Coordinator in Multi-Blade).<p>\n" +
+"<tt class=\"input\"><b>#iqisql -P<i class=\"var\">&lt;dwhrep_password&gt;</i> -Udwhrep -Srepdb\n" +
+"-w200000</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>1&gt;select * from DWHPARTITION where status='INSANE_AC'</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>2&gt;go</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">Capture the output in some file for future reference.</li>\n" +
+"<li class=\"UNORD\">Follow the steps to run the script:<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/sw/installer</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ./insane_WA.bsh</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">Run DWHM_INSTALL set from Adminui for the corresponding\n" +
+"TP.</li>\n" +
+"<li class=\"UNORD\">Login to repdb as dwhrep.<p>\n" +
+"<tt class=\"input\"><b>#iqisql -P<i class=\"var\">&lt;dwhrep_password&gt;</i> -Udwhrep -Srepdb\n" +
+"-w200000</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>1&gt; select * from DWHPARTITION where status='INSANE_AC'</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>2&gt;go</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">Compare the result with previous one and there shouldnot\n" +
+"be any INSANE partition.</li></ul></li></ul>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_6=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.6 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_rnc0\"></a><a name=\"CHAPTER35.6\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">General Single Blade Information</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To list ENIQ services that are running on a Single-Blade, execute\n" +
+"the following command as <tt class=\"file-path\">root</tt> user:</p>\n" +
+"\n" +
+"\n" +
+"<p>\n" +
+"For the single blade:</p><ul class=\"unoL\">\n" +
+"\n" +
+"<li class=\"UNORD\"><tt class=\"input\"><b># grep eniq_stats /eniq/admin/etc/smf_contract_config\n" +
+"|grep ENIQ |grep Y</b></tt></li></ul>\n" +
+"<p>\n" +
+" The following is the expected output of the command executed as <tt class=\"file-path\">root</tt> user:</p>\n" +
+"\n" +
+"<p>\n" +
+" <tt class=\"input\"><b># services -s eniq</b></tt></p>\n" +
+"\n" +
+"\n" +
+"<table frame=\"void\" class=\"tblcnt\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">UNIT</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">STATE</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-connectd.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-dwhdb.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-dwh_reader.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">failed</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-engine.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-esm.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-fls.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-licmgr.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-lwphelper.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-repdb.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-rmiregistry.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-scheduler.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-webserver.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr></table>\n" +
+"\n"+
+"</div>\n";
+
+var C35_7=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.7 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_24am\"></a><a name=\"CHAPTER35.7\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">General Multi-Blade Information</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To list ENIQ services running on any particular Blade, execute\n" +
+"the following command as <tt class=\"file-path\">root</tt> user:</p>\n" +
+"\n" +
+"\n" +
+"<p>\n" +
+"For the Coordinator Blade:</p><ul class=\"unoL\">\n" +
+"\n" +
+"<li class=\"UNORD\"><tt class=\"input\"><b># grep stats_coordinator /eniq/admin/etc/smf_contract_config\n" +
+"|grep ENIQ |grep Y</b></tt></li></ul>\n" +
+"\n" +
+"<p>\n" +
+"For the Engine Blade:</p><ul class=\"unoL\">\n" +
+"\n" +
+"<li class=\"UNORD\"><tt class=\"input\"><b># grep stats_engine /eniq/admin/etc/smf_contract_config\n" +
+"|grep ENIQ |grep Y</b></tt></li></ul>\n" +
+"\n" +
+"<p>\n" +
+"For the Reader Blade:</p><ul class=\"unoL\">\n" +
+"\n" +
+"<li class=\"UNORD\"><tt class=\"input\"><b># grep stats_iqr /eniq/admin/etc/smf_contract_config\n" +
+"|grep ENIQ |grep Y</b></tt></li></ul>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">dwh_reader_1</tt> is used by engine\n" +
+"as a writer. Thus, ENIQ Statistics Multi-Blade server has two reader\n" +
+"nodes (<tt class=\"file-path\">stats_iqr</tt>), the first of which is\n" +
+"referred to as the writer.</dd></dl><br />\n" +
+"<p>\n" +
+"While on the various Blades, the user sees varying output of the\n" +
+"command because of different services executing on a particular Blade.\n" +
+"The following is the expected output of the command executed as <tt class=\"file-path\">root</tt> user:</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b># services -s eniq</b></tt></p>\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">On the Coordinator Blade:\n" +
+"<table frame=\"void\" style=\"margin-top:4pt\" class=\"grd\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">UNIT</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">STATE</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-connectd.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-dwhdb.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-dwh_reader.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">failed</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-engine.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">failed</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-esm.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-fls.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">failed</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-licmgr.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-lwphelper.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">failed</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-repdb.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-rmiregistry.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-scheduler.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"61%\">\n" +
+"<p><tt class=\"output\">eniq-webserver.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"39%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr></table></li>\n" +
+"<li class=\"UNORD\">On the Engine Blade:\n" +
+"<table frame=\"void\" style=\"margin-top:4pt\" class=\"grd\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">UNIT</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">STATE</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-connectd.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-engine.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-esm.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-fls.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-lwphelper.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-rmiregistry.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-webserver.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr></table></li>\n" +
+"<li class=\"UNORD\">On the Reader Blade:\n" +
+"<table frame=\"void\" style=\"margin-top:4pt\" class=\"grd\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">UNIT</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">STATE</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-dwh_reader.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"59%\">\n" +
+"<p><tt class=\"output\">eniq-esm.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"41%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr></table></li></ul>\n" +
+"\n"+
+"</div>\n";
+
+var C35_7_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"Stopall\"></a><span class=\"CHAPNUMBER\">35.7.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"stopall\"></a><a name=\"CHAPTER35.7.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Stopping All Services\n" +
+"on All Blades</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To stop all services on all the four Blades, run the commands in\n" +
+"the following order: <br />Login as a <tt class=\"file-path\">root</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Reader_2</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader_1</li>\n" +
+"<li class=\"UNORD\">ENIQ Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Coordinator Server</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin </b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/bash ./manage_eniq_services.bsh -a stop\n" +
+"-s ALL</b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C35_7_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"startall\"></a><span class=\"CHAPNUMBER\">35.7.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_hzlo\"></a><a name=\"CHAPTER35.7.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Starting All\n" +
+"Services on All Blades</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To start all services on all the four Blades, run the commands\n" +
+"in the following order. <br />Login as a <tt class=\"file-path\">root</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader_1</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader_2</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/bash ./manage_eniq_services.bsh -a start\n" +
+"-s ALL</b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C35_7_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"restartall\"></a><span class=\"CHAPNUMBER\">35.7.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_j3el\"></a><a name=\"CHAPTER35.7.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Restarting\n" +
+"All Services on All Blades</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To restart all services on all the four Blades, run the commands\n" +
+"in the following order. <br />Login as a <tt class=\"file-path\">root</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Reader_2 Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader_1 Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Coordinator Server</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin </b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/bash ./manage_eniq_services.bsh -a stop\n" +
+"-s ALL</b></tt><p>\n" +
+"After all the services are stopped on all four Blades, the user\n" +
+"can start it as follows:</p>\n" +
+"<p>\n" +
+"Steps mentioned must be followed on all the four Blades in the\n" +
+"sequence to start services. <br />Log on as a <tt class=\"file-path\">root</tt>.</p>\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader_1 Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader_2 Server</li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/bash ./manage_eniq_services.bsh -a start\n" +
+"-s ALL</b></tt></li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_8=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"dwhdbclear\"></a><span class=\"CHAPNUMBER\">35.8 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_gnm0\"></a><a name=\"CHAPTER35.8\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Clearing Reader\n" +
+"Service in Failed state</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"In a Multi-Blade deployment, if the dwh_reader service is not shutdown\n" +
+"correctly and remains inactive for an extended period, SAP IQ excludes\n" +
+"the node from the multiplex, which results in the corresponding services\n" +
+"having state <tt class=\"file-path\">failed</tt>.</p>\n" +
+"\n" +
+"<p>\n" +
+"Log on to the <tt class=\"file-path\">dwhdb</tt> database and check\n" +
+"for nodes in the multiplex with status <tt class=\"file-path\">excluded</tt>: <br /><tt class=\"input\"><b>eniq_srv{dcuser} # <br />iqisql -U<i class=\"var\">&lt;database_username&gt;</i><br /> -P <i class=\"var\">&lt;database_password&gt;</i>-Sdwhdb  <br />1&gt; sp_iqmpxinfo <br />2&gt; go  </b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"Then change their status to <tt class=\"LITERALMONO\">included</tt> :<br /><tt class=\"input\"><b>1&gt; ALTER MULTIPLEX SERVER  <i class=\"var\">&lt;server name&gt;</i>STATUS INCLUDED <br />2&gt; go <br />Example: <br />1&gt; ALTER MULTIPLEX SERVER  dwh_reader_1\n" +
+"STATUS INCLUDED <br />2&gt; go </b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"Then verify that all nodes in the multiplex have a status <tt class=\"file-path\">included</tt>:<br /><tt class=\"input\"><b>eniq_srv{dcuser} #<br /> iqisql\n" +
+"-U <i class=\"var\">&lt;database_username&gt;</i> <br />-P <i class=\"var\">&lt;database_password&gt;</i>-Sdwhdb  <br />1&gt; sp_iqmpxinfo <br />2&gt; go  </b></tt> </p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_9=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.9 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_25rx\"></a><a name=\"CHAPTER35.9\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Monitoring ENIQ Statistics Services\n" +
+"using Systemd</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Log on as <tt class=\"file-path\">root</tt> user and run the following\n" +
+"command: <br /><tt class=\"input\"><b># services -s eniq</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"If any of the services are not active and must be restarted, proceed\n" +
+"with these steps:</p>\n" +
+"\n" +
+"<p>\n" +
+"To enable any ENIQ service, use the following command: <br /><tt class=\"input\"><b># /usr/bin/systemctl enable <i class=\"var\">&lt;service_name&gt;</i></b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"To disable any ENIQ service, use the following command: <br /><tt class=\"input\"><b># /usr/bin/systemctl disable <i class=\"var\">&lt;service_name&gt;</i></b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"If a service is in a failed state, it is necessary to clear the\n" +
+"service:<br /> <tt class=\"input\"><b># /usr/bin/systemctl reset-failed <i class=\"var\">&lt;service_name&gt;</i></b></tt></p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_10=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.10 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_taow\"></a><a name=\"CHAPTER35.10\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Engine Startup Hanging</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"In a Multi-Blade deployment, if the <tt class=\"file-path\">engine</tt> startup is hanging and services are running properly on other nodes,\n" +
+"run the following command on the <tt class=\"file-path\">engine</tt> node as user <tt class=\"file-path\">root</tt>: <br /><tt class=\"input\"><b># /usr/bin/bash\n" +
+"./manage_eniq_services.bsh -a restart -s ALL</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"If the command hangs, then manually disable the RMI registry service\n" +
+"and try again by executing these steps: <br /><tt class=\"input\"><b># systemctl disable\n" +
+"eniq-rmiregistry.service<br /># /usr/bin/bash ./manage_eniq_services.bsh\n" +
+"-a restart -s ALL</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"If the services on the other nodes have problems, then see <tt class=\"input\"><b>Section 19.4.3</b></tt> to restart all services on the Multi-Blade\n" +
+"servers.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>This is an option for troubleshooting the case of Engine\n" +
+"hanging (with no logging) when it is restarted.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C35_11=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.11 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_wv90\"></a><a name=\"CHAPTER35.11\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Rolling Snapshot Logs</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"There is an option to receive additional information to the rolling\n" +
+"snapshot logfile, this information records that the Rolling Snapshot\n" +
+"file indicator is <strong class=\"MEDEMPH\">not</strong> present on the system. To view\n" +
+"this information, enter the following command:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># touch /eniq/sw/conf/.debug_rollsnap</b></tt></p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_12=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.12 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_tgof\"></a><a name=\"CHAPTER35.12\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting Snapshot Failures</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"If your snapshot fails and if either of the error is displayed,\n" +
+"then follow steps 1 to 3 before retrying the snapshot again.</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\"><tt class=\"output\">ERROR : Could not backup repdb database</tt>.</li></ul>\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\"><tt class=\"output\">ERROR : Could not copy backup file /eniq/database/rep_main/repdb.log\n" +
+"to /eniq/backup/repdb_bkup/repdb1.log </tt></li></ul>\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\"><tt class=\"output\">ERROR : Could not copy backup file /eniq/database/rep_main/repdb.db\n" +
+"to /eniq/backup/repdb_bkup/repdb1.db</tt></li></ul>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>In a Multi-Blade deployment, run all commands on the <tt class=\"file-path\">coordinator</tt> Blade.</dd></dl><br />\n" +
+"<p>\n" +
+" Log on as <tt class=\"file-path\">root</tt> user and run the following\n" +
+"commands:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Check the available diskspace on the backup partition.<p>\n" +
+"<tt class=\"input\"><b>{root} #: df -k /eniq/backup/</b></tt></p>\n" +
+"<p>\n" +
+"Example output:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Filesystem 									kbytes   	used   	avail   	 capacity\n" +
+"  Mounted on</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">nas1:/vx/lte2979-backup  157286400  10832456 145310288\n" +
+" 7%  		/eniq/backup</tt></p>\n" +
+"<p>\n" +
+"Note the available diskspace (avail) of backup partition = _____\n" +
+"KB</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Calculate the size of <tt class=\"file-path\">repdb</tt> database.<p>\n" +
+"<tt class=\"input\"><b>(root) #: cd /eniq/database/rep_main</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>{root} #: echo `ls -l repdb.db repdb.log| awk '{sum = sum\n" +
+"+ $5} END {print sum}' ` / 1024 | bc</b></tt></p>\n" +
+"<p>\n" +
+"Example output:</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">1669764</tt></p>\n" +
+"<p>\n" +
+"Note the size of the <tt class=\"file-path\">repdb</tt> database\n" +
+"size = ______ KB</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Compare the size of <tt class=\"file-path\">repdb</tt> database\n" +
+"and amount of available diskspace on the backup partition.<p>\n" +
+"  If the size of <tt class=\"file-path\">repdb</tt> database is greater\n" +
+"than the available diskspace of backup partition, then perform 'step\n" +
+"a' or there might be some other issue and need to contact the next\n" +
+"level of support.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><strong class=\"MEDEMPH\">Perform the following during a Maintenance Window.\n" +
+"This procedure involves database downtime.</strong></dd></dl><br />\n" +
+"<ol type=\"a\">\n" +
+"\n" +
+"<li class=\"substep\">Truncate the database transaction log.\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>{root} #: bash /eniq/admin/bin/transaction_log_admin.bsh\n" +
+"-t repdb -R -l /eniq/local_logs/transaction_log_admin.txt -N</b></tt></p>\n" +
+"\n" +
+"</li>\n" +
+"</ol></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Verify the logs to ensure successful completion of step\n" +
+"3.1.<p>\n" +
+"Example output:</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\"> Checking for correct user and server type to exectue\n" +
+"script.<br />   =======&lt; 2014-02-18_08.39.29 - Starting ./transaction_log_admin.bsh\n" +
+"&gt;=====<br />  Getting an ordered list of server(s).<br /> Setting engine\n" +
+"to noloads and wating for execution slots to empty <br />Running engine\n" +
+"command for NoLoads locally<br /> 			 . <br /> 			 . 		<br />	 .  <br />		=======&lt; 2014-02-18_08.39.53 - Starting ENIQ services on atrcxb2332\n" +
+"&gt;=====<br />  2014-02-18_08.39.53 - Starting ENIQ service eniq-repdb <br />  ENIQ services started correctly on atrcxb2332<br />  Setting engine\n" +
+"to original profile.<br /> Running engine command for Normal locally <br />Oracle Corporation      SunOS 5.10      Generic Patch   January\n" +
+"2005 <br />Changing profile to: Normal <br />Change profile requested\n" +
+"successfully<br /> Tidying up old logs.<br /><br />   ======&lt; 2014-02-18_08.40.00\n" +
+"- Finishing ./transaction_log_admin.bsh &gt;=====</tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>After successful completion of the steps, there is free space\n" +
+"available for snapshot to proceed.</dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C35_13=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.13 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_2lkh\"></a><a name=\"CHAPTER35.13\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Deletion of Tech Pack</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"For Tech Pack installed in ENIQ which does not have an active node\n" +
+"configured in the server, the following feature is provided to remove\n" +
+"them, so that upgrade times are not affected.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">It is assumed that the deleted Tech Pack is not selected\n" +
+"during subsequent upgrades (if the node remains not configured in\n" +
+"the network).</li>\n" +
+"<li class=\"UNORD\">Solutions for ERBS nodes (DC_E_ERBS and DC_E_ERBSG2)\n" +
+"and RBS nodes (DC_E_RBS and DC_E_RBSG2) are based on a combined view/universe\n" +
+"solution. If user is deleting node of either ERBS or RBS, then the\n" +
+"other node should also be deleted for the same.<p>\n" +
+"<strong class=\"MEDEMPH\">Example -</strong> if user is deleting DC_E_ERBS then DC_E_ERBSG2\n" +
+"shouldalso be deleted.</p>\n" +
+"</li></ul></dd></dl><br />\n" +
+"<p>\n" +
+"To perform Tech Pack deletion, run these commands as user <tt class=\"file-path\">dcuser</tt> on the following server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (standalone)</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator</li></ul>\n" +
+"<p>\n" +
+"To delete a Tech Pack from ENIQ follow these steps:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">Login to server as <tt class=\"file-path\">dcuser</tt> with SSH</li>\n" +
+"<li class=\"UNORD\">Go to the following path:<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/sw/installer/</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">Run the following script:<p>\n" +
+"<tt class=\"input\"><b># ./remove_techpack.bsh <i class=\"var\">&lt;Techpack_Name&gt;</i></b></tt></p>\n" +
+"<p>\n" +
+"<strong class=\"MEDEMPH\">Example -</strong></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ./remove_techpack.bsh DC_E_ERBS</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">If the Tech Pack has some dependent Tech Packs, then\n" +
+"a confirmation message is shown to the user:<p>\n" +
+"<strong class=\"MEDEMPH\">Example -</strong></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Below Techpacks are dependent on DC_E_ERBS -</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">'DC_E_FFAX:((27))'</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">'DC_E_ERBSG2:((43))'</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Are you sure you want to continue? (Y/N)</tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">According to response of the user, the script continues\n" +
+"further or exits.</li>\n" +
+"<li class=\"UNORD\">Before deleting any data, user is asked for a final\n" +
+"confirmation and the information which is going to be deleted is displayed:<p>\n" +
+"<strong class=\"MEDEMPH\">Example -</strong></p>\n" +
+"<p>\n" +
+"The following data is deleted:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">1.	All DC/DIM/VECTOR tables and views created as part of\n" +
+"Techpack</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">2.	All the metadata from REPDB related to Techpack</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">3.	Universe folder from the server</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">For more details about which all tables will be dropped\n" +
+"see the below files-</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">/eniq/sw/installer/DIM_E_ERBS.csv</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">/eniq/sw/installer/DC_E_ERBS_VIEW.csv</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">/eniq/sw/installer/DC_E_ERBS.csv</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">/eniq/sw/installer/DIM_E_ERBS_V.csv</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">/eniq/sw/installer/DC_E_ERBS_VIEW_EXT.csv</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Changes are permanent and cannot be undone.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Please confirm removal of Techpack DC_E_ERBS from ENIQ</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Are you sure you want to continue? (Y/N)</tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">According to the response of the user, script continues\n" +
+"further or exits.</li>\n" +
+"<li class=\"UNORD\">Log file path: <tt class=\"file-path\">/eniq/log/sw_log/tp_installer/remove_techpack_&lt;Techpach_Name&gt;.log</tt><p>\n" +
+"<strong class=\"MEDEMPH\">Example -</strong> <tt class=\"file-path\">/eniq/log/sw_log/tp_installer/remove_techpack_DC_E_ERBS.log</tt></p>\n" +
+"</li></ul>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">This script is only for deleting the PM Tech Packs which\n" +
+"are installed unintentionally in the server.</li>\n" +
+"<li class=\"UNORD\">The Tech Pack is not deleted if it has any data in <tt class=\"file-path\">dwhdb</tt> tables.</li>\n" +
+"<li class=\"UNORD\">If a user has deleted any Tech Pack, then the report\n" +
+"and universe, if present in the BO server for that particular Tech\n" +
+"Pack, will not work.</li>\n" +
+"<li class=\"UNORD\">After successful deletion of Tech Pack, Restart all\n" +
+"the ENIQ services to update the Cache. See <a href='javascript:parent.parent.parent.showAnchor(\"restartEniqServices\")' class=\"xref\">Section  13.7</a>.</li></ul></dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C35_14=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.14 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_5mh1\"></a><a name=\"CHAPTER35.14\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting Maximum Session\n" +
+"Exceeded Warning</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"If the maximum session limit for any user exceeds, then the user\n" +
+"will not be able to login.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><p align=\"left\" class=\"image\"><a title=\"Click to zoom and pan\" name=\"FIGURE54\" class=\"ovl\" onclick=\"ovl(this)\"><img src=\"9_1543-CSA11363_1Uen.BF-session.PNG.png\" border=\"0\" width=\"711\" height=\"169\" class=\"tab0\" /></a></p><p align=\"left\"><i>Figure 54 &nbsp; Maximum Session Limit</i></p></div>\n" +
+"<p>\n" +
+"Create a new user. To create new user, see <em class=\"LOWEMPH\">Adding\n" +
+"New AdminUI Users</em>, <a href='javascript:parent.parent.parent.showAnchor(\"AddingNewAdminUIUsers\")' class=\"xref\">Section  5.15</a>.</p>\n" +
+"\n" +
+"<p>\n" +
+"However, the number of sessions for the same user can be increased.\n" +
+"See <em class=\"LOWEMPH\">Configure Number of Sessions Per User</em>, <a href='javascript:parent.parent.parent.showAnchor(\"ConfigureNumberofSessionsPerUser\")' class=\"xref\">Section  5.16</a>, to increase the number\n" +
+"of sessions.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C35_15=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.15 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_yz1v\"></a><a name=\"CHAPTER35.15\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Deletion of Corrupted Snapshot</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"If the cleanup log (/eniq/local_logs/rolling_snapshot_logs/clean_roll_snap.log)\n" +
+"shows the following error:</p>\n" +
+"\n" +
+"<p><tt class=\"output\">Rolling snapshot cleanup started at 2019-03-10_11.03.56<br />Deleting NAS snapshots with tag \"snss1\"<br />Checking for NAS snapshots\n" +
+"with label \"snss1\"<br />Deleting NAS snapshots with label \"snss1\"<br />Failed to delete NAS snapshots with label \"snss1\"<br /></tt></p>\n" +
+"<p>\n" +
+"Then run the NAS audit report and check the report.</p>\n" +
+"\n" +
+"<p>\n" +
+"If any error is reported for the snapshot of NAS filesystem, then\n" +
+"run the following commands as root user on the following server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Login to NAS from ENIQ using the following command:<pre class=\"prencd\"># ssh master@nasconsole</pre><p></p><dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Enter the password when prompted.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">List the snapshots:<pre class=\"prencd\">storage rollback list</pre><p></p></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Delete the corrupted snapshot:<pre class=\"prencd\">storage rollback destroy &lt;snapshot name&gt; &lt;filesystem name&gt;</pre><p></p><p>\n" +
+"Where <tt class=\"file-path\">&lt;snapshot name&gt;</tt> refers to the\n" +
+"name of the corrupted NAS snapshot and <tt class=\"file-path\">&lt;filesystem\n" +
+"name&gt;</tt> refers to the file system for which the snapshot\n" +
+"is corrupted.</p>\n" +
+"</li></ol>\n" +
+"<div class=\"example\" style=\"margin-top: 12pt\"><p><i>Example 15 &nbsp; </i></p><pre class=\"prencd\">storage rollback destroy  ev2961-etldata_-03-test ev2961-etldata_-03 </pre></div>\n" +
+"\n"+
+"</div>\n";
+
+var C35_16=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.16 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_xnpy\"></a><a name=\"CHAPTER35.16\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Server Hang Issue at GRUB Level</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"When the server hangs at GRUB level during reboot, while performing\n" +
+"ENIQ II or migration or upgrade or restore or reboot (for OS pickup),\n" +
+"the following screen is displayed.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><p align=\"left\" class=\"image\"><a title=\"Click to zoom and pan\" name=\"FIGURE55\" class=\"ovl\" onclick=\"ovl(this)\"><img src=\"9_1543-CSA11363_1Uen.BF-Server_Hang_Issue.png.png\" border=\"0\" width=\"502\" height=\"226\" class=\"tab0\" /></a></p><p align=\"left\"><i>Figure 55 &nbsp; Server Hang Issue</i></p></div>\n" +
+"<p>\n" +
+"In this scenario, press ENTER to pick up the OS and move forward\n" +
+"to next step.</p>\n" +
+"\n" +
+"<p>\n" +
+"To handle the server hanging issue for future occurrences, execute\n" +
+"the following command after the server is up. This prevents the server\n" +
+"from hanging at GRUB level.</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b>(root)# grub2-set-default 0</b></tt></p>\n" +
+"<p><tt class=\"input\"><b>(root)# grub2-mkconfig -o /boot/grub2/grub.cfg </b></tt></p>\n" +
+"\n"+
+"</div>\n";
+
+var C35_17=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">35.17 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_kmac\"></a><a name=\"CHAPTER35.17\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Verify SSH Connectivity to NAS\n" +
+"Nodes</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"This section describes to verify the passwordless connectivity\n" +
+"from ENIQ-S to the NAS nodes (Node1 and Node2).</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Log on to the following servers as root user:\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ-S Standalone Server</li>\n" +
+"<li class=\"UNORD\">ENIQ-S Multi-Blade - Coordinator, Engine, Reader1, and\n" +
+"Reader2 Servers</li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Switch to the user storadm using the command:<p>\n" +
+"<tt class=\"input\"><b>#su - storadm</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Run the following commands on ENIQ-S server as root user\n" +
+"to verify the passwordless SSH connectivity to NAS nodes:<p>\n" +
+"<tt class=\"input\"><b>#ssh support@nasconsole</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>#ssh master@nasconsole</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>#ssh support@&lt;NASNode1_PhysicalIp&gt;</b></tt> </p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>#ssh master@&lt;NASNode1_PhysicalIp&gt;</b></tt> </p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>#ssh support@&lt;NASNode2_PhysicalIp&gt;</b></tt> </p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>#ssh master@&lt;NASNode2_PhysicalIp&gt;</b></tt></p>\n" +
+"<p>\n" +
+"If the password prompt appears, then manually end the session by\n" +
+"pressing Ctrl +C and continue Step 4.</p>\n" +
+"<p>\n" +
+"If the password prompt does not appear, then no further action\n" +
+"is required.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Execute the <tt class=\"file-path\">setup_ssh_FileStore.sh</tt> script to establish passwordless connection from ENIQ_S to NAS. <dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>If rolling snapshot is in progress, <tt class=\"file-path\">setup_ssh_FileStore.sh</tt> must not be executed. Check the cronjob entries by executing <tt class=\"file-path\">crontab -l</tt> command.\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">If server is Node hardened, go to the path:<p>\n" +
+"<tt class=\"input\"><b>{root} #: cd /ericsson/storage/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>{root} #: ./setup_ssh_FileStore.sh /eniq/installation/config/ssh_input_file</b></tt></p>\n" +
+"<p>\n" +
+"Ensure that passwordless connection is established from ENIQ to\n" +
+"NAS. See Step 3. </p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\">If server is not Node hardened, go to the path:<p>\n" +
+"<tt class=\"input\"><b>{root} #: cd /ericsson/storage/bin/ </b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>{root} #: ./setup_ssh_FileStore.sh /ericsson/storage/etc/ssh_input_file</b></tt></p>\n" +
+"<p>\n" +
+"Ensure that passwordless connection is established from ENIQ to\n" +
+"NAS. See Step 3.</p>\n" +
+"</li></ul></dd></dl><br /></li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

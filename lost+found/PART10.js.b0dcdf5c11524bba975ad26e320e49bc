@@ -1,0 +1,75 @@
+var C10=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">10 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_4fxr\"></a><a name=\"CHAPTER10\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Managing ENIQ Mounts</a></span></h1>\n" +
+"\n"+
+"</div>\n";
+
+var C10_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">10.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_og34\"></a><a name=\"CHAPTER10.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Updating Current Mounted Filesystems</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"It is possible to update ENIQ so that it mounts different filesystems\n" +
+"on the OSS. This enables administrators to mount up different network\n" +
+"types and parse the data, without stopping the normal operation of\n" +
+"the ENIQ.</p>\n" +
+"\n" +
+"<p>\n" +
+"To update the filesystems that ENIQ mounts, complete the following\n" +
+"steps as <tt class=\"file-path\">root</tt> user.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/connectd/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_mountpoints.bsh -a update -o <i class=\"var\">&lt;eniq_oss_alias&gt;</i> [-l <i class=\"var\">&lt;path_to_logfile&gt;</i>]</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Select which filesystem or filesystems to mount from the\n" +
+"displayed options:<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The list is an example depending on the installation type\n" +
+"(Rack or Blade). The displayed file systems are in a different format.</dd></dl><br /><p>\n" +
+"<tt class=\"LITERALMONO\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Description &nbsp; &nbsp; &nbsp;Filesystem</tt><br />\n" +
+"<tt class=\"LITERALMONO\">[1] &nbsp; &nbsp; &nbsp;NWS_SGw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/ossrc/data/sgw/sgwcg &nbsp; &nbsp; &nbsp; (*)</tt><br />\n" +
+"<tt class=\"LITERALMONO\">[2] &nbsp; &nbsp; &nbsp;NWS_PDM &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/ossrc/ericsson</tt><br />\n" +
+"<tt class=\"LITERALMONO\">[3] &nbsp; &nbsp; &nbsp;NWS_PMS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/ossrc/data/pms/segment1</tt><br />\n" +
+"<tt class=\"LITERALMONO\">[4] &nbsp; &nbsp; &nbsp;EBA_EBSS &nbsp; &nbsp; &nbsp; &nbsp; /ossrc/data/eba/eba_ebss</tt><br />\n" +
+"<tt class=\"LITERALMONO\">[5] &nbsp; &nbsp; &nbsp;EBA_EBSW &nbsp; &nbsp; &nbsp; &nbsp; /ossrc/data/eba/eba_ebsw</tt><br />\n" +
+"<tt class=\"LITERALMONO\">[6] &nbsp; &nbsp; &nbsp;EBA_EBSG &nbsp; &nbsp; &nbsp; &nbsp; /ossrc/data/eba/eba_rsdm</tt><br />\n" +
+"<tt class=\"LITERALMONO\"></tt><br />\n" +
+"<tt class=\"LITERALMONO\">(*) indicates the filesystem is already mounted</tt><br />\n" +
+"<tt class=\"LITERALMONO\">Already mounted filesystems will be unmounted if not re-selected</tt><br />\n" +
+"<tt class=\"LITERALMONO\"></tt><br />\n" +
+"<tt class=\"LITERALMONO\">Select range of filesystems you wish to mount [n,n-n,n...n]</tt><br />\n" +
+"<tt class=\"LITERALMONO\">&nbsp; &nbsp; &nbsp; &nbsp; E.G. 1,3-5,6</tt></p>\n" +
+"<p>\n" +
+"Select '<tt class=\"input\"><b>Y</b></tt>' or '<tt class=\"input\"><b>y</b></tt>' on the confirmation\n" +
+"screen.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">To check if the new filesystems are mounted, monitor the\n" +
+"logs stored in <tt class=\"file-path\">/eniq/local_logs/connectd/</tt>.</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C10_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">10.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_foq0\"></a><a name=\"CHAPTER10.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Managing Mount System</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The default mount system of the ENIQ mounts the OSS filesystems\n" +
+"directly through NFS. However, it is possible to change this setup\n" +
+"and mount through <em class=\"LOWEMPH\">ssh</em> tunnel. This scenario\n" +
+"gives increased security to the data as it is encrypted, but the amount\n" +
+"of WRAN data collected is limited. </p>\n" +
+"\n" +
+"<p>\n" +
+"To enable the <em class=\"LOWEMPH\">ssh</em> tunnel for a particular\n" +
+"OSS, complete these steps as <tt class=\"file-path\">root</tt> user:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/connectd/mount_info/</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/touch &lt;eniq_oss_alias&gt;/disable_OSS</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Wait for the system to unmount the filesystems before\n" +
+"continuing.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/touch &lt;eniq_oss_alias&gt;/use_tunnel</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/rm &lt;eniq_oss_alias&gt;/disable_OSS</b></tt></li></ol>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For Blade and Multi-Blade deployments, see <a href='javascript:parent.parent.parent.showAnchor(\"ConnectdMonitor\")' class=\"xref\">Section  27</a> for information on how the OSS is mounted.</dd></dl><br />\n" +
+"<p>\n" +
+"To disable <em class=\"LOWEMPH\">ssh</em> tunnel for a particular\n" +
+"OSS, complete these steps as <tt class=\"file-path\">root</tt> user:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/connectd/mount_info/</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/touch &lt;eniq_oss_alias&gt;/disable_OSS</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Wait for the system to unmount the filesystems before\n" +
+"continuing.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/rm &lt;eniq_oss_alias&gt;/use_tunnel</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/rm &lt;eniq_oss_alias&gt;/disable_OSS</b></tt></li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

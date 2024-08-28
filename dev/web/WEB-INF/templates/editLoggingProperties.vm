@@ -1,0 +1,167 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: Logging Configuration</title>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form method=post action="$req.getContextPath()/servlet/EditLogging">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href=EditLogging>Logging Configuration</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table class="myt" style="width:550;">
+<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Logging levels can be changed for engine, scheduler and for all packages. Default logging level defines level for logging if logging level for package is not defined. 
+			<br><br>
+			<font color="red"><b>Note!</font> If there is no need for more information about packages logging level should be INFO.</b>
+			<br><br>
+			</font>
+		</td>
+</table>
+
+#if ($errorMessage && $errorMessage != "")
+<table class="myt" style="width:650;">
+<tr>
+       <td  class="error1">$errorMessage</td>
+<tr>
+</table>
+#end
+<br>
+
+<table border="1">
+
+	<tr>
+		<td width="200" class="basichdr">&nbsp;</td>
+		<td class="basichdr">log level</td>
+	</tr>
+
+	<tr>
+		<td class="basic">Default logging</td>
+		<td>
+		   <select name="defLevel" style="font-size: 9;">
+			#foreach ($set in $defLogLevels)
+				#if ($set == $defLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+
+	<tr>
+		<td class="basic">Engine logging</td>
+		<td>
+		   <select name="engLevel" style="font-size: 9;">
+			#foreach ($set in $logLevels)
+				#if ($set == $engLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+
+	<tr>
+		<td class="basic">PriorityQueue logging</td>
+		<td>
+		   <select name="priorityQueueLevel" style="font-size: 9;">
+			#foreach ($set in $logLevels)
+				#if ($set == $priorityQueueLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+
+	<tr>
+		<td class="basic">Scheduler logging</td>
+		<td>
+		   <select name="schLevel" style="font-size: 9;">
+			#foreach ($set in $logLevels)
+				#if ($set == $schLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="basic">Licensing logging</td>
+		<td>
+		   <select name="licLevel" style="font-size: 9;">
+			#foreach ($set in $logLevels)
+				#if ($set == $licLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="basic">Performance logging</td>
+		<td>
+		   <select name="perfLevel" style="font-size: 9;">
+		    <option value=""></option>
+			#foreach ($set in $logLevels)
+				#if ($set == $perfLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+     
+</table>
+<br>
+<table border="1">	
+	
+	<tr>
+		<td  width="200" class="basichdr">Package name</td>
+		<td class="basichdr">log level</td>
+	</tr>
+
+	#foreach ($set in $meatypeLevels)
+	<tr>
+		<td class="basic">$set.get(0)</td>
+		<td>
+			<select name="logLevel:$set.get(0)" style="font-size: 9;">
+				<option value=""></option>
+				#foreach ($level in $logLevels)					
+					#if ($level == $set.get(1)) 
+					<option selected value="$set.get(1)">$set.get(1)</option>
+					#else
+					<option value="$level">$level</option> 
+					#end
+				#end
+			</select>
+		</td>
+	</tr>
+	#end	
+</table>
+<br>
+<input type="submit" name="save" value="Save changes">
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+</html>

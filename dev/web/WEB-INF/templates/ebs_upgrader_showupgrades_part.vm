@@ -1,0 +1,84 @@
+##This file contains a form that shows upgrade information
+
+#if( $upgradelist.size()>0 )
+<p>Configured EBS Upgrades</p>
+<table border="0" cellspacing="10" cellpadding="0">
+      <tr>
+      
+        <th align="left">Number</th>
+        <th align="left">Upgrade/Tech Pack</th>
+        <th align="left">Status</th>
+        <th align="left">Actions</th>
+        <th align="left">Details</td>
+        
+        ##Disable multi execution
+        ##set ( $isRunning = $oneSetIsRunning )
+        #foreach( $upgrade in $upgradelist )
+          ##Initialize isRunning for each set
+          #set ( $isRunning = 'false' )
+          #set ( $isDetailsAvailable = 'true' )
+          
+          <tr>
+          <td align="left" valign="top">$velocityCount</td>
+          <td align="left" valign="top">$upgrade.getId()</td>
+          
+          <td align="left" valign="top">
+            <i>
+            #if( $upgrade.getStatus() == 'EMPTY' )
+               #set ( $isDetailsAvailable = 'false' )
+              Not running (Previous status not available)
+            #elseif ( $upgrade.getStatus() == '' )
+              #set( $isRunning = 'true' )
+              Running...
+            #elseif ( $upgrade.getStatus() == 'alreadyrunning' )
+              Already running....
+            #elseif ( $upgrade.getStatus() == 'started' )
+              Started and running...
+            #elseif ( $upgrade.getStatus() == 'succeeded' )
+              Not running (Previous run finished successfully)
+            #elseif ( $upgrade.getStatus() == 'dropped' )
+              Not running (dropped)
+            #elseif ( $upgrade.getStatus() == 'failed' )
+              Not running (Failed to run. See logs for more details)
+            #else
+              Not running (Status = $upgrade.getStatus() ) 
+            #end
+            <i>
+          </td>
+          
+          <td align="left" valign="middle">
+           #if( $upgrade.isAvailable() ) 
+           <form autocomplete="off" action="$servletPath/EbsUpgradeManager" method="post">
+            <input type="hidden" name="action" value="action_run_upgrade" />
+            <input type="hidden" name="upgradeId" value="$upgrade.getId()" />
+            #if( $isRunning == 'true' )
+            <input type="submit" disabled="disabled" value="Upgrade now!"/>
+            #else
+            <input type="submit" value="Upgrade now!"/>
+            #end
+           </form> 
+           #else
+            <p><i>Not available</i></p>
+           #end 
+          </td>
+           
+          <td align="left" valign="middle">
+          
+          <form action="$servletPath/EbsUpgradeManager" method="post">
+            <input type="hidden" name="action" value="action_get_details" />
+            <input type="hidden" name="upgradeId" value="$upgrade.getId()" />
+             #if( $isDetailsAvailable == 'true' )
+                <input type="submit" value="Details"/>
+             #else
+                <input type="submit" disabled="disabled" value="Details" />
+             #end
+           </form>
+           
+          </td> 
+         
+        </tr>
+      #end
+  </table>      
+ #else
+   <p>No upgrades configured.</p>
+ #end

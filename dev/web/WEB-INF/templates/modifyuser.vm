@@ -1,0 +1,274 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css"> 
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: User Administration :: Modify User</title>
+        <script type="text/javascript" src="../javascript/userValidation.js">
+ </script>
+<script language="JavaScript">
+
+        if(!('${notification}'=='' || '${notification}'==' ')) {
+          alert('${notification}');
+ 	} 
+ function Validator()
+ {
+	var numb = '0123456789';
+	var lwr = 'abcdefghijklmnopqrstuvwxyz';
+	var upr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	var specialCharacter= '£()-_><@#$%^&=+-%';
+   		var error=" ";
+
+	  if(ModifyUser.First_Name.value !="")
+        {
+		  if(maxLength(ModifyUser.First_Name.value,25))
+		  {
+		       error+="First Name can only be "+25+" characters in length \n "; 
+		  }
+		                          if (!validateCharsWithSpace(ModifyUser.First_Name.value)) {
+		                              error += " First Name contains invalid charatcers \n ";
+		                          }
+
+         }
+        else
+            {
+                 error+="Please fill in the First Name \n";
+            }
+	  
+  	if (ModifyUser.Last_Name.value !="")
+    {
+	    if(maxLength(ModifyUser.Last_Name.value,25))
+	     {
+		      error+=" Last Name can only be "+25+" characters in length \n "; 
+	     }
+	                             if (!validateCharsWithSpace(ModifyUser.Last_Name.value)) {
+	                                 error += " Last Name contains invalid charatcers \n ";
+	                             }
+
+	
+    } 
+       else
+       {
+      error += " Please fill in a Last Name.\n";
+  
+       }
+  
+    
+	if (ModifyUser.Password.value !="")
+    {
+  		if(maxLength(ModifyUser.Password.value,255))
+   		 {
+	      		error+=" Password can only be "+255+" characters in length \n "; 
+	      }
+    
+	                        if (!validatePwd(ModifyUser.Password.value)) {
+	                           
+	                           error += " Password should have a upper case letter, number and minimum length of 8 \n ";
+	                        }
+
+   }
+  else
+  {
+  error += " Please fill in a Password.\n";
+  }
+  
+  if (ModifyUser.Confirm.value !="")
+  {
+   if(maxLength(ModifyUser.Confirm.value,25))
+    {
+	      error+=" Confirm Password can only be "+25+" characters in length \n "; 
+    }
+
+  }
+  else
+  {
+    
+    error += " Please fill in Confirm Password.\n";
+	
+  } 
+
+  if (ModifyUser.Password.value != ModifyUser.Confirm.value)
+  {
+  
+    error += " Password and Confirm Password are not same.\n";
+	
+  } 
+
+  if(ModifyUser.Email.value!="")
+                    {
+                    
+                        if (maxLength(ModifyUser.Email.value, 50))
+                         {
+                            error += " Email can only be " + 50 + " characters in length \n ";
+                        }
+                        if (!emailCheck(ModifyUser.Email.value)) 
+                        {
+                            error += " Not a valid email address \n ";
+                        }
+                    
+                    }
+
+    
+  if(maxLength(ModifyUser.Phone.value,20))
+    {
+	      error+=" Phone can only be "+20+" characters in length \n "; 
+    }
+   if(!isInteger(ModifyUser.Phone.value,numb))
+	{
+	      error+=" Not a valid phone number \n "; 
+
+	}
+   
+
+    if(maxLength(ModifyUser.Organization.value,30))
+    {
+	      error+=" Organization can only be "+30+" characters in length \n "; 
+    }
+   
+   
+	if(error!=" ")
+	{
+		alert(error);
+		return false;
+	}
+	
+	return true;
+	
+}
+
+ 
+function clickclear(box,defaulttext) {
+ 
+ if(box.name=="Password"){
+ 	if (ModifyUser.Password.value == defaulttext) {
+ 
+ 		ModifyUser.Password.value ="";
+  		ModifyUser.Confirm.value ="";
+  		
+ 	}
+ }else if(box.name=="Confirm"){
+ 	if (ModifyUser.Confirm.value == defaulttext) {
+ 
+ 		ModifyUser.Password.value ="";
+  		ModifyUser.Confirm.value ="";
+  		
+ 	}
+ }
+ 
+} 
+
+</script>
+
+</head>
+
+#set($modifySubmitted = "")
+#set($flag ="false")
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">User Administration&nbsp;&gt;&gt;&nbsp;<a href="$req.getContextPath()/servlet/UserManagement">User Management</a>&nbsp;&gt;&gt;&nbsp;Modify User</font>
+<hr />
+	<font size="1" face="Verdana, Helvetica, Arial">You can modify the following fields<br /><br />
+
+</font>
+
+<br>
+	
+<FORM name="ModifyUser" METHOD=POST ACTION="$req.getContextPath()/servlet/UserManagement?action=modifyuser"  onSubmit="return Validator(this);">
+
+<table style="border:1px solid #B3B3FF;">
+<td><input name="modifySubmitted" type="hidden" id="hidden" size="20" maxlength="30" value="$modifySubmitted"></td>
+#foreach( $entry in $listOfUserAttributeValues )
+<td><input name="uid" type="hidden" id="hidden" size="20" maxlength="30" value="$entry.uid">
+
+</td>
+
+                            <tr>
+                                <td class="basic">
+                                    Roles*
+                                </td>
+                                <td>
+                                    <select MULTIPLE name="Account_Type" id="Account_Type" style="font-size: 10;" size="3">
+						
+							
+							#foreach( $entry in $listOfRoles )
+								#set($flag ="false")
+								#foreach( $role in $listUserRolesfromLdap )
+								  #if($role==$entry.roles)
+				    					<option value="$entry.roles" selected="true">$entry.roles</option>
+				    					#set($flag ="true")
+				    				  #end      
+				    				#end	
+				    				
+				    				 #if ($flag=='false')	
+								    <option value="$entry.roles">$entry.roles</option>
+				    				 #end 
+				    			#end
+				    		
+				    /select>
+                                </td>
+                            </tr>
+<tr>
+<td class="basic">First Name*</td>
+<td><input name="First_Name" type="text" id="First_Name" size="20" maxlength="40" value= "$entry.givenname"></td>
+</tr>
+
+<tr>
+<td class="basic">Last Name*</td>
+<td><input name="Last_Name" type="text" id="Last_Name" size="20" maxlength="40" value= "$entry.sn"></td>
+</tr>
+<tr>
+<td class="basic">Password*</td>
+<td>
+<input name="pwdOld" type="hidden" id="pwdOld" size="20" maxlength="30" value="$entry.userPassword">
+<input name="Password" type="password" id="Password" size="20" maxlength="30" value= "$entry.userPassword" onKeyPress="clickclear(this,'$entry.userPassword')"></td>
+</tr>
+<tr>
+<td class="basic">Confirm*</td>
+<td><input name="Confirm" type="password" id="Confirm" size="20" maxlength="30" value= "$entry.userPassword" onKeyPress="clickclear(this,'$entry.userPassword')"></td>
+</tr>
+<tr>
+<td class="basic">Email</td>
+<td><input name="Email" type="text" id="Email" size="20" maxlength="60" value= "$entry.mail"></td>
+</tr>
+<tr>
+<td class="basic">Phone</td>
+<td><input name="Phone" type="text" id="Phone" size="20" maxlength="30" value= "$entry.telephoneNumber"></td>
+</tr>
+<tr>
+<td class="basic">Organization</td>
+<td><input name="Organization" type="text" id="Organization" size="20" maxlength="50" value="$entry.o"></td>
+</tr>
+<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+<tr>
+    <td class="basic" colspan="2">
+	* indicates mandatory input 
+    </td>
+</tr>
+<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+</table>
+<table border="0">
+    <tr>
+	<td>
+	    <input type="submit" name="Submit" value="Submit" style="font-size: 11;">
+	</td>
+	<td>
+	    <input name="Cancel" type="button" id="Cancel" value="Cancel" style="font-size: 11;" onClick="submitForm(eval('ModifyUser'),'$servletPath/UserManagement')">
+	</td>                         
+    </tr>
+
+</table>
+<table style="width: 600px; height: 29px;" border="0" cellpadding="1" cellspacing="2">
+	<tr><td><font size="1" face="Verdana, Helvetica, Arial"></font></td></tr>
+</table>
+</FORM>
+ #end
+#parse( "footer.vm" )
+</body>
+</html>

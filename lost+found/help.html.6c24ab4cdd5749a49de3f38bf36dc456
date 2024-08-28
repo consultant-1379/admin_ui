@@ -1,0 +1,1072 @@
+<html>
+<head>
+<title>Help: Ericsson Network IQ Security Admin Guide</title>
+<script type="text/javascript" language="JavaScript">
+<!--
+   var newText="";
+   var BrowserType = parent.BrowserType;
+   AF = new Image (16,16);
+   AF.src = "AF.gif";
+   BF = new Image (16,16);
+   BF.src = "BF.gif";
+   CF = new Image (16,16);
+   CF.src = "CF.gif";
+   DF = new Image (16,16);
+   DF.src = "DF.gif";
+   CL = new Image (16,16);
+   CL.src = "CL.gif";
+   CLM = new Image (16,16);
+   CLM.src = "CLM.gif";
+   CLP = new Image (16,16);
+   CLP.src = "CLP.gif";
+   CT = new Image (16,16);
+   CT.src = "CT.gif";
+   CTM = new Image (16,16);
+   CTM.src = "CTM.gif";
+   CTP = new Image (16,16);
+   CTP.src = "CTP.gif";
+   LI = new Image (16,16);
+   LI.src = "LI.gif";
+   BL = new Image (16,16);
+   BL.src = "BL.gif";
+
+   var searchAnchor = new Array();
+
+   var fwHistArray = new Array();			// Forward History array
+   var fwTop = 0;
+
+   function goBack() {
+     if(hlexmain.hlexdummy.hlexdoc) {
+       if(hlexmain.histArray.length > 1) {
+         // TR 3319 Problem with THS Back button when scaled Image is clicked
+         if(hlexmain.hlexdummy.hlexdoc.isHelp || (hlexmain.isScalled == 1)) {
+           hlexmain.isScalled = 0
+           var chap = peek();
+           push(chap);
+           writeChap(chap, true, true);
+         } else {
+   	 fwTop++;
+            fwHistArray[fwTop] = hlexmain.histArray[hlexmain.histArray.length-1]; // Added for Forward Button
+            writeChap(pop(), true, true);
+         }
+        }
+       }
+     }
+
+   // Begin(jawamra): Forward Button
+
+   function goForward() {
+     	if(fwTop > 0)
+     	{
+              writeChap(fwHistArray[fwTop], false, true);
+          	   fwTop--;
+     	}
+   }
+
+   // End: Forward Button
+
+   function printDocument() {
+     if (navigator.appVersion.indexOf('MSIE 4') == -1) {
+       if(hlexmain.hlexdummy.hlexdoc && hlextbar.isPDFView) {
+         hlexmain.hlexdummy.hlexdoc.focus();
+         hlexmain.hlexdummy.hlexdoc.print();
+       }
+       else
+       alert("The toolbar print function does not work with PDF-document. \nPlease use the plug-in's own print function.");
+     } else
+       alert("The toolbar print function does not work with Internet Explorer version 4.\nPlease right-click the frame you wish to print and select 'Print' from the browser background menu.");
+   }
+
+   function showHelp() {
+     hlextbar.isPDFView = true;
+     hlexmain.hlexdummy.hlexdoc.document.location.href = "hlex_help.html";
+     if(!canEnableTree())
+       hlexmain.folderAct("C_");
+   }
+
+   //Added by Srimanta: To enable the parallel PDF option in THS
+   function showParallelPDF() {
+     if (hlexmain.parallelPDF != undefined)
+     {
+     	hlextbar.isPDFView = false;
+     	push("PDF");
+     	hlexmain.hlexdummy.hlexdoc.document.location.href = hlexmain.parallelPDF;
+     }
+     else
+     {
+     	alert("There is no PDF version of this document available.");
+     	return;
+     }
+   }
+
+
+
+   var lastChapIndex = 0;
+   var origSearch = "";
+   var anyFounds = false;
+   var search = "";
+   var firstRun = true;
+   var srcRerun = false;
+
+   function startDocumentFind() {
+     if(origSearch != hlextbar.document.tbar.search_inp.value || srcRerun) {
+       search = hlextbar.document.tbar.search_inp.value;
+       origSearch = hlextbar.document.tbar.search_inp.value;
+       anyFounds = false;
+       srcRerun = false;
+       if(!firstRun) {
+         writeChap("C0", false, true);
+       }
+       if(search == null || search == "")
+         return;
+     }
+     if(search == null || search == "")
+       return;
+     if(hlexmain.currentChapter != "C0") {
+       writeChap("C0", false, true);
+       firstRun = false;
+     }
+     if(hlexmain.hlexdummy.hlexdoc.find(search, false, false)) {
+
+     } else {
+       srcRerun = true;
+       alert("Search String Not Found!");
+     }
+   }
+
+   function startDocumentSearch() {
+//xsugant: check if no text is given in the search text box
+   if(hlextbar.document.tbar.search_inp.value == "Search help set content" || hlextbar.document.tbar.search_inp.value == "") {
+    alert("Please enter something to search for!"); 
+	return;
+	}
+
+     if(document.layers) {
+         startDocumentFind();
+     } else {
+     if(BrowserType == "Firefox")
+     {
+
+       var sLen = 0;
+       var chapters = hlexmain.CHAPTERS;
+       var entity = "";
+       var foundIndex = 0;
+       var lastFound = 'X';
+       var c = '';
+       var isFoundIndex = false;
+       var needToSearch = true;
+
+       if(origSearch != hlextbar.document.tbar.search_inp.value || srcRerun) {
+         srcRerun = false;
+         search = hlextbar.document.tbar.search_inp.value;
+         origSearch = hlextbar.document.tbar.search_inp.value;
+         search = remTabs(search);
+         search = remExtraSpace(search);
+         anyFounds = false;
+         if(search == "")
+           return;
+         search = symbol2Space(search).toLowerCase();
+         searchAnchor = search.split(' ');
+         lastChapIndex = 0;
+       } else {
+         if(search == "")
+           return;
+         lastChapIndex++;
+     }
+
+     for(var i=lastChapIndex; i<chapters.length; i++) {
+       var fCoords = new Array();
+       lastChapIndex = i;
+       var text = eval("hlexmain."+chapters[i]).toLowerCase();
+       for(var k=0; k<searchAnchor.length; k++) {
+         if((text.indexOf(searchAnchor[k])) == -1) {
+           needToSearch = false;
+           break;
+         } else {
+           needToSearch = true;
+         }
+       }
+       if(!needToSearch)
+         continue;
+       for(var j=0; j<(text.length+1); j++) {
+         c = text.charAt(j);
+         if(c == '<') {
+           j += ((text.indexOf('>', (j+1)))-j);
+           c = ' ';
+         }
+         if((c == '\n') || (c == '\t'))
+           c = ' ';
+         if(c == '&') {
+           j += ((text.indexOf(';', (j+1)))-j);
+           c = ' ';
+         }
+         if(lastFound == ' ' && c == ' ') {
+           continue;
+         }
+         if(c.toLowerCase() == search.charAt(sLen)) {
+           lastFound = c;
+           if(foundIndex == 0 && !isFoundIndex) {
+             foundIndex = j;
+             isFoundIndex = true;
+           }
+           sLen++;
+           if(sLen == search.length) {
+             var coords = new Array(foundIndex, (j+1));
+             foundIndex=0;
+             fCoords[fCoords.length] = coords;
+           }
+         } else {
+           sLen = 0;
+           foundIndex = 0;
+           isFoundIndex = false;
+         }
+         if(j>=(text.length-1) && fCoords.length>0) {
+           writeHighLight(fCoords, chapters[i]);
+           anyFounds = true;
+           return;
+         }
+       }
+     }
+     if(anyFounds) {
+       alert("Finished searching the document.");
+       srcRerun = true;
+     } else {
+       alert("Search string not found!");
+     }
+
+   }
+   else
+   {
+
+   	var SearchScriptString = "";
+   	hlexmain.hlexdummy.hlexscript.document.open();
+   	hlexmain.hlexdummy.hlexscript.document.write(hlexmain.PAGE_START);
+
+   	for(var j=0; j<hlexmain.PARTS.length; j++) {
+
+   	SearchScriptString = SearchScriptString + "<script type=\"text\/javascript\" language=\"JavaScript\" src=\"";
+   	var newparts = hlexmain.PARTS[j] + ".js"
+   	SearchScriptString = SearchScriptString + newparts;
+   	SearchScriptString = SearchScriptString + "\"><\/script>\n";
+   	}
+
+
+   	SearchScriptString = SearchScriptString+"<script type='text/javascript' language='JavaScript'>";
+
+   	//callSearch Function
+   	SearchScriptString = SearchScriptString+"\n\nfunction callSearch(){\n";
+   	SearchScriptString = SearchScriptString+"       var chapters = top.hlexmain.CHAPTERS;\n";
+   	SearchScriptString = SearchScriptString+"      	for(var k=0; k<chapters.length; k++)\n";
+   	SearchScriptString = SearchScriptString+"       {\n";
+   	SearchScriptString = SearchScriptString+"       \n";
+   	SearchScriptString = SearchScriptString+"       \n";
+   	SearchScriptString = SearchScriptString+"      	   var tempstr = eval(chapters[k]);\n";
+   	SearchScriptString = SearchScriptString+"       }\n//}\n";
+   	SearchScriptString = SearchScriptString+"       top.startDocumentSearchIE();\n";
+   	SearchScriptString = SearchScriptString+"      }\n";
+
+   	SearchScriptString = SearchScriptString+"</script>\n" + "</head><bo" + "dy onload=\"callSearch();\">\n" + hlexmain.PAGE_END ;
+
+   	hlexmain.hlexdummy.hlexscript.document.write(SearchScriptString);
+   	hlexmain.hlexdummy.hlexscript.document.close();
+       }
+      }
+   }
+
+   function remTabs(text) {
+     var newText = "";
+     for(var i=0; i<text.length; i++) {
+         if(text.charAt(i) == '\t') {
+           newText += ' ';
+         } else {
+           newText += text.charAt(i);
+         }
+     }
+     return newText;
+   }
+
+   function remExtraSpace(text) {
+     var index = 0;
+     var newText = "";
+     var b = true;
+     for(var i=0; i<text.length; i++) {
+       if(b && text.charAt(i) == ' ') {
+         continue;
+       } else {
+         b = false;
+       }
+       if(text.charAt(i) == ' ' && (i+1) == text.length) {
+         return newText;
+       }
+       if(i < text.length) {
+         if(text.charAt(i) == ' ' && text.charAt(i+1) == ' ') {
+           continue;
+         }
+       }
+       newText += text.charAt(i);
+     }
+     return newText;
+   }
+
+   function symbol2Space(text) {
+     var newText = "";
+     var index = 0;
+     while((index = text.indexOf("&", index)) >= 0) {
+       newText = text.substring(0, index);
+       newText += " ";
+       newText += text.substring(index+1,text.length);
+       text = newText;
+     }
+     index = 0;
+     while((index = text.indexOf("<", index)) >= 0) {
+       newText = text.substring(0, index);
+       newText += " ";
+       newText += text.substring(index+1,text.length);
+       text = newText;
+     }
+     index = 0;
+     while((index = text.indexOf(">", index)) >= 0) {
+       newText = text.substring(0, index);
+       newText += " ";
+       newText += text.substring(index+1,text.length);
+       text = newText;
+     }
+     return text;
+   }
+
+   //To hightlight the search string present inside the divided part of the chapter
+   function replacetext(Text, LowerText, SearchPattern){
+
+       var ReplacedString = "";
+       var wText_p1="";
+       var wText_p2="";
+       var wText_p3=Text;
+
+       while(LowerText.indexOf(SearchPattern.toLowerCase()) > -1){
+       	searchIndex = LowerText.indexOf(SearchPattern);
+   	wText_p1 = Text.substring(0,searchIndex);
+   	wText_p2 = Text.substring(searchIndex,searchIndex+SearchPattern.length);
+   	wText_p3 = Text.substring(searchIndex+SearchPattern.length);
+   	LowerText = wText_p3.toLowerCase();
+   	Text = wText_p3;
+   	ReplacedString += wText_p1 + "<span class=\"search-hit\">" + wText_p2 + "</span>";
+       }
+       ReplacedString += wText_p3;
+       return ReplacedString;
+   }
+
+   function searchPartChildChapters(chapter,searchedString) {
+
+     var wText ="";
+     var lowerwText ="";
+     for(var i=1;; i++) {
+     	if (BrowserType == "Firefox")
+   	{
+           	if (typeof(eval("hlexmain."+chapter+'P'+i)) != "undefined")
+           	{
+               		wText=eval("hlexmain."+chapter+'P'+i);
+           	}
+           	else
+           	{
+           		break;
+           	}
+           }
+           else
+           {
+           	if (typeof(eval("hlexmain.hlexdummy.hlexscript."+chapter+'P'+i)) != "undefined")
+           	{
+               		wText=eval("hlexmain.hlexdummy.hlexscript."+chapter+'P'+i);
+           	}
+           	else
+           	{
+           		break;
+           	}
+
+           }
+   	// Need to highlight the search string
+   	lowerwText=wText.toLowerCase();
+   	newText = replacetext(wText,lowerwText,searchedString.toLowerCase());
+   	hlexmain.hlexdummy.hlexdoc.document.write(newText);
+
+     }
+     return null;
+   }
+
+   function writeHighLight(fCoords, chapter) {
+     hlextbar.isPDFView = true;
+     if(!canEnableTree())
+   	  hlexmain.showTree(chapter);
+     hlexmain.currentChapter = chapter;
+     var wText="";
+
+     if (BrowserType == "Firefox")
+     {
+     	var chapObj = eval("hlexmain."+chapter);
+     }
+     else
+     {
+     	var chapObj = eval("top.hlexmain.hlexdummy.hlexscript."+chapter);
+     }
+
+     hlexmain.hlexdummy.hlexdoc.document.open()
+     hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_START);
+     hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.BODY_START);
+
+     for(var i=0; i<fCoords.length; i++) {
+   	if(i==0) {
+   	    var coords = fCoords[i];
+   	    wText += chapObj.substring(0,coords[0]);
+   	  } else {
+   	    var coordsNew = fCoords[i];
+   	    var coordsOld = fCoords[i-1];
+   	    wText += chapObj.substring(coordsOld[1],coordsNew[0]);
+   	  }
+   	  var coordsNew = fCoords[i];
+   	  wText += "<span class=\"search-hit\">";
+   	  searchedString=chapObj.substring((coordsNew[0]), coordsNew[1]);
+   	  wText += chapObj.substring((coordsNew[0]), coordsNew[1]);
+   		wText += "</span>";
+   		if(i==(fCoords.length-1)) {
+   		  wText += chapObj.substring(coordsNew[1], chapObj.length);
+   		}
+   	}
+   	hlexmain.hlexdummy.hlexdoc.document.write(wText);
+
+   	//Search in the divided parts of chapter if present
+   	searchPartChildChapters(chapter,searchedString);
+
+   	var childs = getChildChapters(chapter);
+   	hlexmain.hlexdummy.hlexdoc.document.write(childs);
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_END);
+   	hlexmain.hlexdummy.hlexdoc.document.close();
+   	push(chapter);
+   }
+
+   function getChildChapters(chapter) {
+     var childChapters = "";
+     for(var i=0; i<hlexmain.CHAPTERS.length; i++) {
+       if(hlexmain.CHAPTERS[i] != chapter) {
+         if(hlexmain.CHAPTERS[i].length >= (chapter.length+1)) {
+           var chapName = hlexmain.CHAPTERS[i].substring(0, (chapter.length+1));
+           if(chapName == (chapter+'_'))
+           {
+   		if (BrowserType == "Firefox")
+   		{
+   			childChapters += eval("hlexmain."+hlexmain.CHAPTERS[i]);
+   		}
+   		else
+   		{
+   			childChapters += eval("hlexmain.hlexdummy.hlexscript."+hlexmain.CHAPTERS[i]);
+   		}
+   		childChapters += getPartChildChapters(hlexmain.CHAPTERS[i]);
+           }
+         }
+       }
+     }
+     return childChapters;
+   }
+
+   //Added by Srimant : Return the contents of all the divided parts of the chapter
+   //                   to be used during Search
+   function getPartChildChapters(chapter) {
+     var partChapter = "";
+     for(var i=1;; i++) {
+
+   	if (BrowserType == "Firefox")
+   	{
+   		if (typeof(eval("hlexmain."+chapter+'P'+i)) != "undefined")
+   		{
+   			partChapter += eval("hlexmain."+chapter+'P'+i);
+   		}
+   		else
+   		{
+   			break;
+   	        }
+            }
+            else
+            {
+   		if (typeof(eval("hlexmain.hlexdummy.hlexscript."+chapter+'P'+i)) != "undefined")
+   		{
+   		       	partChapter += eval("hlexmain.hlexdummy.hlexscript."+chapter+'P'+i);
+   		}
+   		else
+   		{
+   			break;
+           	}
+           }
+
+     }
+     return partChapter;
+   }
+
+   //Added by Srimant : Write the contents of all the divided parts of the chapter
+   function writePartChildChapters(chapter) {
+     for(var i=1;; i++) {
+
+           if (BrowserType == "Firefox")
+   	{
+   		if (typeof(eval("hlexmain."+chapter+'P'+i)) != "undefined")
+   		{
+   		       	hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain."+chapter+'P'+i));
+   		}
+   		else
+   		{
+   			break;
+           	}
+   	}
+   	else
+   	{
+   		if (typeof(eval("hlexmain.hlexdummy.hlexdoc."+chapter+'P'+i)) != "undefined")
+   		{
+   		       	hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain.hlexdummy.hlexscript."+chapter+'P'+i));
+   		}
+   		else
+   		{
+   			break;
+           	}
+   	}
+     }
+     return;
+   }
+
+   function writeChap(chapter, isPop, treeUpDate) {
+     //For Parallel PDF option
+     if(chapter == "PDF")
+     {
+        showParallelPDF();
+     }
+     else
+     {
+
+     hlextbar.isPDFView = true;
+     if (BrowserType != "Firefox"){
+        if(!isPop)
+          push(chapter);
+     }
+       hlexmain.currentChapter = chapter;
+       var chapObj = "hlexmain."+chapter;
+       if(chapObj == "hlexmain.C0")
+        {
+   	if(!canEnableTree())
+   	hlexmain.showTree("C0");
+   	writeDocument();
+        }
+        else
+        {
+
+   	//Need to link the correct JavaScript File
+   	var indexpart = chapter.indexOf('C');
+   	var newText = chapter.substring(indexpart+1, indexpart+2);
+   	if(chapter.indexOf('_') > 0) {
+   		newText = chapter.substring(indexpart+1,chapter.indexOf('_'));
+   	} else {
+   		newText = chapter.substring(indexpart+1);
+   	}
+
+   	var newpart = "PART" + newText + ".js" ;
+   	if (chapter != "TOP" )
+   	{
+   		if (BrowserType != "Firefox")
+   		{
+   			hlexmain.hlexdummy.hlexscript.document.open();
+   			hlexmain.hlexdummy.hlexscript.document.write(hlexmain.PAGE_START);
+
+   			//Write the chapter content and Update the tree structure
+   			var ScriptString = "<script type='text\/javascript' language='JavaScript' src=\"" + newpart + "\"><\/script>\n" + "<script type='text/javascript' language='JavaScript'>";
+   			ScriptString=ScriptString+"\n\nfunction callwritechap(){\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.open();\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.write(top.hlexmain.PAGE_START);\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.write(top.hlexmain.BODY_START);\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.write("+chapter+");\n";
+   			ScriptString=ScriptString+"callwritechildparts(\""+chapter+"\");\n";
+   			ScriptString=ScriptString+"callwriteChildChapters(\""+chapter+"\");\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.write(top.hlexmain.PAGE_END);\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.close();\n\n";
+   			ScriptString=ScriptString+"if(!(top.canEnableTree()) && " + treeUpDate +")\n";
+         			ScriptString=ScriptString+"top.hlexmain.showTree(\"" + chapter + "\");\n}\n\n";
+
+   			//Chapter divided into parts has to be written i.e C1P1, C1P2 etc.
+   			ScriptString=ScriptString+"function callwritechildparts(chapter){\n";
+   			ScriptString=ScriptString+"var childpartcount = 0;\n";
+   			ScriptString=ScriptString+"var obj;\n";
+   			ScriptString=ScriptString+"var tempstring;\n\n";
+   			ScriptString=ScriptString+"for(var i=1;; i++) {\n";
+   			ScriptString=ScriptString+"tempstring = \"top.hlexmain.hlexdummy.hlexscript.\" + chapter + \"P\" + i;\n";
+   			ScriptString=ScriptString+"obj = eval(tempstring) ;\n";
+   			ScriptString=ScriptString+"if (typeof(eval(tempstring)) != \"undefined\")\n{\n";
+   			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.write(eval(tempstring));\n}\nelse\n{\nbreak;\n}\n\n}\n}\n";
+
+   			//Child chapter need to be displayed i.e. C1_1, C1_2 etc.
+			// Modified by XKUMVEN : Fix for TR#93913
+   			ScriptString=ScriptString+"function callwriteChildChapters(chapter) {\n";
+   			ScriptString=ScriptString+"var childChapters = \"\";\n";
+   			ScriptString=ScriptString+"for(var i=0; i<top.hlexmain.CHAPTERS.length; i++) {\n";
+   			ScriptString=ScriptString+"if(top.hlexmain.CHAPTERS[i] != chapter) {\n";
+   			ScriptString=ScriptString+"if(top.hlexmain.CHAPTERS[i].length >= (chapter.length+1)) {\n";
+   			ScriptString=ScriptString+"var chapName = top.hlexmain.CHAPTERS[i].substring(0, (chapter.length+1));\n";
+   			ScriptString=ScriptString+"if(chapName == (chapter+'_'))\n{\n";
+   			ScriptString=ScriptString+"var tempstring = \"top.hlexmain.hlexdummy.hlexscript.\" + top.hlexmain.CHAPTERS[i];\n";
+			ScriptString=ScriptString+"top.hlexmain.hlexdummy.hlexdoc.document.write(eval(tempstring));\n\n";
+   			ScriptString=ScriptString+"callwritechildparts(top.hlexmain.CHAPTERS[i]);\n";
+   			ScriptString=ScriptString+"}\n}\n}\n}\n}\n";
+
+   			ScriptString=ScriptString+"</script>\n" + "</head><bo" + "dy onload=\"callwritechap();\">\n" + hlexmain.PAGE_END ;
+
+   			hlexmain.hlexdummy.hlexscript.document.write(ScriptString);
+   			hlexmain.hlexdummy.hlexscript.document.close();
+
+   			return;
+
+   		}
+   		else
+   		{
+   			hlexmain.hlexdummy.hlexdoc.document.open();
+   			hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_START);
+   		}
+   	}
+   	if (chapter != "TOP" )
+   	{
+   		if (BrowserType == "Firefox")
+   		{
+   			var chapObj = eval("hlexmain."+chapter);
+   		}
+
+   	}
+   	else
+   	{
+   		var chapObj = eval("hlexmain."+chapter);
+   	}
+
+   	if (chapter == "TOP" ) {
+   		hlexmain.hlexdummy.hlexdoc.document.open();
+   		hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_START);
+   	}
+
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.BODY_START);
+   	hlexmain.hlexdummy.hlexdoc.document.write(chapObj);
+
+   	if (chapter == "TOP" ) {
+   		 for(var i=1;; i++) {
+
+   		        if (typeof(eval("hlexmain.TOP"+i)) != "undefined")
+   				{
+   				       	hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain.TOP"+i));
+   				}
+   				else
+   				{
+   					break;
+   		        	}
+   		}
+   	}
+
+   	writePartChildChapters(chapter);
+   	var childs = getChildChapters(chapter);
+   	hlexmain.hlexdummy.hlexdoc.document.write(childs);
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_END);
+   	hlexmain.hlexdummy.hlexdoc.document.close();
+   	if(!canEnableTree() && treeUpDate)
+         	hlexmain.showTree(chapter);
+        }
+     }
+     if (BrowserType == "Firefox"){
+        if(!isPop)
+          push(chapter);
+     }
+   }
+
+   function writeDocument() {
+   	if (BrowserType != "Firefox")
+       	{
+
+   		var SearchScriptString = "";
+   		hlexmain.hlexdummy.hlexscript.document.open();
+   		hlexmain.hlexdummy.hlexscript.document.write(hlexmain.PAGE_START);
+
+   		for(var j=0; j<hlexmain.PARTS.length; j++) {
+
+   		SearchScriptString = SearchScriptString + "<script type=\"text\/javascript\" language=\"JavaScript\" src=\"";
+   		var newparts = hlexmain.PARTS[j] + ".js"
+   		SearchScriptString = SearchScriptString + newparts;
+   		SearchScriptString = SearchScriptString + "\"><\/script>\n";
+   		}
+
+
+   		SearchScriptString = SearchScriptString+"<script type='text/javascript' language='JavaScript'>";
+
+   		//callwriteDocument Function
+   		SearchScriptString = SearchScriptString+"\n\nfunction callwriteDocument(){\n";
+   		SearchScriptString = SearchScriptString+"       var chapters = top.hlexmain.CHAPTERS;\n";
+   		SearchScriptString = SearchScriptString+"      	for(var k=0; k<chapters.length; k++)\n";
+   		SearchScriptString = SearchScriptString+"       {\n";
+   		SearchScriptString = SearchScriptString+"       \n";
+   		SearchScriptString = SearchScriptString+"       \n";
+   		SearchScriptString = SearchScriptString+"      	   var tempstr = eval(chapters[k]);\n";
+   		SearchScriptString = SearchScriptString+"       }\n//}\n";
+   		SearchScriptString = SearchScriptString+"       top.writeDocumentIE();\n";
+   		SearchScriptString = SearchScriptString+"      }\n";
+
+   		SearchScriptString = SearchScriptString+"</script>\n" + "</head><bo" + "dy onload=\"callwriteDocument();\">\n" + hlexmain.PAGE_END ;
+
+   		hlexmain.hlexdummy.hlexscript.document.write(SearchScriptString);
+   		hlexmain.hlexdummy.hlexscript.document.close();
+   		return;
+   	}
+
+   	hlexmain.hlexdummy.hlexdoc.document.open();
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_START);
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.BODY_START);
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.TOP);
+
+   	for(var i=1;; i++) {
+   		if (typeof(eval("hlexmain.TOP"+i)) != "undefined")
+   		{
+   			hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain.TOP"+i));
+   		}
+   		else
+   		{
+   			break;
+   		}
+   	}
+
+   	for(var i=0; i<hlexmain.CHAPTERS.length; i++) {
+
+   		if (BrowserType == "Firefox")
+       		{
+   			hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain."+hlexmain.CHAPTERS[i]+""));
+   			writePartChildChapters(hlexmain.CHAPTERS[i]);
+   		}
+     	}
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_END);
+   	hlexmain.hlexdummy.hlexdoc.document.close();
+   }
+
+   // Modified by XWOKANN for TR#2692 on 1-DEC-2004. The two else parts are modified
+   // Problem: The focus was not going to the exact link position
+   // Fix: Find the parent level and the required offset then move to the specified location
+
+   function showAnchor(anchorName) {
+     for(var i=0; i<hlexmain.ANCH_ARRAY.length; i++) {
+       var anchor = hlexmain.ANCH_ARRAY[i];
+
+       var sAncName = anchor[0];
+       var sAncChap = anchor[1];
+       if(sAncName == anchorName) {
+         writeChap(sAncChap, false, true);
+         var aLen = hlexmain.hlexdummy.hlexdoc.document.anchors.length;
+         for(var i=0; i<aLen; i++) {
+           if(hlexmain.hlexdummy.hlexdoc.document.anchors[i].name == anchorName) {
+             if(document.layers) {
+               var nsCoords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].y};
+               hlexmain.hlexdummy.hlexdoc.scrollTo(nsCoords.x , nsCoords.y);
+               return;
+             } else if(!document.all && document.getElementById) {
+               var coords;
+               coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop};
+               if(hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetParent != null && typeof(hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetParent.offsetTop) != "undefined" ){
+               	coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop + hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetTop + hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetParent.offsetTop};
+               } else if(typeof(hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent) != "undefined"){
+               	coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop + hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetTop };
+               } else {
+               	coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop};
+               }
+               hlexmain.hlexdummy.hlexdoc.scrollTo(coords.x , (coords.y-15));
+               return;
+             } else if(document.all) {
+               var coords ;
+               coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop};
+               if(hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetParent != null && typeof(hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetParent.offsetTop) != "undefined" ){
+               	coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop + hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetTop + hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetParent.offsetTop};
+               } else if(typeof(hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent) != "undefined"){
+               	coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop + hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetParent.offsetTop };
+               } else {
+               	coords = {x: 0, y: hlexmain.hlexdummy.hlexdoc.document.anchors[i].offsetTop};
+               }
+               hlexmain.hlexdummy.hlexdoc.scrollTo(coords.x , coords.y);
+               return;
+             }
+           }
+         }
+         return;
+       }
+     }
+     writeChap("TOP", false, true);
+   }
+
+   function showChapter(chapter, upDateTree) {
+     if(upDateTree)
+       writeChap(chapter, false, true);
+     else
+       writeChap(chapter, false, false);
+   }
+
+   function parseEntryPoint(entryURL) {
+     var index = entryURL.lastIndexOf('#');
+     if (index < 0) {
+        return "";
+     }
+     var entryPoint = entryURL.substring((index+1), entryURL.length);
+     return entryPoint;
+   }
+
+
+   function showEntry() {
+     var entryPoint = parseEntryPoint(location.href);
+     if(entryPoint == "") {
+       writeChap("TOP", false, true);
+     } else if(entryPoint == "_INDEX_") {
+        writeChap("TOP", false, false);
+        showIndex_Forced();
+     } else {
+       showAnchor(entryPoint);
+     }
+   }
+
+   function showTreePage() {
+     if(canEnableTree()) {
+       hlexmain.showTree(hlexmain.currentChapter);
+     }
+   }
+
+   function showIndex() {
+     if(canEnableIndex()) {
+       hlexmain.hlextree.document.open();
+       hlexmain.hlextree.document.write(hlexmain.INDEX);
+       hlexmain.hlextree.document.close();
+     }
+   }
+
+   function showIndex_Forced() {
+     hlexmain.hlextree.document.open();
+     hlexmain.hlextree.document.write(hlexmain.INDEX);
+     hlexmain.hlextree.document.close();
+     setTimeout("setIndexDisabled()", 1);
+     setTimeout("setTreeEnabled()", 1);
+   }
+
+   function canEnableTree() {
+     if(hlexmain.hlextree) {
+       if(hlexmain.hlextree.isTreeView != false && hlexmain.hlextree.isTreeView != true) {
+         if(parent.parseEntryPoint(parent.location.href) == "_INDEX_")
+           return true;
+         else
+           return false;
+       } else {
+         if(hlexmain.hlextree.isTreeView == false)
+           return true;
+         else
+           return false;
+       }
+     } else {
+       return false;
+     }
+   }
+
+   function canEnableIndex() {
+     if(hlexmain.hlextree && hlexmain.hlextree.isTreeView == true)
+       return true;
+     else
+       return false;
+   }
+
+   function push(chapter) {
+     if(!(hlexmain.histArray[hlexmain.histArray.length-1] == chapter))
+       hlexmain.histArray[hlexmain.histArray.length] = chapter;
+   }
+
+   function pop() {
+     if(hlexmain.histArray.length < 2)
+       return hlexmain.histArray[0];
+     var tmp = hlexmain.histArray[hlexmain.histArray.length-2];
+     hlexmain.histArray.length = hlexmain.histArray.length-1;
+     return tmp;
+   }
+
+
+   function peek() {
+     return hlexmain.histArray[hlexmain.histArray.length-1];
+   }
+
+
+   function startDocumentSearchIE() {
+
+     var sLen = 0;
+     var chapters = hlexmain.CHAPTERS;
+     var entity = "";
+     var foundIndex = 0;
+     var lastFound = 'X';
+     var c = '';
+     var isFoundIndex = false;
+     var needToSearch = true;
+
+     if(origSearch != hlextbar.document.tbar.search_inp.value || srcRerun) {
+       srcRerun = false;
+       search = hlextbar.document.tbar.search_inp.value;
+       origSearch = hlextbar.document.tbar.search_inp.value;
+       search = remTabs(search);
+       search = remExtraSpace(search);
+       anyFounds = false;
+       if(search == "")
+         return;
+       search = symbol2Space(search).toLowerCase();
+       searchAnchor = search.split(' ');
+       lastChapIndex = 0;
+     } else {
+       if(search == "")
+         return;
+       lastChapIndex++;
+     }
+     for(var i=lastChapIndex; i<chapters.length; i++) {
+       var fCoords = new Array();
+       lastChapIndex = i;
+
+       var text = eval("top.hlexmain.hlexdummy.hlexscript."+chapters[i]).toLowerCase();
+
+       for(var k=0; k<searchAnchor.length; k++) {
+         if((text.indexOf(searchAnchor[k])) == -1) {
+           needToSearch = false;
+           break;
+         } else {
+           needToSearch = true;
+         }
+       }
+       if(!needToSearch)
+         continue;
+       for(var j=0; j<(text.length+1); j++) {
+         c = text.charAt(j);
+         if(c == '<') {
+           j += ((text.indexOf('>', (j+1)))-j);
+           c = ' ';
+         }
+         if((c == '\n') || (c == '\t'))
+           c = ' ';
+         if(c == '&') {
+           j += ((text.indexOf(';', (j+1)))-j);
+           c = ' ';
+         }
+         if(lastFound == ' ' && c == ' ') {
+           continue;
+         }
+         if(c.toLowerCase() == search.charAt(sLen)) {
+           lastFound = c;
+           if(foundIndex == 0 && !isFoundIndex) {
+             foundIndex = j;
+             isFoundIndex = true;
+           }
+           sLen++;
+           if(sLen == search.length) {
+             var coords = new Array(foundIndex, (j+1));
+             foundIndex=0;
+             fCoords[fCoords.length] = coords;
+           }
+         } else {
+           sLen = 0;
+           foundIndex = 0;
+           isFoundIndex = false;
+         }
+         if(j>=(text.length-1) && fCoords.length>0) {
+           writeHighLight(fCoords, chapters[i]);
+           anyFounds = true;
+           return;
+         }
+       }
+     }
+     if(anyFounds) {
+           	alert("Finished searching the document.");
+           	srcRerun = true;
+
+         } else {
+           	alert("Search string not found!");
+       }
+   }
+
+   function writeDocumentIE() {
+
+   	hlexmain.hlexdummy.hlexdoc.document.open();
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_START);
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.BODY_START);
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.TOP);
+
+   	for(var i=1;; i++) {
+   		if (typeof(eval("hlexmain.TOP"+i)) != "undefined")
+   		{
+   			hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain.TOP"+i));
+   		}
+   		else
+   		{
+   			break;
+   		}
+   	}
+
+   	for(var i=0; i<hlexmain.CHAPTERS.length; i++) {
+
+   		if (BrowserType != "Firefox")
+       		{
+   			hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain.hlexdummy.hlexscript."+hlexmain.CHAPTERS[i]+""));
+   			writePartChildChapters(hlexmain.CHAPTERS[i]);
+   		}
+   		else
+   		{
+
+   			hlexmain.hlexdummy.hlexdoc.document.write(eval("hlexmain."+hlexmain.CHAPTERS[i]+""));
+   			writePartChildChapters(hlexmain.CHAPTERS[i]);
+   		}
+     	}
+   	hlexmain.hlexdummy.hlexdoc.document.write(hlexmain.PAGE_END);
+   	hlexmain.hlexdummy.hlexdoc.document.close();
+   }
+// -->
+</script>
+
+<script type="text/javascript" language="JavaScript">
+<!--
+
+window.history.forward(+1);
+
+var browserName = navigator.appName;
+var browserVer = parseInt(navigator.appVersion);
+var BrowserType = "";
+
+var ua = navigator.userAgent.toLowerCase();
+if((ua.indexOf('mozilla') != -1) && (ua.indexOf('firefox') != -1))
+{
+	BrowserType = "Firefox";
+}
+
+else if ((browserName == "Netscape") && (browserVer < 5)) {
+	BrowserType = "Firefox";
+}
+else if((ua.indexOf('gecko') != -1))
+{
+	BrowserType = "Firefox";
+}
+else if((ua.indexOf('msie') != -1))
+{
+	BrowserType = "MSIE";
+}
+
+
+
+if (BrowserType == "Firefox") {
+
+  document.write('<frameset rows="32,*" frameborder="1" framespacing="1" border="1" bordercolor="#cccccc">');
+  document.write('<frame src="hlex_tbar.html" name="hlextbar" scrolling="no" frameborder="0" marginheight="1" noresize="noresize" />');
+  document.write('<frame src="hlexMOZILLA.html" name="hlexmain" />');
+  document.write('<\/frameset>');
+  document.close();
+
+} else {
+
+  document.write('<frameset rows="32,*" frameborder="1" framespacing="1" border="1" bordercolor="#cccccc">');
+  document.write('<frame src="hlex_tbar.html" name="hlextbar" scrolling="no" frameborder="0" marginheight="1" noresize="noresize" />');
+  document.write('<frame src="hlex.html" name="hlexmain" />');
+  document.write('<\/frameset>');
+  document.close();
+}
+// -->
+</script>
+</head>
+<frameset rows="32,*" frameborder="1" framespacing="1" border="1" bordercolor="#cccccc">
+<frame src="hlex_tbar.html" name="hlextbar" scrolling="no" frameborder="0" marginheight="1" noresize="noresize" />
+<frame src="hlex.html" name="hlexmain" />
+</frameset>
+</html>

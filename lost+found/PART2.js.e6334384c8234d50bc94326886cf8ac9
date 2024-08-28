@@ -1,0 +1,22 @@
+var C2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_0w4x\"></a><a name=\"CHAPTER2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Overview</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"This document describes security administration for ENIQ. This\n" +
+"includes the following topics:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">Configuring HTTPS/HTTP Communication</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Handling Security Certificates</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">User Management</li></ul>\n" +
+"<p>\n" +
+"This material is applicable for ENIQ Statistics, ENIQ Events and\n" +
+"Ericsson Business Intelligence Deployment (EBID).</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>By default, HTTPS is enabled throughout the ENIQ. This document\n" +
+"describes how to configure ENIQ to use HTTP if it is required.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+

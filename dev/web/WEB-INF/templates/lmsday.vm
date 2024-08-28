@@ -1,0 +1,150 @@
+#if (!$search_days)
+#set ($search_days = 1)
+#end
+
+#if (!$search_string)
+#set ($search_string = "")
+#end
+
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+		<title>Ericsson Network IQ Monitoring Summary</title>
+		#include( "calendar_js.txt" )
+	</head>
+	<body bgcolor="#ffffff">
+		<table border="0">
+			<tr valign=top>
+				<td width=220>
+					#parse( "main_menu.vm" )
+				</td>
+				<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Session Info&nbsp;&gt;&gt;&nbsp;<a href="ViewPhysicalTable">Monitoring Summary</a></font>
+<hr />
+					<form name=f1 action=$req.getContextPath()/servlet/LMSDay method=post>
+						<table border=1>
+							<tr>
+								<td align="center">
+									<font size="-1"><b>Search<br>Start Date</b></font>
+								</td>
+								<td align="center">
+									<font size="-1"><b>Search<br>Days</b></font>
+								</td>
+								<td align="center">
+									<font size="-1"><b>Search<br>Direction</b></font>
+								</td>
+								<td align="center">
+									<font size="-1"><b>Search for<br>selected status(es)</b></font>
+								</td>
+								<td align="center">
+									<font size="-1"><b>Search for<br>Measurement Type</b></font>
+								</td>
+							</tr>
+							<tr>
+								<td valign=top>
+									#parse( "cal_select_1.vm" )
+								</td>
+								<td valign=top>
+									<select name="search_days" style="font-size: 9;">
+										<option selected value="$search_days">$search_days</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+										<option>11</option>
+										<option>12</option>
+										<option>13</option>
+										<option>14</option>
+									</select>									
+								</td>
+								<td valign="top">
+									<font size="-1">
+									#if ($searchDirection == "forward") 
+									<input type="radio" name="search_direction" value="forward"checked> Forward<br>
+									<input type="radio" name="search_direction" value="backward"> Backward
+									#else
+									<input type="radio" name="search_direction" value="forward"> Forward<br>
+									<input type="radio" name="search_direction" value="backward"checked> Backward
+									#end
+									</font>
+								</td>
+								<td>
+									<select name="status_selection" size="5" multiple>
+										#foreach ($status in $statusArray)
+										<option value="$status.Text" $status.Selected>$status.Text </option>
+										#end
+									</select>
+								</td>
+								<td valign="top" style="font-size: 9;">
+#set($nlist = $twoLevelSelectionBuilder.getNameList())
+<select name="search_string" style="font-size: 9;">
+<option selected value="$theGroup">$theGroup</option>
+#foreach($grp in $nlist)
+<option>$grp</option>
+#end			
+</select>
+								</td>
+							</tr>
+							<tr>
+								<td valign=top colspan=5>
+									<input type="hidden" name="search_done" value="true">
+									<input type=submit style="font-size: 11;" value="Get Information">
+								</td>
+							</tr>
+						</table>
+					</form>
+					
+					<p><hr size="1"><p>
+
+## --------------------------------------------------------		
+
+	
+#if ($search_done == "true")
+Selected statuses:
+#foreach ($status in $statusArray)
+#if ($status.Selected == "SELECTED")
+$status.Text,
+#end
+#end
+
+<br>
+<table border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="left" valign="top">
+			<table border="1" cellpadding="1" cellspacing="1">
+				<tr>
+					<td width="250" align="left" valign="top"><font size="2"><strong>Measurement<br>Type</strong></font></td>
+    				<td width="50" align="center" valign="top"><font size="2"><strong>Time<br>Level</strong></font></td>
+					#foreach ($day in $daysArray)
+					<td width="75" align="center"><font size="-2"><b>$day</b></font></td>
+					#end
+				</tr>
+				#foreach ($result in $resultArray)
+				<tr>
+					<td width="250" align="left" valign="top"><font size="-2">$!result.getTypeName()</font></td>
+					<td width="50" align="center" valign="top"><font size="-2">$!result.getTimeLevel()</font></td>
+					#set ($counter_max = $result.getSize() - 1)
+					#foreach ($counter in [0..$counter_max])
+					<td width="75" align="center"><font size="-2">$result.getNextCountValue()</font>
+					#end
+				</tr>
+				#end
+			</table>
+		</td>
+	</tr>
+</table>
+#end
+				</td>
+			</tr>
+			#parse( "footer.vm" )
+		</table>
+	</body>
+</html>
+					

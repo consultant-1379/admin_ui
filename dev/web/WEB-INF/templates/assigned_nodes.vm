@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Node Assignment Tool</title>
+
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Node Assignment Tool&nbsp;&gt;&gt;&nbsp;<a href="AssignedNodes">Assigned Nodes</a></font>
+<hr />
+<form action="$req.getContextPath()/servlet/AssignedNodes" method="post" onsubmit="return filterFields();">
+<table border="0">
+	<tr>
+				<td class="basichlp" colspan="3">
+					This page allows the user to view the assigned nodes on all the ENIQ-S servers connected to the MASTER.
+					<br>Select the appropriate NEType to view the Assigned Nodes. <br /><br />
+				</td></tr>
+
+
+<br>
+<tr>
+		<td valign=top><font size=-1>
+		<select name="NEType" style="font-size: 9;">
+			<option selected>$NEType</option>
+			#foreach($key in $NETypes)
+			#if ($key != $NEType)
+			<option>$key
+			#end
+			#end
+		</select>
+		</font></td>
+	</tr>
+	<tr>
+		<td valign=top colspan=4><font size=-1>
+		<input type=submit style="font-size: 11;" value="Submit">
+		</font></td>
+	</tr>
+</table>
+</form>
+
+<!-- Node Table Snapshot -->
+
+<br><br>
+<table name="ttable" id="ttable" border="1" width="100%" cellpadding="1" cellspacing="1">
+		<tr bgcolor="#B3B3FF">
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>ENIQS</strong></font></td> <!-- ENIQS -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>FDN</strong></font></td> <!-- version -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>NeType</strong></font></td> <!-- NeType -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>ENMHostname</strong></font></td> <!-- ENM -->
+#if($nodeSnap.size() > 0)
+		#foreach($set in $nodeSnap)
+				<tr>
+					#foreach($i in $set)
+					<td class="basic">$i</td>
+					#end
+					#end
+				</tr>
+				</tr>
+		#end
+</table>
+<br><br>
+
+#parse( "footer.vm" )
+</table>
+
+</body>
+</html>

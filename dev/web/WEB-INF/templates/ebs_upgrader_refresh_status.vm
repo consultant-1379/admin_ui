@@ -1,0 +1,28 @@
+##This file contains a form that shows upgrade information
+
+<form action="$servletPath/EbsUpgradeManager" method="post">
+<input type="hidden" name="action" value="action_get_upgrade_status" />
+<input type="submit" value="refresh status">
+</form>
+
+#* COMMENTED
+<p>Upgrade current status: 
+<i>
+#if( $upgradeStatus == '0' )
+  Upgrade not running
+#elseif ( $upgradeStatus == '' )
+  Started and running...
+#elseif ( $upgradeStatus == 'alreadyrunning' )
+  Upgrade is already running!
+#elseif ( $upgradeStatus == 'started' )
+  Started and running...
+#elseif ( $upgradeStatus == 'succeeded' )
+  Upgrade not running (the last upgrade finished successfully)
+#elseif ( $upgradeStatus == 'failed' )
+  Failed to run (see logs for more details)
+#else
+  Upgrade not running!
+#end
+</i>
+</p>
+*#

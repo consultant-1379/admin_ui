@@ -1,0 +1,88 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>FLEXIBLE ROP :: FRH Configuration :: FRH History</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">FRH Configuration&nbsp;&gt;&gt;&nbsp;<a href="FRHHistory">FRH History</a></font>
+<hr />
+	<font size="1" face="Verdana, Helvetica, Arial">FRH History shows logs for the selected package. <br /><br />	<li>Date(Which date logs are shown)</li>
+<li>Package</li>
+</font>
+
+<br>
+
+<FORM METHOD=POST ACTION="FRHHistory" onSubmit="return filterFields();">
+
+<table border="0">
+
+<tr><td class="basic" colspan="2">Select date from which you wish to fetch session logs.</td></tr>
+<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+<tr><td class="basic">Date:</td><td>#parse( "cal_select_1.vm" )</td></tr>
+<tr><td class="basic">Package:</td><td>
+
+	<SELECT name="selectedpack">
+	#if($selectedpack != "")
+		<option selected>$selectedpack</option>
+	#else
+		<option selected></option>
+	#end
+	#foreach ($key in $settypes)
+		<option>$key</option>
+	#end
+	</SELECT>
+</td></tr>
+</tr>
+<tr><td colspan="2"><INPUT value="Search" style="font-size: 11;" TYPE="submit"></FORM></td></tr>
+</table>
+<hr noshade size="1" color="#000000">
+<table border="1" width="70%" cellpadding="1" cellspacing="1">
+#if ($isold.equals("") == false)
+	<tr>
+    	<td>
+      	<b>Cannot show logs for date older than three days</b><br/>
+   	</td>
+	</tr>  	
+#else
+		#if ($toomany != " ")
+		<tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Row count exceeded $toomany -rows. Please, redefine your search parameters.</font></b>
+		</tr>
+		#end
+		#if($etlsets.size() > 0)
+		<tr bgcolor="#B3B3FF">
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>ROP StartTime</strong></font></td>
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>ROP EndTime</strong></font></td> 
+		<td width="40" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>No. Of Files</strong></font></td> 
+		</tr>
+		#end
+	#foreach ($oneset in $etlsets)
+		<tr>
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(0)</font></td>
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</font></td> 
+		<td width="40" nowrap><font face="Verdana,Helvetica,Arial" size="1">
+		<a href="FRHDetail?pagefrom=historybrowsing&starttime=$!oneset.get(0)&endtime=$!oneset.get(1)&techpak=$!oneset.get(2)">$!oneset.get(3)</a></font></td>
+		</tr>		
+	#end
+#end
+</table>
+<br />
+</td>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

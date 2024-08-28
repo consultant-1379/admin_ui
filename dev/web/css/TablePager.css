@@ -1,0 +1,61 @@
+/*
+ * CSS for TablePager.js library
+ */
+
+/* Nav Menu styles */
+.page-normal {
+	color: #000099;
+	font-family: Verdana, monospace;
+	font-weight: normal;
+	font-size: 10px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.page-selected {
+	color: #000099;
+	font-family: Verdana, monospace;
+	font-weight: bold;
+	font-size: 10px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/*Jump To Drop Down Styles*/
+#nav,#nav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+}
+
+#nav a {
+	display: block;
+	width: 10em;
+}
+
+#nav li {
+	float: left;
+}
+
+#nav li ul {
+	position: absolute; /*background: gray;*/
+	left: -999em;
+}
+
+#nav li:hover ul,#nav li.sfhover ul {
+	left: auto;
+}
+
+#content {
+	clear: left;
+	color: #ccc;
+}
+
+table.sortable thead {
+	background-color: #A0A0F0;
+	border: 1px solid black;
+	margin: 0;
+	padding: 2px;
+	cursor: pointer;
+}

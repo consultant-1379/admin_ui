@@ -1,0 +1,21 @@
+#set ($toc = "toc_eniq.html")
+
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+		<title>AdminUI 5.2 User Manual</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	</head>
+
+	<frameset rows="697" cols="235,*" frameborder="no">
+  		<frame src="$req.getContextPath()/manual/$toc" name="toc">
+	  	<frame src="$req.getContextPath()/manual/$page" name="main">
+	</frameset>
+
+	<noframes>
+		<body>
+
+		</body>
+	</noframes>
+</html>

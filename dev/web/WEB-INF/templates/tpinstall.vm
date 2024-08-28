@@ -1,0 +1,138 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: TechPack Installation</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+<style type='text/css'>
+#progressbar {
+  background-color: #B3B3FF;
+  border-radius: 13px; /* (height of inner div) / 2 + padding */
+  padding: 3px;
+}
+
+#progressbar > div {
+   background-color: green;
+   width: $percentProg%; /* Adjust with JavaScript */
+   height: 20px;
+   border-radius: 10px;
+}
+</style>
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="TPInstallation">TechPack Installation</a></font>
+<hr />
+<font size="1.5" face="Verdana, Helvetica, Arial">Showing status as of $currenttime &nbsp;&gt;&gt;&nbsp;<a href="TPInstallation"> Refresh</a></font>
+<br><br>
+<!-- if For Checking TP Status -->
+#if($isTPInstall == true && $isStageStart == true)
+<br><br>
+<table border="1" cellpadding="1" cellspacing="1">
+	<tr bgcolor="#B3B3FF">
+		<td colspan ="2"><font face="Verdana,Helvetica,Arial" size="4"><b>Feature Installation In Progress</b></font></td>
+	</tr>
+	#if( (!$featList.get(0).contains(" ")) && ($currentFeat.get(0) == " ") )
+	<tr>
+	<td colspan ="2"><font face="Verdana,Helvetica,Arial" size="2"><b>Feature Pre-install Processes and Checks Running</b></font></td>
+	</tr>
+	#else
+	<tr>
+		<td width="400"><font face="Verdana,Helvetica,Arial" size="4">$currentFeat.get(0)</font></td>
+		<td width="400"><font face="Verdana,Helvetica,Arial" size="4">$currentFeat.get(1)</font></td>
+	</tr>
+	#end
+	<tr bgcolor="#B3B3FF">
+		<td colspan ="2"><font face="Verdana,Helvetica,Arial" size="2"><b>Tech Pack Installation In Progress</b></font></td>
+	</tr>
+	<tr>
+		<td width="400"><font face="Verdana,Helvetica,Arial" size="2"><b>$techpackName</b></font></td>
+		<td width="400"><font face="Verdana,Helvetica,Arial">$rState</font></td>
+	</tr>
+<!--	<tr>
+		<td width="400"><font face="Verdana,Helvetica,Arial">$rState</font></td>
+		<td width="400"><font face="Verdana,Helvetica,Arial">Stage $progress of 10 Completed</font></td>
+	</tr>
+	<tr>
+	<td height="60" colspan ="2"><div id="progressbar">
+									<div></div>
+									</div></td>
+	</tr> -->
+	<tr bgcolor="#B3B3FF">
+		<td width="800" colspan ="2"><font face="Verdana,Helvetica,Arial" size="2"><b>Tech Pack Queued For Installation</b></font></td>
+	</tr>
+	#foreach ($tpIndi in $tpList)
+	<tr>
+		#foreach ($tpQ in $tpIndi)
+		<td width="400"><font face="Verdana,Helvetica,Arial">$tpQ</font></td>
+		#end
+	</tr>
+	#end
+	<tr bgcolor="#B3B3FF">
+		<td width="800" colspan ="2"><font face="Verdana,Helvetica,Arial" size="2"><b>Tech PackInstallation Complete</b></font></td>
+	</tr>
+	#foreach ($installedTP in $tpInstall)
+		<tr>
+			#foreach ($tpInstIndi in $installedTP)
+			<td width="400"><font face="Verdana,Helvetica,Arial">$tpInstIndi</font></td>
+			#end
+		</tr>
+	#end
+</table>
+<br><br>
+<table border="1" cellpadding="1" cellspacing="1">
+	<tr bgcolor="#B3B3FF">
+		<td width="800" colspan ="2"><font face="Verdana,Helvetica,Arial" size="4"><b>Feature Queued For Installation</b></font></td>
+	</tr>
+	#foreach ($featIndi in $featList)
+	<tr>
+		#foreach ($featQ in $featIndi)
+		<td width="400"><font face="Verdana,Helvetica,Arial" size="2">$featQ</font></td>
+		#end
+	</tr>
+	#end
+</table>
+<br><br>
+<table border="1" cellpadding="1" cellspacing="1">
+	<tr bgcolor="#B3B3FF">
+		<td width="800" colspan ="2"><font face="Verdana,Helvetica,Arial" size="4"><b>Feature Installation Complete</b></font></td>
+	</tr>
+	#foreach ($featIns in $featInstall)
+	<tr>
+		#foreach ($featInsInd in $featIns)
+		<td width="400"><font face="Verdana,Helvetica,Arial" size="2">$featInsInd</font></td>
+		#end
+	</tr>
+	#end
+</table>
+#elseif($isTPInstall == true && $isStageStart == false)
+<font face="Verdana,Helvetica,Arial" size="4"><center><b>Pre-install Processes and Checks Running</b></center></font>
+<br><br>
+<!-- else For Checking TP Status -->
+#else
+<font face="Verdana,Helvetica,Arial" size="2"><center><b>No Tech Pack Installation In Progress</b></center></font>
+<br><br>
+<table border="1">
+		<tr><td colspan="6" class="basic">Active Tech Packs</td></tr>
+		<tr><td class="midhdr">Tech pack name</td><td class="midhdr">Product number</td><td class="midhdr">R-State</td><td class="midhdr">Type</td><td class="midhdr">Status</td><td class="midhdr">DWH Creation date</td></tr>
+		#foreach($set in $activeTps)
+			<tr>
+			#foreach ($rs in $set)
+			<td class="basic">$rs</td>
+			#end
+			</tr>
+		#end
+</table>
+#end
+#parse( "footer.vm" )
+</table>
+
+</body>
+</html>

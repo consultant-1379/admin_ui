@@ -1,0 +1,47 @@
+var C20=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">20 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_wvzn\"></a><a name=\"CHAPTER20\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Symbolic Link Recreation</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"If FLS or Symlink OSS mounts are down where the source files are\n" +
+"present, parsing of these files, fails as broken links resulting in\n" +
+"data loss.  </p>\n" +
+"\n" +
+"<p>\n" +
+"In this scenario, parser tracks PM and topology file broken links\n" +
+"in <tt class=\"file-path\">/eniq/archive/&lt;OSS_alias_name&gt;/&lt;NodeType&gt;/failed</tt> directory, in <tt class=\"file-path\">trackfile_&lt;date&gt;.txt</tt> format.</p>\n" +
+"\n" +
+"<p>\n" +
+"Once the mount point is up and if user wants to recreate the symbolic\n" +
+"link again for the tracked files, execute the following script as\n" +
+"dcuser:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/sw/installer/</b></tt></p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b>#./symboliclink_recreation.bsh -a &lt;OSS_alias_name&gt; -f &lt;StartDate&gt;\n" +
+"-t &lt;EndDate&gt;</b></tt></p>\n" +
+"<p>\n" +
+"Where, &lt;OSS_alias_name&gt; is OSS alias, where failure is observed.</p>\n" +
+"\n" +
+"<p>\n" +
+"&lt;StartDate&gt; is date from when the source file mount is down.</p>\n" +
+"\n" +
+"<p>\n" +
+"&lt;EndDate&gt; is date till when the source file mount is down.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The Start date and End date must be provided as per the retention\n" +
+"period of source files.</dd></dl><br />\n" +
+"<p>\n" +
+"For example:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>#./symboliclink_recreation.bsh -a eniq_oss_1 -f 2019-12-27\n" +
+"-t 2019-12-29</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"Log file is created under <tt class=\"file-path\">/eniq/log/sw_log/symboliclinkcreator/symboliclink_recreation_&lt;Date&gt;.log</tt>.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

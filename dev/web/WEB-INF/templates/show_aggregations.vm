@@ -1,0 +1,883 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Show Aggregations</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff" onLoad="populate_1(document.forms[0],document.forms[0].month_1.selectedIndex);document.forms[0].day_1.options[${day_1}-1].selected = true;">
+
+#set($raw_checked = "")
+#set($aggregated_checked = "")
+#set($all_checked = "")
+#set($problematic_checked = "")
+#set($disabled_checked = "")
+
+#if($filter == "raw")
+  #set($raw_checked = "checked")
+#else
+#if($filter == "aggregated")
+  #set($aggregated_checked = "checked")
+#else
+#if($filter == "all")
+  #set($all_checked = "checked")
+#else
+  #set($raw_checked = "checked")
+#end
+#end
+#end
+
+#if($problematic == "problematic")
+  #set($problematic_checked = "checked")
+#end
+#if($disabled == "disabled")
+  #set($disabled_checked = "checked")
+#end
+
+<table border="0">
+
+<tr valign=top><td width="220">
+#parse( "main_menu.vm" )
+</td>
+<td width="800">
+<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ShowAggregations">Show Aggregations</a></font>
+<hr />
+<form method=post action=$req.getContextPath()/servlet/ShowAggregations onSubmit="return filterFields();">
+<table class="myt" style="width:550;">
+		<tr>
+									  <td colspan="2">
+									  <font size="1" face="Verdana, Helvetica, Arial">Show aggregations functionality shows status of aggregations for a certain tech pack with certain date.
+									  Day aggregations are shown fourteen(14) days prior to the selected date. Week aggregations are shown eight(8) weeks backwards, 
+									  month aggregations are shown four(4) months backwards.
+									  Two different filters have to be set:<br /><br />
+									  								<li>Date(From which date backwards are aggregations shown.)</li>
+<li>Tech pack name</li>
+</font>
+									  </td>
+</tr>
+</table>
+<br>
+<table cellspacing="0" style="width:500;">
+	<tr>
+		<td class="midhdr">Date</td>
+		<td class="midhdr">Tech Pack</td>
+	<!--	<td class="midhdr">Filter</td> -->
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td valign="top"><font size="-1">
+		#parse( "cal_select_1.vm" )
+		</font></td>
+		<td valign="top"><font size="-1">
+#set($nlist = $twoLevelSelectionBuilder.getNameList())
+<select name="type" style="font-size: 9;">
+<option selected value="$type">$theGroup</option>
+	#foreach($grp in $distinctTechPacks)
+		#if ($grp != $type)
+		<option>$grp</option>
+		#end
+	#end	
+	#if ($theGroup != "-" && $type != "-")
+		<option>-</option>
+	#end
+</select>
+		</font></td>
+		<!-- <td class="ctitle"><input  type="checkbox" align="left" name="disabled" value="disabled" $disabled_checked/>Show disabled</td>  -->
+	</tr>
+
+##---------------------------------------------
+<td valign="top"   colspan=2><font size="-1">
+
+<table border="1">
+
+</table>
+		</font></td>
+	</tr>
+		<tr>
+		<td></td>
+	</tr>
+	<tr>
+		<td valign="top" colspan="4"><font size="-1">
+		<input type="submit" style="font-size: 11;" name="value" value="Get Information" onSubmit="return filterFields();">
+		</font></td>
+	</tr>
+</table>
+</form>
+
+<hr>
+
+#set ($agg_clr = "#047e01")
+#set ($load_clr = "#90ee90")
+#set ($late_clr = "#8080ff")
+#set ($man_clr = "#0000ff")
+#set ($chk_clr = "#000099")
+#set ($que_clr = "#00ffff")
+#set ($nloa_clr = "#ffff00")
+#set ($bloc_clr = "#ff8000")
+#set ($err_clr = "#CC0000")
+#set ($ign_clr = "#808080")
+#set ($faileddp_clr = "#FF00FF")
+#set ($notmon_clr = "#FFFFFF")
+
+
+#set ($day_fil = "<font color=white>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>")
+#set ($week_fil = "<font color=white>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>")
+#set ($month_fil = "<font color=white>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></a>")
+
+
+
+#if ($maxtime!="")
+<table border="0" width="400">
+<tr><td colspan="5">
+<font size="1" face="Verdana, Helvetica, Arial"><b>Color symbols:</b></font></td></tr>
+<tr>
+<td align="center" class="basic" bgcolor="$agg_clr" width=20% height=14><font color="white">Aggregated</font></td>
+<td align="center" class="basic" bgcolor="$load_clr" width=20% height=14><font color="black">Loaded</font></td>
+<td align="center" class="basic" bgcolor="$late_clr" width=20% height=14><font color="white">Late data</font></td>
+<td align="center" class="basic" bgcolor="$man_clr" width=19% height=14><font color="white">Manual</font></td>
+<td align="center" class="basic" bgcolor="$chk_clr" width=21% height=14><font color="white">Check failed</font></td>
+<td align="center" class="basic" bgcolor="$faileddp_clr" width=21% height=14><font color="white">Failed Dependency</font></td>
+</tr>
+<tr>
+<td align="center" class="basic" bgcolor="$que_clr" width=20% height=14><font color="black">Queued</font></td>
+<td align="center" class="basic" bgcolor="$nloa_clr" width=20% height=14><font color="black">Not loaded</td>
+<td align="center" class="basic" bgcolor="$bloc_clr" width=20% height=14><font color="black">Blocked</font></td>
+<td align="center" class="basic" bgcolor="$err_clr" width=19% height=14><font color="white">Error</font></td>
+<td align="center" class="basic" bgcolor="$ign_clr" width=21% height=14><font color="white">Ignored</font></td>
+<td align="center" class="basic" bgcolor="$notmon_clr" width=21% height=14><font color="black">Not Monitored</font></td>
+</tr>
+<!--
+<td align="center" class="basic" bgcolor="#000099" width=20% height=14><font color="white">Manual</font></td>
+<td align="center" class="basic" bgcolor="#000000" width=20% height=14><font color="white">Ignored</font></td>
+<td align="center" class="basic" bgcolor="#969696" width=20% height=14><font color="white">Loaded</font></td> 
+<td align="center" class="basic" bgcolor="#E4EA06" width=20% height=14><font color="black">Not loaded</td>
+<td align="center" class="basic" bgcolor="#3366FF" width=20% height=14><font color="white">Late data</font></td>
+</tr>
+<tr>
+<td align="center" class="basic" bgcolor="#33FF33" width=20% height=14><font color="black">Check failed</font></td>
+<td align="center" class="basic" bgcolor="#006600" width=20% height=14><font color="white">Aggregated</font></td>
+<td align="center" class="basic" bgcolor="#CC0000" width=20% height=14><font color="white">Error</font></td>
+<td align="center" class="basic" bgcolor="#7FFFD4" width=20% height=14><font color="black">Blocked</font></td>
+<td align="center" class="basic" bgcolor="#FF00FF" width=20% height=14><font color="black">Queued</font></td>
+</tr>
+-->
+<br>
+#set ($col_width = "30")
+
+#if ($future_date == "true")
+  <tr><td colspan="15" class="pt_b_top" width="230"><b> WARNING : More than 2 days of future data is not available.</b></td></tr>
+#end
+
+#if ($day.size() == 0)
+  <tr><td colspan="9" class="pt_b_top" width="230"><b>No Day Data</b></td></tr>
+#end
+
+#if ($week.size() == 0 )
+  <tr><td width="230" class="pt_b_top" colspan="9"><b>No Week Data</b></td></tr>
+#end
+#if ($month.size() == 0 )
+  <tr><td width="230" class="pt_b_top" colspan="9"><b>No Month Data</b></td></tr>
+#end
+</table>
+#end
+<br />
+#if ($day.size() > 0 && $future_date == "false")
+  <table border="1" width="800" name="daymark">
+  <tr><td width="230"  bgcolor="silver" class="basic"><font size="-1"><b>Day Aggregations</b></td></tr>
+  <tr><td width="230"  bgcolor="silver" class="basic"><font size="-1">&nbsp;</td>
+
+  #foreach($foofaa in $days)
+    <td bgcolor="silver" width="50" height="14"><IMG SRC="../img/space.gif" WIDTH="1" HEIGHT="1" BORDER="0" ALT=""><font size="-1" face="Verdana, Helvetica, Arial">$foofaa</font></td> 
+  #end
+  </tr>
+
+
+  #set ($meascount = 0)
+  #foreach ($measvect in $day)
+    #set ($measrow = 0)
+    #foreach ($meas in $measvect)
+      #set ($meascol = 0)
+      #foreach ($onething in $meas)
+	        #set ($counttmp_ = 0)
+        #if ($measrow == 0 && $meascol==0) 
+          #set ($tname = $onething.trim())
+        #end
+
+        #if ($measrow == 0 && $meascol==1) 
+          #set ($timelevel = $onething.trim())
+          <tr><td width="230"><font size="-1">$tname</font></td>
+        #end
+
+        #if ($meascol==1)
+          #set($tname = $onething)
+        #end
+
+        #if ($meascol==2) 
+          #set($aggregation = $onething)
+        #end
+
+        #if ($meascol==3)
+          #set($datadate = $onething)
+        #end
+
+        #if ($meascol==4)
+          #set($timestamp = $onething)
+        #end
+        
+        #if ($meascol==7)
+          #set($value = $onething)
+        #end
+              
+        #if ($meascol==8)
+        
+        #if ($onething.startsWith("blank"))
+            #set ($counttmp_ = $meascount + 1)
+            <td class="agglink" bgcolor="white" width=$col_width height=14>&nbsp;</td>
+          
+          #elseif ($onething == "")
+            #set ($counttmp_ = $meascount + 1)
+            <td class="agglink" bgcolor="white" width=$col_width height=14>&nbsp;</td>
+          
+          #elseif ($onething.startsWith("CHECKFAILED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$chk_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$chk_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td>
+	    #end
+          
+          #elseif ($onething.startsWith("ERROR"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$err_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td> <!-- black -->
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$err_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td> <!-- black -->
+        #end
+          
+          #elseif ($onething.startsWith("AGGREGATED"))
+          #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$agg_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td> <!-- yellow -->
+	       #elseif($value == "disable")
+	       <td class="agglink" bgcolor="$agg_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td> <!-- yellow -->
+	    #end
+          
+          #elseif ($onething.startsWith("NOT_LOADED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$nloa_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?year_1=$year_1&month_1=$month_1&day_1=$day_1&type=$type&aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td> <!-- grey -->
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$nloa_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td> <!-- grey -->
+	    #end
+          
+          #elseif ($onething.startsWith("LATE_DATA"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$late_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td> <!-- blue -->
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$late_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td> <!-- blue -->
+	    #end
+          
+          #elseif ($onething.startsWith("LOADED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$load_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td> <!-- green -->
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$load_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td> <!-- green -->
+	    #end
+         
+          #elseif ($onething.startsWith("MANUAL"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$man_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	     #elseif($value == "disable")
+	    </a></td> <!-- dark blue -->
+	    <td class="agglink" bgcolor="$man_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td> <!-- dark blue -->
+         #end 
+         
+		  #elseif ($onething.startsWith("IGNORED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$ign_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	     $day_fil
+	    </a></td> 
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$ign_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	     $day_fil
+	    </a></td>
+	    #end
+          
+		  #elseif ($onething.startsWith("BLOCKED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$bloc_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	    $day_fil
+	    </a></td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$bloc_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	    $day_fil
+	    </a></td>
+	    #end
+          
+		  #elseif ($onething.startsWith("QUEUED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$que_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	    $day_fil
+	    </a></td>
+	     #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$que_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	    $day_fil
+	    </a></td>
+	    #end
+	    
+	     #elseif ($onething.startsWith("FAILEDDEPENDENCY"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$faileddp_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+	    $day_fil
+	    </a></td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$faileddp_clr" width=$col_width height=14>
+	    <a href="#daymark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+	    $day_fil
+	    </a></td>
+	    #end
+	    
+          #else
+            #set ($counttmp_ = $meascount + 1)
+	        <td bgcolor="#FFFFFF" width=$col_width height=14><font color="#FFFF33">&nbsp;</font></td>
+          #end
+        #end
+        #set ($meascol = $meascol + 1)
+      #end<!-- one cell ends here-->
+      #set ($measrow = $measrow + 1)
+    #end
+
+    #set ($count = 13 - $counttmp_)
+    #set ($counter = [$meascount..$count])
+
+    <!-- one row ends here-->
+</tr>
+
+#set ($meascount = 0)
+</tr>
+#end 
+#end
+<!-- End of day aggregations-->
+<!-- Week Aggregations-->
+#if ($week.size() > 0 && $future_date == "false")
+  <table border="1" width="700">
+  <tr><td width="150" name="weekmark"  bgcolor="silver" class="basic" NOWRAP><font size="-1"><b>Week Aggregations</b></td></tr>
+  <tr><td width="320"  bgcolor="silver" class="basic" NOWRAP><font size="-1">&nbsp;</td>
+
+  #foreach($foofaa in $v_week)
+    <td height="1" bgcolor="silver" width="50" align="center" NOWRAP><font size="-1" face="Verdana, Helvetica, Arial">$foofaa</font></td> 
+  #end
+  </tr>
+
+
+  #set ($meascount = 0)
+  #foreach ($measvect in $week)
+    #set ($measrow = 0)
+    #foreach ($meas in $measvect)
+      #set ($meascol = 0)
+      #foreach ($onething in $meas)
+	        #set ($counttmp_ = 0)
+        #if ($measrow == 0 && $meascol==0) 
+          #set ($tname = $onething.trim())
+        #end
+
+        #if ($measrow == 0 && $meascol==1) 
+          #set ($timelevel = $onething.trim())
+          <tr><td width="150" NOWRAP><font size="-1">$tname</font></td>
+        #end
+
+        #if ($meascol==1)
+          #set($tname = $onething)
+        #end
+
+        #if ($meascol==2) 
+          #set($aggregation = $onething)
+        #end
+
+        #if ($meascol==3)
+          #set($datadate = $onething)
+        #end
+
+        #if ($meascol==4)
+          #set($timestamp = $onething)
+        #end
+        
+        #if ($meascol==7)
+          #set($value = $onething)
+        #end
+
+        #if ($meascol==8)
+			          #set ($col_width = 50)
+          #if ($onething.startsWith("blank"))
+            #set ($counttmp_ = $meascount + 1)
+            <td bgcolor="white" width=$col_width height=14 align="center">&nbsp;</td> <!-- black -->
+  
+          #elseif ($onething.startsWith("CHECKFAILED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$chk_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$chk_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+        #end
+          
+          #elseif ($onething.startsWith("ERROR"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$err_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td> <!-- black -->
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$err_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td> <!-- black -->
+	    #end
+         
+          #elseif ($onething.startsWith("AGGREGATED"))
+          #set ($counttmp_ = $meascount + 1)
+          #if($value == "enable")
+            <td class="agglink" bgcolor="$agg_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	        <td class="agglink" bgcolor="$agg_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+          
+          #elseif ($onething.startsWith("NOT_LOADED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$nloa_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$nloa_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+          
+          #elseif ($onething.startsWith("LATE_DATA"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$late_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$late_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+         
+          #elseif ($onething.startsWith("LOADED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$load_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$load_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+          
+          #elseif ($onething.startsWith("MANUAL"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$man_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$man_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+          
+		  #elseif ($onething.startsWith("IGNORED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$ign_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$ign_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+         
+		  #elseif ($onething.startsWith("BLOCKED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$bloc_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td> 
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$bloc_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end
+          
+		  #elseif ($onething.startsWith("QUEUED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$que_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$que_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end 
+	    
+	      #elseif ($onething.startsWith("FAILEDDEPENDENCY"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$faileddp_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $week_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$faileddp_clr" width=$col_width height=14 align="center">
+            <a href="#weekmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $week_fil
+	    </td>
+	    #end 
+	    
+          #else
+	            #set ($counttmp_ = $meascount + 1)
+	            <td bgcolor="#FFFFFF" width=$col_width height=14 align="center">&nbsp;</td>
+          #end
+        #end
+        #set ($meascol = $meascol + 1)
+      #end<!-- one cell ends here-->
+      #set ($measrow = $measrow + 1)
+    #end
+
+    #set ($count = 7 - $counttmp_)
+    #set ($counter = [$meascount..$count])
+
+    <!-- one row ends here-->
+</tr>
+
+#set ($meascount = 0)
+</tr>
+#end
+#end
+<!-- end of week aggregations -->
+<!-- Month aggregations-->
+#if ($month.size() > 0 && $future_date == "false")
+  <table border="1" width="700" name="monthmark">
+  <tr><td width="150"  bgcolor="silver" class="basic"><font size="-1"><b>Month Aggregations</b></td></tr>
+  <tr><td width="450"  bgcolor="silver" class="basic"><font size="-1">&nbsp;</td>
+
+  #foreach($foofaa in $v_month)
+    <td bgcolor="silver" width="80" height="14" align="center"><font size="-1" face="Verdana, Helvetica, Arial">$foofaa</font></td> 
+  #end
+  </tr>
+
+
+  #set ($meascount = 0)
+  #foreach ($measvect in $month)
+    #set ($measrow = 0)
+    #foreach ($meas in $measvect)
+      #set ($meascol = 0)
+      #foreach ($onething in $meas)
+	        #set ($counttmp_ = 0)
+        #if ($measrow == 0 && $meascol==0) 
+          #set ($tname = $onething.trim())
+        #end
+
+        #if ($measrow == 0 && $meascol==1) 
+          #set ($timelevel = $onething.trim())
+          <tr><td width="100"><font size="-1">$tname</font></td>
+        #end
+
+        #if ($meascol==1)
+          #set($tname = $onething)
+        #end
+
+        #if ($meascol==2) 
+          #set($aggregation = $onething)
+        #end
+
+        #if ($meascol==3)
+          #set($datadate = $onething)
+        #end
+
+        #if ($meascol==4)
+          #set($timestamp = $onething)
+        #end
+        
+        #if ($meascol==7)
+          #set($value = $onething)
+        #end
+		      #if ($meascount < 4 )
+        #if ($meascol==8)
+          #set ($col_width = 100)
+          #if ($onething.startsWith("blank"))
+            #set ($counttmp_ = $meascount + 1)
+            <td bgcolor="white" width=$col_width height="14" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> <!-- black -->
+         
+          #elseif ($onething.startsWith("CHECKFAILED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$chk_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$chk_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+        #end  
+        
+          #elseif ($onething.startsWith("ERROR"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$err_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil</td>
+            #elseif($value == "disable")
+            <td class="agglink" bgcolor="$err_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil</td>
+            #end
+        
+          #elseif ($onething.startsWith("AGGREGATED"))
+          #set ($counttmp_ = $meascount + 1)
+          #if($value == "enable")
+            <td class="agglink" bgcolor="$agg_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+            <td class="agglink" bgcolor="$agg_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+	    #end
+        
+          #elseif ($onething.startsWith("NOT_LOADED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$nloa_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$nloa_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+         #end
+
+          #elseif ($onething.startsWith("LATE_DATA"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$late_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+          <td class="agglink" bgcolor="$late_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+	    #end
+        
+          #elseif ($onething.startsWith("LOADED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$load_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$load_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+	    #end
+          
+          #elseif ($onething.startsWith("MANUAL"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$man_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$man_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+	    #end
+         
+          #elseif ($onething.startsWith("IGNORED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$ign_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$ign_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+	    #end
+         
+		  #elseif ($onething.startsWith("BLOCKED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$bloc_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil
+	    </td>
+	    #elseif($value == "disable")
+	    <td class="agglink" bgcolor="$bloc_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil
+	    </td>
+	    #end
+       
+          #elseif ($onething.startsWith("QUEUED"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$que_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil</td>
+            #elseif($value == "disable")
+            <td class="agglink" bgcolor="$que_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil</td>
+            #end
+            
+          #elseif ($onething.startsWith("FAILEDDEPENDENCY"))
+            #set ($counttmp_ = $meascount + 1)
+            #if($value == "enable")
+            <td class="agglink" bgcolor="$faileddp_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="window.open('MakeAggregation?aggregation=$aggregation&datadate=$datadate&tname=$tname&timestamp=$timestamp&','','scrollbars=no,menubar=no,height=600,width=500,resizable=yes,toolbar=no,location=no,status=no');">
+            $month_fil</td>
+            #elseif($value == "disable")
+            <td class="agglink" bgcolor="$faileddp_clr" width=$col_width height=14 align="center">
+            <a href="#monthmark" onclick="alert('Set is disabled, this set can be enabled from Busy Hour Configuration');">
+            $month_fil</td>
+            #end
+         
+          #else
+	         #set ($counttmp_ = $meascount + 1)
+	         <td bgcolor="white" width=$col_width height="14">&nbsp;</td> <!-- white -->            
+          #end
+        #end
+      #end  
+        #set ($meascol = $meascol + 1)
+      #end<!-- one cell ends here-->
+      #set ($measrow = $measrow + 1)
+    #end
+
+    #set ($count = 3 - $counttmp_)
+    #set ($counter = [$meascount..$count])
+    <!-- one row ends here-->
+</tr>
+
+#set ($meascount = 0)
+</tr>
+#end
+#end
+
+#if ($day.size() > 0 || $month.size() > 0 || $week.size() > 0)
+</table>
+<br>
+
+</td></tr>
+#end
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

@@ -1,0 +1,86 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Security Administration :: User Management :: View User Roles</title>
+
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+
+</head>
+
+<body bgcolor="#ffffff" >
+
+
+<table border="0">
+<tr valign=top>
+
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+
+<!-- the body -->
+<FORM METHOD=POST ACTION="" >
+<td width=800>
+Security Administration&nbsp;&gt;&gt;&nbsp;User Management&nbsp;&gt;&gt;&nbsp;<a href="">View User Roles</a>
+
+<hr />
+<br>
+	List of all roles(s) assigned to the selected user
+<br><br><br>
+
+### $!_debug
+
+##
+##
+##
+
+<table style="width=350px; border:1px solid #99F;" cellpadding="0" cellspacing="12">
+
+<tbody>
+<tr >
+    <td align="left" valign="top" width=20%><strong>User ID:</strong></td>
+    <td align="left" valign="top">$userData.userId</td>
+</tr>
+
+
+<tr >
+    <td align="left" valign="top"><strong>Name:</strong></td>
+    <td align="left" valign="top">$userData.Fname $userData.Lname</td>
+</tr>
+
+<tr >
+    <td align="left" valign="top"><strong>Role(s):</strong></td>
+    <td align="left" valign="top">     
+        #foreach( $roleName in $userData.roles )
+            $roleName<br>
+        #end
+    </td>
+</tr>
+
+
+</tbody>
+
+</table>
+
+<br><br>
+
+
+<a href="$req.getContextPath()/servlet/UserManagement">&lt;&lt;&nbsp;User Management</a>
+</FORM>
+
+
+#parse( "footer.vm" )
+
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+
+
+
+
+
+

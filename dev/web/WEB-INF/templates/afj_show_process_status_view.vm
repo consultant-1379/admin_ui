@@ -1,0 +1,35 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: Configuration :: Node Version Update</title>
+<meta http-equiv="refresh" content="2;url=/adminui$servletURL" />
+  <!-- This is for evaluation..-->
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="shortcut icon" href="../img/eric.ico">
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+
+<td width=800>
+
+<font size="1" face="Verdana, Helvetica, Arial">Configuration &nbsp;&gt;&gt;&nbsp;<a href="AfjShowAfjTechPacks">Node Version Update</a>
+</font>
+<hr />
+
+#parse( "afj_message.vm" )
+
+</td>
+
+#parse( "footer.vm" )
+</tr>
+</table>
+</body>
+</html>

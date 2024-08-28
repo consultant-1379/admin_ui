@@ -1,0 +1,137 @@
+<html>
+<head>
+  <title>Ericsson Network IQ :: Configuration :: Unmatched Topology</title>
+
+  <link rel="shortcut icon" href="../img/eric.ico">
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="stylesheet" type="text/css" href="../css/TablePager.css">
+</head>
+<body bgcolor="#ffffff">
+<table border="0">
+  <tr valign=top>
+    <td width=220>
+      #parse( "main_menu.vm" )
+    </td>
+    <td width=800>
+	  #parse("unmatched_topology_breadcrumb.vm")
+	  #if ($errormsg != "")
+         #parse("unmatched_topology_error.vm")
+      #else
+	  <p>Connect unmatched #if ( $network_type == "_4G" ) 4G #elseif($network_type == "_3G") 3G (Core)  #elseif($network_type == "_3G_RAN") 3G (RAN) #else 2G #end topology records</p> 	
+
+      <div id="tabledata"></div>
+      <div id="navbar"></div>
+
+	  <form name="reparent_form" id="reparent_form" action=$req.getContextPath()/servlet/UnmatchedTopologyManager?connect method=post onSubmit="return filterFields();">
+        
+        ##<input type="hidden" id="cellsToReparent" name="cellsToReparent" value="$cellsToReparent"/>
+		#if ($network_type != '_4G' && $network_type != "_3G_RAN") 
+		<input type="hidden" id="parentSelection" name="parentSelection" value="$parentSelection"/>
+		#end
+		<input type="hidden" id="controllerSelection" name="controllerSelection"/>	
+
+		<fieldset>		
+			Vendor:
+			<select name="vendors" size="1" onchange="document.reparent_form.vendor.value=document.reparent_form.vendors.options[document.reparent_form.vendors.selectedIndex].value;">
+				<option value="Ericsson">Ericsson</option>
+				<option value="Huawei">Huawei</option>
+				<option value="Nortel">Nortel</option>
+				<option value="Alcatel">Alcatel</option>
+				<option value="AT&T">AT&T</option>
+			</select>
+			<input type="text" id="vendor" name="vendor" value="Ericsson" size="20"/>
+            OSS ID:
+			<select name="ossIds" size="1" onchange="document.reparent_form.ossId.value=document.reparent_form.ossIds.options[document.reparent_form.ossIds.selectedIndex].value;">
+				<option value="">    </option>
+				#foreach( $ossId in $ossIds)
+					<option value="$ossId">$ossId</option>
+				#end
+			</select>
+			<input type="text" id="ossId" name="ossId" value="" size="10"/>
+			<input type="submit" name="connect" value="Connect" onclick="return checkForm();"/>
+		</fieldset>
+      </form>
+	  #parse("unmatched_topology_cancel_link.vm")
+      #end 
+      <br>
+    </td>
+  </tr>
+  #parse( "footer.vm" )
+</table>
+<script type="text/javascript" src="../javascript/TablePager.js"></script>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script type="text/javascript">
+
+#if ($reparentCellData)
+    #if ( $network_type == "_4G" )
+   // Create unmatched topology dynamic table 
+    var tableId = "cellTable";
+    var tableHeaders = ["Select", "Controller", "CELL ID", "MCC", "MNC", "TAC"];
+    var tablePager = new TablePager(tableId, 15,5);
+
+   try {
+   	 tablePager.initSelectableTable($reparentCellData, tableHeaders);
+   } catch(e) {
+     alert('Error creating table '+e);
+   }
+   
+
+#elseif ( $network_type == "_3G_RAN" )
+   // Create unmatched topology dynamic table
+    var tableId = "cellTable";
+    var tableHeaders = ["Select", "Controller", "CELL ID", "MCC", "MNC"];
+    var tablePager = new TablePager(tableId, 15,4);
+
+   try {
+   	 tablePager.initSelectableTable($reparentCellData, tableHeaders);
+   } catch(e) {
+     alert('Error creating table '+e);
+   }
+
+
+#else 
+ 	// Create unmatched topology dynamic table 
+   var tableId = "cellTable";
+   var tableHeaders = ["Select", "Controller", "Access Area ID", "MCC", "MNC", "LAC", "RAC"];
+   var tablePager = new TablePager(tableId, 15,6);
+
+   try {
+   	 tablePager.initSelectableTable($reparentCellData, tableHeaders);
+   } catch(e) {
+     alert('Error creating table '+e);
+   }
+#end
+#end  
+  
+  function checkForm() {
+     var vendor = document.getElementById('vendor');
+	 if ( vendor.value == null || vendor.value.length == 0) {
+	    alert('Please specify a vendor from the list or add a new entry');
+		return false;
+	 }
+	 
+	 var ossId = document.getElementById('ossId');
+	 if ( ossId.value == null || ossId.value.length == 0) {
+	    alert('Please specify a source OSS ID');
+		return false;
+	 }
+	 
+	 
+	 tablePager.getSelectedCells('controllerSelection');
+     var selectedCells = document.getElementById('controllerSelection');
+	 if (selectedCells.value === null || selectedCells.value.length == 0) {
+	    alert('Please select Controller item(s) for connection');
+		return false;
+	 }
+	 
+  }
+  
+  function submitForm(form, type){
+     form.reset();
+     form.action='$req.getContextPath()/servlet/UnmatchedTopologyManager?network_type=' + type;
+     form.submit();
+  }
+
+</script>
+</body>
+</html>

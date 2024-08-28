@@ -1,0 +1,31 @@
+#if( $messages.size()>0 )
+<br/>	
+<div style="border: 1px solid black; text-align: center; width: 97%;"> 
+<table border="0" width="97%" cellpadding="1" cellspacing="1"><th />     
+      #foreach( $message in $messages )
+		#if ($message.toString() != "")
+        <tr>
+			<td>
+				&nbsp;
+			</td>
+			<td valign="top">
+				#if ( $message.isInfo() )
+				<img src="../img/information.png" width="16" height="16" border="0" alt="Info" />
+				#elseif ( $message.isError() )
+				<img src="../img/error.png" width="16" height="16" border="0" alt="Error" />
+				#elseif ( $message.isWarning() )
+				<img src="../img/warning.png" width="16" height="16" border="0" alt="Warning" />
+				#elseif ( $message.isRunning() )
+				<img src="../img/running.gif" width="16" height="16" border="0" alt="Running" />
+				#end	
+			</td>
+			<td>
+				<font face="Verdana, Helvetica, Arial" size=3>$message.getTextAsHTML()</font>
+			</td>
+		</tr>					
+		#end
+      #end
+</table>      
+</div>
+<br/>	
+#end

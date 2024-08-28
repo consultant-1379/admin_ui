@@ -1,0 +1,67 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: License Log Details</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css" />
+<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font class="toplink" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="$servletPath/LoaderStatusServlet">System Status</a> 
+&nbsp;&gt;&gt;&nbsp;<a href="$servletPath/LicenseLogsViewer">Show License Logs</a>&nbsp;&gt;&gt;&nbsp;License Log Details</font>
+
+<hr />
+<br>
+<table cellspacing="0" cellpadding="0">
+
+#if ($listnull == "0")
+<tr>
+    <td class="log">
+      <b>No results found.</b>
+   </td>
+</tr>  	
+
+#else
+<tr>
+  <td class="log"><b>Timestamp&nbsp;&nbsp;</b></td>
+  <td class="log"><b>Level&nbsp;&nbsp;</b></td>
+  <td class="log" nowrap><b>Action details&nbsp;&nbsp;</b></td>
+  <td class="log"><b>Message</b></td>
+</tr>
+<tr><td colspan="4"><hr noshade size="1" color="#000000"></td></tr>
+#if ($licenselog_rows.size() > 0)
+	#foreach ($value in $licenselog_rows)
+
+		#if ($value.getLogLevel() == "WARNING" || $value.getLogLevel() == "ERROR")
+			<tr class="log_warning">
+		#else
+			<tr>
+		#end
+		<td valign="top" class="log">$sdf.format($value.getLogTime())</td>
+		<td valign="top" class="log">$value.getLogLevel()&nbsp;&nbsp;</td>
+		#if ($value.getTypeDetails() != "")
+			<td valign="top" class="log" nowrap>$value.getTypeDetails()&nbsp;&nbsp;&nbsp;</td>
+		#else
+			<td valign="top" class="log" nowrap>&nbsp;</td>
+		#end
+		<td valign="top" class="log">$value.getMessage()</td>
+		</tr>
+		<tr><td colspan="4"><hr noshade size="1" color="#000000"></td></tr>
+	#end
+#end
+#end
+</table>
+<br/>
+</td>
+</table>
+</body>
+</html>

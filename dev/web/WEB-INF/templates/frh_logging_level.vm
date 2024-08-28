@@ -1,0 +1,82 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>FLEXIBLE ROP :: FRH Configuration :: FRH Logging Configuration</title>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form method=post action="$req.getContextPath()/servlet/FRHLoggingConfig">
+<font size="1" face="Verdana, Helvetica, Arial">FRH Configuration&nbsp;&gt;&gt;&nbsp;<a href=FRHLoggingConfig>FRH Logging Configuration</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table class="myt" style="width:550;">
+<tr>
+		<td>
+			<font color="red"><b>Note!</font> If there is no need for more information about packages logging level should be INFO.</b>
+			<br><br>
+			</font>
+		</td>
+</table>
+
+#if ($errorMessage != "")
+<table class="myt" style="width:650;">
+<tr>
+       <td  class="error1">$errorMessage</td>
+<tr>
+</table>
+#end
+<br>
+
+<table border="1">
+
+	<tr>
+		<td width="200" class="basichdr">&nbsp;</td>
+		<td class="basichdr">log level</td>
+	</tr>
+
+	<tr>
+		<td class="basic">Controller logging</td>
+		<td>
+		   <select name="CONTROLLER" style="font-size: 9;">
+			#foreach ($set in $logLevels)
+				#if ($set == $ctrlLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="basic">Flow logging</td>
+		<td>
+		   <select name="FLOW" style="font-size: 9;">
+			#foreach ($set in $logLevels)
+				#if ($set == $flowLevel) 
+				<option selected value="$set">$set</option>
+				#else
+				<option value="$set">$set</option> 
+				#end
+			#end
+		</td>
+	</tr>
+</table>
+<br>
+
+<input type="submit" name="save" value="Save changes">
+</form>
+
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+</html>

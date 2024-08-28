@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Fls Monitoring</title>
+<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript">
+#if ($ERROR)
+window.onload = function(){	
+	alert("Persisted file exists");
+	#if ($servername)
+		window.location.href = "https://"+"$servername"+":8443/adminui/";
+	#end
+}
+#else
+	#if ($future_date )
+	window.onload = function(){
+		alert("You have entered future date.Please enter valid date and time to start fls querying");
+	}
+	#end
+	
+	#if ($past_date )
+	window.onload = function(){
+		alert("You have entered a date which is older than 3 days.Please enter valid date and time to start fls querying");
+	}
+	#end
+	
+	#if ($invalid_date)
+	window.onload = function(){
+		alert("You have entered invalid date.Please enter valid date and time to start fls querying");
+	}
+	#end
+</script>	
+	</head>
+	
+	<body bgcolor="#ffffff" >
+	<table border="0">
+	<tr valign=top>
+	<!-- main menu -->
+	<td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	<!-- the body -->
+	<td width=800>
+	<font size="1" face="Verdana, Helvetica, Arial">ENM Interworking &nbsp;&gt;&gt;&nbsp;<a href="FlsMonitoring">Fls Monitoring</a></font>
+	<hr />
+	#if($resultpage)
+	<form name=f1 method=post action=$req.getContextPath()/servlet/FlsMonitoring onsubmit="return filterInput();">
+	
+	<br/><br/>
+	Persisted token is lost. Enter a valid date and time to start fls querying.
+	<br/>
+	Note : Entered date should not be older than 3 days.
+	<br/><br/>
+	<table cellspacing="0" style="width:500;">
+		<tr> <br/><br/></tr>
+		<tr>
+			<td>Select ENMHostname</td>
+			<td valign=top><font size=-1>
+			<select name="enmHostname" style="width: 200px" style="font-size: 15;">
+			#foreach($enm in $allENMHostnames)
+			<option>$enm
+			#end
+			</select></font></td>
+		<tr>
+		#parse( "cal_time.vm" )
+		<tr>
+			<td valign="top" colspan="2"><font size="-1">
+			<input type="submit" style="font-size: 11;" name="value" value="FlsInputDateTime" onSubmit="return filterInput();">
+			</font></td>
+		</tr>
+	</table>
+	</form>
+	#else		
+		</br>
+		<div id="date_1">Fls started querying $enmHostname with alias $enmAlias with User inputted date and time: $date_1 </div>
+	#end
+	
+	<!-- End of Input results -->
+	#parse( "footer.vm" )
+	</table>
+	</body>
+<script>
+#end
+</script>
+</html>

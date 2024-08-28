@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: FeatureAvailability</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+<style type='text/css'>
+</style>
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<form name=f2 autocomplete="off" method=post action=$req.getContextPath()/servlet/FeatureAvailability onsubmit="return filterFields();">Configuration&nbsp;&gt;&gt;&nbsp;<a href="FeatureAvailability">Feature Availability</a>
+<hr />
+<br><br>
+
+#if($InvalidMWS )
+<br><br>
+<font face="Verdana,Helvetica,Arial" size="2" color="red"><center><b>MWS Server IP not found.</b></center></font>
+<br><br>
+#end
+
+#if($NoSwLocate )
+<br><br>
+<font face="Verdana,Helvetica,Arial" size="2" color="red"><center><b>Eniq Track could not be found</b></center></font>
+<br><br>
+#end
+
+#if($installed_featurelist.size() != 0)
+<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Availability Summary for Update</b></font>
+<br><br>
+<table border="1">
+		
+<tr>
+	<td class="midhdr">Feature</td>
+	<td class="midhdr">Node type</td>
+	<td class="midhdr">Latest version in Network</td>
+	<td class="midhdr">Version in ENIQ</td>
+	<td class="midhdr">Version available in MWS</td>
+	<td class="midhdr">Update Available</td>
+	<td class="midhdr">Update Feature</td>
+	<td class="midhdr">Update Priority</td></tr>
+	
+	#set($dummy = "")
+	
+	#foreach ( $features in $installed_featurelist.keySet())
+	
+	#set($featureSize = $installed_featurelist.get($features).size())
+	
+	#set($flag = false)
+	
+	#if($featureSize != 0)
+		#foreach ( $nodeType in $installed_featurelist.get($features).keySet())
+		<tr>
+			#if( !$flag && $features != $dummy )
+				<td class="basic" rowspan=$featureSize>$features</td>
+				#set( $flag = true)
+				#set( $rowFlag=false)				
+			#end
+			<td class="basic">$installed_featurelist.get($features).get($nodeType).get("NODE_TYPE")</td>
+			<td>$installed_featurelist.get($features).get($nodeType).get("NODE_VERSION_NW")</td>
+			<td></td>
+			<td>$installed_featurelist.get($features).get($nodeType).get("NODE_VERSION_SW_GW")</td>
+			<td></td>
+			#if(!$rowFlag)
+				#set( $rowFlag=true)
+				#set($cxc=$installed_featurelist.get($features).get($nodeType).get("CXCNUMBER"))
+			<td rowspan=$featureSize style="text-align: center; vertical-align: middle;"><input type="checkbox" name="featurechecked" value="$cxc"></td>
+			<td rowspan=$featureSize></td>			
+			#end
+		</tr>
+		#end
+		#set($dummy = $features )
+	#else
+		<tr><td>$features</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td style="text-align: center; vertical-align: middle;" ><input type="checkbox"></td>
+		<td></td></tr>
+		#end
+	#end
+	
+		
+</table>
+<br><br>
+#end
+
+
+<input OnClick="return check();" type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" value="Update" />
+
+<br><br>
+
+#if($licensed_featurelist.size() != 0)
+
+<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Availability Summary for Install</b></font>
+<br><br>
+<table border="1">
+		
+	<tr><td class="midhdr">Feature</td>
+	<td class="midhdr">Node type</td>
+	<td class="midhdr">Latest version in Network</td>
+	<td class="midhdr">Version in ENIQ</td>
+	<td class="midhdr">Version available in MWS</td>
+	<td class="midhdr">Install Available</td>
+	<td class="midhdr">OSS Alias</td>
+	<td class="midhdr">Install Priority</td></tr>
+	
+	#set($dummy = "")
+	
+	#foreach ( $features in $licensed_featurelist.keySet())
+	
+	#set($featureSize = $licensed_featurelist.get($features).size())
+	
+	#set($flag = false)
+	
+	#if($featureSize != 0)
+		#foreach ( $nodeType in $licensed_featurelist.get($features).keySet())
+		<tr>
+			#if( !$flag && $features != $dummy)
+				<td nowrap class="basic" size="1" rowspan=$featureSize>$features</td>
+				#set( $flag = true)
+				#set( $rowFlag=false)				
+			#end
+			<td class="basic">$licensed_featurelist.get($features).get($nodeType).get("NODE_TYPE")</td>
+			<td>$licensed_featurelist.get($features).get($nodeType).get("NODE_VERSION_NW")</td>
+			<td style=></td>
+			<td>$licensed_featurelist.get($features).get($nodeType).get("NODE_VERSION_SW_GW")</td>
+			#if(!$rowFlag)
+			#set( $rowFlag=true)
+			<td rowspan=$featureSize style=" text-align: center;vertical-align: middle;" ><input type="checkbox"> </td>
+			<td rowspan=$featureSize><li id = "listid">
+			#foreach($oss in $ossalias)
+			<ul style="font-size : 12;"><input type="checkbox">&nbsp$oss</ul> 	
+			#end
+			</li></td> 	
+			<td rowspan=$featureSize></td>			
+			#end
+		</tr>
+		</tr>
+		#end
+		#set($dummy = $features )
+		#else
+		<tr><td>$features</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td><td style="text-align: center; vertical-align: middle;"><input type="checkbox"></td><td></td><td></td>
+		</tr>
+		#end		
+	#end
+		
+</table>
+<br><br><br>
+<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" value="Install" />
+#end
+<br>
+</form>
+#parse( "footer.vm" )
+</table>
+
+</body>
+</html>

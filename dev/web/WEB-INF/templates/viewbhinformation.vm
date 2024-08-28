@@ -1,0 +1,112 @@
+#if (!$search_string)
+#set ($search_string = "-")
+#end
+
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+		<title>Ericsson Network IQ :: Data Verification :: Busy Hour Information</title>
+		<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+		#include( "calendar_js.txt" )
+	</head>
+
+	<body bgcolor="#ffffff">
+		<table border="0">
+			<tr valign=top>
+				<td width=220>
+					#parse( "main_menu.vm" )
+				</td>
+				<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Verification&nbsp;&gt;&gt;&nbsp;<a href="ViewBHInformation">Busy Hour Information</a></font>
+<hr />
+					<form name=f1 action=$req.getContextPath()/servlet/ViewBHInformation method=post onsubmit="return filterFields();">
+						<table border=1>
+							<tr>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Available BH Tables</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>Start Date</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>End Date</b></font>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<font size="-1">
+										<select name="search_string" style="font-size: 9;">
+											<option selected>$search_string</option>
+											#foreach ($row in $initialArray)
+											<option value="$row">$row</option>
+											#end
+										</select>
+									</font>
+								</td>
+								<td valign=top>
+									#parse( "cal_select_1.vm" )
+								</td>
+								<td valign=top>
+									#parse( "cal_select_2.vm" )
+								</td>
+							</tr>
+							<tr>
+								<td class="basic" valign=top colspan=4>
+									<input type="hidden" name="search_done" value="true">
+									<input type=submit style="font-size: 11;" value="Get BH Information">
+								</td>
+							</tr>
+						</table>
+					</form>
+					
+					<p><hr size="1"><p>
+
+
+#if ($search_done == "true")
+<table border=1 cellpadding=1 cellspacing=1>
+	<tr>
+		<td align="center" class="basichdr" colspan="3">
+			<font size="-1"><b>$search_string</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" class="basichdr" valign="top" width="100">
+			<font size="-2"><b>Count</b></font>
+		</td>
+		<td align="center" class="basichdr" valign="top" width="150">
+			<font size="-2"><b>Date ID</b></font>
+		</td>
+		<td align="center" class="basichdr" valign="top" width="50">
+			<font size="-2"><b>Description</b></font>
+		</td>
+	</tr>
+	#foreach ($result in $resultArray)
+	<tr>
+		<td class="basic" align="left" valign="top">
+			<font size="-1">
+				$result.getCount()
+			</font>
+		</td>
+		<td class="basic" align="center" valign="top">
+			<font size="-1">
+				$result.getDateID()
+			</font>
+		</td>
+		<td class="basic" align="center" valign="top">
+			<font size="-1">
+				$result.getDesc()
+			</font>
+		</td>
+	</tr>
+	#end
+</table>
+#end
+
+		
+				</td>
+			</tr>
+			#parse( "footer.vm" )
+		</table>
+	</body>
+</html>

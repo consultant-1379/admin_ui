@@ -1,0 +1,25 @@
+Adminui in general
+-------------------
+Dc5000 administrator user interface (Later AdminUI) is administrative tool for dc5000 installation. With adminui, one is able to see status 
+of system, browse through different types of data collected by dc5000(e.g different types of executed aggregations) and  also request 
+aggregations and run set actions. Adminui’s core functionaly is to observe raw data, which is collected from elements and which is 
+aggregated. Adminui is a web application, which is used via html-browser. With adminui, user is able to visually see and verify that system 
+is running properly. 
+
+Version numbers and their features are shown in ascending order. Features are described as changes to previous version. 
+Features are described from version 5.0 ->.
+
+Pre-requisites
+---------------
+
+Adminui 5.0.1 needs dc5000 core installation to work. Installations of dc5000 from version
+
+
+Version features
+----------------
+##5.0.1
+----------------
+
+See the Functional_description.doc for features in dc5000 adminui version 5.
+
+See the /doc/installation_instructions.txt to how to install and configure adminui

@@ -1,0 +1,25 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Error Page</title>
+#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff">
+  
+	<center>
+		<br/><br/>
+		<img src="../eniq_blue_banner.jpg" /><br /><br/>
+		<br/>
+		<img src="../img/error.png" />&nbsp;&nbsp;<font face="Verdana, Helvetica, Arial" size="3px" color="red"><b>Error</b></font><br />
+		<hr width="100px" size="1" color="red"/>
+		<br/>
+		#if($errorSet)
+		<font face="Verdana, Helvetica, Arial" size="3px" color="red">$errorText</font>
+		#end
+		<br/><br/><br/>
+		<font face="Vedana, Helvetica, Arial" size="2px" color="blue">Check logs for more details.</font>
+	</center>
+
+</body>
+</html>

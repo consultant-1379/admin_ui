@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Policy Refinement Tool</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+	<script type="text/javascript">
+function onConfirm(id){
+	let a = confirm("Click on OK to delete the policy criteria" );
+	if(a === true)
+		window.location.href = id;
+}
+function LevelChanged()
+{		
+  document.f1.submit();
+}
+#if ($invalidNaming)
+window.onload = function(){
+	alert("Invalid Naming Convention!! Please check the character entered ");
+}
+#end
+#if ($invalidcombination)
+window.onload = function(){
+	alert("Entered Combination exists already!!");
+}
+#end
+</script>
+</head>
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">ENM Interworking Tools&nbsp;&gt;&gt;&nbsp;<a href="PolicyAssignment">Policy Refinement Tool</a></font>
+<hr/>
+<form name="f1" action="$req.getContextPath()/servlet/PolicyAssignment" method="post" onsubmit="return filterFields();">
+<table border="0" cellpadding="1" cellspacing="1" >	
+	<table style="width:550;" border=0>
+		#if($message)
+		<tr>
+			<td colspan="3" class="note">$message<br/><br/>
+		#end
+		</tr>
+		<tr>
+			<td class="basichlp" colspan="3">
+				This page allows the user to configure the policies and criteria of any connected ENIQ-S server. 
+				User can select the below options to assign polices --<br /><br />
+				<li>Technology(Applicable for LTE,WCDMA,Core,TRANSPORT,GRAN)</li>
+				<li>Naming Convention - Requires user input</li>
+				<li>ENM_Hostname</li>
+				<li>ENIQ-S servers </li><br /><br />
+			</td>
+		<tr>
+			<td class="midhdr">Technology</td>
+			<td class="midhdr">Naming Convention</td>
+			<td class="midhdr">ENM_Hostname</td>
+			<td class="midhdr">ENIQ-S Servers</td>
+		</tr>
+		<tr>
+			<td valign=top><font size=-1>
+				<select name="technology" style="width: 200px" style="font-size: 15;">
+				<option selected>$technology</option>
+				#foreach($alltech in $allTechnologies)
+				<option>$alltech
+				#end
+				</select>
+				</font></td>
+			<td>
+				<input type="text" name="inputstring" value=""></p>
+			</td>
+			<td valign=top><font size=-1>
+				<select name="enmHostname" style="width: 200px" style="font-size: 15;">
+				#foreach($enm in $allENMHostnames)
+				<option>$enm
+				#end
+				</select>
+				</font>
+			</td>
+			<td valign=top><font size=-1>
+				<select name="identifier" style="width: 300px" style="font-size: 15;">
+				#foreach($key in $allRoles)
+				<option>$key
+				#end
+				</select>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td valign=top colspan=4><font size=-1>
+			<input type=submit style="font-size: 11;" value="Submit">
+			</font></td>
+		</tr>
+			<br>
+		<tr><td class="basichlp" colspan="3">
+			* NOTE - 
+			<li>The input can begin only with alphabet or digits or characters like <b> [ ,*,^,.  </b> </li>
+			<li>The entered input can have only following characters - <br> &nbsp &nbsp &nbsp alphabets, digits and characters like <b> [ , * , ^ , ] , - ,  _ , +, . </b> </li>
+			<li>If the Technology is not selected then by default * will inserted into ENIQS_Policy_Criteria table. This is not <br> &nbsp &nbsp &nbsp recommended.</li> 
+			<li>If Naming Convention field is empty then by default * will inserted into ENIQS_Policy_Criteria table.</li></td>
+		</tr>
+	</table>
+	</form>
+	<hr /><br>
+	#if($policyTable.size() > 0)
+		<div id="t1" style="display: block;">
+		<table border="1" width="100%" cellpadding="1" cellspacing="1">
+				<tr bgcolor="#B3B3FF">
+				<td width="70" height="30"><font face="Verdana,Helvetica,Arial" size="2"><strong>Technology</strong></font></td> <!-- Technology -->
+				<td width="70"><font face="Verdana,Helvetica,Arial" size="2"><strong>Naming Convention</strong></font></td> <!-- Naming Convention -->
+				<td width="70"><font face="Verdana,Helvetica,Arial" size="2"><strong>ENM_Hostname</strong></font></td> <!-- ENM Hostname -->
+				<td width="70"><font face="Verdana,Helvetica,Arial" size="2"><strong>ENIQ-S Servers</strong></font></td> <!-- ENIQ-S Servers -->
+				<td width="70"><font face="Verdana,Helvetica,Arial" size="2"><strong>Edit Policy</strong></font></td>
+				<td width="70"><font face="Verdana,Helvetica,Arial" size="2"><strong>Delete Policy</strong></font></td>
+				#foreach($set in $policyTable)
+						<tr>
+							#foreach($i in $set)
+							<td class="basic">$i</td>
+							#end
+							<td class="basic">
+								<font size="1" face="Verdana, Helvetica, Arial"><a href="PolicyReassignment?pc=$policyTable.indexOf($set)">Edit</a></font>
+							</td>
+							<td class="basic">
+								<font size="1" face="Verdana, Helvetica, Arial"><a id="PolicyAssignment?deletePolicy=$policyTable.indexOf($set)" onclick="onConfirm(this.id)" style="cursor:pointer;">Delete</a></font>
+							</td>
+						</tr>
+				#end	
+			</tr>
+		</table>
+		</div>	
+	#end
+#parse( "footer.vm" )
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

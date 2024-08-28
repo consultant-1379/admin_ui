@@ -1,0 +1,45 @@
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Begin
+
+function populate_1(objForm,selectIndex) {
+timeA = new Date(objForm.year_1.options[objForm.year_1.selectedIndex].text, 
+		objForm.month_1.options[objForm.month_1.selectedIndex].value,1);
+timeDifference = timeA - 86400000;
+timeB = new Date(timeDifference);
+var daysInMonth = timeB.getDate();
+for (var i = 0; i < objForm.day_1.length; i++) 
+{
+	objForm.day_1.options[i] = null;
+}
+for (var i = 0; i < daysInMonth; i++) 
+{
+	if (i+1 <10)
+	objForm.day_1.options[i] = new Option(('0'+(i+1)), ('0'+(i+1)));
+	else
+	objForm.day_1.options[i] = new Option((i+1), (i+1));
+}
+objForm.day_1.options[0].selected = true;
+}
+
+function populate_2(objForm,selectIndex) {
+timeA = new Date(objForm.year_2.options[objForm.year_2.selectedIndex].text, 
+		objForm.month_2.options[objForm.month_2.selectedIndex].value,1);
+timeDifference = timeA - 86400000;
+timeB = new Date(timeDifference);
+var daysInMonth = timeB.getDate();
+for (var i = 0; i < objForm.day_2.length; i++) 
+	{
+	objForm.day_2.options[i] = null;
+	}
+for (var i = 0; i < daysInMonth; i++) 
+	{
+	if (i+1 <10)
+	objForm.day_2.options[i] = new Option(('0'+(i+1)), ('0'+(i+1)));
+	else
+	objForm.day_2.options[i] = new Option((i+1), (i+1));
+	}
+objForm.day_2.options[0].selected = true;
+}
+
+//  End -->
+</script>

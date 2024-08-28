@@ -1,0 +1,126 @@
+#set ($appPath = $req.getContextPath()) 
+#set ($servletPath = "$appPath/servlet")
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#if($monitor)
+	#set( $pageTitle = "Edit system monitor")
+#else
+	#set( $pageTitle = "Add system monitor")
+#end
+<title>System monitoring :: System Status :: Configure system status :: $pageTitle</title>
+<script type="text/javascript">
+	function checkForm( ) {
+		if(document.getElementById("monitor").value == "") {
+			alert("Monitor is a required value.");
+			return false;
+		} else {		
+              return (true && filterFields());
+		}
+	}
+</script>
+
+
+
+</head>
+
+<body bgcolor="#ffffff">
+
+
+<form action="$servletPath/SystemMonitorsServlet" method="post" onsubmit="return checkForm();">
+<table border="0">
+
+	<tr valign=top>
+		<!-- main menu -->
+		<td width=220>#parse( "main_menu.vm" )</td>
+		<!-- the body -->
+		<td width=800>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			System Monitoring&nbsp;&gt;&gt;&nbsp;
+			<a href="$servletPath/SystemMonitorsServlet">System Status</a>&nbsp;&gt;&gt;&nbsp;
+			<a href="$servletPath/SystemMonitorsServlet?action=editSystemMonitors">Configure system status</a>&nbsp;&gt;&gt;&nbsp;
+			#if($monitor) 
+				<a href="$servletPath/SystemMonitorsServlet?action=editMetaSystemMonitor&monitor=$monitor&hostName=$hostName">Edit system monitor</a> 
+			#else 
+				<a href="$servletPath/SystemMonitorsServlet?action=addSystemMonitor">Add system monitor</a> 
+			#end 
+			</font>
+		<hr />
+
+		#if ($message)
+		<table border="1" cellpadding="2" cellspacing="0">
+			<tr>
+				<td><font size="-1" face="Courier">$message</font></td>
+			</tr>
+		</table>
+		#end
+
+		<table name="ttable" id="ttable" border="0" width="100%"
+			cellpadding="1" cellspacing="1">
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Host name:</font></td>
+				<td><input type="hidden" name="hostName" id="hostName" value="$hostName"><font size="1" face="Verdana, Helvetica, Arial">$hostName</font>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Monitor:</font></td>
+				<td>
+				#if($monitor)
+					<input type="hidden" name="monitor" id="monitor" value="$monitor"><font size="1" face="Verdana, Helvetica, Arial">$monitor</font>
+				#else
+					<input type="text" name="monitor" id="monitor" value="">
+				#end
+				</td>
+			</tr>
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Type:</font></td>
+				<td>
+					<select name="type" id="type">
+						<option name="disk" id="disk" value="DISK" #if(($type) && $type == "DISK") || (!$type) selected #end>DISK</option>
+						<option name="sql" id="sql" value="SQL" #if($type && $type == "SQL") selected #end>SQL</option>
+						<option name="connection" id="connection" value="CONNECTION" #if($type && $type == "CONNECTION") selected #end>CONNECTION</option>
+						<option name="server" id="server" value="SERVER" #if($type && $type == "SERVER") selected #end>SERVER</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Configuration:</font></td>
+				<td>
+					<textarea name="configuration" id="configuration" rows="8" cols="40">#if($configuration)$configuration#end</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" width="150">&nbsp;</td>
+				<td>
+				#if($monitor)
+					#set( $submitButtonText = "Save changes" )
+				#else
+					#set( $submitButtonText = "Add system monitor" )
+				#end
+				
+				<input type="submit"
+					value="$submitButtonText"></td>
+			</tr>
+		</table>
+		<input type="hidden" name="action" id="action" value="saveSystemMonitor">
+
+		#if($monitor) 
+			#set( $addingNewSystemMonitor = "false" )			
+		#else 
+			#set( $addingNewSystemMonitor = "true" )
+		#end 
+		<input type="hidden"
+			name="addingNewSystemMonitor" id="addingNewSystemMonitor" value="$addingNewSystemMonitor">
+
+		</td>
+		#parse( "footer.vm" )
+</table>
+</form>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

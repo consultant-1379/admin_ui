@@ -1,0 +1,215 @@
+<HTML>
+<HEAD>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	#if ($addMode)
+		<title>Ericsson Network IQ :: Security Administration :: Permission Groups :: Add Permission Group</title>
+	#else
+		<title>Ericsson Network IQ :: Security Administration :: Permission Groups :: Edit Permission Group</title>
+	#end
+	    <script type="text/javascript" src="../javascript/userValidation.js"></script>
+	    <script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+	    
+		<script language="JavaScript">
+	        
+
+	        function showPermDetails() {
+	            var permList = EditPermissionGroup.permissions;
+	
+	            if(countSelectedOption(permList)>1) {
+	                // more than 1 selected item->Clear previous description->return
+	                document.getElementById("permDetail").innerHTML = "";
+	                return;
+	            }
+	
+	            $permArray
+	
+	            //// alert ( permList.selectedIndex);
+	            //// alert ( permList.options[permList.selectedIndex].value ); 
+	
+	            // show description for selectem permission
+	            var selVal   = arr [ permList.options[permList.selectedIndex].value ];
+	            document.getElementById("permDetail").innerHTML = selVal;
+	        }//func
+		
+			
+
+				
+
+	        function Validator() {
+	        
+
+	        	EditPermissionGroup.permGroupDescription.value=trimRightLeftSpace(EditPermissionGroup.permGroupDescription.value);
+
+				EditPermissionGroup.permGroupTitle.value=trimRightLeftSpace(EditPermissionGroup.permGroupTitle.value);
+
+	        	        
+
+	           	if ( ! hasSelection(EditPermissionGroup.permissions, "Permission") )
+	               	return false;
+	
+		        #if ($addMode)
+		        ## verify only if adding new item, otherwise Name can't be changed
+		           	if ( ! validateValue(EditPermissionGroup.permGroupName.value, "Permission Group Name", false) )
+		                    return false;
+		        #end                    
+		
+		          	if ( ! validateValue(EditPermissionGroup.permGroupTitle.value, "Permission Group Title", true) )
+		                    return false;
+		
+		        	if ( EditPermissionGroup.permGroupDescription.value != "" && maxLength(EditPermissionGroup.permGroupDescription.value,200) ) {
+		                    alert ("Description can only be 200 characters in length");
+		                    return false;
+		         	}
+		                return (true && filterFields());
+					}
+	        </script> 
+</HEAD>
+
+<BODY bgcolor="#ffffff" onload="sortList(EditPermissionGroup.permissions);">
+
+<TABLE border="0">
+	<tr valign=top>
+	
+	<!-- main menu -->
+	<td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	
+	
+	
+	<!-- the body -->
+	
+	##$!_debug
+	
+	#if ($addMode)
+	    #set($formAction = "$servletPath/PermissionGroupManagement?action=addPermissionGroup" )
+	#else
+	    #set($formAction = "$servletPath/PermissionGroupManagement?action=editPermissionGroup" ) 
+	#end
+
+<FORM id="EditPermissionGroup" name="EditPermissionGroup" METHOD=POST ACTION="$formAction" onsubmit="return Validator();" >
+	<td width=800>
+	
+	#if ($addMode)
+	    Security Administration &gt;&gt; Permission Groups &gt;&gt;<font color="#333399"> Add Permission Group</font>
+	#else
+	    Security Administration &gt;&gt; Permission Groups &gt;&gt;<font color="#333399"> Edit Permission Group</font>
+	#end
+	
+	
+	 
+	<hr />
+	<br>
+	#if ($addMode)
+	    Please enter the following details to create a new permission group
+	#else
+	    Modify/edit permission group information
+	#end
+	<br><br>
+<TABLE width="450">
+  <tr>
+   <td align="left">
+	<TABLE width="450">
+     <tr>
+      <td align="left" valign="middle" >
+       <TABLE border="0" align="left">
+        <tr>
+          <br><td>Name*</td>
+          <td>
+            #if($addMode)
+                <input name="permGroupName" id="permGroupName" type="text" size="25"  maxlength="30" value="$permGroupData.permissionGroupName" onBlur="changeToLowerCase(this);" title="Enter Permission Group Name here (Example: 'pgname1')"  />
+            #else
+                $permGroupData.permissionGroupName 
+                <input type="hidden" name="permGroupName" id="permGroupName"  value="$permGroupData.permissionGroupName " > ## repost name
+            #end
+          </td>
+        </tr>
+                
+        <tr>
+          <td>Title*</td>
+          <td>
+             <input name="permGroupTitle" type="text" id="permGroupTitle" value="$permGroupData.title" title="Enter Permission Group Title here (Example: 'PGTitle1')" size="25"  maxlength="30"/>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Description</td>
+          <td>
+              <textarea name="permGroupDescription" maxlength="200" cols="25" rows="5" type="text" id="permGroupDescription" title="Enter Permission Group Description here"  />$permGroupData.description</textarea>
+         </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" valign="bottom"><font size="-3">* indicates mandatory input</font></td>
+          <td>
+              <input name="formValid" type="hidden" id="formValid"  value="yes"><br>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" align="left" valign="bottom"><br><br>
+            <input type="submit" name="submit2" value="Save" title="Save Details"/>
+            <input type="reset" name="Reset"    value="Reset" title="Reset Form"/>
+            <input type="button"  name="Cancel" onClick="window.location.href='$servletPath/PermissionGroupManagement'" value="Cancel" title="Cancel and return to previous page"/>
+          </td>
+       </tr>
+      </TABLE></td>
+      
+    <td colspan="1" rowspan="10" align="center" valign="top">
+    
+    <TABLE width="200" border="0">
+      <tr>
+        <td><b>Permission(s)*:</b></td>
+      </tr>
+      
+      <tr>
+        <td colspan="2">
+            <select name="permissions" id="permissions" size="5" multiple="multiple" Title="List of available Permissions" onchange="showPermDetails();">
+                      ##
+                      ##  check all permissions, and select those which are assigned to group
+                      ##
+                      #foreach( $permission in $availPermissions )
+                          #set ($assigned=false)
+                          
+                          #foreach ( $assignedPermission in $permGroupData.permissions )
+                              #if ( $permission.permissionName == $assignedPermission )
+                                  #set ($assigned=true)
+                                  #break;
+                               #end ## if
+                           #end ## for
+
+                           #if ( $assigned )
+                               <option value="$permission.permissionName" selected="true"> $permission.permissionName </option>
+                           #else
+                               <option value="$permission.permissionName"> $permission.permissionName </option>
+                           #end
+                      #end ## foreach
+            </select>
+         </td>
+      </tr>
+        
+      <tr>
+          <td>Press 'Crtl+Permission' to select<br>more than one permission</td>
+        </tr>
+        <tr>
+        	<td><font color="#666666"><div id="permDetail"></div></font></td>
+        </tr>	
+      </table></td>
+    </tr>
+    <tr align="left" valign="middle">  
+  </TABLE>
+   	</td>
+  </tr>
+  <tr>
+    <td valign="top"  class="errormessage">$!errorMessage</td>
+  </tr>
+</TABLE>
+</FORM>
+
+#parse( "footer.vm" )
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

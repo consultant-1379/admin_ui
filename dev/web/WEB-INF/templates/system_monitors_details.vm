@@ -1,0 +1,78 @@
+#set ($appPath = $req.getContextPath()) 
+#set ($servletPath = "$appPath/servlet")
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: System Monitors :: System monitors details</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body bgcolor="#ffffff">
+
+<table border=0>
+	<tr valign=top>
+		<td width=220>#parse( "main_menu.vm" )</td>
+		<td width=800><font size="1" face="Verdana, Helvetica, Arial">System
+		Monitoring&nbsp;&gt;&gt;&nbsp;
+		<a href="$servletPath/SystemMonitorsServlet">System Status</a>&nbsp;&gt;&gt;&nbsp;
+		<a href="$servletPath/SystemMonitorsDetailsServlet">System monitor details</a></font>
+		<hr />
+		#if ($message)
+			<table border="1" cellpadding="2" cellspacing="0">
+				<tr>
+					<td><font size="-1" face="Courier">$message</font></td>
+				</tr>
+			</table>
+		#end
+		
+		<table border="0" width="100%" border="0" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td bgcolor="#b3b3ff" width="30"><font size="2" face="Verdana, Helvetica, Arial">&nbsp;</font></td>
+				<td bgcolor="#b3b3ff"><font size="2" face="Verdana, Helvetica, Arial">Monitor</font></td>
+				<td bgcolor="#b3b3ff"><font size="2" face="Verdana, Helvetica, Arial">Type</font></td>
+				<td bgcolor="#b3b3ff"><font size="2" face="Verdana, Helvetica, Arial">Host</font></td>
+				<td bgcolor="#b3b3ff"><font size="2" face="Verdana, Helvetica, Arial">Execution</font></td>
+			</tr>
+			#if ($systemMonitors)
+				#set ($metaServerSystemMonitorsVector = $metaServerSystemMonitors.get($metaServer.getHostname()))
+				#foreach($systemMonitor in $systemMonitors)
+				<tr bgcolor="#FFCC33">
+					#set ($statusColor = "red")
+				
+					#if($systemMonitor.getStatus() == "ACTIVE")
+						#set ($statusColor = "green")
+					#end
+					
+					<td width="30" bgcolor="#b3b3ff"><IMG SRC="../img/${statusColor}_bulp.gif" WIDTH="30" HEIGHT="30" BORDER="0" ALT=""></td>
+					<td><font size="2" face="Verdana, Helvetica, Arial">&nbsp;$systemMonitor.getMonitor()</font></td>
+					<td><font size="2" face="Verdana, Helvetica, Arial">$systemMonitor.getType()</font></td>
+					<td><font size="2" face="Verdana, Helvetica, Arial">$systemMonitor.getHostname()</font></td>
+					#set ( $tempHostName = $systemMonitor.getHostname() )
+					#set ( $tempMonitor = $systemMonitor.getMonitor() )
+					#set ( $separator = "::" )
+					#set ( $systemMonitorKey = "${tempHostName}${separator}${tempMonitor}" )
+					#set ( $systemMonitorExecutedString = $systemMonitorExecuteTimes.get(${systemMonitorKey}) )
+					<td><font size="2" face="Verdana, Helvetica, Arial">${systemMonitorExecutedString}</font></td>
+				</tr>
+				#end
+			#end
+			<tr>
+				<td colspan="5">
+				&nbsp;
+
+				</td>
+			</tr>
+		</table>
+
+
+		</td>
+	</tr>
+	#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

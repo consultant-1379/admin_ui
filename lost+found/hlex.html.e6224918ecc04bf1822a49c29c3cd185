@@ -1,0 +1,953 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript" language="JavaScript">
+<!--
+
+var PARTS    = new Array(
+"PART1",
+"PART2",
+"PART3",
+"PART4",
+"PART5",
+"PART6",
+"PART7",
+"PART8",
+"PART9",
+"PART10",
+"PART11"
+);
+
+var CHAPTERS = new Array(
+"C1",
+"C1_1",
+"C1_2",
+"C1_3",
+"C1_4",
+"C2",
+"C3",
+"C3_1",
+"C3_2",
+"C3_3",
+"C4",
+"C4_1",
+"C4_1_1",
+"C4_1_2",
+"C4_1_3",
+"C4_2",
+"C4_2_1",
+"C4_2_2",
+"C4_2_3",
+"C4_2_4",
+"C4_2_5",
+"C4_2_6",
+"C4_2_6_1",
+"C4_2_6_2",
+"C4_2_6_3",
+"C4_3",
+"C4_3_1",
+"C4_3_2",
+"C4_3_3",
+"C4_3_3_1",
+"C4_3_3_2",
+"C4_3_4",
+"C4_4",
+"C4_4_1",
+"C4_4_2",
+"C4_4_3",
+"C4_4_4",
+"C4_4_5",
+"C4_4_6",
+"C4_4_7",
+"C4_4_8",
+"C4_4_9",
+"C4_5",
+"C4_5_1",
+"C4_5_2",
+"C4_5_3",
+"C4_5_4",
+"C4_5_5",
+"C5",
+"C6",
+"C6_1",
+"C6_1_1",
+"C6_1_2",
+"C6_1_3",
+"C6_1_4",
+"C6_1_5",
+"C6_2",
+"C6_3",
+"C7",
+"C8",
+"C9",
+"C9_1",
+"C9_1_1",
+"C9_1_2",
+"C9_1_3",
+"C10",
+"C11"
+);
+// TR 3319 Problem with THS Back button when scaled Image is clicked
+var isScalled = 0;
+function ScaledImage() {
+	isScalled = 1;
+}
+
+var ANCH_ARRAY = new Array();
+function saveAnchor(name, location) {
+ var saveAnch = new Array(
+  name,
+  location
+ );
+ ANCH_ARRAY[ANCH_ARRAY.length] = saveAnch;
+}
+
+saveAnchor("CHAPTER1", "C1");
+saveAnchor("id_t43h", "C1");
+saveAnchor("CHAPTER1.1", "C1_1");
+saveAnchor("id_5xl1", "C1_1");
+saveAnchor("CHAPTER1.2", "C1_2");
+saveAnchor("id_kemx", "C1_2");
+saveAnchor("CHAPTER1.3", "C1_3");
+saveAnchor("id_lgnk", "C1_3");
+saveAnchor("CHAPTER1.4", "C1_4");
+saveAnchor("id_lr43", "C1_4");
+saveAnchor("CHAPTER2", "C2");
+saveAnchor("id_0w4x", "C2");
+saveAnchor("CHAPTER3", "C3");
+saveAnchor("id_5jrj", "C3");
+saveAnchor("CHAPTER3.1", "C3_1");
+saveAnchor("id_y870", "C3_1");
+saveAnchor("CHAPTER3.2", "C3_2");
+saveAnchor("id_b4kr", "C3_2");
+saveAnchor("CHAPTER3.3", "C3_3");
+saveAnchor("chl2-restartingGlassfish", "C3_3");
+saveAnchor("id_15e1", "C3_3");
+saveAnchor("CHAPTER4", "C4");
+saveAnchor("HTTPS", "C4");
+saveAnchor("id_f8t1", "C4");
+saveAnchor("CHAPTER4.1", "C4_1");
+saveAnchor("id_w5el", "C4_1");
+saveAnchor("CHAPTER4.1.1", "C4_1_1");
+saveAnchor("ApacheTomcatEniqInstallation", "C4_1_1");
+saveAnchor("id_2lzv", "C4_1_1");
+saveAnchor("CHAPTER4.1.2", "C4_1_2");
+saveAnchor("id_s4fu", "C4_1_2");
+saveAnchor("CHAPTER4.1.3", "C4_1_3");
+saveAnchor("id_8ch1", "C4_1_3");
+saveAnchor("CHAPTER4.2", "C4_2");
+saveAnchor("HTTPSonBIS", "C4_2");
+saveAnchor("id_vkqd", "C4_2");
+saveAnchor("CHAPTER4.2.1", "C4_2_1");
+saveAnchor("id_f3jv", "C4_2_1");
+saveAnchor("CHAPTER4.2.2", "C4_2_2");
+saveAnchor("SSL-default-self-signed-cert", "C4_2_2");
+saveAnchor("id_xdih", "C4_2_2");
+saveAnchor("keypass", "C4_2_2");
+saveAnchor("CHAPTER4.2.3", "C4_2_3");
+saveAnchor("SSL-user-self-signed-cert", "C4_2_3");
+saveAnchor("id_o362", "C4_2_3");
+saveAnchor("CHAPTER4.2.4", "C4_2_4");
+saveAnchor("SSL-disable", "C4_2_4");
+saveAnchor("id_qzrw", "C4_2_4");
+saveAnchor("CHAPTER4.2.5", "C4_2_5");
+saveAnchor("SSL-re-enable", "C4_2_5");
+saveAnchor("id_yg6k", "C4_2_5");
+saveAnchor("CHAPTER4.2.6", "C4_2_6");
+saveAnchor("SSL-CA-signed-cert", "C4_2_6");
+saveAnchor("id_79q1", "C4_2_6");
+saveAnchor("CHAPTER4.2.6.1", "C4_2_6_1");
+saveAnchor("enable", "C4_2_6_1");
+saveAnchor("id_uou9", "C4_2_6_1");
+saveAnchor("CA-signed-JKS-Keystore", "C4_2_6_1");
+saveAnchor("CARenewal", "C4_2_6_1");
+saveAnchor("CHAPTER4.2.6.2", "C4_2_6_2");
+saveAnchor("CAdisable", "C4_2_6_2");
+saveAnchor("id_nbqu", "C4_2_6_2");
+saveAnchor("CHAPTER4.2.6.3", "C4_2_6_3");
+saveAnchor("id_o0j4", "C4_2_6_3");
+saveAnchor("CHAPTER4.3", "C4_3");
+saveAnchor("ENIQEventsHTTPS", "C4_3");
+saveAnchor("id_156i", "C4_3");
+saveAnchor("CHAPTER4.3.1", "C4_3_1");
+saveAnchor("id_sjap", "C4_3_1");
+saveAnchor("FIGURE1", "C4_3_1");
+saveAnchor("CHAPTER4.3.2", "C4_3_2");
+saveAnchor("id_ly62", "C4_3_2");
+saveAnchor("CHAPTER4.3.3", "C4_3_3");
+saveAnchor("InstallCACert", "C4_3_3");
+saveAnchor("id_ystv", "C4_3_3");
+saveAnchor("CHAPTER4.3.3.1", "C4_3_3_1");
+saveAnchor("id_6ujq", "C4_3_3_1");
+saveAnchor("FIGURE2", "C4_3_3_1");
+saveAnchor("FIGURE3", "C4_3_3_1");
+saveAnchor("CHAPTER4.3.3.2", "C4_3_3_2");
+saveAnchor("id_hp98", "C4_3_3_2");
+saveAnchor("FIGURE4", "C4_3_3_2");
+saveAnchor("FIGURE5", "C4_3_3_2");
+saveAnchor("CHAPTER4.3.4", "C4_3_4");
+saveAnchor("id_yane", "C4_3_4");
+saveAnchor("CHAPTER4.4", "C4_4");
+saveAnchor("OMSAS", "C4_4");
+saveAnchor("id_31fh", "C4_4");
+saveAnchor("CHAPTER4.4.1", "C4_4_1");
+saveAnchor("id_zgy7", "C4_4_1");
+saveAnchor("CHAPTER4.4.2", "C4_4_2");
+saveAnchor("JKSKeystore", "C4_4_2");
+saveAnchor("id_wr01", "C4_4_2");
+saveAnchor("CHAPTER4.4.3", "C4_4_3");
+saveAnchor("id_8bla", "C4_4_3");
+saveAnchor("CHAPTER4.4.4", "C4_4_4");
+saveAnchor("id_tc3n", "C4_4_4");
+saveAnchor("CHAPTER4.4.5", "C4_4_5");
+saveAnchor("id_4b5x", "C4_4_5");
+saveAnchor("CHAPTER4.4.6", "C4_4_6");
+saveAnchor("id_aj6s", "C4_4_6");
+saveAnchor("CHAPTER4.4.7", "C4_4_7");
+saveAnchor("id_teob", "C4_4_7");
+saveAnchor("CHAPTER4.4.8", "C4_4_8");
+saveAnchor("id_133u", "C4_4_8");
+saveAnchor("CHAPTER4.4.9", "C4_4_9");
+saveAnchor("CertRenewal", "C4_4_9");
+saveAnchor("id_y8sn", "C4_4_9");
+saveAnchor("CHAPTER4.5", "C4_5");
+saveAnchor("ImportCerts", "C4_5");
+saveAnchor("id_vw67", "C4_5");
+saveAnchor("CHAPTER4.5.1", "C4_5_1");
+saveAnchor("Self-cert-browser", "C4_5_1");
+saveAnchor("id_x8bb", "C4_5_1");
+saveAnchor("FIGURE6", "C4_5_1");
+saveAnchor("CHAPTER4.5.2", "C4_5_2");
+saveAnchor("id_m267", "C4_5_2");
+saveAnchor("FIGURE7", "C4_5_2");
+saveAnchor("FIGURE8", "C4_5_2");
+saveAnchor("FIGURE9", "C4_5_2");
+saveAnchor("CHAPTER4.5.3", "C4_5_3");
+saveAnchor("id_nzmw", "C4_5_3");
+saveAnchor("FIGURE10", "C4_5_3");
+saveAnchor("FIGURE11", "C4_5_3");
+saveAnchor("CHAPTER4.5.4", "C4_5_4");
+saveAnchor("ChromeIECerts", "C4_5_4");
+saveAnchor("id_i3bz", "C4_5_4");
+saveAnchor("FIGURE12", "C4_5_4");
+saveAnchor("FIGURE13", "C4_5_4");
+saveAnchor("FIGURE14", "C4_5_4");
+saveAnchor("CHAPTER4.5.5", "C4_5_5");
+saveAnchor("CA-cert-browser", "C4_5_5");
+saveAnchor("id_r961", "C4_5_5");
+saveAnchor("CHAPTER5", "C5");
+saveAnchor("id_j1ys", "C5");
+saveAnchor("CHAPTER6", "C6");
+saveAnchor("UserManagement", "C6");
+saveAnchor("id_ycxz", "C6");
+saveAnchor("CHAPTER6.1", "C6_1");
+saveAnchor("id_0bk0", "C6_1");
+saveAnchor("CHAPTER6.1.1", "C6_1_1");
+saveAnchor("id_2bsc", "C6_1_1");
+saveAnchor("CHAPTER6.1.2", "C6_1_2");
+saveAnchor("UserManagementAdminUI", "C6_1_2");
+saveAnchor("id_h4lv", "C6_1_2");
+saveAnchor("manageusersGUI", "C6_1_2");
+saveAnchor("FIGURE15", "C6_1_2");
+saveAnchor("UserManagementHighlighted", "C6_1_2");
+saveAnchor("FIGURE16", "C6_1_2");
+saveAnchor("PredefinedSysadmin", "C6_1_2");
+saveAnchor("TABLE1", "C6_1_2");
+saveAnchor("tnote1-1", "C6_1_2");
+saveAnchor("tnote1-2", "C6_1_2");
+saveAnchor("tnote1-3", "C6_1_2");
+saveAnchor("tnote1-4", "C6_1_2");
+saveAnchor("Non-PredefinedSysadmin", "C6_1_2");
+saveAnchor("TABLE2", "C6_1_2");
+saveAnchor("TABLE3", "C6_1_2");
+saveAnchor("TABLE4", "C6_1_2");
+saveAnchor("TABLE5", "C6_1_2");
+saveAnchor("adduserGUI", "C6_1_2");
+saveAnchor("FIGURE17", "C6_1_2");
+saveAnchor("CHAPTER6.1.3", "C6_1_3");
+saveAnchor("RoleManagementAdminUI", "C6_1_3");
+saveAnchor("id_bc59", "C6_1_3");
+saveAnchor("fig-rolemgmt", "C6_1_3");
+saveAnchor("FIGURE18", "C6_1_3");
+saveAnchor("tablePredefinedRoles", "C6_1_3");
+saveAnchor("TABLE6", "C6_1_3");
+saveAnchor("FIGURE19", "C6_1_3");
+saveAnchor("CHAPTER6.1.4", "C6_1_4");
+saveAnchor("PermissionGroupsAdminUI", "C6_1_4");
+saveAnchor("id_9zt4", "C6_1_4");
+saveAnchor("FIGURE20", "C6_1_4");
+saveAnchor("tablePredefinedPermissionGroup", "C6_1_4");
+saveAnchor("TABLE7", "C6_1_4");
+saveAnchor("FIGURE21", "C6_1_4");
+saveAnchor("CHAPTER6.1.5", "C6_1_5");
+saveAnchor("id_saxy", "C6_1_5");
+saveAnchor("CHAPTER6.2", "C6_2");
+saveAnchor("id_xopu", "C6_2");
+saveAnchor("CHAPTER6.3", "C6_3");
+saveAnchor("id_b3hj", "C6_3");
+saveAnchor("CHAPTER7", "C7");
+saveAnchor("id_fjvs", "C7");
+saveAnchor("CHAPTER8", "C8");
+saveAnchor("id_muxb", "C8");
+saveAnchor("CHAPTER9", "C9");
+saveAnchor("id_dlco", "C9");
+saveAnchor("TABLE8", "C9");
+saveAnchor("CHAPTER9.1", "C9_1");
+saveAnchor("EEReportsSecExceptions", "C9_1");
+saveAnchor("id_8wi6", "C9_1");
+saveAnchor("CHAPTER9.1.1", "C9_1_1");
+saveAnchor("id_sjcv", "C9_1_1");
+saveAnchor("FIGURE22", "C9_1_1");
+saveAnchor("CHAPTER9.1.2", "C9_1_2");
+saveAnchor("id_3a24", "C9_1_2");
+saveAnchor("FIGURE23", "C9_1_2");
+saveAnchor("CHAPTER9.1.3", "C9_1_3");
+saveAnchor("id_l63u", "C9_1_3");
+saveAnchor("FIGURE24", "C9_1_3");
+saveAnchor("CHAPTER10", "C10");
+saveAnchor("CHAPTER11", "C11");
+saveAnchor("OSSGlossary", "C11");
+saveAnchor("OSSLibraryTypographicConventions", "C11");
+saveAnchor("TrademarkInformation", "C11");
+saveAnchor("rft-OMSec-SAG-ref", "C11");
+saveAnchor("rft-OMSec-SAG", "C11");
+saveAnchor("OSS-RC-OverallSecurityAdmin", "C11");
+saveAnchor("rf-ENIQNodeHardening", "C11");
+saveAnchor("rf-OSNodeHardening", "C11");
+saveAnchor("ApacheTomcat1", "C11");
+saveAnchor("AdminUISAG", "C11");
+saveAnchor("EBID-II-Upg", "C11");
+saveAnchor("EBID-SAG", "C11");
+saveAnchor("Ciphers", "C11");
+saveAnchor("SAPPAM", "C11");
+
+
+var parallelPDF = "2_0400-CRA1191493_EN_AV_ISO9069.html";
+
+var TOP=
+"<a name=\"TOP\"></a><!--@@noprnt-->\n" +
+"<div id=\"header\">\n" +
+"<table class=\"docinfo\">\n" +
+"<tr>\n" +
+"<td> &nbsp; &nbsp; <span class=\"fcaption\"><span class=\"caption\">SECURITY ADM. GUIDE</span> &nbsp; &nbsp; &nbsp; &nbsp; 2/0400-CRA 119 1493 Uen&nbsp;AX</span> &nbsp; &nbsp;</td>\n" +
+"</tr>\n" +
+"</table>\n" +
+"</div>\n" +
+"<!--@@/noprnt-->\n" +
+"<div id=\"content\" class=\"body-content\">\n" +
+"\n" +
+"\n" +
+"<h1 class=\"TITLE\"><a name=\"TITLE\"></a></h1><div class=\"DOCTITLE\">Ericsson Network IQ Security Admin Guide</div>\n" +
+"\n" +
+" \n" +
+"<!--@contents level=2-->\n" +
+"<p class=\"HDR\"><a name=\"CONTENTS\" onclick=\"javascript:if(!document.tocf0){document.toc0=1;document.tocf0=1;}document.toc0=show_hide_cont('toc0', 'ce_i1_0', 'ce_i2_0', document.toc0);\" title=\"Expand/collapse table of contents\"><img id=\"ce_i1_0\" class=\"ce\" src=\"CP.png\" /><img id=\"ce_i2_0\" class=\"ce\" src=\"EP.png\" style=\"display:none\" />Contents\n" +
+"</a></p><div id=\"toc0\"><table cellpadding=\"0\" class=\"TOCTBL\"><tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><b><span class=\"TOCNUM\">1</span></b></td><td><b><a href='javascript:parent.parent.sC2(\"C1\")' class=\"TOCLINK\">About this Document</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">1.1</span></td><td><a href='javascript:parent.parent.sC2(\"C1_1\")' class=\"TOCLINK\">Purpose</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">1.2</span></td><td><a href='javascript:parent.parent.sC2(\"C1_2\")' class=\"TOCLINK\">Scope</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">1.3</span></td><td><a href='javascript:parent.parent.sC2(\"C1_3\")' class=\"TOCLINK\">Prerequisites</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">1.4</span></td><td><a href='javascript:parent.parent.sC2(\"C1_4\")' class=\"TOCLINK\">Typographic Conventions</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">2</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C2\")' class=\"TOCLINK\">Overview</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">3</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C3\")' class=\"TOCLINK\">Starting, Stopping and Restarting Glassfish</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">3.1</span></td><td><a href='javascript:parent.parent.sC2(\"C3_1\")' class=\"TOCLINK\">Starting GlassFish</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">3.2</span></td><td><a href='javascript:parent.parent.sC2(\"C3_2\")' class=\"TOCLINK\">Stopping GlassFish</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">3.3</span></td><td><a href='javascript:parent.parent.sC2(\"C3_3\")' class=\"TOCLINK\">Restarting GlassFish</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">4</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C4\")' class=\"TOCLINK\">HTTPS</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">4.1</span></td><td><a href='javascript:parent.parent.sC2(\"C4_1\")' class=\"TOCLINK\">HTTPS on Apache Tomcat Server</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">4.2</span></td><td><a href='javascript:parent.parent.sC2(\"C4_2\")' class=\"TOCLINK\">HTTPS and Ericsson Business Intelligence Deployment</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">4.3</span></td><td><a href='javascript:parent.parent.sC2(\"C4_3\")' class=\"TOCLINK\">HTTPS and ENIQ Events UI</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">4.4</span></td><td><a href='javascript:parent.parent.sC2(\"C4_4\")' class=\"TOCLINK\">Managing ENIQ Certificates in CSA from OSS-RC</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">4.5</span></td><td><a href='javascript:parent.parent.sC2(\"C4_5\")' class=\"TOCLINK\">Importing Self Signed Certificates to Web Browser</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">5</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C5\")' class=\"TOCLINK\">HTTPS Renegotiation</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">6</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C6\")' class=\"TOCLINK\">User Management</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">6.1</span></td><td><a href='javascript:parent.parent.sC2(\"C6_1\")' class=\"TOCLINK\">ENIQ Events UI User Management</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">6.2</span></td><td><a href='javascript:parent.parent.sC2(\"C6_2\")' class=\"TOCLINK\">Changing the Max Password Age</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">6.3</span></td><td><a href='javascript:parent.parent.sC2(\"C6_3\")' class=\"TOCLINK\">ENIQ Server User Management</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">7</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C7\")' class=\"TOCLINK\">Changing the LDAP Administrator Password</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">8</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C8\")' class=\"TOCLINK\">ENIQ Events Node Hardening</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td width=\"80\" align=\"left\" valign=\"top\"><br /><b><span class=\"TOCNUM\">9</span></b></td><td><br /><b><a href='javascript:parent.parent.sC2(\"C9\")' class=\"TOCLINK\">Troubleshooting</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc2\"><td width=\"80\" align=\"left\" valign=\"top\"><span class=\"TOCNUM\">9.1</span></td><td><a href='javascript:parent.parent.sC2(\"C9_1\")' class=\"TOCLINK\">Security Exceptions Accessing Reports in ENIQ Events UI</a>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td valign=\"bottom\" colspan=\"2\"><br /><b><a href='javascript:parent.parent.sC2(\"C10\")' class=\"TOCLINK\">Glossary</a></b>\n" +
+"</td></tr>\n" +
+"<tr class=\"toc1\"><td valign=\"bottom\" colspan=\"2\"><br /><b><a href='javascript:parent.parent.sC2(\"C11\")' class=\"TOCLINK\">Reference List</a></b>\n" +
+"</td></tr>\n" +
+"</table>\n" +
+"</div>\n" +
+"<!--@/contents-->\n" +
+"<table width=\"100%\" class=\"copytbl\">\n" +
+"<tr><td class=\"copyhead\">Copyright</td><td class=\"copyinfo\">\n" +
+"<p>\n" +
+"&copy; Ericsson LMI 2015. All rights reserved. No part\n" +
+"of this document may be reproduced in any form without the written\n" +
+"permission of the copyright owner.</p>\n" +
+"</td></tr>\n" +
+"<tr><td class=\"copyhead\">Disclaimer</td><td class=\"copyinfo\">\n" +
+"<p>\n" +
+"The contents of this document are subject to revision\n" +
+"without notice due to continued progress in methodology, design and\n" +
+"manufacturing. Ericsson shall have no liability for any error or damage\n" +
+"of any kind resulting from the use of this document.</p>\n" +
+"</td></tr>\n" +
+"<tr><td class=\"copyhead\">Trademark List</td><td class=\"copyinfo\">\n" +
+"<table class=\"trdmrkcnt\" width=\"100%\">\n" +
+"<tr><td colspan=\"3\" width=\"100%\">All trademarks mentioned herein\n" +
+"are the property of their respective owners. These are shown in the\n" +
+"document Trademark Information.\n" +
+"</td></tr></table>\n" +
+"</td></tr></table>\n" +
+"\n" +
+"<br />\n" +
+"<div class=\"hd0\"></div><div class=\"hd1\"></div>\n";
+
+TOP = TOP+"</div>\n";
+var PAGE_START=
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n" +
+"<head><meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\" /><meta name=\"HTMLPACKLINKS\" content=\"2\" />\n" +
+"\n" +
+"<title>Ericsson Network IQ Security Admin Guide</title>\n" +
+"<meta name=\"TITLE\" content=\"Ericsson Network IQ Security Admin Guide\" />\n" +
+"<meta name=\"GENERATOR\" content=\"omnifilter CAA 139 1216/11 R11Y\" />\n" +
+"<meta name=\"FILTERTIME\" content=\"2016-02-10 10:07:47\" />\n" +
+"<meta name=\"SRCDOCTYPE\" content=\"XSEIF\" />\n" +
+"<meta name=\"SRCDTD\" content=\"-//ERICSSON//DTD XSEIF 1/FAD 110 05 R6//EN\" />\n" +
+"<meta name=\"APPR\" content=\"XWO (XSRIKUS)\" />\n" +
+"<meta name=\"CHECKED\" content=\"XSRIKUS\" />\n" +
+"<meta name=\"CONFIDENTIALITY\" content=\"Ericsson Internal\" />\n" +
+"<meta name=\"CRIGHT\" content=\"&copy; Ericsson LMI 2015. All rights reserved. No part of this document may be reproduced in any form without the written permission of the copyright owner.\" />\n" +
+"<meta name=\"DATE\" content=\"2016-02-10\" />\n" +
+"<meta name=\"DOCNAME\" content=\"SECURITY ADM. GUIDE\" />\n" +
+"<meta name=\"DOCNO\" content=\"2/0400-CRA 119 1493 Uen\" />\n" +
+"<meta name=\"LANG\" content=\"en\" />\n" +
+"<meta name=\"PREP\" content=\"XSHRSAH Shruti Saha\" />\n" +
+"<meta name=\"REV\" content=\"AX\" />\n" +
+"<meta name=\"SEIFDOCTYPE\" content=\"REGISTRATION\" />\n" +
+"<meta name=\"SEIFVERSION\" content=\"XSEIF R6\" />\n" +
+"<meta name=\"SUBRESP\" content=\"XHARSHI XRITJAI \" />\n" +
+"<meta name=\"format-detection\" content=\"telephone=no\" />\n" +
+"<script type=\"text/javascript\" language=\"JavaScript\">window.history.forward(+1);\n" +
+"function show_hide_cont(d_id, i_id1, i_id2, fl){\n" +
+"var TOC=document.getElementById(d_id)\;\n" +
+"if (fl) {\n" +
+"TOC.style.display=\"none\"\;\n" +
+"document.getElementById(i_id1).style.display = \"none\"\;\n" +
+"document.getElementById(i_id2).style.display = \"inline\"\;\n" +
+"fl = false\;\n" +
+"} else {\n" +
+"TOC.style.display=\"inline\"\;\n" +
+"document.getElementById(i_id1).style.display = \"inline\"\;\n" +
+"document.getElementById(i_id2).style.display = \"none\"\;\n" +
+"fl = true\;\n" +
+"}\n" +
+"return fl\;\n" +
+"}\n" +
+"<\/script>\n" +
+"<link href=\"CVL.css\" rel=\"stylesheet\" type=\"text/css\" />\n" +
+"\n";
+
+var BODY_START= "</head><bo"+"dy>";
+
+var PAGE_END="</body></html>";
+
+var bodyForIndex = "";
+if(document.layers)
+  bodyForIndex = "<bo"+"dy onresize='parent.parent.showIndex_Forced()'>\n";
+else
+  bodyForIndex = "<bo"+"dy>\n";
+
+var INDEX=
+"<html>\n" +
+"<head>\n" +
+"<title>Index</title>\n" +
+"<style type='text/css'>\n" +
+"<!--\n" +
+"a:link,a:visited{color:#004499;text-decoration:none}\n" +
+"a:hover{color:#6699CC;text-decoration:none}\n" +
+"p{font-family:helvetica,arial,sans-serif}\n" +
+"body{background-color:#FFFFFF}\n" +
+"//-->\n" +
+"</style>\n" +
+"</head>\n" +
+bodyForIndex +
+"<pre>" +
+"<font size=2>" +
+"<p>" +
+"<b>A</b><br />" +
+"<a href='javascript:parent.sC2(\"C1\")'>About this Document</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_1_3\")'>Apace tomcat configuration for Disabling SSLv3.0 and Weak Ciphers</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>B</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_1\")'>Backing Up Self Signed Certificates</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>C</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_5_5\")'>CA Signed Certificate</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_6_3\")'>CA Signed Certificate Renewal</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_9\")'>Certificate Renewal for ENIQ</a><br />" +
+"<a href='javascript:parent.sC2(\"C7\")'>Changing the LDAP Administrator Password</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_2\")'>Changing the Max Password Age</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_7\")'>Combine Private Key and CA Signed Certificate in .p12 Format</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3_1\")'>Configuration of GlassFish Application Server During Installation and Upgrades</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_1_1\")'>Configuring Apache Tomcat during ENIQ Installation</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_2\")'>Configuring HTTPS using Default Self-signed Certificate</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_3\")'>Configuring HTTPS using User Generated Self-Signed Certificate</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3_2\")'>Configuring the BIS for HTTPS</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_4\")'>Converting JKS into PKCS12 Format</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>D</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_4\")'>Disabling HTTPS</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_6_2\")'>Disabling HTTPS (CA Signed Certificate)</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>E</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_1\")'>EBID media update</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_1_2\")'>Enabling and Disabling HTTPS</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_6_1\")'>Enabling HTTPS using CA Signed Certificate</a><br />" +
+"<a href='javascript:parent.sC2(\"C8\")'>ENIQ Events Node Hardening</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_1\")'>ENIQ Events UI User Management</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_3\")'>ENIQ Server User Management</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_5_4\")'>Exporting and Importing Self Signed Certificates in Internet Explorer and Chrome</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_5\")'>Exporting Private key</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>G</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_6\")'>Generating Certificate for ENIQ</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_3\")'>Generating CSR File</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_2\")'>Generating JKS Keystore Files</a><br />" +
+"<a href='javascript:parent.sC2(\"C10\")'>Glossary</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>H</b><br />" +
+"<a href='javascript:parent.sC2(\"C4\")'>HTTPS</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3\")'>HTTPS and ENIQ Events UI</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2\")'>HTTPS and Ericsson Business Intelligence Deployment</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_1\")'>HTTPS on Apache Tomcat Server</a><br />" +
+"<a href='javascript:parent.sC2(\"C5\")'>HTTPS Renegotiation</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>I</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_4_8\")'>Importing .12 File into Keystore File</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_1_5\")'>Importing ENIQ Events Users</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_5\")'>Importing Self Signed Certificates to Web Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3_3_1\")'>Installing the Root CA Certificate in Firefox</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3_3_2\")'>Installing the Root CA Certificate in Internet Explorer and Chrome</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3_3\")'>Installing the Root CA Certificate in Users' Browsers</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>M</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_4\")'>Managing ENIQ Certificates in CSA from OSS-RC</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>O</b><br />" +
+"<a href='javascript:parent.sC2(\"C2\")'>Overview</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>P</b><br />" +
+"<a href='javascript:parent.sC2(\"C6_1_1\")'>Password policies</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_1_4\")'>Permission Groups</a><br />" +
+"<a href='javascript:parent.sC2(\"C1_3\")'>Prerequisites</a><br />" +
+"<a href='javascript:parent.sC2(\"C1_1\")'>Purpose</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>R</b><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_5\")'>Re-enabling HTTPS</a><br />" +
+"<a href='javascript:parent.sC2(\"C11\")'>Reference List</a><br />" +
+"<a href='javascript:parent.sC2(\"C3_3\")'>Restarting GlassFish</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_1_3\")'>Role Management</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>S</b><br />" +
+"<a href='javascript:parent.sC2(\"C1_2\")'>Scope</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_3_4\")'>Script to Disable/Enable HTTPS in GlassFish</a><br />" +
+"<a href='javascript:parent.sC2(\"C9_1_3\")'>Security Exception in Chrome Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C9_1_2\")'>Security Exception in Firefox Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C9_1_1\")'>Security Exception in Internet Explorer Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C9_1\")'>Security Exceptions Accessing Reports in ENIQ Events UI</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_5_3\")'>Self Signed Certificate for Chrome Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_5_1\")'>Self Signed Certificate for Firefox Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_5_2\")'>Self Signed Certificate for Internet Explorer Browser</a><br />" +
+"<a href='javascript:parent.sC2(\"C3_1\")'>Starting GlassFish</a><br />" +
+"<a href='javascript:parent.sC2(\"C3\")'>Starting, Stopping and Restarting Glassfish</a><br />" +
+"<a href='javascript:parent.sC2(\"C3_2\")'>Stopping GlassFish</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>T</b><br />" +
+"<a href='javascript:parent.sC2(\"C9\")'>Troubleshooting</a><br />" +
+"<a href='javascript:parent.sC2(\"C1_4\")'>Typographic Conventions</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"<p>" +
+"<b>U</b><br />" +
+"<a href='javascript:parent.sC2(\"C6\")'>User Management</a><br />" +
+"<a href='javascript:parent.sC2(\"C6_1_2\")'>User Management</a><br />" +
+"<a href='javascript:parent.sC2(\"C4_2_6\")'>Using Certificate Authority Signed Certificate</a>" +
+"</p> " ;
+
+INDEX = INDEX +
+"</font>" +
+"</pre>\n" +
+"<script type='text\/javascript' language='JavaScript'>\n" +
+"var isTreeView=false;\n" +
+"window.history.forward(+1);\n" + 
+"<\/script>\n" +
+"</body>\n" +
+"</html>";
+
+
+var chl;
+chl = new Array;
+var chlCount;
+chlCount = new Array;
+var activeFolder = "C_";
+
+var fT = 0;
+var nextNodeId = 0;
+var scrollPx = 0;
+var treeStatus = 0;
+
+function generateTree() {
+fT=cN("&nbsp;Ericsson Network IQ Security Admin Guide","C0");
+h1=aN(fT,cN("About this Document","C1"));
+h2=aN(h1,cN("Purpose","C1_1"));
+h3=aN(h1,cN("Scope","C1_2"));
+h4=aN(h1,cN("Prerequisites","C1_3"));
+h5=aN(h1,cN("Typographic Conventions","C1_4"));
+h6=aN(fT,cN("Overview","C2"));
+h7=aN(fT,cN("Starting, Stopping and Restarting Glassfish","C3"));
+h8=aN(h7,cN("Starting GlassFish","C3_1"));
+h9=aN(h7,cN("Stopping GlassFish","C3_2"));
+h10=aN(h7,cN("Restarting GlassFish","C3_3"));
+h11=aN(fT,cN("HTTPS","C4"));
+h12=aN(h11,cN("HTTPS on Apache Tomcat Server","C4_1"));
+h13=aN(h12,cN("Configuring Apache Tomcat during ENIQ Installation","C4_1_1"));
+h14=aN(h12,cN("Enabling and Disabling HTTPS","C4_1_2"));
+h15=aN(h12,cN("Apace tomcat configuration for Disabling SSLv3.0 and Weak Ciphers","C4_1_3"));
+h16=aN(h11,cN("HTTPS and Ericsson Business Intelligence Deployment","C4_2"));
+h17=aN(h16,cN("EBID media update","C4_2_1"));
+h18=aN(h16,cN("Configuring HTTPS using Default Self-signed Certificate","C4_2_2"));
+h19=aN(h16,cN("Configuring HTTPS using User Generated Self-Signed Certificate","C4_2_3"));
+h20=aN(h16,cN("Disabling HTTPS","C4_2_4"));
+h21=aN(h16,cN("Re-enabling HTTPS","C4_2_5"));
+h22=aN(h16,cN("Using Certificate Authority Signed Certificate","C4_2_6"));
+h23=aN(h22,cN("Enabling HTTPS using CA Signed Certificate","C4_2_6_1"));
+h24=aN(h22,cN("Disabling HTTPS (CA Signed Certificate)","C4_2_6_2"));
+h25=aN(h22,cN("CA Signed Certificate Renewal","C4_2_6_3"));
+h26=aN(h11,cN("HTTPS and ENIQ Events UI","C4_3"));
+h27=aN(h26,cN("Configuration of GlassFish Application Server During Installation and Upgrades","C4_3_1"));
+h28=aN(h26,cN("Configuring the BIS for HTTPS","C4_3_2"));
+h29=aN(h26,cN("Installing the Root CA Certificate in Users' Browsers","C4_3_3"));
+h30=aN(h29,cN("Installing the Root CA Certificate in Firefox","C4_3_3_1"));
+h31=aN(h29,cN("Installing the Root CA Certificate in Internet Explorer and Chrome","C4_3_3_2"));
+h32=aN(h26,cN("Script to Disable/Enable HTTPS in GlassFish","C4_3_4"));
+h33=aN(h11,cN("Managing ENIQ Certificates in CSA from OSS-RC","C4_4"));
+h34=aN(h33,cN("Backing Up Self Signed Certificates","C4_4_1"));
+h35=aN(h33,cN("Generating JKS Keystore Files","C4_4_2"));
+h36=aN(h33,cN("Generating CSR File","C4_4_3"));
+h37=aN(h33,cN("Converting JKS into PKCS12 Format","C4_4_4"));
+h38=aN(h33,cN("Exporting Private key","C4_4_5"));
+h39=aN(h33,cN("Generating Certificate for ENIQ","C4_4_6"));
+h40=aN(h33,cN("Combine Private Key and CA Signed Certificate in .p12 Format","C4_4_7"));
+h41=aN(h33,cN("Importing .12 File into Keystore File","C4_4_8"));
+h42=aN(h33,cN("Certificate Renewal for ENIQ","C4_4_9"));
+h43=aN(h11,cN("Importing Self Signed Certificates to Web Browser","C4_5"));
+h44=aN(h43,cN("Self Signed Certificate for Firefox Browser","C4_5_1"));
+h45=aN(h43,cN("Self Signed Certificate for Internet Explorer Browser","C4_5_2"));
+h46=aN(h43,cN("Self Signed Certificate for Chrome Browser","C4_5_3"));
+h47=aN(h43,cN("Exporting and Importing Self Signed Certificates in Internet Explorer and Chrome","C4_5_4"));
+h48=aN(h43,cN("CA Signed Certificate","C4_5_5"));
+h49=aN(fT,cN("HTTPS Renegotiation","C5"));
+h50=aN(fT,cN("User Management","C6"));
+h51=aN(h50,cN("ENIQ Events UI User Management","C6_1"));
+h52=aN(h51,cN("Password policies","C6_1_1"));
+h53=aN(h51,cN("User Management","C6_1_2"));
+h54=aN(h51,cN("Role Management","C6_1_3"));
+h55=aN(h51,cN("Permission Groups","C6_1_4"));
+h56=aN(h51,cN("Importing ENIQ Events Users","C6_1_5"));
+h57=aN(h50,cN("Changing the Max Password Age","C6_2"));
+h58=aN(h50,cN("ENIQ Server User Management","C6_3"));
+h59=aN(fT,cN("Changing the LDAP Administrator Password","C7"));
+h60=aN(fT,cN("ENIQ Events Node Hardening","C8"));
+h61=aN(fT,cN("Troubleshooting","C9"));
+h62=aN(h61,cN("Security Exceptions Accessing Reports in ENIQ Events UI","C9_1"));
+h63=aN(h62,cN("Security Exception in Internet Explorer Browser","C9_1_1"));
+h64=aN(h62,cN("Security Exception in Firefox Browser","C9_1_2"));
+h65=aN(h62,cN("Security Exception in Chrome Browser","C9_1_3"));
+h66=aN(fT,cN("Glossary","C10"));
+h67=aN(fT,cN("Reference List","C11"));
+}
+
+function aN(parent, child) {
+    parent[parent.length] = child;
+    return child;
+}
+
+function cN(chapterTitle, chapterLevel) {
+    var newNode;
+    newNode = new Array;
+    newNode[0] = 0;
+    newNode[1] = nextNodeId++;
+    newNode[2] = chapterTitle;
+    newNode[3] = chapterLevel;
+    return newNode;
+}
+
+function renderTree() {
+    var doc = hlextree.document;
+    doc.open();
+    doc.write("<html>\n<head>\n");
+    doc.write("<title>Tree</title>\n");
+    doc.write("<script type='text\/javascript' language='JavaScript'>\n");
+    doc.write("var isTreeView=true;\n");
+    doc.write("window.history.forward(+1);\n"); 
+    doc.write("<\/script>\n");
+    doc.write("<style type='text/css'>\n<!--\na:link,a:visited{color:#004499;text-decoration:none}\nbody{background-color:#FFFFFF}\n");
+    doc.write("a:hover{color:#6699CC;text-decoration:none}\ntd{font-family:helvetica,arial,sans-serif}\n--\>\n</style>\n");
+    doc.write("</head>\n<bo" + "dy onload='scrollTo(0," + scrollPx + ");parent.checkTree()' onresize='parent.checkTree()'>\n");
+    doc.write("<table border='0' cellspacing='0' cellpadding='0'>\n");
+    chlCount[1] = 0;
+    renderNode(fT, doc, 0, 1, "");
+    doc.write("</table>\n");
+    doc.write("\n</body>\n</html>");
+    doc.close();
+}
+
+function renderNode(foldersNode, doc, level, lastNode, leftSide) {
+    var html;
+    var image = "CF.gif";
+    treeStatus = 1;
+    var hasChildren = (foldersNode.length > 4);
+    doc.write("<tr><td nowrap>" + leftSide);
+    if (level>0) {
+      chlCount[level]++;
+      if (chl[level] == chlCount[level])
+        foldersNode[0] = 1;
+      if (lastNode) {
+        if (hasChildren) {
+          if (foldersNode[0])
+            html="<img src='CLM.gif' border=0 align=top>";
+          else
+            html="<img src='CLP.gif' border=0 align=top>";
+        }
+        else
+          html="<img src='CL.gif' border=0 align=top>";
+      }
+      else {
+        if (hasChildren) {
+          if (foldersNode[0])
+            html="<img src='CTM.gif' border=0 align=top>";
+          else
+            html="<img src='CTP.gif' border=0 align=top>";
+        }
+        else
+          html="<img src='CT.gif' border=0 align=top>";
+      }
+      if (hasChildren) {
+        html = "<a href='javascript:parent.tN(" + foldersNode[1] + ")'>" + html + "</a>";
+      }
+      doc.write(html);
+      if (lastNode)
+        leftSide = leftSide + "<img src='BL.gif' align=top>";
+      else
+        leftSide = leftSide + "<img src='LI.gif' align=top>";
+    }
+    else
+      image = "DF.gif";
+
+    html = "<a href='javascript:parent.sC(\"" + foldersNode[3] + "\")'><img src='" + image + "' name='" + foldersNode[3] + "' border=0 align=top>";
+    doc.write(html + "<font size=2> " + foldersNode[2] + "</font></a></td></tr>\n");
+
+    if (hasChildren && foldersNode[0]) {
+      var i=0;
+      level++;
+      chlCount[level] = 0;
+
+      for (i=4; i<foldersNode.length;i++) {
+        if (i==foldersNode.length-1)
+          renderNode(foldersNode[i], doc, level, 1, leftSide);
+        else
+          renderNode(foldersNode[i], doc, level, 0, leftSide);
+      }
+    }
+}
+
+function clickOnFolderRec(foldersNode, nodeId) {
+    if (foldersNode[1] == nodeId) {
+      if (foldersNode[0])
+        foldersNode[0] = 0;
+      else
+        foldersNode[0] = 1;
+    }
+    else {
+      var i=0;
+      if (foldersNode.length) {
+        for (i=4; i<foldersNode.length; i++)
+          clickOnFolderRec(foldersNode[i], nodeId);
+      }
+    }
+}
+
+function tN(nodeId) {
+    clickOnFolderRec(fT, nodeId);
+    if (navigator.appVersion.indexOf('MSIE') == -1)
+      scrollPx = hlextree.pageYOffset;
+    else
+      scrollPx = hlextree.document.body.scrollTop;
+
+    parseChapterLevels("");
+    setTimeout("renderTree()", 1);
+    folderAct(activeFolder);
+}
+
+function parseChapterLevels(chapterLevel) {
+    chl[1] = "";
+    chl[2] = "";
+    chl[3] = "";
+    chl[4] = "";
+    chl[5] = "";
+
+    if ((chapterLevel) && (chapterLevel.length)) {
+      var i=1;
+      var j=1;
+      for (i=1; i<chapterLevel.length; i++)
+        if (chapterLevel.substr(i,1) == "_")
+          j++;
+        else
+          chl[j] = chl[j] + chapterLevel.substr(i,1);
+    }
+}
+
+function folderAct(imageName) {
+    if (imageName != activeFolder) {
+      if (hlextree.document [activeFolder])
+        if (activeFolder == "C0")
+          hlextree.document [activeFolder].src = parent.DF.src;
+        else
+          hlextree.document [activeFolder].src = parent.CF.src;
+
+      activeFolder = imageName;
+    }
+    if (hlextree.document [activeFolder])
+      if (activeFolder == "C0")
+        hlextree.document [activeFolder].src = parent.BF.src;
+      else
+        hlextree.document [activeFolder].src = parent.AF.src;
+}
+
+function checkTree() {
+    if (treeStatus == 0) {
+      initializeTree();
+      setTimeout("renderTree()", 1);
+    }
+    else
+      folderAct(activeFolder);
+}
+
+function initializeTree() {
+    nextNodeId = 0;
+    generateTree();
+    fT[0] = 1;
+}
+
+function showTree(chapterLevel) {
+    if (treeStatus == 0)
+      initializeTree();
+    if (navigator.appVersion.indexOf('MSIE') == -1)
+      scrollPx = hlextree.pageYOffset;
+    else
+      scrollPx = hlextree.document.body.scrollTop;
+    parseChapterLevels(chapterLevel);
+    setTimeout("renderTree()", 1);
+    folderAct(chapterLevel);
+}
+
+function sC(chapterLevel) {
+    folderAct(chapterLevel);
+    parent.showChapter(chapterLevel, false);
+}
+
+function sC2(chapterLevel) {
+    folderAct(chapterLevel);
+    parent.showChapter(chapterLevel, true);
+}
+
+var histArray = new Array();
+var currentChapter = "";
+
+if(document.layers) {
+  window.onresize=updateOldNetscape;
+  function updateOldNetscape() {
+    if(parent.hlexmain.hlexdoc && parent.hlexmain.hlexdoc.isHelp)
+      setTimeout("parent.showHelp()", 1);
+    else
+      setTimeout("parent.writeChap(currentChapter, false, false)", 1);
+    if(parent.canEnableTree())
+      setTimeout("parent.showIndex_Forced()", 1);
+    setTimeout("refreshToolbar()", 200);
+  }
+}
+
+function refreshToolbar() {
+  parent.hlextbar.location.href = parent.hlextbar.location.href;
+}
+
+//-->
+</script>
+</head>
+<frameset cols="309, *" frameborder="1" framespacing="3" border="6" bordercolor="#eeeeee">
+<frame src="hlex_tree.html" name="hlextree" marginwidth="5" marginheight="5">
+<frame src="hlex_dummy.html" name="hlexdummy" marginwidth="5" marginheight="5">
+</frameset>
+</html>

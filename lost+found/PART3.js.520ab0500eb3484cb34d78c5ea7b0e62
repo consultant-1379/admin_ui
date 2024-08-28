@@ -1,0 +1,111 @@
+var C3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_mmoh\"></a><a name=\"CHAPTER3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ System</a></span></h1>\n" +
+"\n"+
+"</div>\n";
+
+var C3_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_di3m\"></a><a name=\"CHAPTER3.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">License Agreement</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"For licensing information, refer to the contractual agreement between\n" +
+"Ericsson and the customer.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C3_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_uki6\"></a><a name=\"CHAPTER3.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ System</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The ENIQ system is a full network performance monitoring solution,\n" +
+"providing both monitoring and long-term analysis capabilities. It\n" +
+"collects and presents performance data from multiple OSS installations.</p>\n" +
+"\n" +
+"<p>\n" +
+"The main components of the architecture are:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">One or more OSS servers</li>\n" +
+"<li class=\"UNORD\">One or more ENIQ Statistics servers</li>\n" +
+"<li class=\"UNORD\">The Business Intelligence Server (BIS) <br />The BIS\n" +
+"server is a Windows Server, hosting the reporting layer of the platform\n" +
+"(Business Objects).</li>\n" +
+"<li class=\"UNORD\"><a name=\"NetAnServer\"></a>The Network Analytics Server (Optional) <br />The Network Analytics Server is a Windows Server deployment. It\n" +
+"provides functionality to both Guided Analysis Report and Ad-hoc report\n" +
+"through a web interface. For more information on functionality, see <a href='javascript:parent.parent.parent.showAnchor(\"NetAnServerSAG\")' class=\"xref\">Reference [4]</a>.</li>\n" +
+"<li class=\"UNORD\">OSS&nbsp;Client&nbsp;Solution (OCS) <br />User machine\n" +
+"on the operator LAN is called the OSS Client (OC). The OCS Windows\n" +
+"Servers are ADDS, CCS, and VDA. <br />BI Platform 4 client tools are\n" +
+"installed on the VDA server. These client tools are accessed as published\n" +
+"applications through the Citrix Storefront. For more information,\n" +
+"see <a href='javascript:parent.parent.parent.showAnchor(\"OCS_guide\")' class=\"xref\">Reference [28]</a>.</li></ul>\n" +
+"\n"+
+"</div>\n";
+
+var C3_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_b98l\"></a><a name=\"CHAPTER3.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Supported Node Version</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"ENIQ supports only N to N-4 release of any node version that is\n" +
+"supported in ENIQ-S, where <strong class=\"MEDEMPH\">N</strong> is the release supported\n" +
+"in the latest ENIQ GA release.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C3_3_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">3.3.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ncvg\"></a><a name=\"CHAPTER3.3.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">SGSN-MME</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"SGSN-MME is an internal release version 99A-99-99, which is loaded\n" +
+"as 99A-CP99 FP99 and is available with some customers (for example,\n" +
+"FOA customers). When working with ENIQ, the node is upgraded to the\n" +
+"standard release version of the node. For example, 16A-CP02.</p>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C3_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_3509\"></a><a name=\"CHAPTER3.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Datatype Sizing in ENIQ Tech Pack\n" +
+"Tables</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"In ENIQ-S, the size of the keys is limited to the size as detailed\n" +
+"in the Tech Pack Description document of the respective Tech Pack.\n" +
+"Adherence is made to the size before configuring the node names and\n" +
+"other keys.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C3_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_6w4e\"></a><a name=\"CHAPTER3.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Node Name in ENIQ-S</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Ericsson Nodes follow standard 3GPP XML file format which is:</p>\n" +
+"\n" +
+"<p>\n" +
+"&lt;Type&gt;&lt;Startdate&gt;.&lt;Starttime&gt;-[&lt;Enddate&gt;.]&lt;Endtime&gt;[_-&lt;jobld&gt;][_&lt;UniqueId&gt;][_-_&lt;RC&gt;]</p>\n" +
+"\n" +
+"<p>\n" +
+"As the fields in the file name use delimiters as Hyphen (-) and\n" +
+"underscore (_). It is recommended NOT to use these delimiters in the\n" +
+"node name. </p>\n" +
+"\n" +
+"<p>\n" +
+"This might result in no or incorrect loading of the data which\n" +
+"is extracted from the file name.</p>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

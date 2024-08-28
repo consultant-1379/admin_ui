@@ -1,0 +1,327 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Type Activation</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script>
+	function openWindow(link){
+		newWin = window.open(link, 'Generator', 
+		'location=0,directories=0,menubar=0,scrollbars=0,'
+		+'status=1,toolbar=0,resizable=0,width=500,height=250');
+	}
+	
+	function checkNumeric() {
+
+		// Don't mind the value of explicit storage time if the default storagetime is used.
+		if(document.getElementById("useDefaultStorageTime").checked == true) {
+			return true;
+		}
+
+		var strValidChars = "0123456789";
+		var strChar;
+		var blnResult = true;
+		var e = "";
+		var strString = document.tpedit.st.value;
+		
+		if (strString != "-1")	{
+			//  test strString consists of valid characters listed above
+			for (i = 0; i < strString.length && blnResult == true; i++) {
+				strChar = strString.charAt(i);
+      			if (strValidChars.indexOf(strChar) == -1) {
+					blnResult = false;
+				}
+			}
+		}
+	
+		if (blnResult == false || strString == "") {
+			alert("Storage time value is not numeric.");
+			return false;
+	   	}
+	   
+	   	if(parseInt(strString) > parseInt(document.getElementById("maxStorageTimeValue").value)) {
+	    	alert("Storage time has to be smaller than maximum storage time.");
+	    	return false;
+	   	}
+	   	
+	   	if(parseInt(strString) < 1) {
+	    	alert("Storage time has to be larger than zero.");
+	    	return false;
+	   	}
+	   		   
+		document.tpedit.submit();
+		return true;
+ }
+	
+</script>
+#include( "calendar_js.txt" )
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td>
+<td width=800>
+
+ <!-- action="$req.getContextPath()/servlet/TypeActivationEdit" -->
+<form name=tpedit method=post onsubmit="return checkNumeric();" action="$req.getContextPath()/servlet/TypeActivationEdit">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="TypeActivation">Type Configuration</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Select status and set storage time. Storage time can only be numeric.
+			<br><br><br>
+			</font>
+		</td>
+</tr>
+
+#if ($errorMessage && $errorMessage != "")
+<tr>
+	<td><font size="1" face="Verdana, Helvetica, Arial" color="red">$errorMessage</font></td>
+</tr>
+#end
+</table>
+
+<table border=1>
+		<tr>
+			<td height="22" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Typename</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$tpn</font></td>
+		</tr>
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Level</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$level</font></td>
+		</tr>
+		<tr>	
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td>
+			<td>
+				<select name="status" selected value="ACTIVE" style="font-size: 9;">
+		  			
+					<option value="ACTIVE">ACTIVE</option>
+					<option value="INACTIVE">INACTIVE</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Partition plan</strong></font></td>
+			<td>
+				<font face="Verdana,Helvetica,Arial" size="1">$!partitionPlan &nbsp;</font></td>
+		</tr>
+		#if( $level != "RAW" || $partitionType == 0 )
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Default storage time</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">
+			
+			#if( $defaultStorageTime.equalsIgnoreCase("Not defined") == true )
+		    	$defaultStorageTime
+ 			#else
+        		$defaultStorageTime days			
+			#end
+			
+			<input type="hidden" name="defaultStorageTimeValue" id="defaultStorageTimeValue" value="$defaultStorageTime" />
+			
+			  </font></td>
+		</tr>
+		#else
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Default storage volume</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">
+			
+			#if( $defaultStorageTime.equalsIgnoreCase("Not defined") == true )
+		    	$defaultStorageTime
+ 			#else
+        		$defaultStorageTime 
+				#if($partitionType == 1)
+					rows
+				#else
+					days
+				#end			
+			#end
+			
+			<input type="hidden" name="defaultStorageTimeValue" id="defaultStorageTimeValue" value="$defaultStorageTime" />
+			
+			  </font></td>
+		</tr>
+		#end
+	#if( $level != "RAW" || $partitionType == 0)
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Use default storage time</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">
+				<input type="checkbox" name="useDefaultStorageTime" id="useDefaultStorageTime" onclick="if(this.checked == true) { document.getElementById('st').disabled = true; document.getElementById('st').style.backgroundColor = '#CCCCCC'; } else { document.getElementById('st').disabled = false; document.getElementById('st').style.backgroundColor = '#FFFFFF'; }"
+				
+				#if( $useDefaultStorageTime.equalsIgnoreCase("true") == true )
+				  checked
+				#end
+				
+				#if( $defaultStorageTime.equalsIgnoreCase("Not defined") == true )
+				  disabled
+				#end
+				/>
+				
+				</font></td>
+		</tr>
+   #else
+   
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Use default storage volume</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">
+				<input type="checkbox" name="useDefaultStorageTime" id="useDefaultStorageTime" onclick="if(this.checked == true) { document.getElementById('st').disabled = true; document.getElementById('st').style.backgroundColor = '#CCCCCC'; } else { document.getElementById('st').disabled = false; document.getElementById('st').style.backgroundColor = '#FFFFFF'; }"
+				
+				#if( $useDefaultStorageTime.equalsIgnoreCase("true") == true )
+				  checked
+				#end
+				
+				#if( $defaultStorageTime.equalsIgnoreCase("Not defined") == true )
+				  disabled
+				#end
+				/>
+				
+				</font></td>
+		</tr>
+  
+	#end
+	
+		#if( $level != "RAW" || $partitionType == 0 )
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Storage time</strong></font></td>
+      <!-- size and maxlength changed to support volume based sizes-->
+			<td><input size="15" maxlength="15" type="text" id="st" name="st" 
+			
+			#if( $useDefaultStorageTime.equalsIgnoreCase("true") == true )
+			  style="background-color: #CCCCCC;" disabled
+			#else
+			  value="$st"
+			#end
+			/><font face="Verdana,Helvetica,Arial" size="1">days</font></td>
+		</tr>
+		#else
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Storage volume</strong></font></td>
+      <!-- size and maxlength changed to support volume based sizes-->
+			<td><input size="15" maxlength="15" type="text" id="st" name="st" 
+			
+			#if( $useDefaultStorageTime.equalsIgnoreCase("true") == true )
+			  style="background-color: #CCCCCC;" disabled
+			#else
+			  value="$st"
+			#end
+			/><font face="Verdana,Helvetica,Arial" size="1">
+			#if($partitionType == 1)
+				rows
+			#else
+				days
+			#end			
+			</font></td>
+		</tr>
+		#end
+		#if( $level != "RAW" || $partitionType == 0)
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Max storage time</strong></font></td>			
+			<td><font face="Verdana,Helvetica,Arial" size="1">$maxStorageTime days</font>
+			<input type="hidden" name="maxStorageTimeValue" id="maxStorageTimeValue" value="$maxStorageTime" />
+			</td>
+		</tr>
+		#else
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Max storage volume</strong></font></td>			
+			<td><font face="Verdana,Helvetica,Arial" size="1">$maxStorageTime 
+			#if($partitionType == 1)
+				rows
+			#else
+				days
+			#end			
+			</font>
+			<input type="hidden" name="maxStorageTimeValue" id="maxStorageTimeValue" value="$maxStorageTime" />
+			</td>
+		</tr>
+		#end
+		<tr>
+			<td height="22" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Type</strong></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$type</font></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type=submit name=save value=Save>
+			<input type=hidden name=tp value=$tp>
+			<input type=hidden name=tpn value=$tpn>
+			<input type=hidden name=level value=$level>
+			</td>
+		</tr>
+</table>
+
+#if ($partInfo.size() > 0) 
+<br>
+<br>
+<font size="2" face="Verdana, Helvetica, Arial">Partition info:</font>
+<br>
+<br>
+<table border=1>
+			<tr bgcolor="#B3B3FF">
+				<!-- <td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>StorageId</strong></font></td> -->
+				<td width="230" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Tablename</strong></font></td>
+				<td width="70" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td>
+				<td width="70" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Starttime</strong></font></td>
+				<td width="70" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Endtime</strong></font></td>
+			</tr>
+	 		#foreach ($set in $partInfo)
+			<tr onmouseover="this.style.background='#C0C0C0';" onmouseout="this.style.background='#FFFFFF';">
+				<!-- <td><font face="Verdana,Helvetica,Arial" size="1">$set.getStorageid()</font></td> -->
+				<td><font face="Verdana,Helvetica,Arial" size="1">$set.getTablename()</font></td>
+				
+				#set ($bgcolor = "white")
+				#set ($fontcolor = "black")
+
+				#if ($set.getStatus().startsWith("INSANE"))
+					#set ($bgcolor = "red")
+					#set ($fontcolor = "white")
+				#end
+				#if ($set.getStatus() == "ACTIVE")
+					#set ($bgcolor = "green")
+					#set ($fontcolor = "white")
+				#end
+				#if ($set.getStatus() == "NEW")
+					#set ($bgcolor = "lightgreen")
+				#end
+				#if ($set.getStatus() == "READONLY")
+					#set ($bgcolor = "lightgreen")
+				#end
+				#if ($set.getStatus() == "MIGRATED")
+					#set ($bgcolor = "lightgreen")
+				#end
+				
+				
+				<td bgcolor=$bgcolor><font face="Verdana,Helvetica,Arial" size="1" color=$fontcolor>$set.getStatus()</font></td>
+				<td><font face="Verdana,Helvetica,Arial" size="1">
+				#if ($set.getStarttime().toString() && $set.getStarttime().toString() != "")
+				$set.getStarttime()
+				#else
+				&nbsp;
+				#end
+				</font></td>
+				<td><font face="Verdana,Helvetica,Arial" size="1">
+				#if ($set.getEndtime().toString() && $set.getEndtime().toString() != "")
+				$set.getEndtime()
+				#else
+				&nbsp;
+				#end
+				</font></td>
+			</tr>
+			#end
+		
+</table>
+#end
+
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

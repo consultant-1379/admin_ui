@@ -1,0 +1,13 @@
+admin_ui	-	commons-configuration	-	commons-configuration-1.0-dev.jar	-	vobs/eniq_3pp/apache/configuration/v11/prod
+admin_ui	-	commons-dbcp	-	commons-dbcp-1.0-dev-20020806.jar	-	vobs/eniq_3pp/apache/dbcp/v10/prod
+admin_ui	-	commons-lang	-	commons-lang	-	vobs/eniq_3pp/apache/comm_lang/v10
+admin_ui	-	commons-logging	-	commons-logging-1.0.2.jar	-	vobs/eniq_3pp/apache/comm_logging/v1x/prod
+admin_ui	-	engine		-	engine_5-0-0b325.jar	-	vobs/eniq_design/plat/etl_controller/build/engine
+admin_ui	-	jconn3		-	jconn3.jar		-	vobs/eniq_3pp/sybase/sybase/v127/prod/client
+admin_ui	-	log4j		-	log4j-1.2-api-2.16.0.jar	-	vobs/eniq_3pp/apache/log4j/v2160/prod
+admin_ui	-	log4j		-	log4j-core-2.16.0.jar	-	vobs/eniq_3pp/apache/log4j/v2160/prod
+admin_ui	-	log4j		-	log4j-api-2.16.0.jar	-	vobs/eniq_3pp/apache/log4j/v2160/prod
+admin_ui	-	repository	-	repository_5-0-0b184.jar	-	vobs/eniq_design/plat/installer/build/repository
+admin_ui	-	scheduler	-	scheduler_5-0-0b60.jar		-	vobs/eniq_design/plat/etl_controller/build/scheduler
+admin_ui	-	servlet		-	servlet.jar			-	vobs/eniq_3pp/apache/tomcat/prod
+admin_ui	-	velocity	-	velocity-dep-1.2.jar	-	vobs/eniq_3pp/apache/jakarta_velocity/v12/prod

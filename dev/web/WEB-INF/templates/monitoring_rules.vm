@@ -1,0 +1,142 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: Monitoring Rules</title>
+		<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script>
+	function openWindow(link){
+		newWin = window.open(link, 'Generator', 
+		'location=0,directories=0,menubar=0,scrollbars=0,'
+		+'status=1,toolbar=0,resizable=0,width=500,height=250');
+	}
+	
+	function refreshPage (selectedTechpack) {
+	
+		window.location.href = "$req.getContextPath()/servlet/MonitoringRules?tp="+selectedTechpack; 
+	
+	}
+	
+	function checkUncheckAll(theElement) {
+     var theForm = theElement.form, z = 0;
+	 for(z=0; z<theForm.length;z++){
+      if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	  theForm[z].checked = theElement.checked;
+	  }
+     }
+    }
+    
+	function selectAll(formObj, isInverse) {
+   		for (var i=0;i < formObj.length;i++) {
+      		fldObj = formObj.elements[i];
+      		
+      		if (fldObj.type == 'checkbox')
+      		{ 
+         		if(isInverse)
+         			fldObj.checked = (fldObj.checked) ? false : true;
+         		else fldObj.checked = true; 
+       		}
+       	}
+	}
+	
+	function LevelChanged()
+	{
+  		document.f1.timelevel_changed.value="yes"; 
+  		document.f1.submit();
+	}
+
+//-->
+</script>
+#include( "calendar_js.txt" )
+
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form method=post action=$req.getContextPath()/servlet/MonitoredTypes onsubmit="return filterFields();">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="MonitoringRules">Monitoring Rules</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Monitoring rules define which measurement types are shown in Show loadings and which have some rules to be monitored.<br>
+			For example minimum row count. If row count is smaller than threshold it appears as Check Failed in show loadings.
+			<br> By clicking measurement type name monitoring rules can be edited.<br>
+			<br>
+			<br>
+			</font>
+		</td>
+</tr>
+
+#if ($errorMessage && $errorMessage != "")
+<tr>
+	<td><font size="1" face="Verdana, Helvetica, Arial" color="red">$errorMessage</font></td>
+<tr>
+#end
+</table>
+<table class="myt" style="width:350;">
+<tr>
+	<td colspan="2" class="pt_b_top"><font size="-1"><strong>Tech Pack</strong></font></td>
+</tr>
+<tr>
+	<td>
+		<select onChange="refreshPage(this.form.type.value);" name="type" style="font-size: 9;">
+		#if ($tp != "")
+		<option selected value="$tp">$tp</option>
+		#end
+		<option value="-">-</option>
+		#foreach($tps in $distinctTechPacks)
+			<option value="$tps">$tps</option>
+		#end
+		</select>
+	#if ($tp != "" && $tp != '-')
+	</td>
+	<td>
+		<a href="$req.getContextPath()/servlet/AddMonitoringRule?tp=$tp"><font face="Verdana,Helvetica,Arial" size="1">Add new monitoring rule</font></a>
+	</td>
+	#else
+	<td>
+		&nbsp;
+	</td>
+	#end
+</tr>
+<tr>
+	<td>&nbsp;</td>	
+</tr>
+
+
+<table border=1>
+	
+	#if($monitoringRules.size() > 0)
+		<tr bgcolor="#B3B3FF">
+		    <td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Typename</strong></font></td> <!-- Typename -->
+			<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel</strong></font></td> <!-- Timelevel -->
+			<td width="190" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Modified</strong></font></td> <!-- Modified Time -->
+		</tr>
+	#end
+	#foreach ($oneset in $monitoringRules)
+		<tr>
+			<td width="100" nowrap><a href="$req.getContextPath()/servlet/AddMonitoringRule?tp=$tp&type=$!oneset.get(0)&timelevel=$!oneset.get(1)"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(0)</a></td>
+			<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</td>
+			<td width="150" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(2)</td>
+		</tr>
+	#end	
+</table>
+<input type="hidden" name="tp" value=$tp>
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

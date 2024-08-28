@@ -1,0 +1,490 @@
+#if (!$search_string)
+#set ($search_string = "-")
+#end
+#if (!$search_days)
+#set ($search_days = "31")
+#end
+#if (!$year_1)
+#set ($year_1 = "2015")
+#end
+#if (!$month_1)
+#set ($month_1 = "01")
+#end
+#if (!$day_1)
+#set ($day_1 = "01")
+#end
+#if (!$search_days)
+#set ($search_days = "31")
+#end
+#if (!$year_2)
+#set ($year_2 = "2015")
+#end
+#if (!$month_2)
+#set ($month_2 = "01")
+#end
+#if (!$day_2)
+#set ($day_2 = "01")
+#end
+#if (!$row_limit)
+#set ($row_limit = "5")
+#end
+#if(!$search)
+#set ($search = "day")
+#end
+<html>
+<head><title>Ericsson Network IQ :: System Monitoring :: Eniq Monitoring Services</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css"></head>
+<link rel="shortcut icon" href="../img/eric.ico">
+<SCRIPT src="../javascript/Chart.js-master/Chart.js"></script>
+<script type="text/javascript">
+function returnValues(){
+	var graph = [];
+	var graph1 = [];
+	var graph2 = [];
+	 var i=0;
+ var IDs = new Array();	
+	#foreach ($key in $keys)
+		var x= $heap.get($key);
+		var value= new Array("$key");
+		var value1= new Array(x);
+		graph[i]="$key";
+		if($keys.size() > 80){
+			if(i%10==0){
+				graph[i]="$key";
+			}else{
+			graph[i]=" ";
+			}
+		}else{
+			graph[i]="$key";
+		}
+		
+		graph1[i]=x;
+	i++;
+	#end
+	IDs[0]=graph;
+	IDs[1]=graph1;
+	IDs[2]="rgba(1,116,223,0.5)";
+	IDs[3]= "rgba(1,116,223,0.5)";
+	IDs[4]="rgba(220,220,220,0.75)";
+	IDs[5]="rgba(220,220,220,1)";
+	
+	return IDs
+
+}
+function LevelChanged()
+{		
+	//var x=document.getElementsByName("search_direction")[0].value;
+	var y="NO";
+  document.f1.timelevel_changed.value=document.getElementsByName("search_direction")[0].value;
+  document.f1.timelevel_changed.value="NO";
+  document.f1.submit();
+    
+	//window.location.href = "$req.getContextPath()/servlet/EniqMonitoring?timelevel_changed="+y+"&search_direction="+x;
+}
+			<!--
+			
+			function check() {
+			
+			   var strString = "";
+			
+			   var strValidChars = "0123456789";
+			   var strChar;
+			   var blnResult = true;
+			
+			   strString = document.f1.row_limit.value;
+				
+				//  test strString consists of valid characters listed above
+				for (i = 0; i < strString.length && blnResult == true; i++) {
+		      
+					strChar = strString.charAt(i);
+		      
+					if (strValidChars.indexOf(strChar) == -1) {
+						blnResult = false;
+						e = "Number of rows is not numeric.\n";
+					}
+				}
+				
+			   if (blnResult == false) {
+				return false;
+			   } else {
+				document.f1.submit();
+				return (true && filterFields());
+			   }
+			
+			 }
+			  // -->
+			 
+			</SCRIPT>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<body bgcolor="#ffffff">
+		<table border="0">
+			<tr valign=top>
+				<td width=220>
+					#parse( "main_menu.vm" )
+				</td>
+				<td width=800>
+				
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="EniqMonitoring">Eniq Monitoring Services</a></font>
+		<hr />
+		<form name="f1" action="$req.getContextPath()/servlet/EniqMonitoring" method="post" onsubmit="return filterFields();">
+			#if ($search_direction.equalsIgnoreCase("day"))
+						<table border=1>
+							<tr>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>Command</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Monitor</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>Date</b></font>
+								</td>
+							<!--<td class="basichdr" align="center">
+								<font size="-1"><b>Search Date</b></font>
+								</td> -->
+							</tr>
+							<tr>
+								<td valign=top>
+									<font size="-1">
+										<select name="command" style="font-size: 9;">
+										<option selected>$theCommand</option>
+										#foreach($cmd in $commands)
+										<option>$cmd
+										#end
+										</select>
+									</font>
+								</td>
+								<input type=hidden name="timelevel_changed" value="YES">
+								<td class="basic" valign="top"><input type="radio"
+								
+                                     name="search_direction" value="day"  onclick="LevelChanged()" $day> Day<br>
+                                <input type="radio"   name="search_direction" value="range"  onclick="LevelChanged()" $range>
+                                Range</td><script>
+								</script>
+								<td valign=top>
+								#parse( "cal_select_1.vm" )
+								</td>
+								
+					<!--			<td valign=top>
+									#parse( "cal_select_2.vm" )
+								</td>-->
+							</tr>
+							<tr>
+								<td valign=top colspan=1>
+									<input type="hidden" name="search_done" value="true">
+									<input type=submit style="font-size: 11;" onclick="getInputValue();" id="submitbtn" value="Get Information">
+								</td>
+						<!--		<td class="basic" valign=top colspan=2>
+								Top<input type="text" maxlength="3" id="inputTxt" name="row_limit" value=$row_limit min="0" max="500">Rows
+								</td> -->
+							</tr>
+						</table>
+			#end
+			#if ($search_direction.equalsIgnoreCase("range"))
+			<table border=1>
+							<tr>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>Command</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Monitor</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>Start Date</b></font>
+								</td>
+							<td class="basichdr" align="center">
+								<font size="-1"><b>Search<br>End Date</b></font>
+								</td> 
+							</tr>
+							<tr>
+								<td valign=top>
+									<font size="-1">
+										<select name="command" style="font-size: 9;">
+										<option selected>$theCommand</option>
+										#foreach($cmd in $commands)
+										<option>$cmd
+										#end
+										</select>
+									</font>
+								</td>
+								<input type=hidden name="timelevel_changed" value="YES">
+								<td class="basic" valign="top"><input type="radio"
+                                        name="search_direction" value="day" onclick="LevelChanged()" $day> Day<br>
+                                <input type="radio"   name="search_direction" value="range"  onclick="LevelChanged()" $range>
+								<script>
+									alert($day+","+$range);
+								</script>
+
+                                Range</td>
+								<td valign=top>
+									#parse( "cal_select_1.vm" )
+								</td>
+								
+								<td valign=top>
+									#parse( "cal_select_2.vm" )
+								</td>
+							</tr>
+							<tr>
+								<td valign=top colspan=1>
+									<input type="hidden" name="search_done" value="true">
+									<input type=submit style="font-size: 11;" onclick="getInputValue();" id="submitbtn" value="Get Information">
+								</td>
+							<td class="basic" valign=top colspan=2>
+								Top <input type="text" maxlength="3" id="inputTxt" name="row_limit" value=$row_limit min="0" max="500">rows
+								</td> 
+							</tr>
+						</table>
+				#end 
+					</form>
+					
+					<p><hr size="1"><p>
+#if ( $search.equalsIgnoreCase("YES"))
+#if ($row_limit == 0)
+	<table>
+	 <tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Selected number of rows should be greater than 0</font></b>
+		</tr>
+	 <tr><td>&nbsp;</td></tr>
+	</table>
+	#end
+#if($row_limit != 0)
+#if ($command.equalsIgnoreCase("schedulerHeap"))
+	Note: MAX SCHEDULER HEAP 64MB 
+	<h2>SCHEDULER HEAP USAGE</h2>
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+	var graph = returnValues();
+
+	var barChartData = {
+		labels : graph[0],
+		datasets : [
+			{
+			 fillColor: graph[2],
+	               strokeColor:graph[3],
+            	        highlightFill:graph[4] ,
+      	               highlightStroke:graph[5] ,
+		data : graph[1]
+			}
+		]
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			 barStrokeWidth : 1,
+			 barDatasetSpacing : 1,
+  			 annotateDisplay : true,
+      			 annotateLabel: "<%= v1 + ' : ' + v3%>"
+		});}
+</SCRIPT>
+
+<div style="width: 50%">
+			<canvas id="canvas" height="600px" width="1000"></canvas>
+</div>
+#end
+
+#if ($command.equalsIgnoreCase("EngineHeap"))
+	Note: MAX ENGINE HEAP $max 
+	
+	<h2>ENGINE HEAP USAGE</h2>
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+	var graph = returnValues();
+
+	var barChartData = {
+		labels : graph[0],
+		datasets : [
+			{
+			 fillColor: graph[2],
+	               strokeColor:graph[3],
+            	        highlightFill:graph[4] ,
+      	               highlightStroke:graph[5] ,
+		data : graph[1]
+			}
+		]
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			 barStrokeWidth : 2,
+			 barDatasetSpacing : 1,
+  			 annotateDisplay : true,
+      			 annotateLabel: "<%= v1 + ' : ' + v3%>"
+		});}
+</SCRIPT>
+
+<div style="width: 50%">
+			<canvas id="canvas" height="600px" width="1000"></canvas>
+</div>
+#end
+
+#if ($command.equalsIgnoreCase("RepDBConn"))
+	Note: Max 100 connections can be made.
+<h2>NUMBER OF REPDB CONNECTIONS</h2>
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+	var graph = returnValues();
+
+	var barChartData = {
+		labels : graph[0],
+		datasets : [
+			{
+			 fillColor: graph[2],
+	               strokeColor:graph[3],
+            	        highlightFill:graph[4] ,
+      	               highlightStroke:graph[5] ,
+		data : graph[1]
+			}
+		]
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			 barStrokeWidth : 2,
+			 barDatasetSpacing : 1,
+  			 annotateDisplay : true,
+      			 annotateLabel: "<%= v1 + ' : ' + v3%>"
+		});}
+</SCRIPT>
+
+<div style="width: 50%">
+			<canvas id="canvas" height="600px" width="1000"></canvas>
+</div>
+#end
+
+#if ($command.equalsIgnoreCase("DWHDBConn"))
+	 Note: Max 200 connections can be made.
+<h2>NUMBER OF DWHDB CONNECTIONS</h2>
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+	var graph = returnValues();
+
+	var barChartData = {
+		labels : graph[0],
+		datasets : [
+			{
+			 fillColor: graph[2],
+	               strokeColor:graph[3],
+            	        highlightFill:graph[4] ,
+      	               highlightStroke:graph[5] ,
+		data : graph[1]
+			}
+		]
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			 barStrokeWidth : 2,
+			 barDatasetSpacing : 1,
+  			 annotateDisplay : true,
+      			 annotateLabel: "<%= v1 + ' : ' + v3%>"
+		});}
+</SCRIPT>
+
+<div style="width: 50%">
+			<canvas id="canvas" height="600px" width="1000"></canvas>
+</div>
+#end
+
+#if ($command.equalsIgnoreCase("MainCache"))
+<h2>MAIN CACHE USAGE</h2>
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+	var graph = returnValues();
+
+	var barChartData = {
+		labels : graph[0],
+		datasets : [
+			{
+			 fillColor: graph[2],
+	               strokeColor:graph[3],
+            	        highlightFill:graph[4] ,
+      	               highlightStroke:graph[5] ,
+		data : graph[1]
+			}
+		]
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			 barStrokeWidth : 2,
+			 barDatasetSpacing : 1,
+  			 annotateDisplay : true,
+      			 annotateLabel: "<%= v1 + ' : ' + v3%>"
+		});}
+</SCRIPT>
+
+<div style="width: 50%">
+			<canvas id="canvas" height="600px" width="1000"></canvas>
+</div>
+#end
+
+#if ($command.equalsIgnoreCase("TempCache"))
+
+<h2>TEMP CACHE USAGE</h2>
+<SCRIPT>
+
+defCanvasWidth=1200;
+defCanvasHeight=600;
+	var graph = returnValues();
+
+	var barChartData = {
+		labels : graph[0],
+		datasets : [
+			{
+			 fillColor: graph[2],
+	               strokeColor:graph[3],
+            	        highlightFill:graph[4] ,
+      	               highlightStroke:graph[5] ,
+		data : graph[1]
+			}
+		]
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			 barStrokeWidth : 2,
+			 barDatasetSpacing : 1,
+  			 annotateDisplay : true,
+      			 annotateLabel: "<%= v1 + ' : ' + v3%>"
+		});}
+</SCRIPT>
+
+<div style="width: 50%">
+			<canvas id="canvas" height="600px" width="1000"></canvas>
+</div>
+#end
+#end
+
+</td>
+#end
+
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>
+
+<SCRIPT>
+
+function getInputValue(){
+          var inputVal = document.getElementById("inputTxt").value;
+            if (inputVal > 5 || inputVal < 0){
+            alert("The number of row should range between 0 and 5");
+           //("#submitbtn").attr("disabled", true);
+            document.getElementById("submitbtn").disabled = true;
+  }
+     }
+			  
+			</SCRIPT>

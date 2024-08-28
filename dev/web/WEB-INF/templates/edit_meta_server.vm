@@ -1,0 +1,106 @@
+#set ($appPath = $req.getContextPath()) 
+#set ($servletPath = "$appPath/servlet")
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+#if($hostName)
+	#set( $pageTitle = "Edit server")
+#else
+	#set( $pageTitle = "Add server")
+#end
+<title>System monitoring :: System Status :: Configure system status :: $pageTitle</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+
+</head>
+
+<body bgcolor="#ffffff">
+
+
+<form action="$servletPath/SystemMonitorsServlet" method="post" onSubmit="return filterFields();">
+<table border="0">
+
+	<tr valign=top>
+		<!-- main menu -->
+		<td width=220>#parse( "main_menu.vm" )</td>
+		<!-- the body -->
+		<td width=800><font size="1" face="Verdana, Helvetica, Arial">System
+		Monitoring&nbsp;&gt;&gt;&nbsp;
+		<a href="$servletPath/SystemMonitorsServlet">System Status</a>&nbsp;&gt;&gt;&nbsp;
+		<a href="$servletPath/SystemMonitorsServlet?action=editSystemMonitors">Configure system status</a>&nbsp;&gt;&gt;&nbsp;
+		#if($hostName)
+			<a href="$servletPath/SystemMonitorsServlet?action=editMetaServer&hostName=$hostName">Edit server</a> 
+		#else 
+			<a href="$servletPath/SystemMonitorsServlet?action=addMetaServer">Add server</a> 
+		#end 
+		</font>
+		<hr />
+
+		#if ($message)
+		<table border="1" cellpadding="2" cellspacing="0">
+			<tr>
+				<td><font size="-1" face="Courier">$message</font></td>
+			</tr>
+		</table>
+		#end
+
+		<table name="ttable" id="ttable" border="0" width="100%"
+			cellpadding="1" cellspacing="1">
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Host name:</font></td>
+				<td>#if($hostName)
+						<input type="hidden" name="hostName"
+						id="hostName" value="$hostName"><font size="1" face="Verdana, Helvetica, Arial">$hostName</font>
+					#else 
+						<input type="text" name="hostName" id="hostName" value=""> 
+					#end
+				</td>
+			</tr>
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Type:</font></td>
+				<td>
+					<select name="type" id="type">
+						<option name="loader" id="loader" value="LOADER" #if(($type) && $type == "LOADER") || (!$type) selected #end>LOADER</option>
+						<option name="query" id="query" value="QUERY" #if($type && $type == "QUERY") selected #end>QUERY</option>
+						<option name="web" id="web" value="WEB" #if($type && $type == "WEB") selected #end>WEB</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" width="150"><font size="1" face="Verdana, Helvetica, Arial">Status URL:</font></td>
+				<td><input type="text" name="statusUrl"
+					id="statusUrl" value="#if($statusUrl)$statusUrl#end"></td>
+			</tr>
+			<tr>
+				<td align="right" width="150">&nbsp;</td>
+				<td>
+				#if($hostName)
+					#set( $submitButtonText = "Save changes" )
+				#else
+					#set( $submitButtonText = "Add server" )
+				#end
+				
+				<input type="submit"
+					value="$submitButtonText"></td>
+			</tr>
+		</table>
+		<input type="hidden" name="action" id="action" value="saveMetaServer">
+
+		#if($hostName) 
+			#set( $addingNewServer = "false" )			
+		#else 
+			#set( $addingNewServer = "true" )
+		#end 
+		<input type="hidden"
+			name="addingNewServer" id="addingNewServer" value="$addingNewServer">
+
+		</td>
+		#parse( "footer.vm" )
+</table>
+</form>
+
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

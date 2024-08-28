@@ -1,0 +1,43 @@
+var C5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_j1ys\"></a><a name=\"CHAPTER5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">HTTPS Renegotiation</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"From 14A onwards the user has the option of enabling and disabling\n" +
+"HTTPS renegotiation. By default, a freshly installed runtime package\n" +
+"will have HTTPS renegotiation disabled. </p>\n" +
+"\n" +
+"<p>\n" +
+"When upgrading from 14A onwards whatever renegotiation limit Tomcat\n" +
+"has been set to will be automatically retained after the upgrade.\n" +
+"For example if the renegotiation had been enabled by the user then\n" +
+"it will retain the enable setting after the upgrade.</p>\n" +
+"\n" +
+"<p>\n" +
+"To check the current HTTPS renegotiation status run this command\n" +
+"as user dcuser: </p>\n" +
+"\n" +
+"<p>\n" +
+"Note: In a Multi-Blade environment run the command on the Coordinator\n" +
+"blade.</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b># /eniq/sw/runtime/tomcat/bin/tls_switch.bsh status</b></tt></p>\n" +
+"<p>\n" +
+"To enable renegotiation run the following command:</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b># /eniq/sw/runtime/tomcat/bin/tls_switch.bsh enable</b></tt></p>\n" +
+"<p>\n" +
+"To disable renegotiation run the following command:</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b># /eniq/sw/runtime/tomcat/bin/tls_switch.bsh disable</b></tt></p>\n" +
+"<p>\n" +
+"Note: The first time the script is run it backs up the default\n" +
+"/eniq/sw/runtime/tomcat/conf/server.xml into a file called /eniq/sw/runtime/tomcat/conf/orig_server.xml.\n" +
+" The contents of server.xml are then replaced by either /eniq/sw/runtime/tomcat/conf/disable_server.xml\n" +
+"or /eniq/sw/runtime/tomcat/conf/enable_server.xml, depending whether\n" +
+"you specified the parameter disable or enable with the tls_switch.bsh\n" +
+"command</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

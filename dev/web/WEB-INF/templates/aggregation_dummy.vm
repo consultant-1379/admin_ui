@@ -1,0 +1,5 @@
+<SCRIPT LANGUAGE="JavaScript">
+<!-- 
+window.location="ShowAggregations?year_1=$year_1&month_1=$month_1&day_1=$day_1&type=$batch_name";
+// -->
+</script>

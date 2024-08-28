@@ -1,0 +1,45 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: System Monitoring ::Loader Counts</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+	<tr valign=top>
+	<!-- main menu -->
+	<td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	<!-- the body -->
+	<td width=800>
+
+	<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="LoadersDetails">Loader information</a></font>
+	
+	<hr>
+	
+		#if($LoaderDetailsinfo.isEmpty())
+			<h3>Loader Count details not found for selected date</h3>
+		#elseif($LoaderDetailsinfo.size()>0)
+			<table border="1" class="loadercount">
+				<tr>
+					<th class="loadercount">Typename</th>
+					<th class="loadercount">Loader count</th>
+				</tr>
+				#foreach($loader in $LoaderDetailsinfo)
+				<tr>
+					<td class="loadercount">$loader.split("::")[0]</td>							
+					<td class="loadercount">$loader.split("::")[1]</td>
+				</tr>	
+				#end			
+			</table>
+		#end
+	#parse( "footer.vm" )
+</table>
+</body>
+	
+</html>

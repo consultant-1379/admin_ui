@@ -1,0 +1,44 @@
+<html>
+<head><title>Ericsson Network IQ :: System Monitoring :: Monitoring Commands</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+
+</head>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font class="toplink" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="/adminui/servlet/LoaderStatusServlet">System Status</a> 
+&nbsp;&gt;&gt;&nbsp;Vector Counter Bin</font>
+<hr />
+	<table border="1">
+		<th>View Name</th>
+		<th>Counter Name</th>
+		<th>Number Of Bins Loaded</th>
+		<th>ROP</th>
+		<th>SN</th>
+		<tbody>
+			#foreach($row in $vectorcounterbin)
+			<tr>
+				<td>$row.get(0)</td>
+				<td>$row.get(1)</td>
+				<td>$row.get(2).toString()</td>
+				<td>$row.get(3)</td>
+				<td>$row.get(4)</td>
+			</tr>
+			#end
+		</tbody>
+	</table>
+
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

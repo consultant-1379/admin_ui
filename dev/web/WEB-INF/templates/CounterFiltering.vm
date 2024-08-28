@@ -1,0 +1,129 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: Counter Filtering</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+
+
+<script>
+
+function openWindow(link){
+	newWin = window.open(link, 'Generator', 
+	'location=0,directories=0,menubar=0,scrollbars=0,'
+	+'status=1,toolbar=0,resizable=0,width=500,height=250');
+}
+	
+function refreshPage(settype) {
+	var s = settype;
+	window.location.href = "$req.getContextPath()/servlet/CounterFiltering?st="+s; 	
+}
+
+
+function getSetNames(p,s) {
+	window.location.href = "$req.getContextPath()/servlet/CounterFiltering?package="+p+"&st="+s; 	
+}
+	
+function checkUncheckAll(theElement) {
+     var theForm = theElement.form, z = 0;
+	 for(z=0; z<theForm.length;z++){
+     	if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	 		theForm[z].checked = theElement.checked;
+	 	}
+     }
+}
+    
+function selectAll(formObj, isInverse) {
+   	for (var i=0;i < formObj.length;i++) {
+      	fldObj = formObj.elements[i];
+      	if (fldObj.type == 'checkbox')
+      	{ 
+         	if(isInverse)
+         		fldObj.checked = (fldObj.checked) ? false : true;
+         	else fldObj.checked = true; 
+       	}
+    }
+}
+	
+</script>
+
+</head>
+<body>
+<table border="0">
+	<tr valign=top>
+	<td width=220>#parse( "main_menu.vm" )</td>
+	<td width=800 class="toplink">
+	<form name=f1 method=post action=$req.getContextPath()/servlet/CounterFiltering onsubmit="return filterFields();">Configuration&nbsp;&gt;&gt;&nbsp;<a href="CounterFiltering">Counter Filtering</a>
+	<hr />
+		
+		<table width="350" cellspacing="0">
+		<tr>
+			<td class="midhdr">NE TYPE</td>
+			<td class="midhdr">TECHPACK</td>
+		</tr>
+
+		<tr>
+			<td valign="top"><select onchange="javascript:refreshPage(this.form.settype.value=form.settype.value);" name="settype">
+			#if ($st != "")
+			    <option selected value="$st">$st</option>
+			    <option value="-">-</option>
+			#else
+				<option selected value="-">-</option>
+			#end
+			
+			#foreach ($key in $distinctnetype)
+				<option value="$key">$key</option>
+			#end
+				</select></td>
+				<td valign="top"><select onchange="javascript:getSetNames(this.form.packageSets.value, this.form.settype.value);" name="packageSets">
+			#if ($package != "")
+			    <option selected value="$package">$package</option>
+			    <option value="-">-</option>
+			#else
+				<option selected>-</option>
+			#end
+			#foreach ($key in $distinctTechPacks)
+				<option value="$key">$key</option>
+			#end
+					
+				</select></td>
+				
+			</tr>
+	</table>
+	
+<table>	
+<tr><td class="basic">Filter:</td>
+<td>
+<input type="text" name="search">
+</td></tr>
+<tr><td><input type="submit" value="search"></td></tr>
+</table>
+
+		
+<table border=1>
+	#if($volumeBasedMeasTypes.size() > 0)
+		<tr>
+			<td width="*" nowrap class="basichdr">Typename</td>
+		</tr>
+		#foreach ($oneset in $volumeBasedMeasTypes)
+			#set( $rowColor = "#FFFFFF" )
+			<tr style="background-color: $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+			onmouseout="this.style.background='$rowColor';">
+				<td class="basiclist"><a
+				href="$req.getContextPath()/servlet/CounterFilteringDetails?typeName=$oneset&st=$st&package=$package&search=$search">$oneset</a></font></td>
+			</tr>
+		#end
+	#end
+</table>
+
+
+<input type="hidden" name="st" value="$st">
+<input type="hidden" name="package" value="$package">	
+<input type="hidden" name="search" value="$search">
+</form>
+#parse( "footer.vm" ) 
+</font></td>
+</tr>
+</table>
+</body>
+</html>

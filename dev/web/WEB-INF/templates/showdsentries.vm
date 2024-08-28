@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Ericsson Network IQ :: Data Flow Monitoring :: Show Loadings</TITLE>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+</HEAD>
+
+<BODY>
+<TABLE width="500"  cellspacing="0" cellpadding="1">
+
+<TR>
+	<TD class="pop_up" bgcolor="#B3B3FF" width="30%"><b>Detail info</b></TD>
+	<TD class="pop_up" width="70%"><!--<a href="history.go(-1)">back</a>--></TD>
+</TR>
+<TR>
+	<TD bgcolor="#B3B3FF">&nbsp;</TD>
+	<TD>&nbsp;</TD>
+</TR>
+<TR>
+	<TD class="pop_up" bgcolor="white">Typename</TD>
+	<TD class="pop_up" bgcolor="white">$typename</TD>
+</TR>
+<TR>
+	<TD class="pop_up" bgcolor="silver">Timelevel</TD>
+	<TD class="pop_up" bgcolor="silver">$timelevel</TD>
+</TR>
+
+<TR>
+	<TD class="pop_up" bgcolor="white">Datatime</TD>
+	<TD class="pop_up" bgcolor="white">$datatime</TD>
+</TR>
+
+		<TR>
+	<TD class="pop_up" bgcolor="silver">Rowcount</TD>
+	<TD class="pop_up" bgcolor="silver">$rowcount</TD>
+</TR>
+
+<TR>
+	<TD class="pop_up" bgcolor="white">Sourcecount</TD>
+	<TD class="pop_up" bgcolor="white">$sourcecount</TD>
+</TR>
+
+<TR>
+	<TD class="pop_up" bgcolor="silver">Status</TD>
+	<TD class="pop_up" bgcolor="silver">$status</TD>
+</TR>
+
+<TR>
+	<TD class="pop_up" bgcolor="white">Description</TD>
+	<TD class="pop_up" bgcolor="white">$description</TD>
+</TR>
+
+<TR>
+	<TD class="pop_up" bgcolor="silver">Modified</TD>
+	<TD class="pop_up" bgcolor="silver">$modified</TD>
+</TR>
+
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+<html>
+<head>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body>
+#if ($network_type) 
+	#set($networkType = $network_type)
+#else
+	#set($networkType = "_2G")
+#end	
+<span style="font-size: small; font-family: Verdana, Helvetica, Arial,monospace; ">
+	<a href="$req.getContextPath()/servlet/UnmatchedTopologyManager?network_type=$networkType">Cancel</a>
+</span>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

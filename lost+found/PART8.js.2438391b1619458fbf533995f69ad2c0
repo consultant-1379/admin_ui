@@ -1,0 +1,10 @@
+var C8=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">8 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_muxb\"></a><a name=\"CHAPTER8\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ Events Node Hardening</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"For more information on node hardening for ENIQ Events refer to <em class=\"LOWEMPH\">ENIQ Node Hardening</em>, <a href='javascript:parent.parent.parent.showAnchor(\"rf-ENIQNodeHardening\")' class=\"xref\">Reference [6]</a> and to <em class=\"LOWEMPH\">OS Node Hardening</em>, <a href='javascript:parent.parent.parent.showAnchor(\"rf-OSNodeHardening\")' class=\"xref\">Reference [7]</a>.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

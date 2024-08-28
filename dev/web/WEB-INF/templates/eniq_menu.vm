@@ -1,0 +1,409 @@
+<script language="JavaScript">
+	function NewWindow (mypage, myname)
+	{
+		props = 
+			'height=1048' +
+			',width=768' +
+			',directories=yes' +
+			',location=yes' +
+			',menubar=yes' +
+			',scrollbars=yes' +
+			',status=yes' +
+			',toolbar=yes' +
+			',resizable=yes'
+				
+		win = window.open (mypage, 'Name', props);
+			
+		win.window.focus();
+	}
+	function NewBusyhourConfWindow (mypage, myname)
+	{
+		props = 
+			'height=1048' +
+			',width=768' +
+			',directories=yes' +
+			',location=yes' +
+			',menubar=yes' +
+			',scrollbars=yes' +
+			',status=yes' +
+			',toolbar=yes' +
+			',resizable=yes'
+				
+		win = window.open (mypage, 'BusyhourConf', props);
+			
+		win.window.focus();
+	}
+	function disableLink(id){
+	document.getElementById(id).disabled = true;
+	console.log(id)
+	setTimeout(function(){document.getElementById(id).disabled = false;},3000);
+	}
+	function myOverFunction(id) {
+  document.getElementById(id).style.textDecoration='underline';
+}
+function myLeaveFunction(id){
+document.getElementById(id).style.textDecoration='none';
+}
+</script>
+
+#set ($appPath = $req.getContextPath())
+#set ($servletPath = "$appPath/servlet")
+#set ($manual = "$appPath/manual")
+#set ($busyhourConfPath = "$appPath/busyhourcfg")
+#set ($busyhourConf=1)
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td class="menuhdr">System Monitoring</td></tr>
+
+#if ($repDBOk != 0)
+
+<tr><td><a class="menulink"  href="$servletPath/LoaderStatusServlet" >
+<button id="system" style="background: none;border: none;padding: 0;color:#000099;font-family: Verdana, Helvetica, Arial;cursor: pointer; "  onmouseover="myOverFunction(this.id)" onmouseleave="myLeaveFunction(this.id)" onClick="disableLink(this.id)">System Status</button></a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#SystemStatus" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<!--<tr><td><a class="menulink" href="$servletPath/LoaderSetsInfo">Loaders Sets Count</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#AdminUI" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>-->
+<tr><td><a class="menulink" href="$servletPath/ETLShow">ETLC Monitoring</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#AdminUI" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/ETLHistory">ETLC Set History</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#AdminUI" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/ETLRunSetOnce">ETLC Set Scheduling</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#AdminUI" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/CommandLine">Monitoring Commands</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#MonitoringCommands" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#if ($environment.showEniqMonitoring())
+<tr><td><a class="menulink" href="$servletPath/EniqMonitoring">Eniq Monitoring Services</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#EniqMonitoring" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+	#end
+<tr><td><a class="menulink" href="$servletPath/TPInstallation">TechPack Installation</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#TPInstallation" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+
+#if ($environment.showFMAlarm())
+<tr><td><a class="menulink" href="$servletPath/FMAlarm">FM Alarm</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#FMAlarm" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+<tr><td>&nbsp;</td></tr>
+<tr><td class="menuhdr">ENM Interworking</td></tr>
+
+<tr><td><a class="menulink" href="$servletPath/FLSGranularityConfiguration">Granularity Configuration</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#FLSGranularityConfiguration" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+
+<tr><td><a class="menulink" href="$servletPath/CustomNodes">Custom Nodes</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#CustomNodes" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+
+#if ($environment.showRAT())
+<tr><td><a class="menulink" href="$servletPath/RoleAssignmentTool">Role Assignment Tool</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#RoleAssignmentTool" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+#if ($environment.showNAT())
+<tr><td><a class="menulink" href="$servletPath/NodeAssignmentTool">Node Assignment Tool</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#NodeAssignmentTool" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+#if ($environment.showFLS())
+<tr><td><a class="menulink" href="$servletPath/FlsMonitoring">FLS Monitoring</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#FlsMonitoring" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+<tr><td>&nbsp;</td></tr>
+<tr><td class="menuhdr">Feature Version Manager</td></tr>
+<tr><td><a class="menulink" href="$servletPath/Precheck">Pre Check</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#PreCheck" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/UpdateFeatures">Update Features</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#UpdateFeatures" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/InstallFeatures">Install Features</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#InstallFeatures" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/ReportExtraction">Report Extraction</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#ReportExtraction" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td class="menuhdr">Data Flow Monitoring</td></tr>
+#if ($environment.showLoadings())
+<tr><td><a class="menulink" href="$servletPath/ShowLoadStatus">Show Loadings</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#ShowLoadings" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+#if ($environment.showAggregations())
+<tr><td><a class="menulink" href="$servletPath/ShowAggregations">Show Aggregations</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#ShowAggregations" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+#if ($environment.showOldReAggregations() && $environment.showNewReAggregations())
+<tr><td><a class="menulink" href="$servletPath/AggregationEniqEvents">Reaggregation</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#ReaggregationEvents" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/Aggregation">PM Reaggregation</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#Reaggregation" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#elseif($environment.showOldReAggregations())
+<tr><td><a class="menulink" href="$servletPath/Aggregation">Reaggregation</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#Reaggregation" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#elseif ($environment.showNewReAggregations())
+<tr><td><a class="menulink" href="$servletPath/AggregationEniqEvents">Reaggregation</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#ReaggregationEvents" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+<tr><td><a class="menulink" href="$servletPath/ETLSessionLog">Session Logs</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#SessionLogs" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#if ($environment.showDatasourceLog())
+<tr><td><a class="menulink" href="$servletPath/NELog">Datasource Log</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#DataSourceLog" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+
+
+
+<tr><td>&nbsp;</td></tr>
+
+
+<tr><td class="menuhdr">Data Verification</td></tr>
+<tr><td><a class="menulink" href=$servletPath/DataRowInfo>Data Row Info</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#DataRowInfo" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href=$servletPath/DataRowSummary>Data Row Summary</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#DataRowSummary" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+
+<tr><td><a class="menulink" href=$servletPath/ShowRefType>Show Reference Tables</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#ShowReferenceTables" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#if ($environment.showBusyhourInfo())
+<tr><td><a class="menulink" href=$servletPath/ViewBHInformation>Busy Hour Information</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#BusyhourInformation" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+#if ($environment.showBusyhourInfo())
+<tr><td><a class="menulink" href=$servletPath/ViewRankBH>RANKBH Information</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#RANKBHInformation" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td class="menuhdr">Configuration</td></tr>
+#if ($environment.showMonitoringRules())
+<tr><td><a class="menulink" href=$servletPath/MonitoringRules>Monitoring Rules</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#AdminUI" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+#if ($environment.showUnmatchedTopology())
+<tr><td><a class="menulink" href=$servletPath/UnmatchedTopologyManager?network_type=_2G>Unmatched Topology</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#UnknownCells" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+<tr><td><a class="menulink" href=$servletPath/MonitoredTypes>Monitored Types</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#AdminUI" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href=$servletPath/UsercheckActivation>Type Configuration</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#TypeConfiguration" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href=$servletPath/UsercheckDWH>DWH Configuration</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#DWHConfiguration" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<tr><td><a class="menulink" href="$servletPath/UsercheckLogging">Logging Configuration</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#LoggingConfiguration" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+<!-- Only for STATS environment.
+Considering the BusyHour paratmeter just to differntitate between STATS and EVENTS env. (No link with busyhour in functionality)
+Checking Can be improved in future -->
+#if ($environment.showBusyhourInfo())
+<tr><td><a class="menulink" href="$servletPath/INTFPollingDelayConf"><!--INTF Poll Delay Configuration-->Polling Start Time</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#INTFPollingDelayConf" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+#if ($environment.showEBSUpgrader())
+<tr><td><a class="menulink" href="$servletPath/EbsUpgradeManager">EBS Upgrader</a>
+  #if ($helpon!=0)
+  &nbsp;<a class="menulink" href="$manual/index.html#EBSUpgrader" onClick="NewWindow(this.href);return false;">[help]</a>
+  #end
+</td></tr>
+#end
+#if ($environment.showBusyhourInfo())
+<tr><td><a class="menulink" href="$busyhourConfPath/" target="_blank">Busy Hour Configuration</a>
+  #if ($helpon!=0)
+  &nbsp;<a class="menulink" href="$manual/index.html#BusyHourConfig" onClick="NewWindow(this.href);return false;">[help]</a>
+  #end
+</td></tr>
+#end
+
+<tr><td>&nbsp;</td></tr>
+
+##FRH links
+#*
+#if($environment.getFrhService())
+	#if($environment.isFrhLicenseValid())
+	<tr><td class="menuhdr">FRH Configuration</td></tr>
+
+	<tr><td><a class="menulink" href=$servletPath/MoAggregation>MO Aggregation</a>
+		</td></tr>
+	<tr><td><a class="menulink" href=$servletPath/CounterFiltering>Counter Filtering</a>
+		</td></tr>
+	<tr><td><a class="menulink" href=$servletPath/NodeAssignment>Node Assignment</a>
+		</td></tr>
+	#else
+	<tr><td class="menuhdr">FRH Configuration</td></tr>
+
+	<tr><td><a class="menulink" href='javascript:;' style="color:#5D6D7E;">MO Aggregation</a>
+		</td></tr>
+	<tr><td><a class="menulink" href='javascript:;' style="color:#5D6D7E;">Counter Filtering</a>
+		</td></tr>
+	<tr><td><a class="menulink" href='javascript:;' style="color:#5D6D7E;">Node Assignment</a>
+		</td></tr>
+	#end
+#end
+*#
+
+#if($environment.showAdminConfiguration())
+<tr><td><a class="menulink" href="$servletPath/EditAdminProperties">Admin Configuration</a>
+	#if ($helpon!=0)
+	 &nbsp;<a class="menulink" href="$manual/index.html#adminconfiguration" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+#if($environment.showUserAdministration())
+<tr><td>&nbsp;</td></tr>
+
+<tr><td class="menuhdr">Security Administration</td></tr>
+<tr><td><a class="menulink" href="$servletPath/UserManagement">User Management</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#usermanagement" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+
+<tr><td><a class="menulink" href="$servletPath/RoleManagement">Role Management</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#rolemanagement" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+
+<tr><td><a class="menulink" href="$servletPath/PermissionGroupManagement">Permission Groups</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#permissiongroup" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+
+<tr><td>&nbsp;</td></tr>
+
+#if ($helpon!=0)
+<tr><td><a class="menulink" href="$manual" onClick="NewWindow(this.href);return false;">User Manual</a></td></tr>
+#end
+<tr><td>&nbsp;</td></tr>
+
+#else
+<tr><td><a class="menulink" href="$servletPath/LoaderStatusServlet">System Status</a>
+	#if ($helpon!=0)
+	&nbsp;<a class="menulink" href="$manual/index.html#SystemStatus" onClick="NewWindow(this.href);return false;">[help]</a>
+	#end
+</td></tr>
+#end
+<tr><td><a class="menulink" href="$servletPath/ChangePassword">Change Password</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><a class="menulink" href="$servletPath/UpdateLegalNotice">Legal Notice Message</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><a class="menulink" href="$servletPath/Logout">Logout</a></td></tr>
+<tr><td>&nbsp;</td></tr>
+
+
+
+

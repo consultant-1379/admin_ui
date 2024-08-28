@@ -1,0 +1,85 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Show Loadings</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ShowLoadStatus">Show Loadings</a></font>
+<hr />
+
+#if ($lateraw.size() > 0)
+<table border=1>
+	<tr><td><font face="Verdana,Helvetica,Arial" size="1"><b>Type</b></font></td><td><font face="Verdana,Helvetica,Arial" size="1">$subtype</font></td>
+	<td colspan="4" rowspan="3" align="right" valign="top"><font face="Verdana,Helvetica,Arial" size="1"><a href="ShowLoadStatus"><font face="Verdana,Helvetica,Arial" size="1">Back</font></a>&nbsp;
+	</tr>
+<tr><td><font face="Verdana,Helvetica,Arial" size="1"><b>Timelevel</b></font></td>
+<td><font face="Verdana,Helvetica,Arial" size="1">$timelevel</font></td></tr>
+
+<tr>
+	<td><font face="Verdana,Helvetica,Arial" size="1"<b>Date</b></font></td>
+	<td><font face="Verdana,Helvetica,Arial" size="1">${year_1}-${month_1}-${day_1}</font></td>
+</tr>
+<tr>
+	<td><font face="Verdana,Helvetica,Arial" size="1"><b>Total rows</b></font></td>
+	<td><font face="Verdana,Helvetica,Arial" size="1">$lateraw.size()</font></td>
+	<td colspan="4" rowspan="1" align="right"><font face="Verdana,Helvetica,Arial" size="1"><a href="$req.getContextPath()/servlet/ShowLoadings?year_1=$year_1&month_1=$month_1&day_1=$day_1&type=$type&subtype=$subtype&details=$timelevel&request_type=rowcounts&filter2=$filter2&filter=$filter">Source row counts</a></font></td>
+</tr>
+</table>
+<br><br>
+<table border=1>
+<tr>
+<td bgcolor=#B3B3FF><font face="Verdana,Helvetica,Arial" size="1"><b>Datatime</b></td>
+<td bgcolor=#B3B3FF><font face="Verdana,Helvetica,Arial" size="1"><b>Rowcount</b></td>
+<td bgcolor=#B3B3FF><font face="Verdana,Helvetica,Arial" size="1"><b>Sourcecount</b></td>
+<td bgcolor=#B3B3FF><font face="Verdana,Helvetica,Arial" size="1"><b>Status</b></td>
+<td bgcolor=#B3B3FF><font face="Verdana,Helvetica,Arial" size="1"><b>Modified</b></td>
+<td bgcolor=#B3B3FF><font face="Verdana,Helvetica,Arial" size="1"><b>Description</b></td>
+</tr>
+	#foreach ($meas in $lateraw)
+		<tr onmouseover="this.style.background='#C0C0C0';" onmouseout="this.style.background='#FFFFFF';">
+		#foreach ($set in $meas)
+
+			#if ($set.startsWith("HOLE"))
+			<td bgcolor="#CC0000"><font face="Verdana,Helvetica,Arial" color="white" size="1">$set</font></td>
+
+			#elseif ($set.startsWith("LOADED"))
+			<td bgcolor="#339900"><font face="Verdana,Helvetica,Arial" color="white" size="1">$set</font></td>
+
+			#elseif ($set.startsWith("NOT_LOADED"))
+			<td bgcolor="#FFFF33"><font face="Verdana,Helvetica,Arial" size="1">$set</font></td>
+
+			#elseif ($set.startsWith("CHECKFAILED"))
+			<td bgcolor="#000099"><font face="Verdana,Helvetica,Arial" color="white" size="1">$set</font></td>
+
+			#elseif ($set.startsWith("CALC"))
+			<td bgcolor="#000000"><font face="Verdana,Helvetica,Arial" color="white" size="1">$set</font></td>
+			
+			#elseif ($set.startsWith("RESTORED"))
+			<td bgcolor="#B378D3"><font face="Verdana,Helvetica,Arial" color="black" size="1">$set</font></td>
+			
+			#else
+			<td><font face="Verdana,Helvetica,Arial" size="1">$set</font></td>
+
+			#end
+		#end
+		</tr>
+	#end
+
+</table>
+#end
+
+</td></tr>
+#parse( "footer.vm" )
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

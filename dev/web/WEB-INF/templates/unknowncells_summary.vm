@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>Ericsson Network IQ :: Configuration :: Unmatched Topology</title>
+  <link rel="shortcut icon" href="../img/eric.ico">
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+</head>
+<body bgcolor="#ffffff">
+<table border="0">
+  <tr valign=top>
+    <td width=220>
+      #parse( "main_menu.vm" )
+    </td>
+    <td width=800>
+	  #parse("unmatched_topology_breadcrumb.vm")
+      #if ($errormsg != "")
+		 #parse("unmatched_topology_error.vm")
+      #else
+        #if($reparent_results)
+          <span style="font-size: smaller; font-family: Verdana, Helvetica, Arial,monospace; ">
+          #foreach( $node in $reparent_results.keySet())
+          Successfully connected $reparent_results.get($node).size() unmatched topology records to #if ( $network_type == "_4G" ) eNodeB :: #elseif($network_type == "_3G" || $network_type == "_3G_RAN" ) RNC  #else BSC #end $node	
+          <ul>
+          #foreach( $child in $reparent_results.get($node))
+            <li>$child</li>
+          #end
+          </ul>
+          #end
+          </span>
+          <hr/>
+        #end  
+		#if ( $network_type != "_4G" && $network_type != "_3G_RAN" )
+        <form action=$req.getContextPath()/servlet/UnmatchedTopologyManager?export method=post>
+          <input id="btnExport" type="submit" value="Format for Topology import"/>
+          <input type="hidden" name="export_data" value='$reparent_results'>
+        </form>
+		#end  
+	    #parse("unmatched_topology_cancel_link.vm")
+      #end
+      <br>
+    </td>
+  </tr>
+  #parse( "footer.vm" )
+</table>
+</body>
+</html>

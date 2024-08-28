@@ -1,0 +1,89 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: Polling Start Timey</title>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form method=post action="$req.getContextPath()/servlet/INTFPollingDelayConf">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href=INTFPollingDelayConf>Polling Start Time</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table class="myt" style="width:550;">
+<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Interface Polling Delay can be changed for active interfaces. Default values as 0 will be shown if it is not defined.
+			<br><br>
+			<!--<font color="red"><b>Note!</font> If there is no need for it, then Interface Polling Delay should be 0.</b>-->
+			<br><br>
+			</font>
+		</td>
+</table>
+
+#if ($savedSuccess != "")
+<table class="myt" style="width:550;">
+<tr>
+	<td class="success">$savedSuccess</td>
+<tr>
+</table>
+#end
+<br/>
+#if ($errorMessage != "")
+<table class="myt" style="width:550;">
+<tr>
+	<td class="error">Erro Message: $errorMessage</td>
+<tr>
+</table>
+#end
+<br>
+<form name="myForm" action="$req.getContextPath()/servlet/INTFPollingDelayConf">
+<table border="1">	
+	
+	<tr>
+		<td  width="200" class="basichdr">Interface Name</td>
+		<td class="basichdr">Default Value</td>
+		<td class="basichdr">Change To</td>
+	</tr>
+		
+	 #foreach($intervalInMin in $mapOfInterfaceWithInterval.keySet())
+        #foreach($interfaceNameAndPollDelay in $mapOfInterfaceWithInterval.get($intervalInMin))
+                <tr>
+                    <td>$interfaceNameAndPollDelay.substring(0,$interfaceNameAndPollDelay.indexOf(":"))</td>
+                    <td>$interfaceNameAndPollDelay.substring($interfaceNameAndPollDelay.indexOf(":")).substring(1)</td>
+                    <td>
+                        <select name='intfName:$interfaceNameAndPollDelay.substring(0,$interfaceNameAndPollDelay.indexOf(":"))'>
+                        #set($start = 0)
+						#set($end = $intervalInMin.intValue() - 1)
+						#set($range = [$start..$end])
+						#foreach($i in $range)
+   							#if ($i.toString() == $interfaceNameAndPollDelay.substring($interfaceNameAndPollDelay.indexOf(":")).substring(1))
+                                 <option value="$i" selected>$i</option>
+                            #else
+                                 <option value="$i">$i</option>
+                            #end
+						#end
+                        </select>
+                    </td>
+                </tr>
+        #end
+     #end
+</table>
+<br/>
+<input type="submit" name="save" value="Save" />
+<input type="reset" value="Reset" name="reset" />
+<br>
+
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+</html>

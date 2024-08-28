@@ -1,0 +1,107 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Node Assignment</title>
+<script>
+
+function checkUncheckAll(theElement) {
+   	var theForm = theElement.form, z = 0;
+	for(z=0; z<theForm.length;z++){
+      if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	  	theForm[z].checked = theElement.checked;
+	  }
+    }
+}
+    
+function openWindow(link){
+	newWin = window.open(link, 'Generator', 
+	'location=0,directories=0,menubar=0,scrollbars=0,'
+	+'status=1,toolbar=0,resizable=0,width=500,height=250');
+}
+
+
+function selectAll(formObj, isInverse) {
+   	for (var i=0;i < formObj.length;i++) {
+    fldObj = formObj.elements[i];
+      		if (fldObj.type == 'checkbox')
+      		{ 
+         		if(isInverse)
+         			fldObj.checked = (fldObj.checked) ? false : true;
+         		else fldObj.checked = true; 
+       		}
+    }
+}
+
+</script>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td>
+<td width=800>
+
+
+
+<form name=f2 method=post action=$req.getContextPath()/servlet/NodeAssignment onsubmit="return filterFields();">Configuration&nbsp;&gt;&gt;&nbsp;<a href="NodeAssignment">NodeAssignment</a>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table style="width:550;">
+<tr>
+<td class="basichlp"><sup>*</sup>NodeType that are checked are currently processed by FRH.To add new NodeType to FRH -check the NodeType and click select netype button.To remove NodeType from 
+FRH -uncheck the nodes and click select netype button.<br>
+<br>
+</td>
+</tr>
+</table>
+
+
+<table border=1>
+<tr>
+<td colspan="2" width="*" nowrap class="basichdr">NETYPES</td>
+</tr>
+#if($enablednetype.size() > 0)
+#foreach($set1 in $enablednetype)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:ne:$set1" checked></td>
+<td class="basiclist">$set1</td></tr>
+#end
+#end
+#if($NETYPES.size() > 0)
+#foreach($set in $NETYPES)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:ne:$set"></td>
+<td class="basiclist">$set</td></tr>
+#end
+#end
+</table>
+
+
+<table border=0>
+<tr>
+<td colspan="2">&nbsp;</td>
+<td colspan="4"><input type="submit" name="selectnetype" value="Select netype"> </td>
+</tr>
+</table>
+<br>
+
+<table border=0>
+<tr><td>To configure TechPack for FRH click the below link</td></tr>
+<tr><td><a href="$req.getContextPath()/servlet/TechPackSelection" target="_blank">Configure TechPack</a></td></tr>
+</table>
+
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+</html>

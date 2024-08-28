@@ -1,0 +1,315 @@
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<title>Aggregation</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body bgcolor="#ffffff">
+<body bgcolor="#ffffff">
+
+<script language="javaScript">
+<!-- Begin
+
+function LevelChanged()
+{
+  document.f1.timelevel_changed.value="yes"; 
+  document.f1.submit();
+}
+
+function AggregationSelected()
+{
+  document.f1.action[0].disabled=false;
+  document.f1.action[0].value="List";
+  document.f1.action[0].click();
+}
+//-->
+</script>
+#include( "calendar_js.txt" )
+<table border="1">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Aggregation&nbsp;&gt;&gt;&nbsp;<a href="Aggregation">Reaggregation</a></font>
+<hr />
+#if ( $theResult != "" )
+	<font size=-2 face="Verdana, Helvetica, Arial">
+	$theResult
+	</font>
+	<hr>
+#end
+<table border="0" cellpadding="2" cellspacing="0">
+<tr><td><font size=-2 face="Verdana, Helvetica, Arial"><strong>Notice that aggregation goes from the end date towards the start date.</strong></font></td></tr>
+</table>
+</br>
+<form name=f1 action="$req.getContextPath()/servlet/Aggregation" method="post">
+#if("$!overtime" != "")
+  #if("$overtime" != "Accept")
+    <br>
+	<font face="Verdana, Helvetica, Arial">
+    <strong>
+    Warning, Date range is more than 4 days. <br>
+    The aggregation can take a long time to complete.<br>
+    Please check the following box, <br>
+    if you are sure you want to continue 
+    </strong>
+	</font>
+    <input type=checkbox name="overtime" value="Accept" onClick="AggregationSelected();">
+    <br>
+    <br>
+  #else
+    #if("$!overtime" != "")
+     <input type=hidden name="overtime" value=$!overtime>
+    #end
+  #end 
+#else
+  #if("$!overtime" != "")
+    <input type=hidden name="overtime" value=$!overtime>
+  #end
+#end 
+<table border="1">
+	<tr>
+		<td>
+		<font size=-2 face="Verdana, Helvetica, Arial"><b>Time level</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td valign=top><font size=-1>
+		<input type=hidden name="timelevel_changed" value="">
+		<select name="level" value="DAY" style="font-size: 9;" onChange=LevelChanged()>
+		  <option selected>$!level</option>
+		  <option>DAY</option>
+		  <option>WEEK</option>
+		  <option>MONTH</option>
+		</select>
+		</font></td>
+	</tr>
+</table>
+<br />
+#if("$!underflow" != "")
+  <font size=-1 face="Verdana, Helvetica, Arial">
+  <br>Check the end date value. End date must be less than current 
+  #if($level=="DAY") 
+    day.
+  #end
+  #if($level=="WEEK") 
+    week.
+  #end
+  #if($level=="MONTH") 
+    month.
+  #end
+  <br><br>
+#end
+#if("$!theError" != "")
+  <font size=-1 color="#FF0000" face="Verdana, Helvetica, Arial">$theError</font>
+  <br />
+  <br />
+#end
+#if("$!level"!="")
+<table border="1">
+	<tr>
+		<td>
+		<font size=-2 face="Verdana, Helvetica, Arial"><b>From</b></font>
+		</td>
+		<td>
+		<font size=-2 face="Verdana, Helvetica, Arial"><b>To</b></font>
+		</td>
+		<td>
+		<font size=-2 face="Verdana, Helvetica, Arial"><b>Aggregation batch name</b></font>
+		</td>
+	</tr>
+	<tr>
+#if($level=="DAY")
+#if($next_action != "List")
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_1_disabled.vm" )
+		</font></td>
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_2_disabled.vm" )
+		</font></td>
+		<!-- we show all but week, put it as hidden -->
+		<input type=hidden name=week_1 value=$!week_1>
+		<input type=hidden name=week_2 value=$!week_2>
+#else
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_1.vm" )
+		</font></td>
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_2.vm" )
+		</font></td>
+		<!-- we show all but week, put it as hidden -->
+		<input type=hidden name=week_1 value=$!week_1>
+		<input type=hidden name=week_2 value=$!week_2>
+#end
+#end		
+#if($level=="WEEK")
+#if($next_action != "List")
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_week_1_disabled.vm" )
+		</font></td>
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_week_2_disabled.vm" )
+		</font></td>
+		<!-- we show only week and year, so save day and month as hidden -->
+		<input type=hidden name=day_1 value=$!day_1>
+		<input type=hidden name=day_2 value=$!day_2>
+		<input type=hidden name=month_1 value=$!month_1>
+		<input type=hidden name=month_2 value=$!month_2>
+#else
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_week_1.vm" )
+		</font></td>
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_week_2.vm" )
+		</font></td>
+		<!-- we show only week and year, so save day and month as hidden -->
+		<input type=hidden name=day_1 value=$!day_1>
+		<input type=hidden name=day_2 value=$!day_2>
+		<input type=hidden name=month_1 value=$!month_1>
+		<input type=hidden name=month_2 value=$!month_2>
+#end		
+#end		
+#if($level=="MONTH")
+#if($next_action != "List")
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_month_1.vm" )
+		</font></td>
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_month_2.vm" )
+		</font></td>
+		<!-- we show only month and year, so save day and week as hidden -->
+		<input type=hidden name=week_1 value=$!week_1>
+		<input type=hidden name=week_2 value=$!week_2>
+		<input type=hidden name=day_1 value=$!day_1>
+		<input type=hidden name=day_2 value=$!day_2>
+#else
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_month_1.vm" )
+		</font></td>
+		<td valign="top"><font size=-1>
+		#parse( "cal_select_month_2.vm" )
+		</font></td>
+		<!-- we show only month and year, so save day and week as hidden -->
+		<input type=hidden name=week_1 value=$!week_1>
+		<input type=hidden name=week_2 value=$!week_2>
+		<input type=hidden name=day_1 value=$!day_1>
+		<input type=hidden name=day_2 value=$!day_2>
+#end		
+#end		
+		<td valign=top><font size=-1>
+#if($next_action != "List")
+		<select name=type onchange="this.selectedIndex=0;" style="font-size: 9;">
+#else
+		<select name=type onChange="AggregationSelected()" style="font-size: 9;">
+#end
+			<option selected>$theType</option>
+			#foreach( $loc in $theLinks)
+			<option>$loc
+			#end
+		</select>
+        </td>
+	</tr>
+</table>
+<br>
+#end
+<table border="1">
+
+	<td><font size=-2 face="Verdana, Helvetica, Arial"><strong>Target tables</strong></font></td>
+#if($level=="DAY")
+	<td><font size=-2 face="Verdana, Helvetica, Arial"><strong>Delete</strong></font></td>
+#end
+	<td colspan=2><font size=-2 face="Verdana, Helvetica, Arial"><strong>Remarks (source tables missing data)</strong></font></td>
+#foreach($itm in $stages)
+<tr>
+#set($c = 0)
+#set($agg="")
+#set($remarks="")
+#foreach($subitm in $itm)
+  #if($c == 0)
+    #set($agg=$subitm)
+  #end
+  #if($c == 1 )
+    #set($remarks=$subitm)
+  #end
+  #set($c = $c + 1)
+#end
+<td><font size=-1>$agg</font></td>
+#if($level == "DAY")
+#if($remarks=="")
+<td><input type=checkbox name="$agg" value="$agg" checked></td>
+#else
+<td><input type=checkbox name="$agg" value="$agg"></td>
+#end
+#end
+<td colspan=2><font size=-1>$remarks</font></td>
+</tr>
+#end
+	<tr>
+		<td valign=top colspan=4><font size=-2 face="Verdana, Helvetica, Arial">
+#if($next_action != "List")
+		<input type=submit style="font-size: 11;" name="action" value=$next_action>
+#else
+		<input type=submit style="font-size: 11;" disabled name="action" value=$next_action>
+#end
+		<input type=submit style="font-size: 11;" name="action" value="Cancel">
+		</font></td>
+	</tr>
+</table>
+</form>
+<hr/>
+</br>
+<table border="1" cellpadding="2" cellspacing="0">
+<tr>
+<td colspan="6"><font size=-2 face="Verdana, Helvetica, Arial"><strong>Aggregations which are running or finished (started from WEB)</strong></font></td>
+<td colspan="1" align="right"><font size=-2 face="Verdana, Helvetica, Arial">
+  <a href="$req.getContextPath()/servlet/Aggregation">Refresh list</a></font>
+</td>
+</tr>
+<tr>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Technology package release</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Requested period</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Now aggregating</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Agg. Level</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Status</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Last<br />exit value</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">Acknowledge and remove<br />finished processes</font></td>
+</tr>
+#foreach ( $agg in $aggregations ) 
+<tr>
+<td><font size=-2 face="Verdana, Helvetica, Arial"><a href="$req.getContextPath()/servlet/Aggregation?showdetail=$agg.getId()">$agg.getMeasurementType()</a></font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">$agg.getTimePeriod()</font></td>
+#if ($agg.isFinished())
+<td><font size=-2 face="Verdana, Helvetica, Arial">finished</font></td>
+#else
+<td><font size=-2 face="Verdana, Helvetica, Arial">$agg.getRunningDay()</font></td>
+#end
+<td><font size=-2 face="Verdana, Helvetica, Arial">$agg.getAggregationLevel()</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">$agg.getStateString()</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">$agg.getLastExitValue()</font></td>
+<td><font size=-2 face="Verdana, Helvetica, Arial">
+#if ($agg.isFinished())
+<a href="$req.getContextPath()/servlet/Aggregation?acknowledge=$agg.getId()">acknowledge</a>
+#else
+&nbsp;
+#end
+</font></td>
+</tr>
+#end
+</table>
+
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

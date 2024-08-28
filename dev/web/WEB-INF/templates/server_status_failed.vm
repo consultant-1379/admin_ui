@@ -1,0 +1,36 @@
+
+<table border="0" width="100%" border="0" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	<tr>
+	<tr>
+		<td class="tab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">$!{hostType}</font></td>
+	</tr>
+
+	<tbody>
+		<tr>
+			<td bgcolor="#b3b3ff" align="center" bgcolor="#ff0000" height="30"
+				width="1" width="10"><IMG
+				SRC="../img/red_bulp.gif" WIDTH="30"
+				HEIGHT="30" BORDER="0" ALT=""></td>
+			<td valign="top" align="center" bgcolor="#FFCC33" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">$!{hostName}</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#FFCC33">
+				<tbody>
+					<tr>
+						<td colspan="3" height="" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2">$errorString</font></td>
+					</tr>
+
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+

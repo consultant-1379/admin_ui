@@ -1,0 +1,63 @@
+var C14=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">14 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ew9n\"></a><a name=\"CHAPTER14\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Changing BOND Settings for ENIQ Statistics\n" +
+"- ENM Storage VLAN</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"If ENM is integrated with ENIQ Statistics besides OSS-RC, an extra\n" +
+"BOND interface is configured on the ENIQ Blade to connect to the ENM\n" +
+"storage VLAN.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>To configure the new interface, see Section <em class=\"LOWEMPH\">Update ENIQ Network Configuration</em> in <em class=\"LOWEMPH\">OSS-RC\n" +
+"Configuration for ENIQ Statistics</em>, <a href='javascript:parent.parent.parent.showAnchor(\"OSSRCConfigForEniq\")' class=\"xref\">Reference [20]</a>. </dd></dl><br />\n" +
+"<p>\n" +
+"If any changes are required in BOND settings (IP or Netmask), it\n" +
+"is essential to roll back the current BOND settings and reconfigure\n" +
+"the new interface. For this, following steps must be performed:</p>\n" +
+"\n" +
+"<p>\n" +
+"Log on as <tt class=\"file-path\">root</tt> user on the ENIQ Blade\n" +
+"with the issue.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Run the following steps for RHEL Servers:\n" +
+"<ol type=\"a\">\n" +
+"\n" +
+"<li class=\"substep\">Bring down the particular interfaces used for configuring\n" +
+"ENM Storage group.\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ifconfig &lt;<i class=\"var\">interface_name</i>&gt; down</b></tt></p>\n" +
+"\n" +
+"</li>\n" +
+"</ol></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Following are the steps to Rollback configurations from\n" +
+"ipmp.ini file:\n" +
+"<ol type=\"a\">\n" +
+"\n" +
+"<li class=\"substep\"><tt class=\"input\"><b># mkdir /tmp/ipmp_rollback</b></tt>\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\"><tt class=\"input\"><b># cp /eniq/installation/config/ipmp.ini /tmp/ipmp_rollback/ipmp.ini</b></tt>\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\"><tt class=\"input\"><b># /eniq/installation/core_install/lib/inidel.pl\n" +
+"-p ENM_BASED_BONDING -i /tmp/ipmp_rollback/ipmp.ini -o /tmp/ipmp_rollback/ipmp.ini.1</b></tt>\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\"><tt class=\"input\"><b># /eniq/installation/core_install/lib/inidel.pl\n" +
+"-p ENM_STOR_NETMASK -i /tmp/ipmp_rollback/ipmp.ini.1 -o /tmp/ipmp_rollback/ipmp.ini.2</b></tt>\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\"><tt class=\"input\"><b># /eniq/installation/core_install/lib/inidel.pl\n" +
+"-g IPMP -p IPMP_INTF_4 -i /tmp/ipmp_rollback/ipmp.ini.2 -o /tmp/ipmp_rollback/ipmp.ini.3</b></tt>\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\"><tt class=\"input\"><b># mv /tmp/ipmp_rollback/ipmp.ini.3 /eniq/installation/config/ipmp.ini</b></tt>\n" +
+"</li>\n" +
+"</ol></li><li class=\"STEPLIST\" id=\"THSSTYLE0\">To reconfigure the new interface, execute the steps as\n" +
+"mentioned in Section <em class=\"LOWEMPH\">Update ENIQ Network Configuration</em> in <em class=\"LOWEMPH\">OSS-RC Configuration for ENIQ Statistics</em>, <a href='javascript:parent.parent.parent.showAnchor(\"OSSRCConfigForEniq\")' class=\"xref\">Reference [20]</a>.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">After the new interface is configured successfully, run\n" +
+"the following command to remove backup ipmp.ini file:<p>\n" +
+"<tt class=\"input\"><b># rm -rf /tmp/ipmp_rollback </b></tt></p>\n" +
+"</li></ol>\n" +
+"\n"+
+"</div>\n";
+

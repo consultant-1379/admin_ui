@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_etl_controller/build/engine/engine.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_etl_controller/build/symboliclinkcreator/symboliclinkcreator.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>	
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_etl_controller/build/scheduler/scheduler.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_management/build/dwh_manager/dwhmanager.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_licensing/build/licensing/licensing.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_tp_ide/build/tp_ide/techpackide.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/comm_lang/v1_0/prod/commons-lang-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_common_utilities/build/common_utilities/common.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/comm_logging/v1_1/prod/commons-logging-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/configuration/v1_1/prod/commons-configuration-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/dbcp/v1_0/prod/commons-dbcp.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/log4j/v2_17_1/prod/log4j-core-2.17.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/log4j/v2_17_1/prod/log4j-api-2.17.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/log4j/v2_17_1/prod/log4j-1.2-api-2.17.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/sybase/sybase_iq/v12_7/client/prod/jconn3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="buildlib/jdbc-2.0.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/junit/v4_5/prod/junit-4.5.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/bsh-core-2.0b4.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/cglib-2.1_3-src.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/jmock-2.5.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/jmock-junit3-2.5.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/jmock-junit4-2.5.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/jmock-script-2.5.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jmock-2.5.1/objenesis-1.0.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/spring/v2_0_8/spring.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/spring/v2_0_8/spring-mock.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_management/build/afj_manager/afj_manager.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/java/jdk1.7.0_51/lib/missioncontrol/plugins/javax.servlet_3.0.0.v201112011016.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/ant/v1_8_1/prod/ant.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/jsch_ssh2/jsch_ssh2/v0_1_51/prod/jsch-0.1.51.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/apache/jakarta_velocity/v1_5/prod/velocity-dep-1.5.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_3pp/hsqldb/v2_2_2/prod/hsqldb.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ETLC_TestHelper"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/repository"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/symboliclinkcreator"/>
+	<classpathentry kind="lib" path="VIEW_PATH/eniq_3pp/java/jdk1.7.0_51/lib/missioncontrol/plugins/javax.servlet_3.0.0.v201112011016.jar"/>
+	<classpathentry kind="lib" path="VIEW_PATH/eniq_3pp/apache/comm_logging/v1_1/prod/commons-logging-1.1.jar"/>
+	<classpathentry kind="var" path="VIEW_PATH/eniq_design_plat_installer/build/repository/repository.jar" sourcepath="VIEW_PATH/installer/dev/repository"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

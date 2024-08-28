@@ -1,0 +1,87 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: Log Details</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css" />
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font class="toplink"> Ericsson Network IQ&nbsp;&gt;&gt;&nbsp;<a href="#">Log Details</a></font>
+<hr />
+
+<table border="1">
+	<tr><td class="log"><b>Tech pack</b></td><td class="log">$tp</td></tr>
+	<tr><td class="log"><b>Set name</b></td><td class="log">$sn</td></tr>
+	<tr><td class="log"><b>Type</b></td><td class="log">$type</td></tr>
+	<tr><td class="log"><b>Starttime</b></td><td class="log">$st</td></tr>
+	<tr><td class="log"><b>Endtime</b></td><td class="log">$et</td></tr>
+</table>
+<br>
+<table cellspacing="0" cellpadding="0">
+
+#if ($logParsingError.equals("") == false)
+	<tr>
+    	<td class="log">
+      	<b>Browsing log details failed.</b><br />
+      	$logParsingError
+   		</td>
+	</tr>  	
+#else
+	#if ($listnull == "0")
+		<tr>
+    		<td class="log">
+      		<b>No results found.</b>
+   			</td>
+		</tr>  	
+	#else
+		<tr>
+			<td class="log"><b>Timestamp&nbsp;&nbsp;</b></td>
+  			<td class="log"><b>Level&nbsp;&nbsp;</b></td>
+			<td class="log" nowrap><b>Action details&nbsp;&nbsp;</b></td>
+			<td class="log"><b>Message</b></td>
+		</tr>
+		<tr>
+			<td colspan="4"><hr noshade size="1" color="#000000"></td>
+		</tr>
+		#foreach ($value in $listofvalues)
+			#if ($value.getLogLevel() == "WARNING" || $value.getLogLevel() == "ERROR")
+				<tr class="log_warning">
+			#elseif ($value.getLogLevel() == "SEVERE")
+				<tr class="log_severe">
+			#else
+				<tr>
+			#end
+			<td valign="top" class="log">$sdf.format($value.getLogTime())</td>
+			<td valign="top" class="log">$value.getLogLevel()&nbsp;&nbsp;</td>
+			#if ($value.getTypeDetails() != "")
+				<td valign="top" class="log" nowrap>$value.getTypeDetails()&nbsp;&nbsp;&nbsp;</td>
+			#else
+				<td valign="top" class="log" nowrap>&nbsp;</td>
+			#end
+			<td valign="top" class="log">$value.getMessage()</td>
+			</tr>
+			<tr><td colspan="4"><hr noshade size="1" color="#000000"></td></tr>
+		#end
+	#end
+#end
+</table>
+<br/>
+</td>
+#parse( "footer.vm" )
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

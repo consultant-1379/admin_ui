@@ -1,0 +1,168 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script language="JavaScript">
+
+function refreshPage(settype) {
+	
+	var s = settype;
+	window.location.href = "$req.getContextPath()/servlet/MoAggregation?st="+s; 	
+}
+
+
+function getSetNames(p,s) {
+	window.location.href = "$req.getContextPath()/servlet/MoAggregation?pack="+p+"&st="+s; 	
+}
+
+function openWindow(link){
+	newWin = window.open(link, 'Generator', 
+	'location=0,directories=0,menubar=0,scrollbars=0,'
+	+'status=1,toolbar=0,resizable=0,width=500,height=250');
+}
+
+function checkUncheckAll(theElement) {
+     var theForm = theElement.form, z = 0;
+	 for(z=0; z<theForm.length;z++){
+     	if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	 		theForm[z].checked = theElement.checked;
+	 	}
+     }
+}
+    
+function selectAll(formObj, isInverse) {
+   	for (var i=0;i < formObj.length;i++) {
+      	fldObj = formObj.elements[i];
+      	if (fldObj.type == 'checkbox')
+      	{ 
+         	if(isInverse)
+         		fldObj.checked = (fldObj.checked) ? false : true;
+         	else fldObj.checked = true; 
+       	}
+    }
+}
+
+</script>
+</head>
+
+<body bgcolor="#ffffff" >
+<form name="f1" method=post onsubmit="return filterFields();">
+<table border="0">
+
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+
+
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="MoAggregation">MO Aggregation</a></font>
+<hr />
+
+<table>
+	<tr>
+		<td>
+		  <font size="1" face="Verdana, Helvetica, Arial">
+		  NE Types:
+		  </font>
+		</td>
+		<td>
+		  <font size="1" face="Verdana, Helvetica, Arial">
+		  TechPack:
+		  </font>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select onchange="javascript:refreshPage(this.form.settype.value=form.settype.value);" name="settype">
+			#if ($st != "")
+			    <option selected value="$st">$st</option>
+			    <option value="-">-</option>
+			#else
+				<option selected value="-">-</option>
+			#end
+			#foreach ($key in $distinctnetype)
+				<option value="$key">$key</option>
+			#end
+			</select>
+		</td>
+		<td>
+			<select onchange="javascript:getSetNames(this.form.packageSets.value, this.form.settype.value);" name="packageSets">
+			#if ($pack != "")
+			    <option selected value="$pack">$pack</option>
+			    <option value="-">-</option>
+			#else
+				<option selected>-</option>
+			#end
+			#foreach ($key in $distinctTechPacks)
+				<option value="$key">$key</option>
+			#end
+			</select>
+		</td>
+	</tr>
+</table>
+
+<table>	
+<tr><td class="basic">Filter:</td>
+<td>
+<input type="text" name="search">
+</td></tr>
+<tr><td><input type="submit" value="search"></td></tr>
+</table>
+
+
+<table border=1>
+#if(($timeBasedMeasTypes.size() > 0) || ($volumeBasedMeasTypes.size() > 0))
+<tr>
+<td width="*" nowrap class="basichdr"><input type="checkbox"
+	name="checkall" onclick="checkUncheckAll(this);"/></td>
+<td width="*" nowrap class="basichdr">Typename</td>
+</tr>
+#end
+
+#if($timeBasedMeasTypes.size() > 0)
+#foreach($twoset in $timeBasedMeasTypes)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+				onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" 
+		name="chk:$twoset" checked></td>
+<td class="basiclist">$twoset</td></tr>
+#end
+#end
+
+#if($volumeBasedMeasTypes.size() > 0)
+
+#foreach($oneset in $volumeBasedMeasTypes)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:$oneset"></td>
+<td class="basiclist">$oneset</td></tr>
+#end
+#end
+
+
+</table>
+
+<table border=0>
+	<tr>
+		<td colspan="2">&nbsp;</td>
+		<td colspan="4"><input type="submit" name="activateSelected"
+					value="save"></input></td>
+	</tr>
+</table>
+
+
+<input type="hidden" name="st" value="$st">
+<input type="hidden" name="pack" value="$pack">
+</td>
+
+#parse( "footer.vm" )
+</form>
+</table>
+</body>
+</html>

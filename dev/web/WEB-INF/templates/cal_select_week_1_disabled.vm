@@ -1,0 +1,31 @@
+		<select name="week_1" style="font-size: 9;" onchange="this.selectedIndex=0;">
+			<option selected value="$week_1">$week_1</option>
+			#foreach ($iweek in [1..52])
+			<option value="$iweek">$iweek</option>
+			#if ($iweek == 52 && ($year_1.equals("2004") || $year_1.equals("2009")))
+			<option value="53">53</option>
+			#end
+			#end
+		</select>
+		
+		<select name="year_1" style="font-size: 9;" onchange="this.selectedIndex=0;">
+			<option selected value=$year_1>$year_1</option>
+			#if($validYearRange)
+				#foreach( $validYear in $validYearRange )
+					#if($validYear != $year_1)
+					<option value=$validYear>$validYear</option>
+					#end
+				#end
+			#elseif($futureYearRange)
+				#foreach ( $futureYear in $futureYearRange )
+					#if($futureYear != $year_1)
+					   <option value=$futureYear>$futureYear</option>
+					#end
+				#end
+			#else
+				#foreach ( $iyear in [2005..2015] )
+					<option value="$iyear">$iyear</option>		
+				#end
+			#end
+		</select>
+

@@ -1,0 +1,51 @@
+var C21=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">21 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_rot7\"></a><a name=\"CHAPTER21\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ Counter Volume for a ROP</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"The <tt class=\"file-path\">DWH_Monitor</tt> report provides counter\n" +
+"and measurement type information for a selected ROP time. The report\n" +
+"shows all measurements types that were loaded for that ROP, and the\n" +
+"number of counters and rows loaded for each of those measurement types.</p>\n" +
+"\n" +
+"<p>\n" +
+"The <tt class=\"file-path\">DWH_Monitor</tt> report is located in\n" +
+"a top-level folder called <tt class=\"file-path\">ENIQ System</tt> under <tt class=\"file-path\">Public Folders</tt> in the CMS.</p>\n" +
+"\n" +
+"<p>\n" +
+"Before the <tt class=\"file-path\">DWH_Monitor</tt> report is run,\n" +
+"the <tt class=\"file-path\">DWH Monitor</tt> universe must be exported\n" +
+"to a Business Objects server. This is found in the <tt class=\"file-path\">BO_DWH_MONITOR</tt> Tech Pack.</p>\n" +
+"\n" +
+"<p>\n" +
+"In <a href='javascript:parent.parent.parent.showAnchor(\"EXAMPLE-LOG_Session_Adapter_Query\")' class=\"xref\"> Example 1</a> the report\n" +
+"queries the <tt class=\"LITERALMONO\">LOG_SESSION_ADAPTER</tt>  table in the <tt class=\"file-path\">dwhdb</tt> database. <a href='javascript:parent.parent.parent.showAnchor(\"EXAMPLE-Total_Counter_Volume_loaded_query\")' class=\"xref\"> Example 2</a>, shows a query\n" +
+"to fetch the total counter volume loaded in a ROP.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>In both <a href='javascript:parent.parent.parent.showAnchor(\"EXAMPLE-LOG_Session_Adapter_Query\")' class=\"xref\"> Example 1</a> and <a href='javascript:parent.parent.parent.showAnchor(\"EXAMPLE-Total_Counter_Volume_loaded_query\")' class=\"xref\"> Example 2</a> replace <tt class=\"file-path\"><i class=\"var\">&lt;ROP TIME&gt;</i></tt> with an appropriate datetime\n" +
+"stamp that corresponds to the ROP time you want to retrieve.</dd></dl><br />\n" +
+"<div class=\"example\" style=\"margin-top: 12pt\"><a name=\"EXAMPLE-LOG_Session_Adapter_Query\"></a><p><i>Example 1 &nbsp; LOG_SESSION_ADAPTER Table Query</i></p><pre class=\"prencd\">SELECT\n" +
+"  DC.LOG_SESSION_ADAPTER.NUM_OF_COUNTERS,\n" +
+"  DC.LOG_SESSION_ADAPTER.NUM_OF_ROWS,\n" +
+"  DC.LOG_SESSION_ADAPTER.TYPENAME,\n" +
+"  DC.DIM_DATE.DATE_ID\n" +
+"FROM\n" +
+"  DC.LOG_SESSION_ADAPTER,\n" +
+"  DC.DIM_DATE\n" +
+"WHERE\n" +
+"  DC.LOG_SESSION_ADAPTER.DATE_ID=DC.DIM_DATE.DATE_ID \n" +
+"  AND  \n" +
+"  DC.LOG_SESSION_ADAPTER.ROP_STARTTIME = &lt;ROP TIME&gt;</pre></div>\n" +
+"<p>\n" +
+"To fetch the total counter volume loaded in a ROP, this query must\n" +
+"be executed.</p>\n" +
+"\n" +
+"<div class=\"example\" style=\"margin-top: 12pt\"><a name=\"EXAMPLE-Total_Counter_Volume_loaded_query\"></a><p><i>Example 2 &nbsp; Total Counter Volume Loaded Query</i></p><pre class=\"prencd\">SELECT\n" +
+"  SUM(NUM_OF_COUNTERS) \n" +
+"FROM \n" +
+"  DC.LOG_SESSION_ADAPTER \n" +
+"WHERE\n" +
+"  ROP_STARTTIME = &lt;ROP TIME&gt;</pre></div>\n" +
+"\n"+
+"</div>\n";
+

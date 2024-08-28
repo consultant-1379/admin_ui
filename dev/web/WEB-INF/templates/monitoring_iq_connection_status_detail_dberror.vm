@@ -1,0 +1,57 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ Connection status detail</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body bgcolor="#ffffff">
+<!-- one logical thing(!) starts here -->
+<table border="0" width="700" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td colspan="3">
+				&nbsp;	
+			</td>
+		<tr>
+	<tr>
+		<td class="tab" align="center" colspan="2"><font face="Verdana, Helvetica, Arial" size="3">Connection status details</font></td>
+	</tr>
+
+	<!-- Starts-->
+		<tr>
+		
+			<td valign="top" width="700">
+				<table border="0" cellpadding="1" cellspacing="0" width="700" bgcolor="#FFCC33">
+					<tbody>
+
+						<tr>
+							<td width="10" height="40" valign="top">
+								&nbsp;
+							</td>
+							<td colspan="3" height="40" valign="top"><font face="Verdana, Helvetica, Arial" size="2"></font>
+								<font face="Verdana, Helvetica, Arial" size="2"><br />
+				  				<table border="1" BORDERCOLOR="black" FRAME="BOX" cellpadding="1">
+				  					<font face="Verdana, Helvetica, Arial" size="3" color="red"><b>Could not connect to Database. Refresh your System Status page to get the current database connection status.</b><br/></font>
+				  				</table>
+								</font>
+							</td>
+						</tr>
+						<tr>
+							<td width="10">&nbsp;</td>
+							<td width="20%">
+								&nbsp;
+							</td>
+							<td width="*">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+	

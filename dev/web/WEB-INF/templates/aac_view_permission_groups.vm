@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css"></link>
+	<link rel="shortcut icon" href="../img/eric.ico"></link>
+	<title>Ericsson Network IQ :: Security Administration :: Permission Groups</title>
+	<script type="text/javascript" src="../javascript/sorttable.js"> </script> 
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</HEAD>
+
+<BODY bgcolor="#ffffff" >
+
+<TABLE>
+	<tr valign=top>
+	<!-- main menu -->
+		<td class="mainMenu">
+			#parse( "main_menu.vm" )
+		</td>
+
+	<!-- the body -->
+		<td class="body">Security Administration&nbsp;&gt;&gt;&nbsp;<Fontcolor="#333399">Permission Groups</Font>
+		<hr/>                                   
+
+<FORM name="">
+	Click button to create New Permission Group<br><br>
+	<button class="addButton" type="button" onclick="window.location.href='$req.getContextPath()/servlet/PermissionGroupManagement?action=addPermissionGroup'" >Add Permission Group</button>
+	<br><br><br>
+
+	* denotes predefined entity<br><br>
+	List of all Permission Groups<br><br>
+
+<TABLE class="sortable">
+	<tr class="viewTableHeader">
+	    <td>&nbsp;&#x21A8; <strong>Name</strong></td>
+	    <td>&nbsp;&#x21A8; <strong>Title</strong></td>
+	    <td width="185" class="sorttable_nosort"><strong>Operations</strong></td>
+	    <td>&nbsp;&#x21A8; <strong>Description</strong></td>
+	</tr>
+	
+	<tr>
+		#foreach( $group in $allPermGroups )
+	    #set ($predef = "")
+	    #if ( $group.isPredefined() )
+	        #set ($predef = "*")
+	    #end
+
+		<td class="viewTableBorder">$group.permissionGroupName$predef</td>  
+		<td class="viewTableBorder">$group.title</td>   
+
+		##
+		##                           OPERATIONS START
+		##
+		<td class="viewTableBorder" width="200px">
+		    <a href="$req.getContextPath()/servlet/PermissionGroupManagement?action=viewPermissions&gid=$group.permissionGroupName">View Permissions&nbsp;</a>|&nbsp;
+		   
+			#if ($group.isPredefined() )
+				<font color="#666666" >Edit&nbsp;</font>|&nbsp; 
+			    <font color="#666666" >Delete</font>
+			#else
+				<a href="$req.getContextPath()/servlet/PermissionGroupManagement?action=editPermissionGroup&gid=$group.permissionGroupName">Edit&nbsp;</a>|&nbsp;
+			    <a href="$req.getContextPath()/servlet/PermissionGroupManagement?action=deletePermissionGroup&gid=$group.permissionGroupName"
+			       onClick="return confirm('Are you sure you want to delete $group.permissionGroupName?')">Delete</a>
+			#end
+		</td>
+		##
+		##                           OPERATIONS END
+		##
+
+		<td class="viewTableBorder">$group.description &nbsp;</td>
+	</tr>
+	#end
+	##foreach
+
+</TBODY>
+</TABLE>
+     
+	<br>$notification<span class="errormessage">$!errorMessage
+
+	<!-- the footer -->
+	#parse( "footer.vm" )
+	</td></tr>
+</TABLE>
+</FORM>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+
+
+
+

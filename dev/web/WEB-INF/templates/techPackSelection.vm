@@ -1,0 +1,272 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: TechPack Selection</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+
+function checkUncheckAll(theElement) {
+    var theForm = theElement.form, z = 0;
+	for(z=0; z<theForm.length;z++){
+    	if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	  		theForm[z].checked = theElement.checked;
+	 	}
+    }
+}
+    
+function openWindow(link){
+	newWin = window.open(link, 'Generator', 
+	'location=0,directories=0,menubar=0,scrollbars=0,'
+	+'status=1,toolbar=0,resizable=0,width=500,height=250');
+}
+
+function selectAll(formObj, isInverse) {
+   	for (var i=0;i < formObj.length;i++) {
+      	fldObj = formObj.elements[i];
+      	if (fldObj.type == 'checkbox')
+      	{ 
+         	if(isInverse)
+         		fldObj.checked = (fldObj.checked) ? false : true;
+         	else fldObj.checked = true; 
+       	}
+    }
+}
+	
+	
+	$(document).ready(function() {
+	$('#mtp').click(function() {
+    if($(this).attr("name") == "chk:DC_E_ERBSG2"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_ERBSG2 is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_ERBS"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_ERBS is mandatory techpack.It cannot be deselected');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBS"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_RBS is mandatory techpack.It cannot be deselected');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBSG2"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_RBSG2 is mandatory techpack.It cannot be deselected');
+    }}
+    if($(this).attr("name") == "chk:DC_E_EPDG"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_EPDG is mandatory techpack.It cannot be deselected');
+    }}
+    if($(this).attr("name") == "chk:DC_E_SGSNMME"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_SGSNMME is mandatory techpack.It cannot be deselected');
+    }}
+    if($(this).attr("name") == "chk:DC_E_WMG"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_WMG is mandatory techpack.It cannot be deselected');
+    }}
+        
+    }
+    );});
+    
+    $(document).ready(function() {
+    $('#dtp').click(function() {
+    
+    if($(this).attr("name") == "chk:DC_E_ERBSG2"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_ERBSG2 is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_ERBS"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_ERBS is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_PRBS_ERBS"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_PRBS_ERBS is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_PRBS_RBS"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_PRBS_RBS is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_GGSN"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_GGSN is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBS"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_RBS is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RAN"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_RAN is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_MGW"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_MGW is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_SGSN"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_SGSN is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_TCU"){
+    if ($(this).is(':checked') == false) {
+          alert('DC_E_TCU is mandatory techpack.It cannot be deselected.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBSG2"){
+    if ($(this).is(':checked') == false) {
+          alert('RBSG2 is mandatory techpack.It cannot be deselected.');
+    }}
+    }
+	);});
+	
+	$(document).ready(function() {
+	$('#otp').click(function() {
+	if($(this).attr("name") == "chk:DC_E_CPP"){
+     if($(this).is(':checked') == true || $(this).is(':checked') == false) {
+          alert('DC_E_CPP is optional techpack for ERBS,RadioNode(LTE),RBS,RAN.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_TCU"){
+     if($(this).is(':checked') == true || $(this).is(':checked') == false) {
+          alert('DC_E_TCU is optional techpack for ERBS,RadioNode(LTE),RadioNode(WCDMA)DC_E_TCU is mandatory techpack for RadioTNode.');       
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBS"){
+     if($(this).is(':checked') == true || $(this).is(':checked') == false) {
+          alert('DC_E_RBS is optional techpack for ERBS.DC_E_RBS is mandatory techpack for RadioNode(WCDMA),RBS.');
+     }}
+    if($(this).attr("name") == "chk:DC_E_RBSG2"){
+     if($(this).is(':checked') == true || $(this).is(':checked') == false) {
+          alert('DC_E_RBSG2 is optional techpack for ERBS.DC_E_RBSG2 is mandatory techpack for RBS,RadioNode(WCDMA).');
+     }}
+    if($(this).attr("name") == "chk:DC_E_PRBS_CPP"){
+     if($(this).is(':checked') == true || $(this).is(':checked') == false) {
+          alert('DC_E_PRBS_CPP is optional techpack for MsRbs_V1(LTE),MsRbs_V1(WCDMA).');      
+    }}
+    
+    }
+    );});
+	
+	$(document).ready(function() {
+	$('#sotp').click(function() {
+	if($(this).attr("name") == "chk:DC_E_CPP"){
+     if($(this).is(':checked') == false) {
+          alert('DC_E_CPP is optional techpack for ERBS,RadioNode(LTE),RBS,RAN.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_TCU"){
+     if($(this).is(':checked') == false) {
+          alert('DC_E_TCU is optional techpack for ERBS,RadioNode(LTE),RadioNode(WCDMA). DC_E_TCU is mandatory techpack for RadioTNode.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBS"){
+     if($(this).is(':checked') == false) {
+          alert('DC_E_RBS is optional techpack for ERBS.DC_E_RBS is mandatory techpack for RadioNode(WCDMA),RBS.');
+    }}
+    if($(this).attr("name") == "chk:DC_E_RBSG2"){
+     if($(this).is(':checked') == false) {
+          alert('DC_E_RBSG2 is optional techpack for ERBS.DC_E_RBSG2 is mandatory techpack for RBS,RadioNode(WCDMA).');
+    }}
+    if($(this).attr("name") == "chk:DC_E_PRBS_CPP"){
+     if($(this).is(':checked') == false) {
+          alert('DC_E_PRBS_CPP is optional techpack for MsRbs_V1(LTE),MsRbs_V1(WCDMA).');      
+    }}
+    }
+    );});
+	
+</script>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td>
+<td width=800>
+<form name=f2 method=post action=$req.getContextPath()/servlet/TechPackSelection?netype=$ne onsubmit="return filterFields();">Configuration&nbsp;&gt;&gt;&nbsp;<a href="NodeAssignment">NodeAssignment</a>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+<table style="width:550;">
+<tr>
+<td class="basichlp"><sup>*</sup>TechPack in color pink should not be deselected as it is mandatory techpack.<br>
+<br>
+</td>
+</tr>
+</table>
+
+
+<p>Click on below links to configure techpack for any specific node type</p>
+<table>
+#if($enablednetype.size() > 0)
+#foreach($set1 in $enablednetype)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><a href="$req.getContextPath()/servlet/TechPackSelection?netype=$set1">$set1</a></td></tr>
+<input type="hidden" name="ne" value=$ne>
+#end
+#end
+</table>
+<br>
+
+
+#if($techPackDefault.size()>0)
+<table border=1>
+<tr><td colspan=2 class="basichdr">TechPackSelectionList</td></tr>
+#end
+
+#if($techPackDefault.size()>0)
+#foreach($dtp in $techPackDefault)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:$dtp" id="dtp" checked></td>
+<td class="basiclist" bgcolor="pink">$dtp</td></tr>
+#end
+#end
+
+#if($techPackMandatory.size()>0)
+#foreach($mtp in $techPackMandatory)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:$mtp" id="mtp" checked></td>
+<td class="basiclist" bgcolor="pink">$mtp</td></tr>
+#end
+#end
+
+#if($selectedTechPack.size()>0)
+#foreach($sotp in $selectedTechPack)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:$sotp" id="sotp" checked></td>
+<td class="basiclist">$sotp</td></tr>
+#end
+#end
+
+#if($techPackOptional.size()>0)
+#foreach($otp in $techPackOptional)
+#set( $rowColor = "#FFFFFF" )
+<tr style="background-color:  $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+	onmouseout="this.style.background=' $rowColor ';">
+<td><input type="checkbox" name="chk:$otp" id="otp"></td>
+<td class="basiclist">$otp</td></tr>
+#end
+#end
+
+</table>
+
+
+#if($techPackDefault.size()>0)
+<table border=0>
+<tr>
+<td colspan="2">&nbsp;</td>
+<input type="hidden" name="ne" value="$ne">
+<td colspan="4"><input type="submit" name="save" value="save"> </td>
+</tr>
+</table>
+#end
+
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+</html>

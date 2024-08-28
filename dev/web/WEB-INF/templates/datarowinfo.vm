@@ -1,0 +1,188 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script language="javaScript">
+<!-- Begin
+
+function refreshPage (selectedTechpack) {
+	
+		window.location.href = "$req.getContextPath()/servlet/DataRowInfo?tp="+selectedTechpack; 
+	}
+
+	
+//-->
+</script>
+#include( "calendar_js.txt" )
+
+#set($nlist = $twoLevelSelectionBuilder)
+#set($vlist = $theLinks)
+
+<title>Ericsson Network IQ :: Data Verification :: Data Row Info</title>
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Verification&nbsp;&gt;&gt;&nbsp;<a href="DataRowInfo">Data Row Info</a></font>
+<hr />
+<form name=f1 action=$req.getContextPath()/servlet/DataRowInfo method=post onsubmit="return filterFields();">
+<table border=1>
+	<tr>
+		<td class="basichdr">Tech Pack</td>
+		#if ($meaTypesForTechPack.size() > 0)
+		<td class="basichdr">Measurement Type</td>
+		<td class="basichdr">Level</td>
+		<td class="basichdr">Date</td>
+		<td class="basichdr">Search days</td>
+		<td class="basichdr">Search direction</td>
+		#end
+	</tr>
+	<tr>
+		<td class="basic" valign=top>
+		<select name=dgroup style="font-size: 9;" onChange="refreshPage(this.form.dgroup.value);">
+		<option value="-">-</option>	
+		 #foreach($grp in $techPacks)
+			#if ($grp == $tp)
+			<option selected value="$grp">$grp</option>
+			#else
+			<option value="$grp">$grp</option>
+			#end
+		 #end
+		</select>
+		</td>
+
+		#if ($meaTypesForTechPack.size() > 0)
+
+		<td class="basic" valign=top>
+			<select name=dtype style="font-size: 9;">
+			
+				#if ($tp != "")
+					#foreach($val in $meaTypesForTechPack)
+						#if($theType == $val)
+							<option value="$theType" selected>$theType</option>
+						#else
+							<option value="$val">$val</option>
+						#end
+					#end
+				#end
+				
+			</select>
+		</td>
+
+		<td class="basic" valign=top>
+			<select name=dlevel style="font-size: 9;">
+				#foreach($loc in $theLevels)
+					#if($theLevel == $loc)
+						<option selected value="$theLevel">$theLevel</option>
+					#else
+						<option value="$loc">$loc</option>
+					#end
+				#end
+			</select>
+		</td>
+
+		<td class="basic"valign=top>#parse( "cal_select_1.vm" )</td>
+
+		<td class="basic" valign=top>
+			<select name="search_days" style="font-size: 9;">
+				<option selected value="$search_days">$search_days</option>
+				#foreach($n in [1..31])
+					<option value="$n">$n</option>
+				#end
+			</select>									
+		</td>
+		<td class="basic" valign="top">
+			<input type="radio" name="search_direction" value="backward" $backward> Backward<br>
+			<input type="radio" name="search_direction" value="forward" $forward> Forward
+		</td>
+	</tr>
+	<tr>
+		<td class="basic" valign=top colspan="6">
+		<input type=submit style="font-size: 11;" value="Get Information">
+		<input type=hidden value=$tp>
+		</td>
+	</tr>
+	#end
+</table>
+</form>
+
+#if ($errormsg && $errormsg != "")
+	<br /><br />
+	<font size="2" color="#FF0000" face="Verdana,Helvetica,Arial">Error occurred when fetching data<BR />$errormsg</font>
+#end
+
+#if ($genRowInfo.size() > 0)
+	<table border="0" width="400" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+			
+				<font size="-1">
+					<b>Data Row Info: Search result for $theType from ($theDate) for ($search_days) days</b>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table border="1" width="100%" cellpadding="1" cellspacing="1">
+					<tr>
+						<td class="basichdr" width="200">
+							<font size="-1">
+								Date
+							</font>
+						</td>
+						<td class="basichdr" width="100">
+							<font size="-1">
+								Row Count
+							</font>
+						</td>
+						<td class="basichdr" width="100">
+							<font size="-1">
+								Distinct Times
+							</font>
+						</td>
+					</tr>
+					#foreach ($locMark in $genRowInfo)
+					<tr>
+						  #set ($first = 0)
+						  #set ($count = 0)
+						  #foreach ($loc in $locMark)
+						    #if ($first == 0)
+						      #set ($first = 2)
+						    #end
+
+						<td class="basic" valign="top">
+							<font size="-1">
+														    #if ($count == 0)
+							      <a href="DataRowRawInfo?date=$loc&dgroup=$p_dgroup&dtype=$p_dtype&dlevel=$theLevel">$loc</a>  
+						    #else
+      $loc
+	    #end
+							</font>
+						</td>
+						    #set($count = 1)
+						  #end
+					</tr>
+					#end
+				</table>
+			</td>
+		</tr>
+		<tr><td>&nbsp;</td></tr>
+		<tr>
+		</tr>
+	</table>
+	#end
+<br>
+
+</td></tr>
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

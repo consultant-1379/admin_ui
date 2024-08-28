@@ -1,0 +1,97 @@
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Reaggregation for Eniq Events</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+<body bgcolor="#ffffff">
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="AggregationEniqEvents">Reaggregation for Eniq Events</a></font>
+<table border="0" cellpadding="3" cellspacing="0">
+<tr valign=top>
+<td width=800>
+		<font size="-1" face="Verdana, Helvetica, Arial"><b>Errors encountered during Processing : </b></font>
+		</td>
+</tr>
+#if($rmiUrlFailure != "" )
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>Exception encountered during TransferEngine Resolution. </b></font>
+	<font size="-1" face="Verdana, Helvetica, Arial"> TransferEngine URL : &nbsp$rmiUrlFailure&nbsp</font>
+</td>
+</tr>
+#end
+#if($ServerException != "" )
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>Engine Package is not upto date. ServerException encountered during TransferEngine method call.</b></font>
+</td>
+</tr>
+#end
+#if($ParseException != "")
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>Exception encountered while parsing Start time and End time.</b></font>
+	<font size="-1" face="Verdana, Helvetica, Arial">Start Time : &nbsp$startTime&nbsp</font>
+    <font size="-1" face="Verdana, Helvetica, Arial">End Time : &nbsp$endTime&nbsp</font>
+</td>
+</tr>
+#end
+#if($endDateLessThanStartDate != "")
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>End time selected is less than Start time.</b></font>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>Please select End time to be greater than Start time.</b></font><br />
+    <font size="-1" face="Verdana, Helvetica, Arial">End Time : &nbsp$endTime&nbsp</font>
+	<font size="-1" face="Verdana, Helvetica, Arial">Start Time : &nbsp$startTime&nbsp</font>
+</td>
+</tr>
+#end
+#if($NoDataAvailableForReAggregation != "")
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>Data is not available ! </b></font>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>Reason :&nbsp$NoDataAvailableForReAggregation&nbsp</b></font><br />
+</td>
+</tr>
+#end
+#if($SQLException != "")
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>SQLException While Closing Database Connection ! </b></font>
+</td>
+</tr>
+#end
+#if($ServletException != "")
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>ServletException ! </b></font>
+	</td>
+</tr>
+#end
+#if($UnexpectedException != "")
+<tr>
+<td width=800>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>UnexpectedException ! </b></font>
+	<font size="-1" face="Verdana, Helvetica, Arial"><b>&nbsp$UnexpectedException&nbsp</b></font><br />
+	</td>
+</tr>
+#end
+</table>
+</td>
+</tr>
+<tr>
+#parse( "footer.vm" )
+</tr>
+</table>
+</body>
+</html>

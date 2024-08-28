@@ -1,0 +1,183 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: Monitored Types</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+<script>
+	function openWindow(link){
+		newWin = window.open(link, 'Generator', 
+		'location=0,directories=0,menubar=0,scrollbars=0,'
+		+'status=1,toolbar=0,resizable=0,width=500,height=250');
+	}
+	
+	function refreshPage (selectedTechpack) {
+	
+		window.location.href = "$req.getContextPath()/servlet/MonitoredTypes?tp="+selectedTechpack; 
+	
+	}
+	
+	function checkUncheckAll(theElement) {
+     var theForm = theElement.form, z = 0;
+	 for(z=0; z<theForm.length;z++){
+      if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	  theForm[z].checked = theElement.checked;
+	  }
+     }
+    }
+    
+	function selectAll(formObj, isInverse) {
+   		for (var i=0;i < formObj.length;i++) {
+      		fldObj = formObj.elements[i];
+      		
+      		if (fldObj.type == 'checkbox')
+      		{ 
+         		if(isInverse)
+         			fldObj.checked = (fldObj.checked) ? false : true;
+         		else fldObj.checked = true; 
+       		}
+       	}
+	}
+	
+	function LevelChanged()
+	{
+  		document.f1.timelevel_changed.value="yes"; 
+  		document.f1.submit();
+	}
+
+//-->
+</script>
+#include( "calendar_js.txt" )
+
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form method=post action=$req.getContextPath()/servlet/MonitoredTypes onsubmit="return filterFields();">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="MonitoredTypes">Monitored Types</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Monitored types defines which measurement types are shown in Show loadings. Status and activation day can be changed. There can be only 
+			one measurement type and timelevel pair to be monitored. Status defines if measurement type is monitored. Activation day defines the day monitoring 
+			is started if measurement type is set to active. Clicking "Update Selected" button updates the modified status and time. 
+			<br><br>
+			<li>Using checkboxes and "Update selected" button updates only selected measurement types statuses to INACTVE or to ACTIVE. Please note that changing the status of type does not affect loadings until the next day.</li> 
+			<li>Using checkboxes and "Delete selected" button deletes only selected measurement types.</li>
+			<li>New measurement types can be added from link next to tech pack selection.</li>
+			<li>All measurement types can be selected or deselected by clicking the checkbox at the top.</li>
+			<br>
+			<br>
+			</font>
+		</td>
+</tr>
+
+#if ($errorMessage && $errorMessage != "")
+<tr>
+	<td><font size="1" face="Verdana, Helvetica, Arial" color="red">$errorMessage</font></td>
+<tr>
+#end
+</table>
+<table class="myt" style="width:420;">
+<tr>
+	<td colspan="2" class="pt_b_top"><font size="-1"><strong>Tech Pack</strong></font></td>
+</tr>
+<tr>
+	<td>
+		<select onChange="refreshPage(this.form.type.value);" name="type" style="font-size: 9;">
+		#foreach($tps in $distinctTechPacks)
+			#if ($tp == $tps)
+			<option selected value="$tp">$tp</option>
+			#else
+			<option value="$tps">$tps</option>
+			#end
+		#end
+		</select>
+	#if ($tp != "" && $tp != '-')
+	</td>
+	<td>
+		<a href="$req.getContextPath()/servlet/AddMonitoredType?tp=$tp"><font face="Verdana,Helvetica,Arial" size="1">Add new monitored type</font></a>
+	</td>
+	#else
+	<td>
+		&nbsp;
+	</td>
+	#end
+</tr>
+<tr>
+	<td>&nbsp;</td>	
+</tr>
+
+
+<table border=1>
+	
+	#if($monitoredTypes.size() > 0)
+		<tr bgcolor="#B3B3FF">
+		    <td width="*" nowrap><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/></td> <!-- Select all -->
+			<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Typename</strong></font></td> <!-- Typename -->
+			<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel</strong></font></td> <!-- Timelevel -->
+			<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> <!-- Status -->
+			<td width="190" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Activation day</strong></font></td> <!-- Activation day -->
+			<td width="190" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Modified</strong></font></td> <!-- Modified Time -->
+		</tr>
+	#end
+	#foreach ($oneset in $monitoredTypes)
+		<tr>
+			<td><input type="checkbox" name="chk:$!oneset.get(0):$!oneset.get(1)">
+			#if ($errorTypes.size() > 0)
+				#foreach ($oneType in $errorTypes)
+					#if ($oneType == $!oneset.get(0))
+					<td bgcolor="red" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(0)&nbsp;</font></td>
+					#else
+					<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(0)&nbsp;</font></td>
+					#end
+				#end
+			#else
+				<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(0)&nbsp;</font></td>
+			#end 
+			<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</td> <!-- -->
+			<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(2)</td> <!-- -->	
+		
+			<td width="190" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(4)-$!oneset.get(5)-$!oneset.get(6) 00:00</font></td>
+			<td width="190" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(3)</font></td> <!-- -->
+		</tr>
+	#end	
+    </td></tr>
+    #if($monitoredTypes.size() > 0)
+    <tr>
+		
+		<td colspan="2"><input type="submit" name="deleteSelected" value="Delete selected"></td>
+		<td>&nbsp;</td>
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">
+			<select name="status" style="font-size: 9;">
+			<option value="ACTIVE">ACTIVE</option>
+			<option value="INACTIVE">INACTIVE</option>
+			</select>
+			</font>
+		</td> <!-- -->
+		 <td valign="top" class="basic">
+			#parse( "cal_select_1.vm" )
+		 </td>
+		 <td><input type="submit" name="update" value="Update selected"></td>
+    </tr>
+    #end
+</table>
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

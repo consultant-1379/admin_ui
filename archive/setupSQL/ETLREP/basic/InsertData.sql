@@ -1,0 +1,13 @@
+
+insert into META_DATABASES( USERNAME, VERSION_NUMBER, TYPE_NAME, CONNECTION_ID, CONNECTION_NAME, CONNECTION_STRING, PASSWORD, DESCRIPTION, DRIVER_NAME, DB_LINK_NAME) values ('SA', '0', 'USER', 0, 'etlrep', 'jdbc:hsqldb:mem:etlrep', '', 'ETL Repository Database', 'org.hsqldb.jdbcDriver', null);
+insert into META_DATABASES( USERNAME, VERSION_NUMBER, TYPE_NAME, CONNECTION_ID, CONNECTION_NAME, CONNECTION_STRING, PASSWORD, DESCRIPTION, DRIVER_NAME, DB_LINK_NAME) values ('SA', '0', 'USER', 1, 'dwhrep', 'jdbc:hsqldb:mem:dwhrep', '', 'DWH Repository Database', 'org.hsqldb.jdbcDriver', null);
+insert into META_DATABASES( USERNAME, VERSION_NUMBER, TYPE_NAME, CONNECTION_ID, CONNECTION_NAME, CONNECTION_STRING, PASSWORD, DESCRIPTION, DRIVER_NAME, DB_LINK_NAME) values ('SA', '0', 'USER', 2, 'dwh', 'jdbc:hsqldb:mem:dwh', '', 'The DataWareHouse Database', 'org.hsqldb.jdbcDriver', null);
+
+insert into META_COLLECTION_SETS( COLLECTION_SET_ID, COLLECTION_SET_NAME, DESCRIPTION, VERSION_NUMBER, ENABLED_FLAG, TYPE) values (0, 'DWH_BASE', '', 'R2D_b999', 'Y', 'Maintenance');
+insert into META_COLLECTION_SETS( COLLECTION_SET_ID, COLLECTION_SET_NAME, DESCRIPTION, VERSION_NUMBER, ENABLED_FLAG, TYPE) values (1, 'TEST_MONITOR', 'Monitoring', '((999))', 'y', 'Maintenance');
+insert into META_COLLECTION_SETS( COLLECTION_SET_ID, COLLECTION_SET_NAME, DESCRIPTION, VERSION_NUMBER, ENABLED_FLAG, TYPE) values (2, 'TEST', 'Junit test', 'R1A_b999', 'Y', 'Techpack');
+
+insert into META_COLLECTIONS values( 9  ,'AutomaticREAggregation'  ,'testCOLLECTION'  ,'testMAIL_ERROR_ADDR'  ,'testMAIL_FAIL_ADDR'  ,'testMAIL_BUG_ADDR'  ,1  ,1  ,1  ,'N'  ,'N'  ,'2000-01-01 00:00:00.0'  ,'((999))'  ,1  ,'testUSE_BATCH_ID'  ,3  ,33  ,'y'  ,'Support'  ,'Y'  ,'testMEASTYPE'  ,'N'  ,'testSCHEDULING_INFO' );
+insert into META_SCHEDULINGS values( '((999))'  ,0  ,'weekly'  ,null  ,2  ,10  ,19  ,0  ,1  ,9 ,'Y'  ,'Y' ,'Y'  ,'Y'  ,'Y' ,'Y','Y','Executed'  ,'2000-06-27 00:00:00.0'  ,1  ,0  ,'DailyReAggregation'  ,'N'  ,null  ,2006  ,null  ,1 );
+
+insert into META_TRANSFER_BATCHES( ID, START_DATE, END_DATE ,FAIL_FLAG ,STATUS ,VERSION_NUMBER ,COLLECTION_SET_ID ,COLLECTION_ID ,META_COLLECTION_NAME ,META_COLLECTION_SET_NAME ,SETTYPE ,SLOT_ID, SCHEDULING_INFO, SERVICE_NODE) values ( 1, '2011-04-15 22:22:43.0', '2011-04-15 23:22:43.0', 'N', 'FINISHED', '((49))', 0, 15, 'Directory_Checker_DWH_MONITOR', 'DWH_MONITOR', 'Install', 0, '', 'reader1');

@@ -1,0 +1,7 @@
+<HTML>
+<script type="text/javascript" language="JavaScript">window.history.forward(+1);</script>
+<frameset rows="*, 100%" framespacing="0" border="0">
+<frame src="hlex_script.html" name="hlexscript" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" noresize>
+<frame src="hlex_doc.html" name="hlexdoc" marginwidth="5" marginheight="5">
+</frameset>
+</HTML>

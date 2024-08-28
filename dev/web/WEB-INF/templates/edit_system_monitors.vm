@@ -1,0 +1,159 @@
+#set ($appPath = $req.getContextPath()) 
+#set ($servletPath = "$appPath/servlet")
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: System Status :: Configure system status</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script type="text/javascript">
+	function confirmServerDelete( ) {
+		var selectedMetaServerIndex = document.getElementById("metaServers").selectedIndex;
+		var hostName = document.getElementById("metaServers").options[selectedMetaServerIndex].value;
+		var message = "Are you sure you want to delete server " + hostName + " and all its monitors?";
+		if(confirm(message) == true) {
+			document.getElementById("hostName").value = hostName;
+			document.getElementById("action").value = "removeServer";
+			document.forms[0].submit();
+		}
+	}
+	
+	function confirmSystemMonitorDelete( ) {
+		var selectedMetaServerIndex = document.getElementById("metaServers").selectedIndex;
+		var hostName = document.getElementById("metaServers").options[selectedMetaServerIndex].value;
+		var selectedSystemMonitorIndex = document.getElementById("systemMonitors").selectedIndex;
+		//alert("selectedSystemMonitorIndex = " + selectedSystemMonitorIndex);
+		var monitor = document.getElementById("systemMonitors").options[selectedSystemMonitorIndex].value;
+		
+		var message = "Are you sure you want to delete system monitor " + monitor + "?";
+		if(confirm(message) == true) {
+			document.getElementById("hostName").value = hostName;
+			document.getElementById("monitor").value = monitor;
+			document.getElementById("action").value = "removeMetaSystemMonitor";
+			document.forms[0].submit();
+		}
+	}
+	
+	function reloadPage() {
+		var selectedMetaServerIndex = document.getElementById("metaServers").selectedIndex;
+		var selectedMetaServer = document.getElementById("metaServers").options[selectedMetaServerIndex].value;
+		window.location.href = "$servletPath/SystemMonitorsServlet?action=editSystemMonitors&selectedMetaServer=" + selectedMetaServer;
+	}
+	
+	function changeEditLinkVisibility() {
+		var selectedSystemMonitorIndex = document.getElementById("systemMonitors").selectedIndex;
+		//alert("selectedSystemMonitorIndex = " + selectedSystemMonitorIndex);
+		var selectedSystemMonitor = document.getElementById("systemMonitors").options[selectedSystemMonitorIndex].value;
+		
+		//alert("selectedSystemMonitor = " + selectedSystemMonitor );
+		
+		if(selectedSystemMonitor == "" || selectedSystemMonitor == "-") {
+			document.getElementById("removeSystemMonitorLink").style.visibility = "hidden";
+			document.getElementById("editSystemMonitorLink").style.visibility = "hidden";
+		} else {
+			document.getElementById("removeSystemMonitorLink").style.visibility = "visible";
+			document.getElementById("editSystemMonitorLink").style.visibility = "visible";
+		}	
+	}
+	
+	function removeSystemMonitor() {
+		var selectedSystemMonitorIndex = document.getElementById("systemMonitors").selectedIndex;
+		var selectedSystemMonitor = document.getElementById("systemMonitors").options[selectedSystemMonitorIndex].value;
+		
+		if( selectedSystemMonitor == "" || selectedSystemMonitor == "-" ) {
+			alert("Please select a system monitor.");
+			return false;
+		}
+		
+		document.getElementById("action").value = "removeSystemMonitor";
+		document.forms[0].submit();
+	}
+	
+	
+	function redirectToEditSystemMonitorPage() {
+		var selectedSystemMonitorIndex = document.getElementById("systemMonitors").selectedIndex;
+		var selectedSystemMonitor = document.getElementById("systemMonitors").options[selectedSystemMonitorIndex].value;
+		var selectedMetaServer = "$selectedMetaServer";
+		
+		window.location.href = "$servletPath/SystemMonitorsServlet?action=editMetaSystemMonitor&hostName=" + selectedMetaServer + "&monitor=" + selectedSystemMonitor;
+	}
+	 
+	
+</script>
+</head>
+<body bgcolor="#ffffff">
+<form name="form" id="form" action="$servletPath/SystemMonitorsServlet"
+	method="post"><input type="hidden" id="action" name="action" value="">
+<input type="hidden" id="hostName" name="hostName" value="">
+<input type="hidden" id="monitor" name="monitor" value="">
+
+<table border="0">
+	<tr valign=top>
+		<td width=220>#parse( "main_menu.vm" )</td>
+		<td width=800><font size="1" face="Verdana, Helvetica, Arial">System
+		Monitoring&nbsp;&gt;&gt;&nbsp;<a href="$servletPath/SystemMonitorsServlet">System Status</a>&nbsp;&gt;&gt;&nbsp;<a href="$servletPath/SystemMonitorsServlet?action=editSystemMonitors">Configure system status</a></font>
+		<hr />
+		#if ($message)
+			<table border="1" cellpadding="2" cellspacing="0">
+				<tr>
+					<td><font size="-1" face="Courier">$message</font></td>
+				</tr>
+			</table>
+		#end
+		
+		<table border="0" width="100%" border="0" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td colspan="3">
+				<a href="$servletPath/SystemMonitorsServlet?action=addMetaServer">Add new server</a><br />
+				<br />
+				<font face="Verdana, Helvetica, Arial" size="2">Select server:</font><br />
+				<select id="metaServers" name="metaServers" onchange="javascript:reloadPage();">
+					<option name="-" id="-" value="-" #if ($selectedMetaServer == "-") selected #end>-</option>
+					#if ($metaServers)
+						#foreach( $metaServer in $metaServers )
+							<option name="$metaServer.getHostname()" id="$metaServer.getHostname()" value="$metaServer.getHostname()" #if ($selectedMetaServer == $metaServer.getHostname()) selected #end>$metaServer.getHostname()</option>
+						#end
+					#end
+				</select>
+				#if ($selectedMetaServer && $selectedMetaServer != "-" )
+					<a href="$servletPath/SystemMonitorsServlet?action=editMetaServer&hostName=$selectedMetaServer">Edit</a>&nbsp;&nbsp;
+					<a href="javascript:confirmServerDelete();">Remove</a><br />
+				#end
+				<br />
+				#if ($selectedMetaServer && $selectedMetaServer != "-" )
+					<a href="$servletPath/SystemMonitorsServlet?action=addMetaSystemMonitor&hostName=$selectedMetaServer">Add new system monitor</a><br />
+					<br />
+					<font face="Verdana, Helvetica, Arial" size="2">Select system monitor:</font><br />
+					<select id="systemMonitors" name="systemMonitors" onchange="changeEditLinkVisibility();">
+					<option name="-" id="-">-</option>
+					#if ($metaServerSystemMonitors)
+						#set ($metaServerSystemMonitorsVector = $metaServerSystemMonitors.get($selectedMetaServer))
+						metaServerSystemMonitorsVector.size() = $metaServerSystemMonitorsVector.size()<br />
+						#if($metaServerSystemMonitorsVector.size() > 0)
+							#foreach( $currentSystemMonitor in $metaServerSystemMonitorsVector )
+								<option name="$currentSystemMonitor.getMonitor()" id="$currentSystemMonitor.getMonitor()" value="$currentSystemMonitor.getMonitor()">$currentSystemMonitor.getMonitor()</option>
+							#end
+						#end
+					#end
+					</select>
+					<a href="javascript:redirectToEditSystemMonitorPage();" name="editSystemMonitorLink" id="editSystemMonitorLink" style="display: inline; visibility: hidden;">Edit</a>&nbsp;&nbsp;
+					<a href="javascript:confirmSystemMonitorDelete();" name="removeSystemMonitorLink" id="removeSystemMonitorLink" style="display: inline; visibility: hidden;">Remove</a>
+					<br />
+					
+				#end
+				</td>
+			</tr>
+		</table>
+
+
+		</td>
+	</tr>
+	#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

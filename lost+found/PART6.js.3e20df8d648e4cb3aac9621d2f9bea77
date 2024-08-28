@@ -1,0 +1,1083 @@
+var C6=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><a name=\"UserManagement\"></a><span class=\"CHAPNUMBER\">6 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ycxz\"></a><a name=\"CHAPTER6\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">User Management</a></span></h1>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C6_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">6.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_0bk0\"></a><a name=\"CHAPTER6.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ Events UI User Management</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The following chapters describe how to manage the various individual\n" +
+"and user groups in ENIQ Events.</p>\n" +
+"\n" +
+"<p>\n" +
+"User Management for OpenDJ (LDAP) Users is handled in the Security\n" +
+"Administration, User Management feature in AdminUI. This feature grants\n" +
+"user access to the AdminUI and ENIQ Events User Interfaces.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C6_1_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">6.1.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_2bsc\"></a><a name=\"CHAPTER6.1.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Password policies</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"The password policy for Eniq Events UI is managed by OpenDJ (LDAP).\n" +
+"In addition the following rules are enforced:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">When changing a password, the new password cannot contain\n" +
+"a sequence of three or more characters from the previous password.</li></ul>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C6_1_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"UserManagementAdminUI\"></a><span class=\"CHAPNUMBER\">6.1.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_h4lv\"></a><a name=\"CHAPTER6.1.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">User Management</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"<b>User Management</b> in AdminUI is used to view, create,\n" +
+"edit, delete and unlock user accounts. See <a href='javascript:parent.parent.parent.showAnchor(\"manageusersGUI\")' class=\"xref\"> Figure 15</a> for more details.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"manageusersGUI\"></a><a name=\"FIGURE15\">[Missing image UserManagementPage.png]</a><p align=\"left\"><i>Figure 15 &nbsp; Manage Users on AdminUI</i></p></div>\n" +
+"<p>\n" +
+"The <b>User Management</b> view displays the list of\n" +
+"users that exist on the system. The following conventions are used\n" +
+"to denote various characteristics of User IDs:</p>\n" +
+"\n" +
+"\n" +
+"<table frame=\"void\" class=\"grd\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"6%\">\n" +
+"<p><b class=\"object\">*</b></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"94%\">\n" +
+"<p>following the User ID denotes a predefined user</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"6%\">\n" +
+"<p><b class=\"object\">**</b></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"94%\">\n" +
+"<p>following the User ID denotes the user is a non-predefined\n" +
+"user with Sysadmin role</p>\n" +
+"</td></tr></table>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><strong class=\"MEDEMPH\">BOLD</strong> text denotes the currently logged user.</dd></dl><br />\n" +
+"<p>\n" +
+"The <b>Days Since Last Login</b> column shows the number\n" +
+"of days since the user last logged into ENIQ Events. If a user has\n" +
+"not logged in since recording was enabled, the<b> Days Since\n" +
+"Last Login</b> column displays <b>-</b>.</p>\n" +
+"\n" +
+"<p>\n" +
+"A configurable threshold is used to highlight users who have not\n" +
+"logged in for the specified number of days or more, see <a href='javascript:parent.parent.parent.showAnchor(\"UserManagementHighlighted\")' class=\"xref\"> Figure 16</a>. The last login threshold is\n" +
+"changed using the \"Admin Configuration\" page of Admin UI, see <a href='javascript:parent.parent.parent.showAnchor(\"AdminUISAG\")' class=\"xref\">Reference [9]</a>. The default threshold is 90 days and the maximum\n" +
+"value is 182 days (6 months).</p>\n" +
+"\n" +
+"<p>\n" +
+"The highlighted users can be exported by clicking <b>Export\n" +
+"Unused</b>. They are exported as a tab delimited list to a predefined\n" +
+"file (default export path is <tt class=\"file-path\">/eniq/home/dcuser/unused_users.tab</tt>). </p>\n" +
+"\n" +
+"<p>\n" +
+"The export path is modified by changing the value of <tt class=\"file-path\">user_management.unused_users_export_path</tt> in the file <tt class=\"file-path\">/eniq/sw/runtime/tomcat/webapps/adminui/WEB-INF/classes/general.properties</tt>.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"UserManagementHighlighted\"></a><a name=\"FIGURE16\">[Missing image UserManagementPageHighlighted.png]</a><p align=\"left\"><i>Figure 16 &nbsp; Highlighting Unused Accounts.</i></p></div>\n" +
+"<p>\n" +
+"The <b>Operations</b> column displays the actions available\n" +
+"for a current user. For example, non-predefined <tt class=\"LITERALMONO\">sysadmin</tt> users are not allowed to add or delete other predefined or non-predefined <tt class=\"file-path\">sysadmin</tt> users. Those actions are disabled for a non-predefined <tt class=\"file-path\">sysadmin</tt>.</p>\n" +
+"\n" +
+"<p>\n" +
+"A non-predefined <tt class=\"LITERALMONO\">sysadmin</tt> has access to <tt class=\"file-path\">Unlock</tt> for other non-predefined users (except other\n" +
+"non-predefined <tt class=\"file-path\">sysadmin</tt> users) and also\n" +
+"limited <tt class=\"file-path\">Edit</tt> access for their own non-key\n" +
+"attributes, such as , password, email, and phone.</p>\n" +
+"\n" +
+"<p>\n" +
+"If the current user is a predefined <tt class=\"LITERALMONO\">sysadmin</tt> then it is possible to create, edit and delete other non-predefined\n" +
+"sysadmin users.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><a href='javascript:parent.parent.parent.showAnchor(\"PredefinedSysadmin\")' class=\"xref\"> Table 1</a>, lists the actions that\n" +
+"are available to users logged in as a <tt class=\"file-path\">Predefined Sysadmin</tt>. <a href='javascript:parent.parent.parent.showAnchor(\"Non-PredefinedSysadmin\")' class=\"xref\"> Table 2</a>, lists the actions available\n" +
+"to a <tt class=\"file-path\"><a name=\"PredefinedSysadmin\"></a>Non-Predefined Sysadmin</tt>.</dd></dl><br />\n" +
+"<a name=\"TABLE1\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 1 &nbsp;&nbsp; Predefined Sysadmin</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"17%\">\n" +
+"\n" +
+"<p>Predefined Sysadmin</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"12%\">\n" +
+"\n" +
+"<p>Create User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"20%\">\n" +
+"\n" +
+"<p>Edit User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"15%\">\n" +
+"\n" +
+"<p>Delete User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"15%\">\n" +
+"\n" +
+"<p>Unlock User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"19%\">\n" +
+"\n" +
+"<p>Edit/Revoke User Roles</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"17%\">\n" +
+"<p>Self</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Non-key Attributes ONLY <sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote1-1\")'>(1)</a></sup></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y** <sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote1-2\")'>(2)</a></sup></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>N</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"17%\">\n" +
+"<p>Sysadmin (P) <sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote1-3\")'>(3)</a></sup></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>N/A</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"17%\">\n" +
+"<p>Sysadmin (NP) <sup><a href='javascript:parent.parent.parent.showAnchor(\"tnote1-4\")'>(4)</a></sup></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Y</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"17%\">\n" +
+"<p>Other User (NP)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Y</p>\n" +
+"</td></tr></table><p class=\"tnote\"><a name=\"tnote1-1\">(1) &nbsp;</a> <strong class=\"MEDEMPH\">Non-Key Attributes</strong>: All attribute/fields apart  from UserID and Roles<br /></p><p class=\"tnote\"><a name=\"tnote1-2\">(2) &nbsp;</a> <strong class=\"MEDEMPH\">**</strong>: Can only be Unlocked via LDAP/Script<br /></p><p class=\"tnote\"><a name=\"tnote1-3\">(3) &nbsp;</a> <strong class=\"MEDEMPH\">(P)</strong>: Predefined<br /></p><p class=\"tnote\"><a name=\"tnote1-4\">(4) &nbsp;</a> <strong class=\"MEDEMPH\"><a name=\"Non-PredefinedSysadmin\"></a>(NP)</strong>: Non-Predefined<br /></p><br />\n" +
+"\n" +
+"<a name=\"TABLE2\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 2 &nbsp;&nbsp; Non-Predefined Sysadmin</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"19%\">\n" +
+"\n" +
+"<p>Non-Predefined Sysadmin</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"12%\">\n" +
+"\n" +
+"<p>Create User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"20%\">\n" +
+"\n" +
+"<p>Edit User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"15%\">\n" +
+"\n" +
+"<p>Delete User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"15%\">\n" +
+"\n" +
+"<p>Unlock User</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"19%\">\n" +
+"\n" +
+"<p>Edit/Revoke User Roles</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Self</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Password, Phone &amp; Email ONLY</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>N</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Sysadmin (P)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>N/A</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>N/A</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Sysadmin (NP)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>N</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Other User (NP)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"12%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"20%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"15%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"19%\">\n" +
+"<p>Y</p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+"<strong class=\"MEDEMPH\">Roles</strong>: The following table displays\n" +
+"what features are permitted if the user is logged in as either Predefined\n" +
+"or Non-Predefined Sysadmin.</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE3\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 3 &nbsp;&nbsp; Roles</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"26%\">\n" +
+"\n" +
+"<p>Roles</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"24%\">\n" +
+"\n" +
+"<p>Create</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"25%\">\n" +
+"\n" +
+"<p>Edit</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"24%\">\n" +
+"\n" +
+"<p>Delete</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"26%\">\n" +
+"<p>Roles (P)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"24%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"24%\">\n" +
+"<p>N</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"26%\">\n" +
+"<p>Roles (NP)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"24%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"25%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"24%\">\n" +
+"<p>Y</p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+"<strong class=\"MEDEMPH\">Permission Groups</strong>: The following table\n" +
+"displays what features are permitted if the user is logged in as either\n" +
+"Predefined or Non-Predefined Sysadmin.</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE4\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 4 &nbsp;&nbsp; Roles</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"30%\">\n" +
+"\n" +
+"<p>Permission Groups</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"23%\">\n" +
+"\n" +
+"<p>Create</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"23%\">\n" +
+"\n" +
+"<p>Edit</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"23%\">\n" +
+"\n" +
+"<p>Delete</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>Permission Groups (P)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>N</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>Permission Groups (NP)</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>Y</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>Y</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"30%\">\n" +
+"<p>Permission</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>N</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"23%\">\n" +
+"<p>N</p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+"If the password is locked, click <b>Unlock</b> in the <b>Operations</b> column to unlock the password.</p>\n" +
+"\n" +
+"<p>\n" +
+"If the password has expired, click <b>Edit</b> in the <b>Operations</b> column to modify and remove the expired password.</p>\n" +
+"\n" +
+"<p>\n" +
+"The <b>Remarks</b> column displays information messages\n" +
+"such as:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE5\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 5 &nbsp;&nbsp; Examples of Remarks</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Remark Message</p></th>\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Possible Cause</p></th>\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Suggested Action</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>User is Locked</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>User may have entered password incorrectly 3 times</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>Click the unlock link (blue)</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>Password has expired</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>All users password will be expired after 90 Days (There\n" +
+"is NO password expiry time set for predefined user)</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>User will be asked to change password if expired</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>User has no roles assigned</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>A user has a role assigned that has been deleted from Role\n" +
+"Management</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>Assign a valid role to the User ID.</p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+"It is possible to unlock a locked predefined sysadmin using the\n" +
+"following OpenDJ command:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Create <tt class=\"LITERALMONO\">unlock.ldif</tt>  file containing\n" +
+"the following input:<br />dn: uid=admin,ou=users,dc=ericsson,dc=se<br />changetype: modify<br />delete: pwdAccountLockedTime<br /><br />dn:\n" +
+"uid=admin,ou=users,dc=ericsson,dc=se<br />changetype: modify<br />delete:\n" +
+"pwdFailureTime</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Run the following command as <em class=\"LOWEMPH\">dcuser</em> on the co-ordinator server:<p>\n" +
+"<tt class=\"input\"><b>/eniq/misc/opendj/bin/ldapmodify -h localhost -p 9001 \\<br />--bindDN cn=Administrator,dc=ericsson,dc=se -w ldap \\<br />-a -f\n" +
+"unlock.ldif</b></tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Contact local Ericsson support for more information.</dd></dl><br /></li></ol>\n" +
+"<p>\n" +
+"After unlocking a sysadmin user, retry login after five minutes.</p>\n" +
+"\n" +
+"<p>\n" +
+"It is possible to create new user accounts using <b>Add User</b> option on AdminUI, see <a href='javascript:parent.parent.parent.showAnchor(\"adduserGUI\")' class=\"xref\"> Figure 17</a> for more details.</p>\n" +
+"\n" +
+"<p>\n" +
+"In order to create a new user account, it is necessary to have\n" +
+"Administration access. Select the appropriate role(s) from the drop-down\n" +
+"menu.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"adduserGUI\"></a><a name=\"FIGURE17\">[Missing image AddUserGUI.jpg]</a><p align=\"left\"><i>Figure 17 &nbsp; Create New User Account</i></p></div>\n" +
+"\n"+
+"</div>\n";
+
+var C6_1_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"RoleManagementAdminUI\"></a><span class=\"CHAPNUMBER\">6.1.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_bc59\"></a><a name=\"CHAPTER6.1.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Role Management</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Use the <b>Role Management</b> in AdminUI view to view,\n" +
+"create, edit and delete roles. See <a href='javascript:parent.parent.parent.showAnchor(\"fig-rolemgmt\")' class=\"xref\"> Figure 18</a> for\n" +
+"more details.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"fig-rolemgmt\"></a><a name=\"FIGURE18\">[Missing image Figure_3_Role_Management.PNG]</a><p align=\"left\"><i>Figure 18 &nbsp; Example Role Management Display</i></p></div>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Roles that have been deleted will be removed from any Users\n" +
+"to whom they have been assigned.</dd></dl><br />\n" +
+"<p>\n" +
+"The <b>Role</b> view displays the list of roles that\n" +
+"may be assigned to users. The <b>Operations</b> column displays\n" +
+"the actions available on each role, and clicking the <b>View\n" +
+"Details</b> field, displays the properties of the role.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the <b>Name</b> column, predefined roles are marked\n" +
+"with an asterisk (*). These are roles that have been added as templates. <a name=\"tablePredefinedRoles\" href='javascript:parent.parent.parent.showAnchor(\"tablePredefinedRoles\")' class=\"xref\"> Table 6</a> provides a summary of predefined\n" +
+"roles and their descriptions:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE6\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 6 &nbsp;&nbsp; Predefined Roles</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Role Name</p></th>\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Description</p></th>\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Permissions Groups</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>customercare</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events customer care role.</p><br />\n" +
+"<p>The primary focus of this user is customer (and customer group)\n" +
+"focused analysis.  Users with this role type have, by default, access\n" +
+"to Subscriber views within the user interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>subscribergroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>marketing</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events marketing role.</p><br />\n" +
+"<p>The primary focus of this user is customer (and customer group)\n" +
+"and end-user device-focused analysis.  Users with this role type have,\n" +
+"by default, access to Subscriber and Terminal views within the user\n" +
+"interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>subscribergroup<br />terminalgroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>networkmonitoring</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events network monitoring role.</p><br />\n" +
+"<p>The primary focus of this user is network monitoring, that is,\n" +
+"understanding network performance at a network node level.  Users\n" +
+"with this role type have, by default, access to Network and Ranking\n" +
+"views within the user interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>rankinggroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>networktroubleshooting</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events network troubleshooting role.</p><br />\n" +
+"<p>The primary focus of this user is network-focused analysis and\n" +
+"troubleshooting.  Users with this role type have, by default, access\n" +
+"to Network, Terminal, and Ranking views within the user interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>networkgroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>poweruser</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Power User who can access all ENIQ Events\n" +
+"UI functions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>allpermissions</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>sysadmin</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ System Administrator who can access all\n" +
+"ENIQ Events UI functions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>allpermissions</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>terminalspecialist</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events terminal specialist role.</p><br />\n" +
+"<p>The primary focus of this user is end-user device-focused analysis.\n" +
+"Users with this role type have, by default, access to Terminal views\n" +
+"within the user interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>terminalgroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>sessionbrowserrole</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events Session Browser role. Users with\n" +
+"this role type have, by default, access to Session Browser views within\n" +
+"the user interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>sessionbrowsergroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>kpirole</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events KPI Analysis role. Users with this\n" +
+"role type have, by default, access to KPI Analysis views within the\n" +
+"user interface.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>kpigroup</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>nbirole</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This is the ENIQ Events default LDAP user for using REST\n" +
+"APIs externally.</p><br />\n" +
+"<p><strong class=\"MEDEMPH\">Note:</strong> Once this permission is assigned to a user,\n" +
+"all other UI permissions are disabled when logging into Eniq Events\n" +
+"UI.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>nbigroup</p>\n" +
+"</td></tr></table>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>You may create additional roles and allocate application\n" +
+"access to reflect your operational environment. To do this, use the <b>Add Role</b> option:</dd></dl><br />\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE19\">[Missing image addrole.jpg]</a><p align=\"left\"><i>Figure 19 &nbsp; Add Role View</i></p></div>\n" +
+"<p>\n" +
+"The role name must contain only letters and numbers. For example,\n" +
+"the name cannot contain a space. Ensure that the description is precise\n" +
+"and informative as it will be displayed on the Permissions Group view.\n" +
+"Allocate the permission groups relevant to the new role and click <b>Save</b>.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C6_1_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"PermissionGroupsAdminUI\"></a><span class=\"CHAPNUMBER\">6.1.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_9zt4\"></a><a name=\"CHAPTER6.1.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Permission Groups</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Use <b>Permission Group</b> in AdminUI to view, create,\n" +
+"edit and delete permission groups. Permission Groups define role based\n" +
+"access control to the tabs <b>Network</b>, <b>Subscriber</b>, <b>Ranking</b> and/or <b>Terminal</b> in the\n" +
+"Ericsson Network OSS UI, more than one may be selected.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE20\">[Missing image Figure_5_Permission_Groups.PNG]</a><p align=\"left\"><i>Figure 20 &nbsp; Example Permission Groups Display</i></p></div>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Permission Groups that have been deleted will be removed\n" +
+"from any Roles to which they have been assigned.</dd></dl><br />\n" +
+"<p>\n" +
+"The <b>Permission Group</b> view displays the list of\n" +
+"Permission Groups that may be assigned to roles. The <b>Operations</b> column displays the actions available on each Permission Group,\n" +
+"and clicking the <b>View Permissions</b> field, displays\n" +
+"the properties of the group.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the <b>Name</b> column, predefined groups are marked\n" +
+"with an asterisk <b>*</b>. These are permissions that have\n" +
+"been added as templates. <a name=\"tablePredefinedPermissionGroup\" href='javascript:parent.parent.parent.showAnchor(\"tablePredefinedPermissionGroup\")' class=\"xref\"> Table 7</a> provides a summary of predefined groups and their descriptions:</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE7\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 7 &nbsp;&nbsp; Predefined Permission Groups</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\" width=\"28%\">\n" +
+"\n" +
+"<p>Permission Group Name</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"36%\">\n" +
+"\n" +
+"<p>Description</p></th>\n" +
+"<th align=\"left\" valign=\"top\" width=\"36%\">\n" +
+"\n" +
+"<p>Permissions</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>allpermissions</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.network.view</tt><br /><tt class=\"file-path\">eventsui.ranking.view</tt><br /><tt class=\"file-path\">eventsui.subscriber.view</tt><br /><tt class=\"file-path\">eventsui.terminal.view</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>networkgroup</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI network permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.network.view</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>rankinggroup</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI ranking permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.ranking.view</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>subscribergroup</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI subscriber permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.subscriber.view</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>terminalgroup</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI terminal permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.terminal.view</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>sessionbrowsergroup</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI Session Browser permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.sessionbrowser.view</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"28%\">\n" +
+"<p>kpigroup</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p>This permission group contains all UI KPI Analysis permissions.</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"file-path\">eventsui.kpi.view</tt></p>\n" +
+"</td></tr></table>\n" +
+"<p>\n" +
+" New permission groups are created using the <b>Add Permission\n" +
+"Group</b> option:</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE21\">[Missing image addpermissions.jpg]</a><p align=\"left\"><i>Figure 21 &nbsp; Add Permission Group View</i></p></div>\n" +
+"<p>\n" +
+"The group name must contain only letters and numbers. For example,\n" +
+"the name cannot contain a space or an underscore.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C6_1_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">6.1.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_saxy\"></a><a name=\"CHAPTER6.1.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Importing ENIQ Events Users</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Use the below steps for bulk import of ENIQ Events users.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Create an <tt class=\"file-path\">*.ldif</tt> file in the\n" +
+"server with information on the users to be added. Ensure there is\n" +
+"no whitespace at the end of any line and that there is only one return\n" +
+"between each attribute block .<br /><pre class=\"prencd\">dn: uid=&lt;userId&gt;,ou=users,dc=ericsson,dc=se\n" +
+"objectClass: EniqEvents\n" +
+"objectClass: inetOrgPerson\n" +
+"objectClass: organizationalPerson\n" +
+"objectClass: person\n" +
+"objectClass: top\n" +
+"cn: &lt;firstName&gt;&lt;lastName&gt;\n" +
+"displayName: &lt;firstName&gt;&lt;lastName&gt;\n" +
+"givenName: &lt;firstName&gt;\n" +
+"sn: &lt;lastName&gt;\n" +
+"mail: &lt;email&gt;\n" +
+"uid: &lt;userId&gt;\n" +
+"resetPasswordOnLogin: TRUE\n" +
+"userPassword: &lt;userPassword&gt;\n" +
+"telephoneNumber: &lt;telephoneNumber&gt;\n" +
+"ds-pwp-password-policy-dn;collective: cn=default,\\\n" +
+"ou=pwpolicies,dc=ericsson,dc=se\n" +
+"\n" +
+"#Add the userprofile for the user with a poweruser role.\\\n" +
+"note: there should be only one return between each\\\n" +
+"attribute block\n" +
+"\n" +
+"dn: uid=&lt;userId&gt;,ou=userprofiles,ou=pm,ou=oss,\\\n" +
+"dc=ericsson,dc=se\n" +
+"uid: &lt;userId&gt;\n" +
+"predefined: FALSE\n" +
+"uniqueMember: cn=poweruser,ou=roles,ou=pm,ou=oss,\\\n" +
+"dc=ericsson,dc=se\n" +
+"objectClass: userprofile\n" +
+"\n" +
+"#Add the new user to UI Users login profile\n" +
+"\n" +
+"dn: cn=UI Users,ou=roles,dc=ericsson,dc=se\n" +
+"changetype: modify\n" +
+"add: uniqueMember\n" +
+"uniqueMember: uid=&lt;userId&gt;,ou=users,dc=ericsson,dc=se</pre><p></p><p>\n" +
+"The various properties of a user and their data types are:</p>\n" +
+"\n" +
+"<table frame=\"void\" style=\"margin-top:4pt\" class=\"grd\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><strong class=\"MEDEMPH\">Property</strong></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p><strong class=\"MEDEMPH\">Description</strong></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p><strong class=\"MEDEMPH\">Data Type</strong></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">userId</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>Login user ID</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">firstName</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>First Name</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">lastName</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>Last Name</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">email</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>Valid email address</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">userPassword</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>Login user password</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">organization</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>Organisation to which user belongs</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"36%\">\n" +
+"<p><tt class=\"input\"><b>&lt;<i class=\"var\">telephoneNumber</i>></b></tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"33%\">\n" +
+"<p>Valid phone number</p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"31%\">\n" +
+"<p>String</p>\n" +
+"</td></tr></table><p>\n" +
+"Repeat the same for as many users required.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Duplicate users are not allowed.<p>\n" +
+"Ensure there are no trailing spaces in any line of the <tt class=\"file-path\">*.ldif</tt> file.</p>\n" +
+"</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Save the *.ldif file as:<br /><tt class=\"file-path\">eventsUsers.ldif</tt> under <tt class=\"file-path\">/eniq/home/dcuser</tt> directory.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Execute the following command as <em class=\"LOWEMPH\">dcuser</em> on the co-ordinator server:<br /><tt class=\"input\"><b>/eniq/misc/opendj/bin/ldapmodify\n" +
+"-h localhost \\<br />-p 9001 --bindDN &lt;LDAP Administrator DN&gt; \\<br />-w &lt;LDAP Administrator Password&gt; -a \\<br />-f /eniq/home/dcuser/eventsUsers.ldif</b></tt><br /><br /><p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">LDAP Administrator DN</i>></tt>: uid=admin,ou=users,dc=ericsson,dc=se</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">LDAP Administrator Password</i>></tt>: Password of predefined system administration user</p>\n" +
+"<p>\n" +
+"All users are configured with \"poweruser\" role which enables access\n" +
+"to ENIQ Events UI.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">After import, use AdminUI to modify these users.</li></ol>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C6_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">6.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_xopu\"></a><a name=\"CHAPTER6.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Changing the Max Password Age</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the <tt class=\"file-path\">update_ldap_password_age.bsh</tt> script, which is used to configure the following:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">Max Password Age<p>\n" +
+"This is the amount of time, in days, before a password expires.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Password Expire Warning<p>\n" +
+"This determines the length of time, in days, before warning that\n" +
+"the password expires. </p>\n" +
+"</li></ul>\n" +
+"<p>\n" +
+"The <tt class=\"file-path\">update_ldap_password_age.bsh</tt> script,\n" +
+"must be run as <tt class=\"file-path\">root</tt> on the coordinator\n" +
+"server.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># bash /eniq/admin/bin/update_ldap_password_age.bsh -e &lt;<i class=\"var\">Value In Days</i>&gt; -m &lt;<i class=\"var\">Value In Days</i>&gt; [-p]</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"Where:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"><tt class=\"file-path\">-e</tt> is the value for the Password\n" +
+"Expire Warning in days.<p>\n" +
+"The Password Expire Warning can have a maximum value of 24,854\n" +
+"days  and a minimum value of 1 day.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">-m</tt> is the value for the Password\n" +
+"Max Age in days.<p>\n" +
+"The Password Max Age can have a maximum value of 24,855 days and\n" +
+"a minimum value of 1 day.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">The <tt class=\"file-path\">-p</tt> switch is required\n" +
+"for the Predefined Users.<p>\n" +
+"The <tt class=\"file-path\">-p</tt> switch is not required for Non-Predefined\n" +
+"Users.</p>\n" +
+"</li></ul>\n" +
+"<p>\n" +
+"</p>\n" +
+"\n" +
+"<p>\n" +
+"The time between receiving the password expiry warning (Password\n" +
+"Expire Warning) and the time at which the password will expire (Max\n" +
+"Password Age) is called the grace period. </p>\n" +
+"\n" +
+"<p>\n" +
+"If a user's password expires, the administrator will need to change\n" +
+"the user's password to allow the user to log in again. If the user\n" +
+"attempts to log in using the expired password then instances of <tt class=\"file-path\">pwdGraceUseTime</tt> are created in LDAP. Once the administrator\n" +
+"changes the password using AdminUI the instances of <tt class=\"file-path\">pwdGraceUseTime</tt> are deleted from LDAP.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>If the administrator needs to manually delete instances of <tt class=\"file-path\">pwdGraceUseTime</tt> then perform the following steps before\n" +
+"changing the User's password using AdminUI.</dd></dl><br />\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Create a file <tt class=\"file-path\">/var/tmp/grace.ldif</tt> with the following information.<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Ensure there is no trailing white space at the end of each\n" +
+"line.</dd></dl><br /><p>\n" +
+"</p><pre class=\"prencd\">dn: uid=&lt;User ID&gt;,ou=users,dc=ericsson,dc=se\n" +
+"changetype: modify\n" +
+"delete: pwdGraceUseTime</pre><p></p>\n" +
+"<p>\n" +
+"For example if the user <tt class=\"file-path\">admin</tt>, is locked\n" +
+"out, the following content is required:</p>\n" +
+"<p>\n" +
+"</p><pre class=\"prencd\">dn: uid=admin,ou=users,dc=ericsson,dc=se\n" +
+"changetype: modify\n" +
+"delete: pwdGraceUseTime</pre><p></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Run the following command as <tt class=\"file-path\">dcuser</tt> on the coordinator server:<p>\n" +
+"</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/misc/opendj/bin/ldapmodify -h localhost \\<br />-p 9001\n" +
+"--bindDN cn=Administrator,dc=ericsson,dc=se \\<br />-w &lt;<i class=\"var\">LDAP\n" +
+"Administrator Password</i>&gt; \\<br />-a -f /var/tmp/grace.ldif<br /></b></tt><br /></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The <tt class=\"file-path\">&lt;<i class=\"var\">LDAP Administrator Password</i>></tt> is the password of predefined system administration\n" +
+"user. </dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C6_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">6.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_b3hj\"></a><a name=\"CHAPTER6.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">ENIQ Server User Management</a></span></h2>\n" +
+"\n" +
+"<div class=\"ADMON\"><span class=\"ADMONMSG2\">Warning!</span><p class=\"ADMONDESC\">\n" +
+"Once the password is changed from the original <tt class=\"file-path\">dcuser</tt> password, it is not possible to reuse this password or to use a\n" +
+"password containing any combination of the <tt class=\"file-path\">dcuser</tt> user id character set.</p>\n" +
+"</div>\n" +
+"<p>\n" +
+"To change <tt class=\"file-path\">dcuser</tt> password:.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Log in to server as <tt class=\"file-path\">dcuser</tt> with\n" +
+"SSH.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">In command prompt, type<br /><tt class=\"input\"><b>passwd &lt;<i class=\"var\">username</i>></b></tt><br />where the <tt class=\"input\"><b>&lt;<i class=\"var\">username</i>></b></tt> is <tt class=\"file-path\">dcuser</tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Enter the current password for <tt class=\"file-path\">dcuser</tt>. For security reasons, the user interface does not show the password\n" +
+"you are typing.<br /> <tt class=\"output\">Enter existing login password:</tt></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type the new password. <br /><tt class=\"output\">New Password:</tt></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type the new password again:<br /> <tt class=\"output\">Reenter new\n" +
+"Password:</tt><p>\n" +
+"The following message is displayed:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">passwd: password successfully changed for dcuser</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Synchronize the dcuser's new password in <tt class=\"file-path\">repdb:</tt><p>\n" +
+"In <tt class=\"file-path\">repdb</tt>, the password for <tt class=\"file-path\">dcuser</tt> is stored against each service name. AdminUI\n" +
+"reads the password from <tt class=\"file-path\">repdb</tt> to show the\n" +
+"status of various services. Therefore it is necessary to run the following\n" +
+"script in order to synchronize the new password across all services\n" +
+"in <tt class=\"file-path\">repdb</tt>:<br /><tt class=\"file-path\">/eniq/sw/bin/ChangeUserPasswordsInRepdb</tt></p>\n" +
+"</li></ol>\n" +
+"<p>\n" +
+"Refer to the <tt class=\"file-path\">/eniq/sw/conf/service_names</tt> file. For all the services on a particular host, the <tt class=\"file-path\">dcuser</tt> password should be same in <tt class=\"file-path\">repdb</tt>.</p>\n" +
+"\n" +
+"<p>\n" +
+"For example: </p><pre class=\"prencd\">  Ip address of machine_1::Machine Name1::controlzone\n" +
+"		Ip address of machine_1::Machine Name1::dwh_reader_1\n" +
+"		Ip address of machine_1::Machine Name1::dwhdb\n" +
+"		Ip address of machine_2::Machine Name2::ec_1</pre><p></p>\n" +
+"\n" +
+"<p>\n" +
+"In the above example, services <tt class=\"file-path\">controlzone</tt>, <tt class=\"file-path\">dwh_reader_1</tt> and <tt class=\"file-path\">dwhdb</tt> are running on one host <tt class=\"file-path\">[<i class=\"var\">Machine Name1</i>]</tt> and the service <tt class=\"LITERALMONO\">ec_1</tt> is running on <tt class=\"file-path\">[<i class=\"var\">Machine Name2</i>]</tt>.</p>\n" +
+"\n" +
+"<p>\n" +
+"If <tt class=\"file-path\">dcuser</tt> password is changed on <tt class=\"file-path\">[<i class=\"var\">Machine Name1</i>]</tt>, then to sync up <tt class=\"file-path\">dcuser</tt> password in <tt class=\"file-path\">repdb</tt>, the script:<br /><br /><tt class=\"file-path\">/eniq/sw/bin/ChangeUserPasswordsInRepdb</tt> <br />should be run three times as below, once for each service name:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/bin/ChangeUserPasswordsInRepdb dcuser controlzone\n" +
+"&lt;<i class=\"var\">password_for_dcuser_on_Machine Name1_before_password_change</i>&gt; &lt;<i class=\"var\">password_for_dcuser_on_Machine Name1_after_password_change</i>></b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/bin/ChangeUserPasswordsInRepdb dcuser dwh_reader_1\n" +
+"&lt;<i class=\"var\">password_for_dcuser_on_Machine Name1_before_password_change</i>&gt; &lt;<i class=\"var\">password_for_dcuser_on_Machine Name1_after_password_change</i>></b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/bin/ChangeUserPasswordsInRepdb dcuser dwhdb &lt;<i class=\"var\">password_for_dcuser_on_Machine Name1_before_password_change</i>&gt; &lt;<i class=\"var\">password_for_dcuser_on_Machine Name1_after_password_change</i>></b></tt></p>\n" +
+"\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

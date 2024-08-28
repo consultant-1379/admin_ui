@@ -1,0 +1,152 @@
+var C11=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">11 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_rt18\"></a><a name=\"CHAPTER11\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Changing the NAS VIPs</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"It is possible to update ENIQ so that the number of NAS VIPs can\n" +
+"be changed. The procedure allows administrators to change the NAS\n" +
+"VIPs. </p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>This procedure is applicable for Blade installation only.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C11_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">11.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_lje3\"></a><a name=\"CHAPTER11.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Disabling ENIQ Services</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Stop ENIQ Services to ensure all services are inactive. Run on\n" +
+"all the server types in the following order:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Reader_2 Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Reader_1 Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li></ul>\n" +
+"<p>\n" +
+"Perform these steps as a <tt class=\"file-path\">root</tt> user on\n" +
+"each Blade:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_eniq_services.bsh -a stop -s ALL\n" +
+"\\ [-l <i class=\"var\">&lt;path_to_logfile&gt;</i>]</b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C11_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">11.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_t70x\"></a><a name=\"CHAPTER11.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Run Change NAS VIPs</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"<strong class=\"MEDEMPH\">Pre-requisites:</strong></p>\n" +
+"\n" +
+"<p>\n" +
+"OMBS Backup must not be running. If OMBS backup running, wait until\n" +
+"OMBS backup completes.</p>\n" +
+"\n" +
+"<p>\n" +
+"To change NAS VIPs across the deployment, execute the steps on\n" +
+"these server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (standalone)</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Run the following commands as <tt class=\"file-path\">root</tt> user:<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/installation/core_install/bin </b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># bash ./change_nas_vips.bsh [-l <i class=\"var\">&lt;path_to_logfile&gt;</i>]</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Select the number of virtual IPs available in SFS or VA.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Enter the virtual IP addresses of the NAS servers.<br /> This question loops until all required IPs are entered. If no log\n" +
+"file is specified, the default log is used:<br /> <tt class=\"file-path\">/eniq/local_logs/change_nas_vips/change_nas_vips.log</tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">In VA server, select the number of IP addresses as two.\n" +
+"Only two IP addresses are required from VA servers, one from each\n" +
+"VA server.</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C11_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"NasdRestart\"></a><span class=\"CHAPNUMBER\">11.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_xec3\"></a><a name=\"CHAPTER11.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Restarting\n" +
+"NASd</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To restart NASd across the deployment, follow these steps as <tt class=\"file-path\">root</tt> user on each Blade in the deployment.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Run the following command to restart NASd service:<p>\n" +
+"<tt class=\"input\"><b># /usr/bin/systemctl restart NASd.service</b></tt></p>\n" +
+"<p>\n" +
+"Wait for NASd service and NAS milestone to come in active state.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Verify that NASd service and NAS milestone are in active\n" +
+"state by using the following command:<p>\n" +
+"<tt class=\"input\"><b># services -s NAS</b></tt></p>\n" +
+"\n" +
+"<table frame=\"void\" style=\"margin-top:4pt\" class=\"grd\" rules=\"none\" width=\"100%\">\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"57%\">\n" +
+"<p><tt class=\"output\">UNIT</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"43%\">\n" +
+"<p><tt class=\"output\">STATE</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"57%\">\n" +
+"<p><tt class=\"output\">NASd.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"43%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\" width=\"57%\">\n" +
+"<p><tt class=\"output\">NAS-online.service</tt></p>\n" +
+"</td>\n" +
+"<td align=\"left\" width=\"43%\">\n" +
+"<p><tt class=\"output\">active</tt></p>\n" +
+"</td></tr></table></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C11_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">11.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_codr\"></a><a name=\"CHAPTER11.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Enabling ENIQ Services</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Start ENIQ Services to ensure that all services are online. This\n" +
+"must be run on all server types in the following order:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Reader Servers</li></ul>\n" +
+"<p>\n" +
+"As <tt class=\"file-path\">root</tt> user on each Blade, perform\n" +
+"these steps:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_eniq_services.bsh -a start -s ALL\n" +
+"\\ [-l &lt;path_to_logfile&gt;]</b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C11_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">11.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ldr6\"></a><a name=\"CHAPTER11.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Delete Unused NAS VIPs</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Identify the rest of VIPs which are no longer required at NAS,\n" +
+"after successfully configuring the two required NAS VIPs on ENIQ-S.</p>\n" +
+"\n" +
+"<p>\n" +
+"To remove the VIPs intended to delete from NAS which are not in\n" +
+"use by ENIQ-S, see Section <em class=\"LOWEMPH\">Reduce the Number of Veritas\n" +
+"Access IP Addresses used for OSS and ENIQ</em> from document <em class=\"LOWEMPH\">Veritas Access System Administration Guide</em> <a href='javascript:parent.parent.parent.showAnchor(\"VA_SAG\")' class=\"xref\">Reference [26]</a>.</p>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

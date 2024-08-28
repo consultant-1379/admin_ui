@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>Ericsson Network IQ :: Configuration :: Unmatched Topology</title>
+  <link rel="shortcut icon" href="../img/eric.ico">
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+</head>
+<body bgcolor="#ffffff">
+<table border="0">
+  <tr valign=top>
+    <td width=220>
+      #parse( "main_menu.vm" )
+    </td>
+    <td width=800>
+	  #parse("unmatched_topology_breadcrumb.vm")
+      #if ($errormsg != "")
+		 #parse("unmatched_topology_error.vm")
+	  #end
+      #if($dim_topology)
+        <span style="font-family: Verdana, Helvetica, Arial,monospace; font-size: smaller; ">Select text area below</span></br>
+		<textarea rows="30" cols="150" readonly="readonly" style="font-family: Verdana, Helvetica, Arial,monospace; font-size: xx-small;">
+			$dim_topology
+		</textarea>
+      #else
+        <span style="font-family: Verdana, Helvetica, Arial,monospace; font-size: smaller; ">No topology records to export</span>
+	  #end	
+      <br/>
+	  #parse("unmatched_topology_cancel_link.vm")
+    </td>
+  </tr>
+  #parse( "footer.vm" )
+</table>
+</body>
+</html>

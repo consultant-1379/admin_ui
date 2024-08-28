@@ -1,0 +1,22 @@
+<table class="menu" border="0" cellspacing=1 cellspadding=0>
+<tbody><tr align="top">
+<td align="left" width="212" bgcolor="white">
+<p><img src="../eniq_logo.gif" ></p>
+</td>
+</tr>
+<tr>
+<td height="5"></td>
+</tr>
+
+#set($helpon = 0)
+#if ($environment.showManual())
+#set($helpon = 1)
+#end
+
+#set($repDBOk = 0)
+#if ($isRepDBOk)
+#set($repDBOk = 1)
+#end
+
+#parse ("eniq_menu.vm")
+</table>

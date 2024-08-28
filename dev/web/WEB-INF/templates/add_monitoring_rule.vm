@@ -1,0 +1,218 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Web Portal :: Add Monitoring Rule</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+
+<script type="text/javascript">
+<!--
+
+function check() {
+
+   var strString = "";
+
+   var strValidChars = "0123456789";
+   var strChar;
+   var blnResult = true;
+
+   var strArray= new Array(4);
+
+   strArray[0]=document.add_rule.MAXSOURCEthreshold.value;
+   strArray[1]=document.add_rule.MINSOURCEthreshold.value;
+   strArray[2]=document.add_rule.MAXROWthreshold.value;
+   strArray[3]=document.add_rule.MINROWthreshold.value;
+
+  var arrayName= new Array(4);
+
+   arrayName[0]="MAXSOURCE";
+   arrayName[1]="MINSOURCE";
+   arrayName[2]="MAXROW";
+   arrayName[3]="MINROW";
+
+	
+
+	var e = "";
+	var x=0;
+	
+	for (x=0; x<4; x++)
+	{
+		strString = strArray[x];
+		//  test strString consists of valid characters listed above
+		for (i = 0; i < strString.length && blnResult == true; i++) {
+      
+			strChar = strString.charAt(i);
+      
+			if (strValidChars.indexOf(strChar) == -1) {
+				blnResult = false;
+				e = "Threshold " + arrayName[x] +" value is not numeric.\n";
+			}
+		}
+	}
+	
+	if(((document.add_rule.MAXSOURCEthreshold.value.length == 0) || (document.add_rule.MAXSOURCEstatus.value.length == 0))
+		&& ((document.add_rule.MINSOURCEthreshold.value.length == 0) || (document.add_rule.MINSOURCEstatus.value.length == 0))
+		&& ((document.add_rule.MAXROWthreshold.value.length == 0) || (document.add_rule.MAXROWstatus.value.length == 0))
+		&& ((document.add_rule.MINROWthreshold.value.length == 0) || (document.add_rule.MINROWstatus.value.length == 0))) {
+				blnResult = false;
+				e = "Enter a value for threshold and choose a status.";
+	}
+
+	if (blnResult == false) {
+	alert(e);
+	return false;
+   } else {
+	document.add_rule.submit();
+	 return (true && filterFields());
+   }
+
+ }
+  // -->
+</SCRIPT>
+
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form name=add_rule onsubmit="var b = filterFields();check();return b" method="post">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="MonitoringRules">Monitoring Rules</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+		 #if ($addNew == "true")
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Select measurement type, timelevel. Add thresholds to rules to be monitored. Threshold can only be numeric values.<br>
+			Click "Add new" button. There can be only one measurement type and timelevel pair to be monitored.
+			<br><br>
+			</font>
+		#else
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Add threshold values to different rules. Threshold can only have numeric values. Select status for the rule. If status is empty, rule is not saved.<br>
+			If threshold is empty but status is selected, rule is not saved.
+			<br><br>
+			</font>
+		
+		#end
+		</td>
+</tr>
+<table>
+	 <tr>
+		<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Measurement type:</strong></font></td> <!-- Measurement type -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel:</strong></font></td> <!-- Timelevel -->
+		</tr>
+	<tr>
+	  <td>
+	    #if ($addNew == "true")
+	        <select name="type" style="font-size: 9;">
+	        #if ($type && $type != "")
+	    	<option selected value="$type">$type</option>
+	    	#end
+	    	#foreach($meaType in $distinctMeaTypes)
+			<option value="$meaType">$meaType</option>
+			#end
+			</select>
+	    #else
+		<font face="Verdana,Helvetica,Arial" size="2">$type</font>
+		#end
+		
+		
+	  </td>
+      <td>
+      #if ($addNew == "true")
+      		<select name="timelevel" style="font-size: 9;">
+	    	#if ($timelevel && $timelevel != "")
+	    	<option selected value="$timelevel">$timelevel</option>
+	    	#end
+	    	#foreach($tlevel in $distinctTimelevels)
+			<option value="$tlevel">$tlevel</option>
+			#end
+			</select>
+	  #else 
+        <font face="Verdana,Helvetica,Arial" size="2">$timelevel</font>
+      #end
+      </td>
+      <td>
+      &nbsp;
+      </td>
+    </tr>
+ </table>
+	#if ($errorMsg && $errorMsg != "")
+	<table>
+		<tr>
+			<td colspan="2"><font size="1" face="Verdana, Helvetica, Arial" color="red">$errorMsg</font></td>
+		</tr>
+		<tr>
+			<td colspan="2"><font size="1" face="Verdana, Helvetica, Arial"><a href="javascript:history.go(-1)">Back</a></font></td>
+		</tr>
+	</table>
+	#else
+<table border=1>
+ <tr bgcolor="#B3B3FF">
+		<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Rulename</strong></font></td>
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Threshold</strong></font></td> <!-- Timelevel -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> <!-- Status -->
+		</tr>
+    #foreach ($key in $rules.keySet())
+    <tr>
+		<td>
+		   <font face="Verdana,Helvetica,Arial" size="1">$key</font>
+		   <input type="hidden" name=$key value=$key>
+		</td>
+		<td>
+			<input type="text" name="${key}threshold" value=$rules.get($key).get(0)>
+		<!--  
+		   <input type="text" onBlur="IsNumeric(this.form.${key}threshold.value=this.value);" name="${key}threshold" value=$rules.get($key).get(0)>
+		-->
+		</td>
+		<td>
+		    <select name="${key}status" style="font-size: 9;">
+			<option selected value=$rules.get($key).get(1)>$rules.get($key).get(1)</option>
+			#if ($rules.get($key).get(1) != "")
+			<option value=""></option>
+			#end
+			<option value="ACTIVE">ACTIVE</option>
+			<option value="INACTIVE">INACTIVE</option>
+		</td>
+    </tr>
+    #end
+    <tr>
+	  <td>
+	   #if ($addNew == "true")
+	   <input type="submit" name="add" value="Add new">
+	   #else
+	   <input type="submit" name="save" value="Save">
+	   #end
+	 </td>
+	 <td>
+	   &nbsp;
+	 </td>
+	 <td>
+	 #if ($addNew == "true")
+	   &nbsp;
+	 #else
+	   <input type="submit" name="delete" value="Delete">
+	 #end
+	 </td>
+    </tr>
+ </table>  
+	<input type="hidden" name="type" value=$type>
+	<input type="hidden" name="timelevel" value=$timelevel>
+	<input type="hidden" name="tp" value=$tp>
+#end
+</form>
+
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

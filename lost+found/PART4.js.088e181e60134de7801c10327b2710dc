@@ -1,0 +1,1493 @@
+var C4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><a name=\"HTTPS\"></a><span class=\"CHAPNUMBER\">4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_f8t1\"></a><a name=\"CHAPTER4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">HTTPS</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"Ericsson Network IQ and EBID support configuration of secure (HTTPS)\n" +
+"and insecure HTTP protocol communication between client and server\n" +
+"components.</p>\n" +
+"\n" +
+"<p>\n" +
+"Using HTTPS protocol communication across a network prevents tampering\n" +
+"with or eavesdropping on communication. Any HTTP request will become\n" +
+"a HTTPS enabled request.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Please use the latest supported version of browsers for ENIQ\n" +
+"and BIS/WAS, Refer <a href='javascript:parent.parent.parent.showAnchor(\"SAPPAM\")' class=\"xref\">Reference [13]</a> for supported browser\n" +
+"details.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">4.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_w5el\"></a><a name=\"CHAPTER4.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">HTTPS on Apache Tomcat Server</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Apache Tomcat is used to run the following ENIQ Statistics applications:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">AdminUI</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Busy Hour Config</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Alarm Config</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Universe Update Installer</li></ul>\n" +
+"<p>\n" +
+"Apache Tomcat is used to run the following ENIQ Events applications:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">AdminUI</li></ul>\n" +
+"<p>\n" +
+"The following sections describe:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">Configuring HTTPS on Apache Tomcat</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Importing CA (certificate authority) signed certificates</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Enabling and disabling HTTPS</li></ul>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>HTTPS is enabled by default on the ENIQ Apache Tomcat server.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_1_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"ApacheTomcatEniqInstallation\"></a><span class=\"CHAPNUMBER\">4.1.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_2lzv\"></a><a name=\"CHAPTER4.1.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Configuring Apache Tomcat during ENIQ Installation</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes how Apache Tomcat is configured for HTTPS\n" +
+"during the installation of ENIQ.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\"><strong class=\"MEDEMPH\">Creation of Self-Signed certificate\n" +
+"and Keystore</strong><p>\n" +
+"During the initial installation of Tomcat, keystore and self-signed\n" +
+"certificate are installed by default.</p>\n" +
+"<p>\n" +
+"A keystore (<tt class=\"file-path\">keystore.jks</tt>) is generated\n" +
+"under the directory <tt class=\"file-path\">/eniq/sw/runtime/tomcat/ssl</tt>. This keystore includes the private key and a self-signed certificate.\n" +
+"The default password for keystore is stored in <strong class=\"MEDEMPH\">&ldquo;niq.ini&rdquo;</strong> file.</p>\n" +
+"<p>\n" +
+"A self-signed certificate is also exported in a file with extension <tt class=\"file-path\">.cer</tt> under the directory <tt class=\"file-path\">/eniq/sw/runtime/tomcat/ssl/&lt;hostname&gt;.cer</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\"><strong class=\"MEDEMPH\">Configuration of Tomcat server.xml\n" +
+"To Use the Keystore File</strong><p>\n" +
+"To enable HTTPS, Tomcat&rsquo;s <tt class=\"file-path\">server.xml</tt> is configured with following connector using keystore.</p><pre class=\"prencd\">&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" keystoreFile=\"/eniq/sw/runtime/tomcat/ssl/keystore.jks \"keystorePass=<em><strong class=\"HIGHEMPH\">\"&lt;password&gt;\"</strong></em> clientAuth=\"false\" sslProtocol=\"TLS\" /&gt;</pre><p> <strong class=\"MEDEMPH\">where &lt;password&gt; should be replaced with the value given\n" +
+"for \"keyStorePassValue\" in /eniq/sw/conf/niq.ini file.</strong></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">In the <tt class=\"LITERALMONO\">&lt;Connector/&gt;</tt> element from\n" +
+"the previous step, add <tt class=\"LITERALMONO\">sslEnabledProtocols</tt> parameter\n" +
+"as shown below:<pre class=\"prencd\">&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" <strong class=\"MEDEMPH\">sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\"</strong> keystoreFile=\"/eniq/sw/runtime/tomcat/ssl/keystore.jks\" keystorePass=<em><strong class=\"HIGHEMPH\">\"&lt;password&gt;\"</strong></em> clientAuth=\"false\" sslProtocol=\"TLS\"/&gt;</pre><p><strong class=\"MEDEMPH\">where &lt;password&gt; should be replaced with the value given\n" +
+"for \"keyStorePassValue\" in /eniq/sw/conf/niq.ini file.</strong></p></li><li class=\"STEPLIST\" id=\"THSSTYLE2\"><strong class=\"MEDEMPH\">Restart Apache Tomcat</strong><p>\n" +
+"To restart Apache Tomcat, please follow the below steps,</p>\n" +
+"\n" +
+"<ol type=\"a\">\n" +
+"\n" +
+"<li class=\"substep\">Login as <tt class=\"file-path\">dcuser</tt> on ENIQ server\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\">Run the below command,\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># webserver restart</b></tt></p>\n" +
+"\n" +
+"</li>\n" +
+"</ol></li></ol>\n" +
+"<p>\n" +
+"Please see <a href='javascript:parent.parent.parent.showAnchor(\"ApacheTomcat1\")' class=\"xref\">Reference [8]</a> for further information.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_1_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.1.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_s4fu\"></a><a name=\"CHAPTER4.1.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Enabling and Disabling HTTPS</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"For ENIQ, HTTPS is enabled by default. The status can be changed\n" +
+"for each web application using the script <tt class=\"file-path\">change_eniq_security.sh</tt>.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>This script restarts webserver while enabling and disabling\n" +
+"the security.</dd></dl><br />\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"><strong class=\"MEDEMPH\">To check whether the status of a\n" +
+"module is HTTPS or HTTP.</strong><p>\n" +
+"Login to the server as <tt class=\"file-path\">dcuser</tt> and run\n" +
+"the below command:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/sw/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># bash ./change_eniq_security.sh &lt;<i class=\"var\">web-module-name</i>&gt; status</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><strong class=\"MEDEMPH\">To disable HTTPS (switch to HTTP)</strong><p>\n" +
+"Login to the server as <tt class=\"file-path\">dcuser</tt> and run\n" +
+"the below command:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/sw/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># bash ./change_eniq_security.sh &lt;<i class=\"var\">web-module-name</i>&gt; disable</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><strong class=\"MEDEMPH\">To enable HTTPS</strong><p>\n" +
+"Login to the server as <tt class=\"file-path\">dcuser</tt> and run\n" +
+"the below command:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/sw/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># bash ./change_eniq_security.sh &lt;<i class=\"var\">web-module-name</i>&gt; enable</b></tt></p>\n" +
+"</li></ul>\n" +
+"<p>\n" +
+"In the above commands, <tt class=\"file-path\">&lt;<i class=\"var\">web_module_name</i>></tt> is the name of the Tomcat application. Below are\n" +
+"the valid module names:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"><tt class=\"file-path\">adminui</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">busyhourcfg</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">alarmcfg</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">universeupdateinstaller</tt></li></ul>\n" +
+"\n"+
+"</div>\n";
+
+var C4_1_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.1.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_8ch1\"></a><a name=\"CHAPTER4.1.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Apace tomcat configuration for\n" +
+"Disabling SSLv3.0 and Weak Ciphers</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes how to disable SSL3.0 and Configure Medium/Strong\n" +
+"ciphers  in Apache Tomcat for ENIQ.</p>\n" +
+"\n" +
+"<p>\n" +
+"1.	Open Apache Tomcat <tt class=\"file-path\">server.xml</tt> file<tt class=\"input\"><b> /eniq/sw/runtime/tomcat/conf/server.xml</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"2.	Update Tomcat&rsquo;s server.xml with following connector as\n" +
+"shown below and save it:</p><pre class=\"prencd\">&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\"<strong class=\"MEDEMPH\"> sslEnabledProtocols=\"TLSv1,TLSv1.1,TLSv1.2\"</strong> keystoreFile=\"/eniq/sw/runtime/tomcat/ssl/keystore.jks\" keystorePass=\"<em><strong class=\"HIGHEMPH\">&lt;password&gt;</strong></em>\" clientAuth=\"false\" sslProtocol=\"TLS\"/&gt;</pre><p><strong class=\"MEDEMPH\">where &lt;password&gt; should be replaced with the value given\n" +
+"for \"keyStorePassValue\" in /eniq/sw/conf/niq.ini file.</strong></p>\n" +
+"\n" +
+"<p>\n" +
+"3. For Cipher configuration, Add the attribute <tt class=\"LITERALMONO\">ciphers=&rdquo;&lt;ciphers list&gt;&ldquo;</tt> in the below connector in server.xml.</p><pre class=\"prencd\">&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" sslEnabledProtocols=\"TLSv1,TLSv1.1,TLSv1.2\" <strong class=\"MEDEMPH\">ciphers=&rdquo;&lt;ciphers list&gt;&ldquo;</strong> keystoreFile=\"/eniq/sw/runtime/tomcat/ssl/keystore.jks\" keystorePass=\"<em><strong class=\"HIGHEMPH\">&lt;password&gt;</strong></em>\" clientAuth=\"false\" sslProtocol=\"TLS\"/&gt;</pre><p><strong class=\"MEDEMPH\">where &lt;password&gt; should be replaced with the value given\n" +
+"for \"keyStorePassValue\" in /eniq/sw/conf/niq.ini file.</strong></p>\n" +
+"\n" +
+"<p>\n" +
+"Use only medium/strong ciphers and avoid using DHE/weak ciphers\n" +
+"to overcome vulnerability issues.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>&lt;ciphers list&gt; Please refer <a href='javascript:parent.parent.parent.showAnchor(\"Ciphers\")' class=\"xref\">Reference [12]</a> to\n" +
+"get the list of supported ciphers to be provided.</dd></dl><br />\n" +
+"<p>\n" +
+"4.	Restart Apache Tomcat server. Run the below command as <tt class=\"file-path\">dcuser</tt> user,</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b># webserver restart</b></tt></p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"HTTPSonBIS\"></a><span class=\"CHAPNUMBER\">4.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_vkqd\"></a><a name=\"CHAPTER4.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">HTTPS and Ericsson\n" +
+"Business Intelligence Deployment</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to configure HTTPS in EBID\n" +
+"using self and CA (Certificate Authority) signed certificates.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The following alternative procedures are used to enable HTTPS\n" +
+"on the BIS:\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">Configuring HTTPS using Default Self-Signed Certificate,\n" +
+"see <a href='javascript:parent.parent.parent.showAnchor(\"SSL-default-self-signed-cert\")' class=\"xref\">Section  4.2.2</a></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">User generated self-signed certificate, see <a href='javascript:parent.parent.parent.showAnchor(\"SSL-user-self-signed-cert\")' class=\"xref\">Section  4.2.3</a></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Certificate Authority Signed Certificate, see <a href='javascript:parent.parent.parent.showAnchor(\"SSL-CA-signed-cert\")' class=\"xref\">Section  4.2.6</a></li></ul><p>\n" +
+"The one procedure for enabling the BIS to communicate\n" +
+"with the ENIQ Events Server using HTTPS is to configure HTTPS using\n" +
+"Default Self-Signed Certificate, see <a href='javascript:parent.parent.parent.showAnchor(\"SSL-default-self-signed-cert\")' class=\"xref\">Section  4.2.2</a>.</p>\n" +
+"</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.2.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_f3jv\"></a><a name=\"CHAPTER4.2.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">EBID media update</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"The <tt class=\"file-path\">server.xml</tt> files on <tt class=\"file-path\">Business Intelligence Platform 4.1 SP1 Server DVD</tt> media\n" +
+"have been updated in ENIQ Statistics 16A to prevent usage of SSL 3.0\n" +
+"protocol for HTTPS communication. The latest ENIQ 16A media should\n" +
+"be used to configure HTTPS on the BIS. In case of deployments where\n" +
+"HTTPS is configured already, follow the steps given below:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Disable HTTPS on the BIS. Refer <a href='javascript:parent.parent.parent.showAnchor(\"SSL-disable\")' class=\"xref\">Section  4.2.4</a> for instructions on how to disable HTTPS configured using default\n" +
+"or user-generated self-signed certificate or <a href='javascript:parent.parent.parent.showAnchor(\"CAdisable\")' class=\"xref\">Section  4.2.6.2</a> for instructions on how to disable HTTPS configured using CA signed\n" +
+"certificate.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Backup and delete <tt class=\"file-path\">C:\\ebid\\SSL</tt> folder on the BIS.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Mount the latest <tt class=\"file-path\">Business Intelligence Platform\n" +
+"4.1 SP1 Server DVD</tt> media.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Copy the <tt class=\"file-path\">SSL</tt> folder from <tt class=\"file-path\">D:\\ebid_scripts</tt> to <tt class=\"file-path\">C:\\ebid</tt> on the BIS.<p>\n" +
+"Replace <tt class=\"file-path\">D:</tt> with the drive letter of\n" +
+"the drive where <tt class=\"file-path\">Business Intelligence Platform 4.1 SP1\n" +
+"Server DVD</tt> media is mounted.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Configure HTTPS on the BIS again.</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"SSL-default-self-signed-cert\"></a><span class=\"CHAPNUMBER\">4.2.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_xdih\"></a><a name=\"CHAPTER4.2.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Configuring HTTPS using Default Self-signed Certificate</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to configure HTTPS on the\n" +
+"BIS using a default self-signed JKS (Java KeyStore) certificate.</p>\n" +
+"\n" +
+"<div class=\"ADMON\"><span class=\"ADMONMSG2\">Caution!</span><p class=\"ADMONDESC\"></p><p align=\"left\">\n" +
+"Procedures described in this section should only be executed once\n" +
+"after the installation of BusinessObjects BI Platform 4 software on\n" +
+"the BIS. </p>\n" +
+"\n" +
+"Executing these instructions at any other point will result in\n" +
+"deletion of the existing self-signed certificate keystore and restoration\n" +
+"of default HTTPS configuration.\n" +
+"</div>\n" +
+"<p>\n" +
+"Perform the following steps as user <tt class=\"file-path\">Administrator</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Insert the <tt class=\"file-path\">Business Intelligence Platform\n" +
+"4.1 SP1 Server DVD</tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Copy the <tt class=\"file-path\">SSL</tt> folder from <tt class=\"file-path\">D:\\ebid_scripts</tt> to the <tt class=\"file-path\">C:\\ebid</tt> directory.<p>\n" +
+"Replace <tt class=\"file-path\">D:</tt> with the drive letter of\n" +
+"your DVD drive.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Navigate to the folder <tt class=\"file-path\">C:\\ebid\\SSL</tt> and open the file <tt class=\"file-path\">ebid_ssl_config.bat</tt> .</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Modify the parameters in the file as required.<p>\n" +
+"The following changes should be made to <tt class=\"file-path\">ebid_ssl_config.bat</tt>:</p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">BO_INSTALL_DIR </tt>- Replace <tt class=\"file-path\">C:</tt> with the drive letter of the hard drive that BI\n" +
+"Platform 4 was installed on.</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><a name=\"keypass\"></a><tt class=\"file-path\">KEYSTORE_PASSWD</tt> - Self-signed certificate keystore password. This can be set to\n" +
+"any desired value.<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For the ENIQ Events server to communicate with the BIS Server\n" +
+"over HTTPS, the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> must be\n" +
+"set to <tt class=\"file-path\">tomcatssl</tt>. If <tt class=\"file-path\">KEYSTORE_PASSWD</tt> is not set to <tt class=\"file-path\">tomcatssl</tt>, the ENIQ Events\n" +
+"server is not able to communicate with the BIS Server over HTTPS.</dd></dl><br /></li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Save the file and close.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Navigate to the folder <tt class=\"file-path\">C:\\ebid\\SSL\\xml\\server\\JKS</tt> and open the file <tt class=\"file-path\">server.xml</tt> for editing.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Search for the text <tt class=\"LITERALMONO\">SSL HTTP/1.1</tt> and\n" +
+"update the keystore password.<p>\n" +
+"The updated text should look like the following:</p>\n" +
+"<p>\n" +
+"</p><pre class=\"prencd\">&lt;!-- Define a SSL HTTP/1.1 Connector on port 8443 --&gt;\n" +
+"&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\" URIEncoding=\"UTF-8\" keystoreFile=\"C:\\ebid\\SSL\\cert\\tomcatssl.bin\" <strong class=\"MEDEMPH\">keystorePass=\"&lt;KEYSTORE_PASSWD&gt;\"</strong>/&gt;</pre><p></p>\n" +
+"<p>\n" +
+"Replace <b>&lt;KEYSTORE_PASSWD&gt;</b> above with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> from Step [4].</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">For Cipher configuration, Add the attribute, ciphers=\"TLS_RSA_WITH_AE\n" +
+"S_128_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV\". <p>\n" +
+"The updated text should look like the following:</p>\n" +
+"<p>\n" +
+"</p><pre class=\"prencd\">&lt;!-- Define a SSL HTTP/1.1 Connector on port 8443 --&gt;\n" +
+"&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\" <strong class=\"MEDEMPH\">ciphers=\"TLS_RSA_WITH_AES_128_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV\"</strong> URIEncoding=\"UTF-8\" keystoreFile=\"C:\\ebid\\SSL\\cert\\tomcatssl.bin\" keystorePass=\"&lt;KEYSTORE_PASSWD&gt;\" /&gt;</pre><p></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Search for the text <tt class=\"LITERALMONO\">appBase</tt> and update <tt class=\"file-path\">C:</tt> with the drive letter of the hard drive that BI\n" +
+"Platform 4 was installed on.<p>\n" +
+"</p><pre class=\"prencd\">&lt;Host name=\"localhost\" <strong class=\"MEDEMPH\">appBase</strong>=\"<strong class=\"MEDEMPH\">C:</strong>\\Program Files\\SAP BusinessObjects\\tomcat\\webapps\" unpackWARs=\"true\" autoDeploy=\"true\" /&gt;</pre><p></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Save the file and close.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Navigate to the folder <tt class=\"file-path\">C:\\ebid\\SSL\\xml\\server\\PKCS12</tt> and open the file <tt class=\"file-path\">server.xml</tt> for editing.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Search for the text <tt class=\"LITERALMONO\">SSL HTTP/1.1</tt> and\n" +
+"update the keystore password.<p>\n" +
+"The updated text should look like the following:</p>\n" +
+"<p>\n" +
+"</p><pre class=\"prencd\">&lt;!-- Define a SSL HTTP/1.1 Connector on port 8443 --&gt;\n" +
+"&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\" URIEncoding=\"UTF-8\" keystoreType=\"PKCS12\" keystoreFile=\"C:\\ebid\\SSL\\cert\\tomcatssl.bin\" <strong class=\"MEDEMPH\">keystorePass=\"&lt;KEYSTORE_PASSWD&gt;\"</strong>/&gt;</pre><p></p>\n" +
+"<p>\n" +
+"Replace <b>&lt;KEYSTORE_PASSWD&gt;</b> above with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> from Step [4].</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">For Cipher configuration, Add the attribute, ciphers=\"TLS_RSA_WITH_AE\n" +
+"S_128_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV\".<p>\n" +
+" The updated text should look like the following:</p>\n" +
+"<p>\n" +
+"</p><pre class=\"prencd\">&lt;!-- Define a SSL HTTP/1.1 Connector on port 8443 --&gt;\n" +
+"&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\" <strong class=\"MEDEMPH\">ciphers=\"TLS_RSA_WITH_AES_128_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV\"</strong>URIEncoding=\"UTF-8\" keystoreType=\"PKCS12\" keystoreFile=\"C:\\ebid\\SSL\\cert\\tomcatssl.bin\" keystorePass=\"&lt;KEYSTORE_PASSWD&gt;\"/&gt;</pre><p></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Search for the text <tt class=\"LITERALMONO\">appBase</tt> and update <tt class=\"file-path\">C:</tt> with the drive letter of the hard drive that BI\n" +
+"Platform 4 was installed on.<p>\n" +
+"</p><pre class=\"prencd\">&lt;Host name=\"localhost\" <strong class=\"MEDEMPH\">appBase</strong>=\"<strong class=\"MEDEMPH\">C:</strong>\\Program Files\\SAP BusinessObjects\\tomcat\\webapps\" unpackWARs=\"true\" autoDeploy=\"true\" /&gt;</pre><p></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Save the file and close.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Select <b>Start &gt; Run...</b> and type <tt class=\"input\"><b>cmd</b></tt> Click <b>OK</b>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"input\"><b>C:\\ebid\\SSL\\ebid_ssl_config.bat</b></tt> and\n" +
+"press <b>Enter</b>.<p>\n" +
+"A list of options is displayed on the terminal as shown below:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">---------------- List of options: ----------------<br />1.\n" +
+"Enable SSL (default configuration)<br />2. Generate key store containing\n" +
+"self-signed certificate<br />3. Disable SSL<br />4. Enable SSL (last\n" +
+"configuration)<br />5. Exit<br />Enter your choice:</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">1</tt> and press <b>Enter</b>.<p>\n" +
+"The following message is displayed indicating that HTTPS has been\n" +
+"configured successfully:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">SSL has been enabled on the BIS successfully.  <br /><br />For web services to work correctly with HTTPS, HTTP URL in WSDL\n" +
+"files should be changed manually. Execute the following steps to modify\n" +
+"WSDL files:<br />        1. Go to &lt;BO_INSTALL_DIR&gt;\\tomcat\\webapps\\dswsbobje.<br />2. Search for all *.wsdl files.<br />3. In each file, replace <a href=\"http://localhost:8080\" target=\"ALEX_EXTERNAL\">http://localhost:8080</a>\n" +
+"with <a href=\"https://localhost:8443.\" target=\"ALEX_EXTERNAL\">https://localhost:8443.</a><br /><br />Please restart Tomcat (after\n" +
+"making the above change, if required) using Central  Configuration\n" +
+"Manager to complete SSL configuration.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;BO_INSTALL_DIR&gt;</tt> is the path where\n" +
+"BI Platform 4 is installed.</p>\n" +
+"<p>\n" +
+"Press any key to return to the menu.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">5</tt> and press <b>Enter</b>.<p>\n" +
+"This will end script execution and return to the command prompt.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Restart Tomcat server. Go to <b>Start &gt; Programs\n" +
+"&gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform 4 &gt;\n" +
+"Central Configuration Manager</b>. Right click <tt class=\"file-path\">Apache\n" +
+"Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Go to <b>Start &gt; Programs &gt; SAP Business Intelligence\n" +
+"&gt; SAP BusinessObjects BI platform 4 &gt; SAP BusinessObjects BI platform\n" +
+"Java BI Launch Pad</b>.<p>\n" +
+"This will open a browser session and launch <b>BI Launch Pad</b>. A certificate error will be visible in the browser. For ENIQ Statistics,\n" +
+"refer to your browser help set for details on how to import self signed\n" +
+"security certificates.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For ENIQ Events, refer to <a href='javascript:parent.parent.parent.showAnchor(\"Self-cert-browser\")' class=\"xref\">Section  4.5.1</a> for instructions on how to install the self signed certificate.</dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"SSL-user-self-signed-cert\"></a><span class=\"CHAPNUMBER\">4.2.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_o362\"></a><a name=\"CHAPTER4.2.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Configuring HTTPS using User Generated Self-Signed Certificate</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to configure HTTPS on the\n" +
+"BIS using a user generated self-signed certificate in <tt class=\"file-path\">JKS</tt> and <tt class=\"file-path\">PKCS12</tt> formats.</p>\n" +
+"\n" +
+"<p>\n" +
+"Steps in this chapter can be executed only if:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">HTTPS is configured on the BIS using default self-signed\n" +
+"certificate as described in <a href='javascript:parent.parent.parent.showAnchor(\"SSL-default-self-signed-cert\")' class=\"xref\">Section  4.2.2</a>.<p>\n" +
+"In this case, the user generated self-signed certificate replaces\n" +
+"the default certificate.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">HTTPS is not configured on the BIS, for example, when\n" +
+"CA signed certificate is removed from the BIS.<p>\n" +
+"In this case, a new keystore containing the user generated self-signed\n" +
+"certificate is created.</p>\n" +
+"</li></ul>\n" +
+"<p>\n" +
+"The following steps should be run as <tt class=\"file-path\">Administrator</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Select <b>Start &gt; Run...</b> and type <tt class=\"input\"><b>cmd</b></tt> Click <b>OK</b></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"input\"><b>C:\\ebid\\SSL\\ebid_ssl_config.bat</b></tt> and\n" +
+"press <b>Enter</b>.<p>\n" +
+"A list of options is displayed on the terminal as shown below:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">---------------- List of options: ----------------<br />1.\n" +
+"Enable SSL (default configuration)<br />2. Generate key store containing\n" +
+"self-signed certificate<br />3. Disable SSL<br />4. Enable SSL (last\n" +
+"configuration)<br />5. Exit<br />Enter your choice:</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">2</tt> and press <b>Enter</b>.<p>\n" +
+"A list of available keystore formats is displayed as shown below:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">Types of keystore:<br />1. JKS<br />2. PKCS12<br />Enter your\n" +
+"choice:</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">1</tt> or <tt class=\"LITERALMONO\">2</tt> depending\n" +
+"on the choice of keystore and press <b>Enter</b>.<p>\n" +
+"A list of questions appear on the terminal. In response to <b>What is your first and last name?</b>, the host name of the\n" +
+"BIS should be entered. Remaining information entered while generating\n" +
+"the certificate is not used for authentication.</p>\n" +
+"<p>\n" +
+"At the end, a prompt asking to confirm the details entered is displayed\n" +
+"on the terminal. Type <tt class=\"LITERALMONO\">yes</tt> and press <b>Enter</b> to confirm. If you wish to modify the entered information,\n" +
+"type <tt class=\"LITERALMONO\">no</tt> and press <b>Enter</b>.\n" +
+"The list of questions is displayed again. Type your answers and confirm.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <b>yes</b> and press <b>Enter</b>.<p>\n" +
+"A keystore containing the user generated self signed certificate\n" +
+"is created in  <tt class=\"file-path\">C:\\ebid\\SSL\\cert </tt> folder.</p>\n" +
+"<p>\n" +
+"The following message is displayed indicating that HTTPS has been\n" +
+"configured successfully:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">SSL has been enabled on the BIS successfully.  <br /><br />For web services to work correctly with HTTPS, HTTP URL in WSDL\n" +
+"files should be changed manually. Execute the following steps to modify\n" +
+"WSDL files: <br />       1. Go to &lt;BO_INSTALL_DIR&gt;\\tomcat\\webapps\\dswsbobje.<br />2. Search for all *.wsdl files.<br />3. In each file, replace <a href=\"http://localhost:8080\" target=\"ALEX_EXTERNAL\">http://localhost:8080</a>\n" +
+"with <a href=\"https://localhost:8443.\" target=\"ALEX_EXTERNAL\">https://localhost:8443.</a><br /><br />Please restart Tomcat using\n" +
+"Central  Configuration Manager to complete SSL configuration.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;BO_INSTALL_DIR&gt;</tt> is the path where\n" +
+"BI Platform 4 is installed.</p>\n" +
+"<p>\n" +
+"Press any key to return to the menu.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">5</tt> and press <b>Enter</b>.<p>\n" +
+"This will end script execution and return to the command prompt.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Restart Tomcat server. Go to <b>Start &gt; Programs\n" +
+"&gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform 4 &gt;\n" +
+"Central Configuration Manager</b>. Right click <tt class=\"file-path\">Apache\n" +
+"Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Go to <b>Start &gt; Programs &gt; SAP Business Intelligence\n" +
+"&gt; SAP BusinessObjects BI platform 4 &gt; SAP BusinessObjects BI platform\n" +
+"Java BI Launch Pad</b>.<p>\n" +
+"This will open a browser session and launch <b>BI Launch Pad</b>. A certificate error will be visible in the browser. For ENIQ Statistics,\n" +
+"refer to your browser help set for details on how to import self signed\n" +
+"security certificates.</p>\n" +
+"</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"SSL-disable\"></a><span class=\"CHAPNUMBER\">4.2.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_qzrw\"></a><a name=\"CHAPTER4.2.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Disabling\n" +
+"HTTPS</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to disable HTTPS configured\n" +
+"using self-signed certificate (default or user generated).</p>\n" +
+"\n" +
+"<p>\n" +
+"Perform the following steps as user <tt class=\"file-path\">Administrator</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Select <b>Start &gt; Run...</b> and type <tt class=\"input\"><b>cmd</b></tt> Click <b>OK</b>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"input\"><b>C:\\ebid\\SSL\\ebid_ssl_config.bat</b></tt> and\n" +
+"press <b>Enter</b>.<p>\n" +
+"A list of options is displayed on the terminal as shown below:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">---------------- List of options: ----------------<br />1.\n" +
+"Enable SSL (default configuration)<br />2. Generate key store containing\n" +
+"self-signed certificate<br />3. Disable SSL<br />4. Enable SSL (last\n" +
+"configuration)<br />5. Exit<br />Enter your choice:</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">3</tt> and press <b>Enter</b>.<p>\n" +
+"Backup of the existing self-signed certificate keystore and Tomcat\n" +
+"configuration files is taken. This allows the user to re-enable HTTPS\n" +
+"using the same keystore at a later instance.</p>\n" +
+"<p>\n" +
+"The following message is displayed indicating that HTTPS has been\n" +
+"disabled successfully:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">SSL has been disabled on the BIS successfully. Please restart\n" +
+"Tomcat using Central Configuration Manager.</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">5</tt> and press <b>Enter</b>.<p>\n" +
+"This will end script execution and return to the command prompt.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Restart Tomcat server. Go to <b>Start &gt; Programs\n" +
+"&gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform 4 &gt;\n" +
+"Central Configuration Manager</b>.. Right click <tt class=\"file-path\">Apache Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Go to <b>Start &gt; Programs &gt; SAP Business Intelligence\n" +
+"&gt; SAP BusinessObjects BI platform 4 &gt; SAP BusinessObjects BI platform\n" +
+"Java BI Launch Pad</b>.<p>\n" +
+"This will open a browser session and launch <b>BI Launch Pad</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The URL in the address bar shows <a href=\"http://&lt;BIS-hostname&gt;:8080/BOE/BI\" title=\"http://&lt;BIS-hostname&gt;:8080/BOE/BI\" target=\"ALEX_EXTERNAL\">http://&lt;BIS-hostname&gt;:8080/BOE/BI</a></dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"SSL-re-enable\"></a><span class=\"CHAPNUMBER\">4.2.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_yg6k\"></a><a name=\"CHAPTER4.2.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Re-enabling\n" +
+"HTTPS</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to re-enable HTTPS using the\n" +
+"last saved configuration.</p>\n" +
+"\n" +
+"<p>\n" +
+"Perform the following steps as user <tt class=\"file-path\">Administrator</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Select <b>Start &gt; Run...</b> and type <tt class=\"file-path\">cmd</tt> Click <b>OK</b>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"input\"><b>C:\\ebid\\SSL\\ebid_ssl_config.bat</b></tt> and\n" +
+"press <b>Enter</b>.<p>\n" +
+"A list of options is displayed on the terminal as shown below:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">---------------- List of options: ----------------<br />1.\n" +
+"Enable SSL (default configuration)<br />2. Generate key store containing\n" +
+"self-signed certificate<br />3. Disable SSL<br />4. Enable SSL (last\n" +
+"configuration)<br />5. Exit<br />Enter your choice:</tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">4</tt> and press <b>Enter</b>.<p>\n" +
+"The following message is displayed indicating that HTTPS has been\n" +
+"re-enabled successfully:</p>\n" +
+"<p>\n" +
+"<tt class=\"output\">SSL has been re-enabled on the BIS successfully.  <br /><br />For web services to work correctly with HTTPS, HTTP URL in WSDL\n" +
+"files should be changed manually. Execute the following steps to modify\n" +
+"WSDL files:        1. Go to &lt;BO_INSTALL_DIR&gt;\\tomcat\\webapps\\dswsbobje.<br />2. Search for all *.wsdl files.<br />3. In each file, replace <a href=\"http://localhost:8080\" target=\"ALEX_EXTERNAL\">http://localhost:8080</a>\n" +
+"with <a href=\"https://localhost:8443.\" target=\"ALEX_EXTERNAL\">https://localhost:8443.</a><br /><br />Please restart Tomcat using\n" +
+"Central Configuration Manager to complete SSL configuration.</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;BO_INSTALL_DIR&gt;</tt> is the path where\n" +
+"BI Platform 4 is installed.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <tt class=\"LITERALMONO\">5</tt> and press <b>Enter</b>.<p>\n" +
+"This will end script execution and return to the command prompt.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Restart Tomcat server.  Go to <b>Start &gt; Programs\n" +
+"&gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform 4 &gt;\n" +
+"Central Configuration Manager</b>. Right click <tt class=\"file-path\">Apache\n" +
+"Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Go to <b>Start &gt; Programs &gt; SAP Business Intelligence\n" +
+"&gt; SAP BusinessObjects BI platform 4 &gt; SAP BusinessObjects BI platform\n" +
+"Java BI Launch Pad</b>.<p>\n" +
+"This will open a browser session and launch <b>BI Launch Pad</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The URL in the address bar shows <a href=\"https://&lt;BIS-hostname&gt;:8443/BOE/BI\" title=\"https://&lt;BIS-hostname&gt;:8443/BOE/BI\" target=\"ALEX_EXTERNAL\">https://&lt;BIS-hostname&gt;:8443/BOE/BI</a></dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_6=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"SSL-CA-signed-cert\"></a><span class=\"CHAPNUMBER\">4.2.6 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_79q1\"></a><a name=\"CHAPTER4.2.6\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Using\n" +
+"Certificate Authority Signed Certificate</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to import a CA signed certificate\n" +
+"into an existing keystore.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The <tt class=\"file-path\">ebid_ssl_config.bat</tt> script\n" +
+"does not provide any support for enabling/disabling HTTPS using CA\n" +
+"signed certificates. Hence, it is necessary that HTTPS configuration\n" +
+"(using self-signed certificate) is disabled on the BIS using this\n" +
+"script before proceeding with the current section.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_6_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h4><a name=\"enable\"></a><span class=\"CHAPNUMBER\">4.2.6.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_uou9\"></a><a name=\"CHAPTER4.2.6.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Enabling HTTPS using\n" +
+"CA Signed Certificate</a></span></h4>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to manually enable HTTPS using\n" +
+"CA signed certificate.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>This chapter contains generic instructions for enabling CA\n" +
+"signed certificate.</dd></dl><br />\n" +
+"<p>\n" +
+"Perform the following steps as user <tt class=\"file-path\">Administrator</tt> in the order described.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>To enable the HTTPS using an existing CA signed certificate,\n" +
+"copy the directory <tt class=\"file-path\">C:/ebid/SSL/CA/backup/cert</tt> to <tt class=\"file-path\">C:/ebid/SSL/CA/</tt> and execute instructions\n" +
+"starting from the step on <strong class=\"MEDEMPH\">Configuring tomcat to use CA signed\n" +
+"certificate</strong> till the end of section <a href='javascript:parent.parent.parent.showAnchor(\"enable\")' class=\"xref\">Section  4.2.6.1</a>.</dd></dl><br />\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Create a directory <tt class=\"file-path\">cert</tt> within <tt class=\"file-path\">C:\\ebid\\SSL\\CA</tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Select <b>Start &gt; Run...</b> and type <tt class=\"file-path\">cmd</tt>. Click <b>OK</b>. </li><li class=\"STEPLIST\" id=\"THSSTYLE2\"><a name=\"CA-signed-JKS-Keystore\"></a>Generate a JKS Keystore<p>\n" +
+"Type the following on the command prompt and press <b>Enter</b>.</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>\"&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\SAP BusinessObjects Enterprise\n" +
+"XI 4.0\\win64_x64\\sapjvm\\bin\\keytool.exe\" -genkey -alias bosap -keypass\n" +
+"&lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -keyalg RSA -keysize 2048 -validity\n" +
+"3650 -sigalg  SHA256withRSA -keystore C:\\ebid\\SSL\\CA\\cert\\tomcatssl.bin\n" +
+"-storepass &lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -dname \"CN=%COMPUTERNAME%\"</b></tt></p>\n" +
+"<p>\n" +
+"The following parameters should be modified:</p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>></tt> - Path where BI Platform 4 is installed. For example, <tt class=\"file-path\">D:\\Program Files\\SAP BusinessObjects</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></tt> - CA signed certificate keystore password. This can be set to any\n" +
+"desired value</li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Convert <tt class=\"file-path\">JKS Keystore</tt> to <tt class=\"file-path\">PKCS12</tt> Format<p>\n" +
+"Type the following on the command prompt and press <b>Enter</b>.</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>\"&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\SAP BusinessObjects Enterprise\n" +
+"XI 4.0\\win64_x64\\sapjvm\\bin\\keytool.exe\" -importkeystore -srckeystore\n" +
+"C:\\ebid\\SSL\\CA\\cert\\tomcatssl.bin -destkeystore C:\\ebid\\SSL\\CA\\tomcatssl.bin\n" +
+"-srcstoretype JKS -deststoretype PKCS12 -srcstorepass &lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -deststorepass &lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -srcalias bosap\n" +
+"-destalias bosap -srckeypass &lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -destkeypass\n" +
+"&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></b></tt></p>\n" +
+"<p>\n" +
+"The following parameters should be modified:</p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>></tt>- Path where BI Platform 4 is installed. For example, <tt class=\"file-path\">D:\\Program Files\\SAP BusinessObjects</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></tt>- Replace with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> defined\n" +
+"in <a href='javascript:parent.parent.parent.showAnchor(\"CA-signed-JKS-Keystore\")' class=\"xref\"> Step 3</a>.</li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Generate CSR File<p>\n" +
+"Type the following on the command prompt and press <b>Enter</b>.</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>\"&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\SAP BusinessObjects Enterprise\n" +
+"XI 4.0\\win64_x64\\sapjvm\\bin\\keytool.exe\" -certreq -v -alias bosap\n" +
+"-sigalg SHA256withRSA -file C:\\ebid\\SSL\\CA\\tomcatssl.csr -keystore\n" +
+"C:\\ebid\\SSL\\CA\\cert\\tomcatssl.bin -storepass &lt;<i class=\"var\">KEYSTORE_PASSWD</i>></b></tt></p>\n" +
+"<p>\n" +
+"The following parameters should be modified:</p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>></tt>- Path where BI Platform 4 is installed. For example, <tt class=\"file-path\">D:\\Program Files\\SAP BusinessObjects</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></tt>- Replace with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> defined\n" +
+"in <a href='javascript:parent.parent.parent.showAnchor(\"CA-signed-JKS-Keystore\")' class=\"xref\"> Step 3</a>.</li></ul><dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The CSR file <tt class=\"file-path\">tomcatssl.csr</tt> created\n" +
+"in Step 5 and PKCS12 keystore <tt class=\"file-path\">tomcatssl.bin</tt> created in Step 4 should be copied to the OMSAS server under the\n" +
+"directory <tt class=\"file-path\">/var/tmp/ebid</tt> . These files are\n" +
+"available under <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\</tt> on the\n" +
+"BIS.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Generate CA Signed Certificate for BIS<p>\n" +
+"Login to the OMSAS as <tt class=\"file-path\">root</tt> or <tt class=\"file-path\">CAAS user</tt> and execute the following commands in the\n" +
+"order described.</p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Generate CA signed certificate<p>\n" +
+"<tt class=\"input\"><b>/opt/ericsson/cadm/bin/pkiAdmin cred eniq generate -csr\n" +
+"/var/tmp/ebid/tomcatssl.csr -out /var/tmp/ebid/cert.pem</b></tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Its mandatory to give the certificate name as <tt class=\"file-path\">cert.pem</tt>.</dd></dl><br /></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><a name=\"CARenewal\"></a>Exporting Private key<p>\n" +
+"<tt class=\"input\"><b>/usr/sfw/bin/openssl pkcs12 -in /var/tmp/ebid/tomcatssl.bin\n" +
+"-nocerts -out /var/tmp/ebid/tomcatssl.pem -passin pass:&lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -passout pass:&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></b></tt></p>\n" +
+"<p>\n" +
+"The following parameter should be modified:</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></tt>- Replace\n" +
+"with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> defined in <a href='javascript:parent.parent.parent.showAnchor(\"CA-signed-JKS-Keystore\")' class=\"xref\"> Step 3</a>.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Combine private key and CA signed certificate in <tt class=\"file-path\">.P12</tt> format<p>\n" +
+"<tt class=\"input\"><b>/usr/sfw/bin/openssl pkcs12 -export -in /var/tmp/ebid/cert.pem\n" +
+"-inkey /var/tmp/ebid/tomcatssl.pem -out /var/tmp/ebid/tomcatssl.p12\n" +
+"-name &lt;<i class=\"var\">COMPUTERNAME</i>&gt; -passin pass:&lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -passout pass:&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></b></tt></p>\n" +
+"<p>\n" +
+"The following parameters should be modified:</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">COMPUTERNAME</i>></tt>- Hostname\n" +
+"of the BIS in capital letters</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></tt>- Replace\n" +
+"with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> defined in <a href='javascript:parent.parent.parent.showAnchor(\"CA-signed-JKS-Keystore\")' class=\"xref\"> Step 3</a>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The generated <tt class=\"file-path\">.p12</tt> file must be\n" +
+"transferred back to the BIS under the folder <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\</tt>.</dd></dl><br /></li></ul><p>\n" +
+"</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Importing <tt class=\"file-path\">.p12</tt> file into the\n" +
+"keystore file on the BIS<p>\n" +
+"Type the following on the command prompt and press <b>Enter</b>.</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>\"&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\SAP BusinessObjects Enterprise\n" +
+"XI 4.0\\win64_x64\\sapjvm\\bin\\keytool.exe\" -importkeystore -destkeystore\n" +
+"C:\\ebid\\SSL\\CA\\cert\\tomcatssl.bin -srckeystore C:\\ebid\\SSL\\CA\\tomcatssl.p12\n" +
+"-srcstoretype PKCS12 -srcalias \"%COMPUTERNAME%\" -destalias bosap -srcstorepass\n" +
+"&lt;<i class=\"var\">KEYSTORE_PASSWD</i>&gt; -deststorepass &lt;<i class=\"var\">KEYSTORE_PASSWD</i>></b></tt></p>\n" +
+"<p>\n" +
+"The following parameters should be modified:</p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>></tt>- Path where BI Platform 4 is installed. For example, <tt class=\"file-path\">D:\\Program Files\\SAP BusinessObjects</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">KEYSTORE_PASSWD</i>></tt>- Replace with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> defined\n" +
+"in <a href='javascript:parent.parent.parent.showAnchor(\"CA-signed-JKS-Keystore\")' class=\"xref\"> Step 3</a>.</li></ul><dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>A prompt is displayed asking to confirm if the existing certificate\n" +
+"should be overwritten. Type <tt class=\"LITERALMONO\">yes</tt> and press <b>Enter</b>.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Configuring tomcat to use CA signed certificate.\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Navigate to the folder <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\xml\\</tt> and open the file <tt class=\"file-path\">server.xml</tt><p>\n" +
+"</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Search for the text <tt class=\"LITERALMONO\">SSL HTTP/1.1</tt> and\n" +
+"update the keystore password.<p>\n" +
+"The updated text should look like:</p><pre class=\"prencd\">&lt;!-- Define a SSL HTTP/1.1 Connector on port 8443 --&gt;\n" +
+"&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\" URIEncoding=\"UTF-8\" keystoreType=\"PKCS12\" keystoreFile=\"C:\\ebid\\SSL\\CA\\cert\\tomcatssl.bin\" <strong class=\"MEDEMPH\">keystorePass=\"&lt;KEYSTORE_PASSWD&gt;\"</strong>/&gt;</pre><p></p>\n" +
+"<p>\n" +
+"Replace <b>&lt;KEYSTORE_PASSWD&gt;</b> above with the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> defined in <a href='javascript:parent.parent.parent.showAnchor(\"CA-signed-JKS-Keystore\")' class=\"xref\"> Step 3</a>.</p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">For Cipher configuration, Add the attribute, ciphers=\"TLS_RSA_WITH_\n" +
+"AES_128_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV\". <p>\n" +
+"The updated text should look like the following:</p>\n" +
+"<p>\n" +
+"</p><pre class=\"prencd\">&lt;!-- Define a SSL HTTP/1.1 Connector on port 8443 --&gt;\n" +
+"&lt;Connector port=\"8443\" protocol=\"HTTP/1.1\" SSLEnabled=\"true\" maxThreads=\"150\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" sslEnabledProtocols=\"TLSv1.2,TLSv1.1,TLSv1\" <strong class=\"MEDEMPH\">ciphers=\"TLS_RSA_WITH_AES_128_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV</strong> URIEncoding=\"UTF-8\" keystoreType=\"PKCS12\" keystoreFile=\"C:\\ebid\\SSL\\CA\\cert\\tomcatssl.bin\" keystorePass=\"&lt;KEYSTORE_PASSWD&gt;\"/&gt;</pre><p></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Search for the text <tt class=\"LITERALMONO\">appBase</tt> and update <tt class=\"file-path\">C:</tt> with the drive letter of the hard drive that BI\n" +
+"Platform 4 was installed on.<p>\n" +
+"</p><pre class=\"prencd\">&lt;Host name=\"localhost\" <strong class=\"MEDEMPH\">appBase</strong>=\"<strong class=\"MEDEMPH\">C:</strong>\\Program Files\\SAP BusinessObjects\\tomcat\\webapps\" unpackWARs=\"true\" autoDeploy=\"true\" /&gt;</pre><p></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Copy the following files to <tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\tomcat\\conf\\</tt> directory.<p>\n" +
+"<tt class=\"file-path\">C:\\ebid\\SSL\\CA\\xml\\server.xml</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">C:\\ebid\\SSL\\xml\\web.xml</tt></p>\n" +
+"</li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Update <tt class=\"file-path\">C:\\windows\\system32\\drivers\\etc\\hosts</tt> on the BIS with the IP address, fully qualified host name and short\n" +
+"host name of the OMSAS server as follows:<p>\n" +
+"<tt class=\"LITERALMONO\">IP Address &nbsp; Full Host Name &nbsp; Short Host Name</tt></p>\n" +
+"<p>\n" +
+"For example, </p><pre class=\"prencd\">159.107.177.77   omsas_server.ericsson.se   omsas_server</pre><p></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Restart Tomcat server. Go to <b>Start &gt; Programs\n" +
+"&gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform 4 &gt;\n" +
+"Central Configuration Manager</b>. Right click <tt class=\"file-path\">Apache\n" +
+"Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Go to <b>Start &gt; Programs &gt; SAP Business Intelligence\n" +
+"&gt; SAP BusinessObjects BI platform 4 &gt; SAP BusinessObjects BI platform\n" +
+"Java BI Launch Pad</b>.<p>\n" +
+"This will open a browser session and launch <b>BI Launch Pad</b>. A certificate error might be displayed. For instructions on how\n" +
+"to import a certificate into web browser, refer to <a href='javascript:parent.parent.parent.showAnchor(\"CA-cert-browser\")' class=\"xref\">Section  4.5.5</a> for the browser's help.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The URL in the address bar shows <a href=\"https://&lt;BIS-hostname&gt;:8443/BOE/BI\" title=\"https://&lt;BIS-hostname&gt;:8443/BOE/BI\" target=\"ALEX_EXTERNAL\">https://&lt;BIS-hostname&gt;:8443/BOE/BI</a></dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_6_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h4><a name=\"CAdisable\"></a><span class=\"CHAPNUMBER\">4.2.6.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_nbqu\"></a><a name=\"CHAPTER4.2.6.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Disabling HTTPS\n" +
+"(CA Signed Certificate)</a></span></h4>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedure to manually disable HTTPS\n" +
+"configured using CA signed certificate.</p>\n" +
+"\n" +
+"<p>\n" +
+"Perform the following steps as user <tt class=\"file-path\">Administrator</tt>.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Create a directory <tt class=\"file-path\">backup</tt> within <tt class=\"file-path\">C:\\ebid\\SSL\\CA</tt></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Copy the following files to <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\backup</tt> directory.\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\tomcat\\conf\\server.xml</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\tomcat\\conf\\web.xml</tt></li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Copy the following files to <tt class=\"file-path\">&lt;<i class=\"var\">BO_INSTALL_DIR</i>&gt;\\tomcat\\conf\\</tt> directory.\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">C:\\ebid\\SSL\\backup\\orig\\server.xml</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">C:\\ebid\\SSL\\backup\\orig\\web.xml</tt></li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Copy the following directory to <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\backup</tt>\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">C:\\ebid\\SSL\\CA\\cert</tt><dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Delete the directory <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\cert</tt>. <p>\n" +
+"Delete the files <tt class=\"file-path\">tomcatssl.csr</tt>, <tt class=\"file-path\">tomcatssl.bin</tt>, and <tt class=\"file-path\">tomcatssl.p12</tt> under the directory <tt class=\"file-path\">C:\\ebid\\SSL\\CA\\</tt>.</p>\n" +
+"</dd></dl><br /></li></ul></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Restart Tomcat server. Go to <b>Start &gt; Programs\n" +
+"&gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform 4 &gt;\n" +
+"Central Configuration Manager</b>. Right click <tt class=\"file-path\">Apache\n" +
+"Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Go to <b>Start &gt; Programs &gt; SAP Business Intelligence\n" +
+"&gt; SAP BusinessObjects BI platform 4 &gt; SAP BusinessObjects BI platform\n" +
+"Java BI Launch Pad</b>.<p>\n" +
+"This will open a browser session and launch <b>BI Launch Pad</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The URL in the address bar shows <a href=\"http://&lt;BIS-hostname&gt;:8080/BOE/BI\" title=\"http://&lt;BIS-hostname&gt;:8080/BOE/BI\" target=\"ALEX_EXTERNAL\">http://&lt;BIS-hostname&gt;:8080/BOE/BI</a></dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C4_2_6_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h4><span class=\"CHAPNUMBER\">4.2.6.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_o0j4\"></a><a name=\"CHAPTER4.2.6.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">CA Signed Certificate Renewal</a></span></h4>\n" +
+"\n" +
+"<p>\n" +
+"This session describes the procedure to renew the CA signed certificate.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Disable the HTTPS configuration on the BIS, refer to section <a href='javascript:parent.parent.parent.showAnchor(\"CAdisable\")' class=\"xref\">Section  4.2.6.2</a>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Create a new CSR file by executing the steps 1 to 5 in\n" +
+"section <a href='javascript:parent.parent.parent.showAnchor(\"enable\")' class=\"xref\">Section  4.2.6.1</a>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Login to the OMSAS as <tt class=\"file-path\">root</tt> or <tt class=\"file-path\">CAAS user</tt>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Execute the following command with a proper reason code.<p>\n" +
+"<tt class=\"input\"><b>/opt/ericsson/cadm/bin/pkiAdmin cred eniq renew &ndash;csr\n" +
+"/var/tmp/ebid/tomcatssl.csr -reason &lt;<i class=\"var\">reasoncode</i>></b></tt></p>\n" +
+"<p>\n" +
+"Following Parameter should be modified:</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">reasoncode</i>></tt>- Proper reason\n" +
+"code. For further information on the reason codes, refer to chapter\n" +
+"describing <strong class=\"MEDEMPH\">Command Appendix</strong> and <strong class=\"MEDEMPH\">Reason Codes</strong> in <a href='javascript:parent.parent.parent.showAnchor(\"rft-OMSec-SAG-ref\")' class=\"xref\">Reference [4]</a></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Verify request file contents when printed out.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <b>Y</b> to renew certificate.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Verify renewal status of the certificate with the following\n" +
+"command. There must be two credentials the new one with &quot;valid&quot; status and the old one with &quot;under renewal&quot; status.<p>\n" +
+"<tt class=\"input\"><b>/opt/ericsson/cadm/bin/pkiAdmin cred eniq list</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Revoke the old certificate with the proper common name\n" +
+":<p>\n" +
+"<tt class=\"input\"><b>/opt/ericsson/cadm/bin/pkiAdmin cred eniq revoke_old &ndash;cn\n" +
+"&lt;<i class=\"var\">common name</i>></b></tt></p>\n" +
+"<p>\n" +
+"Following parameter should be modified:</p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">common name</i>></tt> - BIS host\n" +
+"name in capital letters.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Check renewal status by listing credentials. The new credential\n" +
+"with the given common name must have &lsquo;valid&rsquo; status and\n" +
+"the old one is revoked, therefore missing:<br /><tt class=\"input\"><b>/opt/ericsson/cadm/bin/pkiAdmin\n" +
+"cred eniq list</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">The renewed certificate will be created under <tt class=\"file-path\">/opt/ericsson/csa/certs</tt> directory, move this certificate\n" +
+"to <tt class=\"file-path\">/var/tmp/ebid</tt> directory.<p>\n" +
+"<tt class=\"input\"><b>mv /opt/ericsson/csa/cert/cert.pem /var/tmp/ebid</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Execute instructions starting from the step on <strong class=\"MEDEMPH\">Exporting\n" +
+"Private Key </strong> till the end of section <a href='javascript:parent.parent.parent.showAnchor(\"enable\")' class=\"xref\">Section  4.2.6.1</a></li></ol>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"ENIQEventsHTTPS\"></a><span class=\"CHAPNUMBER\">4.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_156i\"></a><a name=\"CHAPTER4.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">HTTPS\n" +
+"and ENIQ Events UI</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"From ENIQ Events 13B, the Events UI supports the use of HTTPS.\n" +
+"HTTPS is configured and enabled by default during initial installation\n" +
+"and upgrades to 13B onwards. </p>\n" +
+"\n" +
+"<p>\n" +
+"Upgrades <em class=\"LOWEMPH\">from</em> 13B onwards will reflect\n" +
+"the current configuration. Existing certificates will be copied over\n" +
+"and HTTPS will be enabled if it was enabled before the upgrade.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>HTTPS is not supported by the ENIQ Events UI prior to version\n" +
+"13B.</dd></dl><br />\n" +
+"<div class=\"ADMON\"><span class=\"ADMONMSG2\">Caution!</span><p class=\"ADMONDESC\">\n" +
+"By default, ENIQ Events uses self-signed certificates signed and\n" +
+"the SHA1 signature algorithm. If a more secure signature algorithm\n" +
+"is required, the customer must either generate their own certificates\n" +
+"using OMSAS, or purchase a third party certificate. For more information\n" +
+"see <a href='javascript:parent.parent.parent.showAnchor(\"SSL-CA-signed-cert\")' class=\"xref\">Section  4.2.6</a> and <a href='javascript:parent.parent.parent.showAnchor(\"OMSAS\")' class=\"xref\">Section  4.4</a>.</p>\n" +
+"</div>\n" +
+"\n"+
+"</div>\n";
+
+var C4_3_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.3.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_sjap\"></a><a name=\"CHAPTER4.3.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Configuration of GlassFish Application\n" +
+"Server During Installation and Upgrades</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"The ENIQ Events UI runs on the GlassFish Application Server. The\n" +
+"following section describes how SSL/HTTPS are configured for GlassFish\n" +
+"during initial installation and upgrades to 13B onwards.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Enable Secure Admin Mode<p>\n" +
+"To access the GlassFish Admin Console remotely, GlassFish 3.1.2\n" +
+"requires that <tt class=\"file-path\">enable-secure-admin</tt> is set.\n" +
+"In turn, this requires that GlassFish has a non-empty admin password.\n" +
+"The password is empty by default, so the install sets the password\n" +
+"and secure admin can then be enabled.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Creation of Self-Signed certificates<p>\n" +
+"During installation, GlassFish creates a default key store and\n" +
+"trust store in the domain's configuration directory <tt class=\"file-path\">&lt;<i class=\"var\">domain-dir</i>&gt;/config</tt>. A self-signed CA certificate\n" +
+"is created as a root certificate. A self-signed certificate is created\n" +
+"for GlassFish and is signed by the root, and is imported into the\n" +
+"key store using the alias <strong class=\"MEDEMPH\">eniq</strong>. It is also\n" +
+"imported into the trust store.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Configure HTTPS on GlassFish <p>\n" +
+"GlassFish receives page requests on Network Listeners and has pre-defined\n" +
+"listeners for HTTP and HTTPS on ports 18080 and 8181 respectively. </p>\n" +
+"<p>\n" +
+"The HTTPS listener is updated to use the previously created self-signed <strong class=\"MEDEMPH\">eniq</strong> cert and security is enabled. \"Port unification\"\n" +
+"is used to redirect HTTP request to HTTPS (and vice-versa) and protocols\n" +
+"are set up for this.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Enable HTTPS<p>\n" +
+"Finally, HTTPS is enabled and HTTP requests are set to redirect\n" +
+"to HTTPS. </p>\n" +
+"<p>\n" +
+"The Events UI uses a number of URLs that are hard-coded in the\n" +
+"GlassFish <tt class=\"file-path\">domain.xml</tt> file. The URLs are\n" +
+"originally defined as HTTP addresses and so they are updated to use\n" +
+"HTTPS (and the correct ports).</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">SSL Configuration for GlassFish<p>\n" +
+"By default, after installation a GlassFish package has SSL3.0 secured\n" +
+"protocol enabled.</p>\n" +
+"<p>\n" +
+"Perform the following steps to disable <b>SSL3.0</b> for <b>GlassFish</b>.</p>\n" +
+"\n" +
+"<ol type=\"a\">\n" +
+"\n" +
+"<li class=\"substep\">Login to the GlassFish Admin Console as user <tt class=\"file-path\">admin</tt>.\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\">Go to <b>Configurations</b> &gt; <b>server-config</b> &gt; <b>Network Config</b> &gt; <b>Protocols</b>,\n" +
+"click on the <b>http-listener-2</b>. Then click on the <b>SSL</b> tab on the right panel.\n" +
+"</li>\n" +
+"\n" +
+"<li class=\"substep\">Uncheck the <b>SSL3</b> checkbox and click the <b>SAVE</b> button on the right top to save the settings.\n" +
+"</li>\n" +
+"</ol></li></ol>\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE1\">[Missing image SSL3.jpg]</a><p align=\"left\"><i>Figure 1 &nbsp; GlassFish Admin Console</i></p></div>\n" +
+"\n"+
+"</div>\n";
+
+var C4_3_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.3.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ly62\"></a><a name=\"CHAPTER4.3.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Configuring the BIS for HTTPS</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"If Eniq Events has HTTPS enabled or is being used with a BIS that\n" +
+"has HTTPS enabled, a new SSL certificate/keystore is required for\n" +
+"the BIS.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Ensure that the BIS has HTTPS enabled. For instructions\n" +
+"on enabling HTTPS on the BIS, see <a href='javascript:parent.parent.parent.showAnchor(\"SSL-default-self-signed-cert\")' class=\"xref\">Section  4.2.2</a><dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>In <a href='javascript:parent.parent.parent.showAnchor(\"SSL-default-self-signed-cert\")' class=\"xref\">Section  4.2.2</a>, step 4,\n" +
+"the <tt class=\"file-path\">KEYSTORE_PASSWD</tt> must be set to <tt class=\"file-path\">tomcatssl</tt>. If <tt class=\"file-path\">KEYSTORE_PASSWD</tt> is not set to <tt class=\"file-path\">tomcatssl</tt>, the ENIQ Events\n" +
+"server is not able to communicate with the BIS Server over HTTPS.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Login to the presentation server as <tt class=\"file-path\">dcuser</tt> and run the following commands:<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/glassfish/glassfish3/glassfish/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ./create_bis_keystore.sh &lt;<i class=\"var\">name of BIS</i>></b></tt></p>\n" +
+"<p>\n" +
+"Where <tt class=\"file-path\">&lt;<i class=\"var\">name of BIS</i>></tt>, is\n" +
+"the name of the BIS server. </p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Use the short name, not the fully qualified domain name.</dd></dl><br /><p>\n" +
+"This command produces the path to the new keystore, for example, <tt class=\"file-path\">/eniq/home/dcuser/bis_ssl/tomcatssl.bin</tt>. </p>\n" +
+"<p>\n" +
+"Copy this file to the BIS.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">On the BIS, create a backup of the original keystore.\n" +
+"For example, open the command prompt and run the following command:<p>\n" +
+"<tt class=\"input\"><b># copy C:\\ebid\\SSL\\cert\\tomcatssl.bin C:\\ebid\\SSL\\tomcatssl.bin.bkp</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">On the BIS, replace the original keystore with the new\n" +
+"keystore created in step 2. For example, if the new keystore has been\n" +
+"placed in <tt class=\"file-path\">C:\\temp\\tomcatssl.bin</tt>, open a\n" +
+"command prompt and run the following command:<p>\n" +
+"<tt class=\"input\"><b># move /Y C:\\temp\\tomcatssl.bin C:\\ebid\\SSL\\cert\\</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">On the BIS, restart the Tomcat server, <b>Start &gt;\n" +
+"Programs &gt; SAP Business Intelligence &gt; SAP BusinessObjects BI platform\n" +
+"4 &gt; Central Configuration Manager</b>. Right click <tt class=\"file-path\">Apache Tomcat for BI 4</tt> and select <tt class=\"LITERALMONO\">Restart</tt>.<p>\n" +
+"Wait until <b>Apache Tomcat for BI 4</b> is shown as <b>Running</b>.</p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Refer section on <em class=\"LOWEMPH\">Unable to restart Tomcat\n" +
+"via Central Configuration Manager</em> in <a href='javascript:parent.parent.parent.showAnchor(\"EBID-SAG\")' class=\"xref\">Reference [11]</a> for details on an issue seen during Tomcat restart via Central\n" +
+"Configuration Manager.</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\"> Login to the presentation server as <tt class=\"file-path\">dcuser</tt> and restart GlassFish. For information on restarting GlassFish refer\n" +
+"to <a href='javascript:parent.parent.parent.showAnchor(\"chl2-restartingGlassfish\")' class=\"xref\">Section  3.3</a>.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">To complete the configuration, login to the mediation\n" +
+"server as <tt class=\"file-path\">dcuser</tt> and restart the EC service<p>\n" +
+"<tt class=\"input\"><b># ec restart</b></tt></p>\n" +
+"</li></ol>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>During installation/upgrade, a public version of the root\n" +
+"CA certificate is created as <tt class=\"file-path\">/eniq/home/dcuser/bis_ssl/eniqroot_xxxxx.cer</tt>, where <tt class=\"file-path\">xxxxx</tt> is the name of the presentation\n" +
+"server. The root CA certificate needs to be installed in users' browsers\n" +
+"to access BIS reports. Refer to <a href='javascript:parent.parent.parent.showAnchor(\"InstallCACert\")' class=\"xref\">Section  4.3.3</a> for\n" +
+"how to do this.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_3_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"InstallCACert\"></a><span class=\"CHAPNUMBER\">4.3.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_ystv\"></a><a name=\"CHAPTER4.3.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Installing\n" +
+"the Root CA Certificate in Users' Browsers</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To access ENIQ EventsUI without security warnings and to access\n" +
+"BIS reports through ENIQ EventsUI, users must install a CA certificate\n" +
+"in their browsers. The certificate is found on the presentation server: <tt class=\"file-path\">/eniq/home/dcuser/bis_ssl/eniqroot_xxxxx.cer</tt>, where <tt class=\"file-path\">xxxxx</tt> is the name of the presentation server. </p>\n" +
+"\n" +
+"<p>\n" +
+"Copy the certificate to the user's PC, for example, to the directory <tt class=\"file-path\">c:\\temp\\eniqroot_xxxxx.cer</tt> and follow the browser specific\n" +
+"instructions below.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_3_3_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h4><span class=\"CHAPNUMBER\">4.3.3.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_6ujq\"></a><a name=\"CHAPTER4.3.3.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Installing the Root CA Certificate in\n" +
+"Firefox</a></span></h4>\n" +
+"\n" +
+"<p>\n" +
+"Go to <b>Tools &gt; Options</b>, click on the <b>Advanced</b> tab and then the <b>Encryption</b> sub-tab. </p>\n" +
+"\n" +
+"<p>\n" +
+"Click the <b>View Certificates</b> button and then click\n" +
+"the <b>Authorities</b> tab. </p>\n" +
+"\n" +
+"<p>\n" +
+"Click the <b>Import</b> button, locate the root CA certificate\n" +
+"and click <b>Open</b>.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE2\">[Missing image firefox-import.png]</a><p align=\"left\"><i>Figure 2 &nbsp; Certificate Manager</i></p></div>\n" +
+"<p>\n" +
+"In the next dialog box, select <b>Trust this CA to identify\n" +
+"websites</b> and click the <b>OK</b> button.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE3\">[Missing image firefox-download-cert.png]</a><p align=\"left\"><i>Figure 3 &nbsp; Setting Trust Levels</i></p></div>\n" +
+"<p>\n" +
+"To complete the import, click <b>OK</b> in the <b>Certificate Manager</b> popup and <b>OK</b> in <b>Options</b>. Finally, restart the browser.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_3_3_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h4><span class=\"CHAPNUMBER\">4.3.3.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_hp98\"></a><a name=\"CHAPTER4.3.3.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Installing the Root CA Certificate\n" +
+"in Internet Explorer and Chrome</a></span></h4>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For Internet Explorer:<p>\n" +
+"In the Internet Explorer browser, click <b>Settings</b> and go to <b>Internet Options</b>.</p>\n" +
+"<p>\n" +
+"In the popup <b>Internet Options</b> select the <b>Content</b> tab, in the <b>Content</b> tab click the <b>Certificates</b> button.</p>\n" +
+"</dd></dl><br />\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For Chrome:<p>\n" +
+"In the Chrome browser, click <b>Settings</b> and scroll\n" +
+"down to the bottom of the screen or until <b>Show advanced settings...</b> is visible.</p>\n" +
+"<p>\n" +
+"Click <b>Show advanced settings...</b> in the expanded\n" +
+"section click <b>Manage certificates...</b> button.</p>\n" +
+"</dd></dl><br />\n" +
+"<p>\n" +
+"In the popup <b>Certificates</b>, select the <b>Trusted Root Certificate Authorities</b> tab and click the <b>Import...</b> button.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE4\">[Missing image IE_cert_import_wizard.png]</a><p align=\"left\"><i>Figure 4 &nbsp; Certificate Import Wizard</i></p></div>\n" +
+"<p>\n" +
+"Click the <b>Next</b> button and then click the <b>Browse...</b> button. Locate the root CA certificate and click <b>Open</b>. In the <b>Certificate Import Wizard</b> click <b>Next</b>. In the next screen, make sure the certificate store\n" +
+"is set to <tt class=\"output\">Trusted Root Certification Authorities</tt>:</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE5\">[Missing image IE11-cert-import-place.PNG]</a><p align=\"left\"><i>Figure 5 &nbsp; Certificate Import Wizard</i></p></div>\n" +
+"<p>\n" +
+"Click <b>Next</b> and then click <b>Finish</b>. In the <b>Security Warning</b> popup click the <b>Yes</b> button. In the confirmation popup click the <b>OK</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"Close the <b>Certificates</b> popup by clicking on the <b>Close</b> button and close <b>Internet Options</b> by clicking on the <b>OK</b> button. Finally, restart\n" +
+"the browser.</p>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_3_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.3.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_yane\"></a><a name=\"CHAPTER4.3.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Script to Disable/Enable HTTPS\n" +
+"in GlassFish</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"HTTPS is enabled by default in GlassFish. The status can be changed\n" +
+"using the script <tt class=\"file-path\">change_glassfish_security.sh</tt>.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>The script restarts GlassFish while enabling and disabling\n" +
+"the security</dd></dl><br />\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"><strong class=\"MEDEMPH\">To check the current status</strong><p>\n" +
+"Login to the presentation server as <tt class=\"file-path\">dcuser</tt> and run the following commands:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/glassfish/glassfish3/glassfish/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ./change_glassfish_security.sh status</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><strong class=\"MEDEMPH\">To disable HTTPS (switch to HTTP)</strong><p>\n" +
+"Login to the presentation server as <tt class=\"file-path\">dcuser</tt> and run the following commands:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/glassfish/glassfish3/glassfish/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ./change_glassfish_security.sh disable</b></tt></p>\n" +
+"</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><strong class=\"MEDEMPH\">To enable HTTPS</strong><p>\n" +
+"Login to the presentation server as <tt class=\"file-path\">dcuser</tt> and run the following commands:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/glassfish/glassfish3/glassfish/bin/</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># ./change_glassfish_security.sh enable</b></tt></p>\n" +
+"</li></ul>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"OMSAS\"></a><span class=\"CHAPNUMBER\">4.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_31fh\"></a><a name=\"CHAPTER4.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Managing ENIQ Certificates\n" +
+"in CSA from OSS-RC</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The Certificate Signing Authority (CSA) component of OSS-RC performs\n" +
+"the CA function for OSS Security Management. The CSA is deployed on\n" +
+"the OMSAS (O&amp;M Security Administration Server - see <a href='javascript:parent.parent.parent.showAnchor(\"OSS-RC-OverallSecurityAdmin\")' class=\"xref\">Reference [5]</a>) and has limited inbound communication\n" +
+"from any other hosts in an OSS-RC network.</p>\n" +
+"\n" +
+"<p>\n" +
+"CSA can be used to manage CA certificates for ENIQ. For generating,\n" +
+"renewing, and revoking certificates for ENIQ, the <tt class=\"file-path\">pkiAdmin</tt> command is used.</p>\n" +
+"\n" +
+"<p>\n" +
+"Take a backup of self signed certificate, so that if a problem\n" +
+"occurs while generating CA signed certificate, you can roll back.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>All the below commands need to run as <tt class=\"file-path\">dcuser</tt> and under the directory <tt class=\"file-path\">/eniq/sw/runtime/tomcat/ssl/</tt> until and unless it is specifically mentioned.<p>\n" +
+"If DNS server is not configured during Upgrade/Initial Install,\n" +
+"then Self Signed Certificate will be generated using IP address of\n" +
+"the ENIQ Stats Server.</p>\n" +
+"</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_zgy7\"></a><a name=\"CHAPTER4.4.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Backing Up Self Signed Certificates</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To create a backup of self signed certificate, go to the path <tt class=\"file-path\">/eniq/sw/runtime/tomcat/ssl/</tt> and archive all the files\n" +
+"and directory </p>\n" +
+"\n" +
+"<p>\n" +
+"Keep the archive file in a separate path and delete all the files\n" +
+"and directory of  <tt class=\"file-path\">/eniq/sw/runtime/tomcat/ssl/</tt> path.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>To roll back, unzip saved archive file and place all the\n" +
+"files under the path <tt class=\"file-path\">/eniq/sw/runtime/tomcat/ssl/</tt></dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"JKSKeystore\"></a><span class=\"CHAPNUMBER\">4.4.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_wr01\"></a><a name=\"CHAPTER4.4.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Generating\n" +
+"JKS Keystore Files</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To generate JKS keystore file run the below command:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/runtime/java/bin/keytool -genkeypair -keystore\n" +
+"&lt;<i class=\"var\">filename.jks</i>&gt; -storepass &lt;<i class=\"var\">password</i>&gt; -alias\n" +
+"eniq -keypass &lt;<i class=\"var\">password</i>&gt; -keysize 2048 -keyalg RSA -sigalg\n" +
+"SHA256withRSA -dname \"CN=&lt;<i class=\"var\">Full_Host_Name</i>&gt;\" -validity\n" +
+"3650</b></tt></p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;<i class=\"var\">password</i>></tt> should\n" +
+"be same wherever it is used.<p>\n" +
+"<tt class=\"file-path\">&lt;<i class=\"var\">Full_Host_Name</i>></tt> is used\n" +
+"as the servers \"Common name\".  If DNS is not configured on the server\n" +
+"use IP address of the server instead of \"Common Name\". The common\n" +
+"name is also used during Certificate Renewal (See <a href='javascript:parent.parent.parent.showAnchor(\"CertRenewal\")' class=\"link\"> Section 3.4.9</a>). </p>\n" +
+"<p>\n" +
+"Only the following special characters are allowed to be used in\n" +
+"the Common Name: </p>\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"><tt class=\"LITERALMONO\">:</tt> (colon)</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"LITERALMONO\">_</tt> (underscore)</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"LITERALMONO\">-</tt> (hyphen)</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"> <tt class=\"LITERALMONO\">@</tt> (at)</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"LITERALMONO\">.</tt> (period)</li></ul></dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_8bla\"></a><a name=\"CHAPTER4.4.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Generating CSR File</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To generate a Certificate Signing Request file run the below command.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/runtime/jdk/bin/keytool -certreq -v -alias eniq\n" +
+"-file &lt;<i class=\"var\">hostname.csr</i>&gt; -keystore &lt;<i class=\"var\">filename.jks</i>&gt; -storetype JKS -storepass &lt;<i class=\"var\">password</i>></b></tt></p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;<i class=\"var\">password</i>></tt> should\n" +
+"be same wherever it is used.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_tc3n\"></a><a name=\"CHAPTER4.4.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Converting JKS into PKCS12 Format</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Convert JKS keystore, created above, into <tt class=\"file-path\">PKCS12</tt> keystore file using the following command.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/runtime/java/bin/keytool -importkeystore -srckeystore\n" +
+"&lt;<i class=\"var\">filename.jks</i>&gt; -destkeystore &lt;<i class=\"var\">filename.pkcs12</i>&gt; -srcstoretype JKS -deststoretype PKCS12 -srcstorepass &lt;<i class=\"var\">password</i>&gt; -deststorepass &lt;<i class=\"var\">password</i>&gt; -srcalias\n" +
+"eniq -destalias eniq -srckeypass &lt;<i class=\"var\">password</i>&gt; -destkeypass\n" +
+"&lt;<i class=\"var\">password</i>></b></tt></p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;<i class=\"var\">password</i>></tt> should\n" +
+"be same wherever it is used.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_4b5x\"></a><a name=\"CHAPTER4.4.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Exporting Private key</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Export the private key using below command.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/usr/sfw/bin/openssl pkcs12 -in &lt;<i class=\"var\">filename.pkcs12</i>&gt; -nocerts -out &lt;<i class=\"var\">filename.pem</i>&gt; -passin pass:&lt;<i class=\"var\">password</i>&gt; -passout pass:&lt;<i class=\"var\">password</i>></b></tt></p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;<i class=\"var\">password</i>></tt> should\n" +
+"be same wherever it is used.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_6=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.6 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_aj6s\"></a><a name=\"CHAPTER4.4.6\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Generating Certificate for ENIQ</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"<em class=\"LOWEMPH\">Prerequisite step:</em><br />Generate CSR file\n" +
+"and transfer it to OMSAS Server.</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Login to the OMSAS.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Run the following command as <tt class=\"file-path\">root</tt> or <tt class=\"file-path\">CAAS</tt> user and pass CSR file to the\n" +
+"CLI:<p>\n" +
+"<tt class=\"input\"><b># /opt/ericsson/cadm/bin/pkiAdmin cred eniq generate &ndash;csr\n" +
+"&lt;<i class=\"var\">csr file</i>&gt; -out &lt;<i class=\"var\">hostname.pem</i>></b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Check request file contents when printed out.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <b>Y</b> to generate ENIQ certificate.\n" +
+"The path to the certificate file is printed out.</li></ol>\n" +
+"<p>\n" +
+"The generated <tt class=\"file-path\">PEM</tt> file must be transferred\n" +
+"back and imported into both the web server and the web browser.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For instructions on how to import a certificate into web\n" +
+"browser, refer to <a href='javascript:parent.parent.parent.showAnchor(\"CA-cert-browser\")' class=\"xref\">Section  4.5.5</a> or the browser's\n" +
+"help. </dd></dl><br />\n" +
+"<p>\n" +
+"For further information on the command and reason codes, refer\n" +
+"to chapter describing <strong class=\"MEDEMPH\">Command Appendix</strong> and <strong class=\"MEDEMPH\">Reason\n" +
+"Codes</strong> in <a href='javascript:parent.parent.parent.showAnchor(\"rft-OMSec-SAG-ref\")' class=\"xref\">Reference [4]</a>.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_7=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.7 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_teob\"></a><a name=\"CHAPTER4.4.7\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Combine Private Key and CA Signed\n" +
+"Certificate in .p12 Format</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To combine the private key and CA signed certificate in <tt class=\"file-path\">.p12</tt> run the below command on ENIQ Server,</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/usr/sfw/bin/openssl pkcs12 -export -in &lt;<i class=\"var\">hostname.pem</i>&gt; -inkey &lt;<i class=\"var\">hostname-private.pem</i>&gt; -out output.p12 -name\n" +
+"&lt;<i class=\"var\">Full_Host_Name</i>&gt; -passin pass:&lt;<i class=\"var\">password</i>&gt; -passout pass:&lt;<i class=\"var\">password</i>></b></tt></p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;<i class=\"var\">password</i>></tt> should\n" +
+"be same wherever it is used.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_8=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.4.8 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_133u\"></a><a name=\"CHAPTER4.4.8\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Importing .12 File into Keystore\n" +
+"File</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"To import <tt class=\"file-path\">.p12</tt> file use below command.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b>/eniq/sw/runtime/jdk/bin/keytool -importkeystore -destkeystore\n" +
+"&lt;<i class=\"var\">keystore.jks</i>&gt; -srckeystore output.p12 -srcstoretype\n" +
+"PKCS12 -srcalias &lt;<i class=\"var\">Full_Host_Name</i>&gt; -destalias eniq -srcstorepass\n" +
+"&lt;<i class=\"var\">password</i>&gt; -deststorepass &lt;<i class=\"var\">password</i>></b></tt></p>\n" +
+"\n" +
+"<p><tt class=\"file-path\"></tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;password&gt;</tt> should be same wherever\n" +
+"it is used.<p>\n" +
+"<tt class=\"file-path\">&lt;Full_Host_Name&gt;</tt> is used as the servers\n" +
+"\"Common name\". If DNS is not configured on the server use IP address\n" +
+"of the server instead of \"Common Name\".</p>\n" +
+"</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C4_4_9=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"CertRenewal\"></a><span class=\"CHAPNUMBER\">4.4.9 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_y8sn\"></a><a name=\"CHAPTER4.4.9\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Certificate\n" +
+"Renewal for ENIQ</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"The certificate is identified by its common name, defined in the\n" +
+"CSR file. The renewal procedure consists of two steps.</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"> First the current certificate is renewed, this means\n" +
+"a new certificate is generated. At this stage both of the certificates\n" +
+"are valid. </li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">To finish the renewal procedure the old certificate\n" +
+"must be revoked.</li></ul>\n" +
+"\n" +
+"<p>\n" +
+"<em class=\"LOWEMPH\">Prerequisite step:</em><br />Generate\n" +
+"a new CSR file for ENIQ credential and transfer it to OMSAS Server.</p><ol start=\"1\">\n" +
+"<li class=\"STEPLIST\" id=\"THSSTYLE2\">Login to the OMSAS.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Run the following command as <tt class=\"file-path\">root</tt> or <tt class=\"file-path\">CAAS</tt> user and pass CSR file to the\n" +
+"CLI. Choose proper reason code for indicating motivation of renewal.<p>\n" +
+"<tt class=\"input\"><b># /opt/ericsson/cadm/bin/pkiAdmin cred eniq renew &ndash;csr <i class=\"var\">&lt;csr file&gt;</i> -reason <i class=\"var\">&lt;reason&gt;</i></b></tt></p>\n" +
+"<p>\n" +
+"For further information on the reason codes, refer to chapter describing <strong class=\"MEDEMPH\">Command Appendix</strong> and <strong class=\"MEDEMPH\">Reason Codes</strong> in <a href='javascript:parent.parent.parent.showAnchor(\"rft-OMSec-SAG-ref\")' class=\"xref\">Reference [4]</a>.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Check request file contents when printed out.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Type <b>Y</b> to renew ENIQ certificate.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Check renewal status by listing ENIQ credentials with\n" +
+"the following command. There must be two credentials the new one with &quot;valid&quot; status and the old one with &quot;under renewal&quot; status.<br /><tt class=\"input\"><b># /opt/ericsson/cadm/bin/pkiAdmin cred eniq list</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Revoke the old certificate with the proper common name\n" +
+"(See <a href='javascript:parent.parent.parent.showAnchor(\"JKSKeystore\")' class=\"link\"> Section 3.4.2</a>) :<p>\n" +
+"<tt class=\"input\"><b># /opt/ericsson/cadm/bin/pkiAdmin cred eniq revoke_old &ndash;cn <i class=\"var\">&lt;common name&gt;</i></b></tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd><tt class=\"file-path\">&lt;common name&gt;</tt> is combination\n" +
+"of hostname and domain name. If DNS is not configured on the server\n" +
+"use IP address of the server instead of \"Common Name\".</dd></dl><br /></li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Check renewal status by listing ENIQ credentials. The\n" +
+"new credential with the given common name must have &lsquo;valid&rsquo;\n" +
+"status and the old one is revoked, therefore missing:<p>\n" +
+"<tt class=\"input\"><b># /opt/ericsson/cadm/bin/pkiAdmin cred eniq list</b></tt></p>\n" +
+"</li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"ImportCerts\"></a><span class=\"CHAPNUMBER\">4.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_vw67\"></a><a name=\"CHAPTER4.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Importing\n" +
+"Self Signed Certificates to Web Browser</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The following sections describe how to import self signed certificates\n" +
+"to enable Firefox, Internet Explorer and Chrome to securely access\n" +
+"Eniq Events UI.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_5_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"Self-cert-browser\"></a><span class=\"CHAPNUMBER\">4.5.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_x8bb\"></a><a name=\"CHAPTER4.5.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Self Signed\n" +
+"Certificate for Firefox Browser</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Launch the Firefox browser and attempt to login to the ENIQ Events\n" +
+"UI.</p>\n" +
+"\n" +
+"<p>\n" +
+"The following is displayed.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE6\">[Missing image Fig1.png]</a><p align=\"left\"><i>Figure 6 &nbsp; Firefox Untrusted Connection</i></p></div>\n" +
+"<p>\n" +
+"Click <b>&gt; I Understand the Risks</b>.</p>\n" +
+"\n" +
+"<p>\n" +
+"<b>&gt; I Understand the Risks</b> is expanded.</p>\n" +
+"\n" +
+"<p>\n" +
+"Click the button <b>Add Exception...</b>.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Add Security Exception</b> click the <b>Confirm Security Exception</b> button.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_5_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.5.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_m267\"></a><a name=\"CHAPTER4.5.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Self Signed Certificate for Internet\n" +
+"Explorer Browser</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Launch Internet Explorer browser and attempt to login to the ENIQ\n" +
+"Events UI</p>\n" +
+"\n" +
+"<p>\n" +
+"The following is displayed.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE7\">[Missing image Fig2.png]</a><p align=\"left\"><i>Figure 7 &nbsp; Internet Explorer Certificate Error</i></p></div>\n" +
+"<p>\n" +
+"Click <b>Continue to this website (not recommended).</b></p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Security Warning</b> click the button <b>Yes</b>.</p>\n" +
+"\n" +
+"<p>\n" +
+"Click <b>Certificate error</b>.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE8\">[Missing image FIG3.png]</a><p align=\"left\"><i>Figure 8 &nbsp; Certificate Error</i></p></div>\n" +
+"<p>\n" +
+"In the popup <b>Untrusted Certificate</b> click <b>View certificates</b>.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE9\">[Missing image Fig4.png]</a><p align=\"left\"><i>Figure 9 &nbsp; Untrusted Certificate</i></p></div>\n" +
+"<p>\n" +
+"Continue with the steps in <b>Exporting and Importing Certificates\n" +
+"in Internet Explorer and Chrome</b> (<a href='javascript:parent.parent.parent.showAnchor(\"ChromeIECerts\")' class=\"xref\">Section  4.5.4</a>).</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_5_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">4.5.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_nzmw\"></a><a name=\"CHAPTER4.5.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Self Signed Certificate for Chrome\n" +
+"Browser</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Launch the Chrome browser and attempt to login to the ENIQ Events\n" +
+"UI.</p>\n" +
+"\n" +
+"<p>\n" +
+"The following is displayed.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE10\">[Missing image Fig5Chrome001-cert_warning.PNG]</a><p align=\"left\"><i>Figure 10 &nbsp; Chrome Browser Certificate Issue</i></p></div>\n" +
+"<p>\n" +
+"Click the <b>Proceed anyway</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"Click on the lock icon next to the URL toolbar.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE11\">[Missing image CompleteFIG6chrome.png]</a><p align=\"left\"><i>Figure 11 &nbsp; Chrome Connection Tab</i></p></div>\n" +
+"<p>\n" +
+"Click <b>Certificate information</b> and continue with\n" +
+"the steps in <b>Exporting and Importing Certificates in Internet\n" +
+"Explorer and Chrome</b> (<a href='javascript:parent.parent.parent.showAnchor(\"ChromeIECerts\")' class=\"xref\">Section  4.5.4</a>).</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_5_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"ChromeIECerts\"></a><span class=\"CHAPNUMBER\">4.5.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_i3bz\"></a><a name=\"CHAPTER4.5.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Exporting\n" +
+"and Importing Self Signed Certificates in Internet Explorer and Chrome</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"This section describes how to export and then import the default\n" +
+"self signed certificates to enable Internet Explorer and Chrome to\n" +
+"access Eniq Events UI without certification warnings.</p>\n" +
+"\n" +
+"<p>\n" +
+" In the popup <b>Certificate</b> select the <b>Details</b> tab, and click the <b>Copy to File...</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Certificate Export Wizard</b> click the <b>Next&gt;</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Certificate Export Wizard</b> change\n" +
+"the format to <b>Cryptograhic Message Syntax Standard - PKCS\n" +
+"#7 Certificates (.P7B)</b> then click the <b>Next&gt;</b> button.</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE12\">[Missing image IE06-cert-export-wizard-format.PNG]</a><p align=\"left\"><i>Figure 12 &nbsp; Certificate Export Wizard</i></p></div>\n" +
+"<p>\n" +
+"In the popup <b>Certificate Export Wizard</b> in the\n" +
+"field <tt class=\"input\"><b>File name:</b></tt> insert <tt class=\"input\"><b>&lt;hostname of the\n" +
+"presentation sever&gt;.p7b</b></tt> then click the <b>Next&gt;</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Certificate Export Wizard</b> click the <b>Finish</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the result popup <b>Certificate Export Wizard</b> click\n" +
+"the <b>OK</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"Close the open <b>Certificate</b> popup by clicking on\n" +
+"the <b>OK</b> button.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For Internet Explorer:<p>\n" +
+"In the Internet Explorer browser, click <b>Settings</b> and go to <b>Internet Options</b>.</p>\n" +
+"<p>\n" +
+"In the popup <b>Internet Options</b> select the <b>Content</b> tab, in the <b>Content</b> tab click the <b>Certificates</b> button.</p>\n" +
+"</dd></dl><br />\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>For Chrome:<p>\n" +
+"In the Chrome browser, click <b>Settings</b> and scroll\n" +
+"down to the bottom of the screen or until <b>Show advanced settings...</b> is visible.</p>\n" +
+"<p>\n" +
+"Click <b>Show advanced settings...</b> in the expanded\n" +
+"section click <b>Manage certificates...</b> button.</p>\n" +
+"</dd></dl><br />\n" +
+"<p>\n" +
+"In the popup <b>Certificates</b> click the <b>Import...</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Certificate Import Wizard</b> click the <b>Next&gt;</b> button then click the <b>Browse...</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Open</b> change the filetype to <b>PKCS #7 Certificates (*.spc;*.p7b)</b> and browse to the location\n" +
+"where the previously exported certificate <tt class=\"input\"><b>&lt;hostname of the\n" +
+"presentation sever&gt;.p7b</b></tt> was saved. Select the certificate\n" +
+"and click the <b>Open</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Certificate Import Wizard</b> click the <b>Next&gt;</b> button and change the Certificate store: to be <tt class=\"output\">Trusted Root Certification Authorities</tt> by clicking the <b>Browse...</b> button and then click the <b>Next&gt;</b> button</p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE13\">[Missing image IE11-cert-import-place.PNG]</a><p align=\"left\"><i>Figure 13 &nbsp; Certificate Import Wizard</i></p></div>\n" +
+"<p>\n" +
+"In the popup <b>Certificate Export Wizard</b> click the <b>Finish</b> button</p>\n" +
+"\n" +
+"<p>\n" +
+"In the popup <b>Security Warning</b> click the <b>Yes</b> button. </p>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE14\">[Missing image FIG9IE12-security-warning_edited-1.png]</a><p align=\"left\"><i>Figure 14 &nbsp; Security Warning</i></p></div>\n" +
+"<p>\n" +
+"In the popup <b>Certificate Import Wizard</b> click the <b>OK</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"Close the popup <b>Certificates</b> by clicking on the <b>Close</b> button, close the popup <b>Internet Options</b> by clicking on the <b>OK</b> button.</p>\n" +
+"\n" +
+"<p>\n" +
+"Finally restart the browser</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C4_5_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><a name=\"CA-cert-browser\"></a><span class=\"CHAPNUMBER\">4.5.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_r961\"></a><a name=\"CHAPTER4.5.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">CA Signed\n" +
+"Certificate</a></span></h3>\n" +
+"\n" +
+"<p>\n" +
+"Import the following certificates in the web browser</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\"><tt class=\"file-path\">COMInfRootCA.pem</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">ExternalSystemsCA.pem</tt></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\"><tt class=\"file-path\">ExternalWebServicesCA.pem</tt></li></ul>\n" +
+"<p>\n" +
+"Refer to your browser help set for details on how to import security\n" +
+"certificates.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>These certificates are available in OMSAS server under directory <tt class=\"file-path\">/opt/ericsson/csa/certs/</tt>.\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">Import <tt class=\"file-path\">COMInfRootCA.pem</tt> as <strong class=\"MEDEMPH\">Trusted Root Certification Authorities</strong></li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Import <tt class=\"file-path\">ExternalSystemsCA.pem</tt> and <tt class=\"file-path\">ExternalWebServicesCA.pem</tt> as <strong class=\"MEDEMPH\">Intermediate Certification Authorities</strong></li></ul></dd></dl><br />\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

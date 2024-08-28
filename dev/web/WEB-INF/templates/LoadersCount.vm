@@ -1,0 +1,75 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: System Monitoring ::Loader Counts</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+	<tr valign=top>
+	<!-- main menu -->
+	<td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	<!-- the body -->
+	<td width=800>
+
+	<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="LoaderSetsInfo">Loader information</a></font>
+	<hr />
+		<font size="1" face="Verdana, Helvetica, Arial">Number of Loader sets successfully executed in last 24 Hrs from the max date loaded in Log_session_loader table<br /><br />
+	</font>
+	<br>
+	#if($LoaderInfo.size()>0)
+		<table border="1" class="loadercount">
+					<tr>
+						<th class="loadercount">Start time</th>
+						<th class="loadercount">End time</th>
+						<th class="loadercount"> Distinct Loaders count</th>
+					</tr>				
+					<tr>
+						<td class="loadercount">$LoaderInfo.get(0)</td>					
+						<td class="loadercount">$LoaderInfo.get(1)</td>	
+						<td class="loadercount">$LoaderInfo.get(2)</td>	
+					</tr>
+		</table>
+	#elseif($LoaderInfo.isEmpty())
+			<h3> No Previous Loadercount Data Found</h3>
+	#end
+	<br>
+	<hr>
+	<table border="0">
+	<FORM  METHOD=POST ACTION="LoaderSetsInfo" onSubmit="return filterFields();">
+	<tr><td class="basic" colspan="2">Select date to check Loaders Count.</td></tr>
+	<tr> <td class="basic">From:</td><td>#parse( "cal_select_1.vm" )</td>
+	<td class="basic">To:</td><td>#parse( "cal_select_2.vm" )</td></tr>
+	<tr><td colspan="2"><INPUT name="Search" value="Search" style="font-size: 11;" TYPE="submit"></td></tr>
+	</FORM>
+	</table>
+		#if($LoaderDateInfo.isEmpty())
+			<h3>Loader Count details not found for selected date</h3>
+		#elseif($LoaderDateInfo.size()>0)
+			<table border="1" class="loadercount">
+				<tr>
+					<th class="loadercount">Date</th>
+					<th class="loadercount">Loaders count</th>
+				</tr>
+				#foreach($loadercount in $LoaderDateInfo)
+				<tr>
+				#set ( $date=$loadercount.split("::")[0] )
+					<td class="loadercount"><a href="$req.getContextPath()/servlet/LoadersDetails?date=$date">$date</td>							
+					<td class="loadercount">$loadercount.split("::")[1]</td>
+				</tr>	
+				#end			
+			</table>
+		#end
+	#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

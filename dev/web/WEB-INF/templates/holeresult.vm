@@ -1,0 +1,260 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Show Loadings</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff">
+  
+<table border="0">
+	<tr valign=top><td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	<td width=800>
+	   <table border=0>
+	    <tr>
+	     <td class="basichlp" colspan="3">
+		Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ShowLoadStatus">Show Loadings</a></font>
+		<hr />
+		Show loadings shows loading information from selected session. There are three(3) different filters that 
+		one is able to use to sort logs:<br/><br/>
+		<li>Date(Which date loadings are shown)</li>
+		<li>Tech pack name</li>
+		<li>Problematic(If only problematic loadings are to be shown)</li><br /><br />
+	     </td>
+	    </tr>
+	    </table>
+	    <table width="550">
+	    <tr>
+		<form action="$req.getContextPath()/servlet/ShowLoadings" method="post">
+		<td class="midhdr">Date</td>
+		<td class="midhdr">Tech Pack</td>
+		<td class="midhdr">Filter</td>
+	    </tr>
+	    <tr>
+		<td></td>
+	    </tr>
+	    <tr>
+		<td valign="top" class="basic">#parse( "cal_select_1.vm" )</td>
+		<td valign="top" class="basic">
+			<select name="type" style="font-size: 9;">
+			#if ($type != "")
+			<option selected value="$type">$theGroup</option>
+			#else
+			<option selected value="">-</option>
+			#end
+
+			#foreach($grp in $distinctTechPacks)
+				#if ($theGroup != $grp)
+				<option>$grp</option>
+				#end
+			#end	
+			#if ($theGroup != "-" && $type != "-")
+				<option>-</option>
+			#end
+			</select>
+		</td>
+		<td class="ctitle"><input  type="checkbox" align="left" name="problematic" value="problematic" $problematic/>Problematic</td>
+	     <tr><td colspan="3">&nbsp;</td></tr>
+	     <tr>
+		<td valign="top" class="basic" colspan="3"><input type="submit" style="font-size: 11;" name="value" value="Get Information"></td>
+	     </tr>
+	   </table>
+</form>
+
+<hr>
+
+#set ($load_clr = "#047e01")
+#set ($nload_clr = "#ffff00")
+#set ($chk_clr = "#000099")
+#set ($hole_clr = "#CC0000")
+#set ($calc_clr = "#000000")
+
+
+#if ($maxtime!="")
+<table border="0" width="500">
+<tr><td colspan="6"><font size="-1">Last update at the loadstatus table is $maxtime<br /><br />
+<b>Color symbols:</b></font></td></tr>
+<tr>
+<td align="center" class="basic" bgcolor="$load_clr" width=12% height=14><font color="white">Loaded</font></td>
+<td align="center" class="basic" bgcolor="$nload_clr" width=12% height=14><font color="black">Not Loaded</font></td>
+<td align="center" class="basic" bgcolor="$chk_clr" width=12% height=14><font color="white">Check failed</font></td>
+<td align="center" class="basic" bgcolor="$hole_clr" width=12% height=14><font color="white">Hole</font></td>
+<td align="center" class="basic" bgcolor="$calc_clr" width=12% height=14><font color="white">Calculating</font></td>
+
+</tr>
+#if ($lateraw.size()==0) 
+<tr><td colspan="6" class="basic">No data</td></tr>
+#end
+</table>
+
+
+#end
+<br />
+
+#set ($meascount = 0)
+#if ($lateraw.size() > 0)
+
+
+<table border="1">
+<tr><td class="basic"><font size="-1">Hours</td>
+<td colspan="1"><font size="-1">&nbsp;</font></td>
+<td class="basic"  bgcolor="silver" width=5 height=14>0<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>1<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>2<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>3<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>4<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>5<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>6<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>7<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>8<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>9<font color="silver">0<font></td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>10</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>11</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>12</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>13</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>14</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>15</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>16</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>17</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>18</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>19</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>20</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>21</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>22</td> 
+<td class="basic"  bgcolor="silver" width=5 height=14>23</td> 
+
+</tr>
+#end
+#foreach ($measvect in $lateraw)
+#set ($measrow = 0)
+#foreach ($meas in $measvect)
+#set ($meascol = 0)
+
+#set ($holeFlag = 0)
+#foreach ($onething in $meas)
+
+#if ($measrow == 0 && $meascol==0) 
+#set ($tname = $onething.trim())
+#end
+
+#if ($measrow == 0 && $meascol==1) 
+#set ($timelevel = $onething.trim())
+
+<tr><td colspan="1"><font size="-1"><a href="$req.getContextPath()/servlet/ShowLoadings?year_1=$year_1&month_1=$month_1&day_1=$day_1&subtype=$tname&type=$type&details=$timelevel">$tname</a></font></td>
+<td colspan="1"><font size="-1">$onething</font></td>
+#end
+
+#if ($meascol==5)
+#if ($timelevel.startsWith("5MIN"))
+#set ($col_width = 1)
+#set ($col_span = 1)
+#elseif ($timelevel.startsWith("10MIN"))
+#set ($col_width = 2)
+#set ($col_span = 1)
+#elseif ($timelevel.startsWith("15MIN"))
+#set ($col_width = 28)
+#set ($col_span = 1)
+#elseif ($timelevel.startsWith("30MIN"))
+#set ($col_width = 28)
+#set ($col_span = 1)
+#elseif ($timelevel.startsWith("HOUR"))
+#set ($col_width = 28)
+#set ($col_span = 1)
+#elseif ($timelevel.startsWith("6HOUR"))
+#set($meascount = 20)
+#set ($col_span = 6)
+#set ($col_width = 240)
+#elseif ($timelevel.startsWith("12HOUR"))
+#set ($col_span = 12)
+#set($meascount = 22)
+#set ($col_width = 380)
+#elseif ($timelevel.startsWith("DAY"))
+#set($meascount = 23)
+#set ($col_span = 24)
+#set ($col_width = 764)
+#elseif ($timelevel.startsWith("24HOUR"))
+#set($meascount = 23)
+#set ($col_span = 24)
+#set ($col_width = 764)
+#else
+#set ($col_width = 4)
+#end
+
+#if ($onething.startsWith("HOLE") || $holeFlag == 1)
+#set ($holeFlag = 1)
+
+<td bgcolor="$hole_clr" colspan="$col_span" width=$col_width height=14></td> <!-- red -->
+
+#elseif ($onething.startsWith("LOADED"))
+
+<td bgcolor="$load_clr" colspan="$col_span" width=$col_width height=14></td> <!-- green -->
+
+
+#elseif ($onething.startsWith("NOT_LOADED"))
+
+<td bgcolor="$nload_clr" width=$col_width colspan="$col_span" height=14></td> <!-- yellow -->
+
+	
+#elseif ($onething.startsWith("CHECKFAILED"))
+
+<td bgcolor="$chk_clr" width=$col_width colspan="$col_span" height=14></td> <!-- black -->
+
+#elseif ($onething.startsWith("CALC"))
+
+<td bgcolor="$calc_clr" width=$col_width colspan="$col_span" height=14></td> 
+
+
+#else
+
+<td bgcolor="#FFFFFF" width=$col_width colspan="$col_span" height=14></td> <!-- white -->
+
+
+#end
+
+	#set ($meascount = $meascount + 1)
+#end
+
+#set ($meascol = $meascol + 1)
+#end
+#set ($measrow = $measrow + 1)
+#end
+#set ($count = 24 - $meascount)
+#set ($counter = [$meascount..23])
+
+#foreach( $index in $counter )
+#if($count != 0)
+#set ($counttmp = $index + 1)
+<td bgcolor="silver" width=$col_width height=14><font color="white"></font></td> <!-- green -->
+#end
+#end
+</td>
+
+#if (($timelevel.startsWith("15MIN") && $measrow==96) || ($timelevel.startsWith("30MIN") && $measrow==48) || ($timelevel.startsWith("HOUR") && $measrow==24) || ($timelevel.startsWith("DAY") && $measrow==1) || ($timelevel.startsWith("24HOUR") && $measrow==1) || ($timelevel.startsWith("10MIN") && $measrow==144)  || ($timelevel.startsWith("5MIN") && $measrow==288))
+<td>
+#else
+<td bgcolor="#FF0000">
+#end
+<font size="-1">Total:&nbsp;$measrow</font></td>
+</tr>
+#set ($meascount = 0)
+#end 
+#if ($lateraw.size() == 0 || $firsttime == "first") 
+#parse( "footer.vm" )
+#end
+</table>
+<br>
+#if ($lateraw.size() > 0) 
+#parse( "footer.vm" )
+#end
+
+</td></tr>
+
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

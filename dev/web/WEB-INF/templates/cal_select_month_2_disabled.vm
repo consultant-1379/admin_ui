@@ -1,0 +1,28 @@
+		<select name="month_2" style="font-size: 9;" onchange="this.selectedIndex=0;">
+			<option selected value="$month_2">$month_2</option>
+			#foreach ($imonth in [1..12])
+			<option value="$imonth">$imonth</option>
+			#end
+		</select>
+		
+		<select name="year_2" style="font-size: 9;" onchange="this.selectedIndex=0;">
+			<option selected value=$year_2>$year_2</option>
+			#if($validYearRange)
+				#foreach( $validYear in $validYearRange )
+					#if($validYear != $year_2)
+					<option value=$validYear>$validYear</option>
+					#end
+				#end
+			#elseif($futureYearRange)
+				#foreach ( $futureYear in $futureYearRange )
+					#if($futureYear != $year_2)
+					   <option value=$futureYear>$futureYear</option>
+					#end
+				#end
+			#else
+				#foreach ( $iyear in [2005..2015] )
+					<option value="$iyear">$iyear</option>		
+				#end
+			#end
+		</select>
+

@@ -1,0 +1,73 @@
+<html>
+<head>
+        <link rel="stylesheet" type="text/css" href="../css/admin.css">
+        <link rel="shortcut icon" href="../img/eric.ico">
+        <title>Ericsson Network IQ :: Legal Notice Message</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+<script>
+function showPreview() {
+	var isContainsSpecialChars = previewValidation(document.legalnoticeform.legalnoticemessage.value);
+	var warningMsg = '';
+	var textAreaContent = document.legalnoticeform.legalnoticemessage.value.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '').replace( /(<([^>]+)>)/ig, '').replace(/[^\w\s]/gi, '').replace(/\n/g, '<br/>');
+	if(isContainsSpecialChars){
+	 warningMsg = 'Symbols, html, url are not allowed in Legal notice message.';
+	 textAreaContent  = 'IF YOU ARE NOT AN AUTHORIZED USER STOP ANY ACTIVITY.YOU ARE PERFORMING ON THIS SYSTEM AND EXIT IMMEDIATELY. </br></br> This system is provided for authorized and official use only. </br> The usage of this system is monitored and audited. </br> Unauthorized or improper usage may result in disciplinary actions, civil or criminal penalties.';
+	}	
+	var myWindow = window.open("", "Preview", "width=500,height=500,menubar=no,toolbar=no,location=no");
+	myWindow.document.write("<p style='color:red; font-size:12; font-family: Arial, Helvitika, sans-serif;' ><b>"+warningMsg+"</b></p>");
+	myWindow.document.write("<center><br/><font face='Verdana, Helvetica, Arial' size=3>Management Interface - Login</font><br/><br/></center>");
+	myWindow.document.write("<center><font face='Verdana, Helvetica, Arial' size=2>Please, type your username and password.</font><br/></br></center>");
+	myWindow.document.write("<center><table border=1><tr><td><table border=0 bgcolor='#B3B3FF'><tr><td><font face='Verdana, Helvetica, Arial' size=2>Username: </font></td><td><input type='TEXT' name='userName' id='username' style='font-size: 12;' value=''></td></tr><tr><td><font face='Verdana, Helvetica, Arial' size=2>Password: </font></td><td><input type='PASSWORD' name='userPassword' style='font-size: 12;' id='password' value=''></td></tr><tr><td colspan=2 align='center'><br /><input type=submit value='Login' name='submit' id='submit' style='font-size: 13f;'><input type='HIDDEN' name='process' value='true'></td></tr></table></td></tr></table></center>");
+    myWindow.document.write("<br> </br>");
+	myWindow.document.write("<div padding-left: 20px ,padding-right: 20pt,align-content: space-around><b><p align=\"left\" style=\"font-size:13px; font-family: Arial, Helvitika, sans-serif\">Important Legal Notice </p></b><p align=\"left\" style=\"background-color:rgb(255,255,255); font-family: Arial, Helvitika, sans-serif; font-size: 11px; border-color:#000000; padding:0.00065em; \">"+textAreaContent+"</p>");
+	myWindow.document.write("</div>");
+	myWindow.document.close();
+}
+function previewValidation(legalWarningMsg) {
+ const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|<>\/?~]/;
+ return specialChars.test(legalWarningMsg);
+}
+</script>
+</head>
+<body bgcolor="#ffffff">
+<table border=0>
+	<tr valign=top>
+        <td width=220>#parse( "main_menu.vm" )</td>
+        <td width=800><font size="1" face="Arial">
+			<form method=post name="legalnoticeform" id="updatelegalnotice" action="$req.getContextPath()/servlet/UpdateLegalNotice">Legal Notice Message
+			&nbsp;&gt;&gt;&nbsp;<a href="UpdateLegalNotice">Legal Notice Message</a>
+			<hr/>
+				<div class="passmainheading">
+				
+				#if($avoidSpecialCharacter)
+					<p style="color:red; font-size:12; font-family: Arial, Helvitika, sans-serif;" ><b>Symbols, html, url are not allowed in Legal notice message.</b></p>
+				#end
+				#if($legalNoticeUpdatedSuccessfully)
+					<p style="color:green; font-size:12; font-family: Arial, Helvitika, sans-serif;" ><b>Legal Notice message is updated successfully.Please Login again.</b></p>
+				#end
+				#if($propertiesFileNotFound)
+					<p style="color:red; font-size:12; font-family: Arial, Helvitika, sans-serif;" ><b>Message File does not exist,Switching to Default Message.</b></p>
+				#end
+					<p class="headstyletomcat" align="center">Legal Notice Message</p>
+					<textarea class="updatelegalnoticetextarea" id="lwmsg" name="legalnoticemessage" rows="4" cols="70" align="center" required autofocus>${currentMessage}</textarea>				
+				</div>
+				</br></br>
+				<table style="margin: 100px 0px 0px 85px;">
+					<tr>
+						<td>
+					        <button style="width:30%" class="editlegalnoticepreview" type="button" onclick="showPreview()">Preview</button>
+							<button style="width:20%" class="editlegalnoticesave" type="submit" >Save</button>
+							<button style="width:25%" class="editlegalnoticecancel" type="button" onclick="window.location.href='$req.getContextPath()/servlet/LoaderStatusServlet'">Cancel</button>
+						</td>
+					</tr>							
+				</table>
+			</form>
+		    #parse( "footer.vm" )	
+            </font>
+          </td>
+        </tr>
+      </table>
+</body>
+</html>
+

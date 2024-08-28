@@ -1,0 +1,50 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: Log Details</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css" />
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Ericsson Network IQ&nbsp;&gt;&gt;&nbsp;<a href="#">Log Details</a></font>
+<hr />
+												<table>
+											  	#foreach ($value in $listofvalues)
+    
+    <tr>
+       <td bgcolor="$value.getTabColor()">
+       <p>$value.getValue()</p>
+       </td>
+    </tr>
+  #end
+  	#if ($listnull == "0")
+    <tr>
+       <td>
+       <p>No results found.</p>
+       </td>
+    </tr>  	
+  	#end
+</table>
+<br />
+
+
+</td>
+
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

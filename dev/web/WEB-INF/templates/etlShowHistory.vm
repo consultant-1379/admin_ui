@@ -1,0 +1,171 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: System Monitoring :: ETLC Set History</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ETLHistory">ETLC Set History</a></font>
+<hr />
+	<font size="1" face="Verdana, Helvetica, Arial">ETLC Set History shows logs from the selected session. There are four(4) different filters that 
+		one is able to use to sort logs:<br /><br />
+	<li>Date(Which date logs are shown)</li>
+<li>Package</li>
+<li>Set type(Adapter, Count, Topology, Backup, Aggregator, Alarm, Loader, Partition, Service, Support,Install and ALL)</li>
+<li>Set name filter - a string which is used to filter logs (e.g. GPRS returns all the logs that stands for GPRS e.g. GPRS_XXX etc.</li>
+</font>
+
+<br>
+
+<FORM METHOD=POST ACTION="ETLHistory" onSubmit="return filterFields();">
+
+<table border="0">
+
+<tr><td class="basic" colspan="2">Select date from which you wish to fetch session logs.</td></tr>
+<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+<tr><td class="basic">Date:</td><td>#parse( "cal_select_1.vm" )</td></tr>
+<tr><td class="basic">Package:</td><td>
+
+	<SELECT name="selectedpack">
+	#if($selectedpack && $selectedpack != "")
+		<option selected>$selectedpack</option>
+	#else
+		<option selected></option>
+	#end
+	#foreach ($key in $settypes)
+		<option>$key</option>
+	#end
+	</SELECT>
+</td></tr>
+<tr><td class="basic">Set type:</td><td>
+
+	<SELECT name="selectedsettype">
+	#if ($type.getValue() == "Adapter")
+		<option value="Adapter" selected>Adapter</option>
+	#else
+		<option value="Adapter">Adapter</option>
+	#end
+	#if ($type.getValue() == "Count")
+		<option value="Count" selected>Count</option>
+	#else
+		<option value="Count">Count</option>
+	#end
+	#if ($type.getValue() == "Topology")
+		<option value="Topology" selected>Topology</option>
+	#else
+		<option value="Topology">Topology</option>
+	#end
+	#if ($type.getValue() == "Backup")
+		<option value="Backup" selected>Backup</option>
+	#else
+		<option value="Backup">Backup</option>
+	#end
+	#if ($type.getValue() == "Aggregator")
+		<option value="Aggregator" selected>Aggregator</option>
+	#else
+		<option value="Aggregator">Aggregator</option>
+	#end
+	#if ($type.getValue() == "Alarm")
+		<option value="Alarm" selected>Alarm</option>
+	#else
+		<option value="Alarm">Alarm</option>
+	#end
+	#if ($type.getValue() == "Loader")
+		<option value="Loader" selected>Loader</option>
+	#else
+		<option value="Loader">Loader</option>
+	#end
+	#if ($type.getValue() == "Partition")
+		<option value="Partition" selected>Partition</option>
+	#else
+		<option value="Partition">Partition</option>
+	#end
+	#if ($type.getValue() == "Service")
+		<option value="Service" selected>Service</option>
+	#else
+		<option value="Service">Service</option>
+	#end
+	#if ($type.getValue() == "Support")
+		<option value="Support" selected>Support</option>
+	#else
+		<option value="Support">Support</option>
+	#end
+	#if ($type.getValue() == "Install")
+		<option value="Install" selected>Install</option>
+	#else
+		<option value="Install">Install</option>
+	#end
+	#if ($type.getValue() == "ALL")
+		<option value="ALL" selected>ALL</option>
+	#else
+		<option value="ALL">ALL</option>
+	#end
+	</SELECT>
+</td></tr>
+<tr><td class="basic">Set name filter:</td>
+<td>
+	#if ($search.getValue() && $search.getValue() != "")
+	<input type="text" name="searchstring" value="$search.getValue()"></p>
+	#else
+	<input type="text" name="searchstring" value=""></p>
+	#end
+</td></tr>
+<tr><td colspan="2"><INPUT value="Search" style="font-size: 11;" TYPE="submit"></FORM></td></tr>
+</table>
+<hr noshade size="1" color="#000000">
+<table border="1" width="97%" cellpadding="1" cellspacing="1">
+		#if ($toomany != " ")
+		<tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Row count exceeded $toomany -rows. Please, redefine your search parameters.</font></b>
+		</tr>
+		#end
+		#if($etlsets.size() > 0)
+		<tr bgcolor="#B3B3FF">
+		<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Name</strong></font></td> <!-- Collection name -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Type</strong></font></td> <!-- Set Type -->
+		<td width="140" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Start</strong></font></td> <!-- Start Time -->
+		<td width="140" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>End</strong></font></td> <!-- End Time -->
+		<td width="40" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> <!--  Status -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Version</strong></font></td> <!-- Version -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Scheduling Information</strong></font></td> <!-- Scheduling Info -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Service Node</strong></font></td> <!-- Service Node -->
+		</tr>
+		#end
+	#foreach ($oneset in $etlsets)
+		<tr>
+		<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1">
+		<a href="ETLDetail?pagefrom=historybrowsing&starttime=$!oneset.get(2)&endtime=$!oneset.get(3)&type=$!oneset.get(1)&techpak=$!oneset.get(0)&setname=$!oneset.get(6)">$!oneset.get(6)</a></font></td> <!-- -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(1)</font></td> <!-- -->
+		<td width="140" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(2)</font></td> <!-- -->
+		<td width="140" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(3)</font></td> <!-- -->
+		<td width="40" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(4)&nbsp;</font></td> <!--  -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(5)&nbsp;</font></td> <!--  -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(7)&nbsp;</font></td> <!--  -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(8)&nbsp;</font></td> <!-- Service Node -->
+		</tr>
+	#end
+</table>
+<br />
+
+</td>
+
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

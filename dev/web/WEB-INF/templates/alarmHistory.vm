@@ -1,0 +1,100 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: Alarm History Browsing</title>
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body bgcolor="#ffffff">
+<form method="post" action="ShowAlarmLogs">
+
+<table border=0>
+  <tr valign=top>
+   <td width=90%>
+	<table border="0">
+	 <tr><td colspan="3"><hr /></td></tr>
+	 <tr><td class="basic" colspan="3">Select date, interface name and status.</td></tr>
+	 <tr><td class="basic" colspan="3">&nbsp;</td></tr>
+	 <tr>
+	 <td class="basic">Date:</td>
+	 <td class="basic">Alarm Interface:</td>
+	 <td class="basic">Status:</td>
+	 </tr>
+	 <tr>
+	 <td>#parse( "cal_select_1.vm" )</td>
+	 <td>
+		<select name="interfaceid">
+		#if($selectedInterface != "-")
+			<option selected value="$selectedInterface">$selectedInterface</option>
+		#end
+			<option value="-">-</option>
+		
+		
+		#foreach ($key in $alarmInterfaces)
+			<option value="$key">$key</option>
+		#end
+		</select>
+	 </td>
+	 <td>
+		<select name="status">
+			#if ($selectedStatus != "-")
+			<option selected>$selectedStatus</option>
+			#end
+			<option value="-">-</option>
+			<option value="FAILED">FAILED</option>
+			<option value="FINISHED">FINISHED</option>
+		</select>
+	</td>
+	</tr>
+	 <tr><td><input value="Search" name="Search" type="submit"></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	 <tr><td colspan="3"><hr noshade size="1" color="#000000"></td></tr>
+	</table>
+   </td>
+  </tr>
+  <tr>
+   <td>
+     <table class="datatable" border="1" width="97%" cellpadding="1" cellspacing="1">
+		#if ($executedAlarms.size() > 100)
+		<tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Row count exceeded $toomany -rows. Please, redefine your search parameters.</font></b>
+		</tr>
+		#end		
+		#if($executedAlarms.size() > 0)
+		<tr bgcolor="#B3B3FF">
+			<td class="datatd" width="*" nowrap><strong>Alarm Interface</strong></td> <!-- Collection name -->
+			<td class="datatd" width="140" nowrap><strong>Start</strong></td> <!-- Start Time -->
+			<td class="datatd" width="140" nowrap><strong>End</strong></td> <!-- End Time -->
+			<td class="datatd" width="40" nowrap><strong>Status</strong></td> <!--  Status -->
+			<td class="datatd" width="40" nowrap><strong>Tech Pack</strong></td> <!--  Status -->
+			<td class="datatd" width="100" nowrap><strong>Version</strong></td> <!-- Version -->
+			<td class="datatd" width="*" nowrap><strong>Set Name</strong></td> <!-- Collection name -->
+			<td class="datatd" width="*" nowrap><strong>Service Node</strong></td> <!-- Service Node -->
+		</tr>
+		#end
+	#foreach ($set in $executedAlarms)
+		#foreach ($oneset in $set)
+		<tr onmouseover="this.style.background='#C0C0C0';" onmouseout="this.style.background='#FFFFFF';">
+
+			<td class="datatd" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1">
+			<a href="AlarmDetail?pagefrom=showAlarms&starttime=$!oneset.get(2)&endtime=$!oneset.get(3)&type=$!oneset.get(1)&techpak=$!oneset.get(0)&setname=$!oneset.get(6)">$!oneset.get(7)</a></font></td> <!-- -->
+			<td class="datatd" width="100" nowrap>$!oneset.get(2)</td> <!-- -->
+			<td class="datatd" width="140" nowrap>$!oneset.get(3)</td> <!-- -->
+			<td class="datatd" width="140" nowrap>$!oneset.get(4)</td> <!-- -->
+			<td class="datatd" width="40" nowrap>$!oneset.get(0)&nbsp;</td> <!--  -->
+			<td class="datatd" width="100" nowrap>$!oneset.get(5)&nbsp;</td> <!--  -->
+			<td class="datatd" width="100" nowrap>$!oneset.get(6)&nbsp;&nbsp;</td> <!-- -->
+			<td class="datatd" width="100" nowrap>$!oneset.get(8)&nbsp;&nbsp;</td> <!-- Service Node -->
+		</tr>
+		#end
+	#end
+     </table>
+    </td>
+   </tr>
+</table>
+</form>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

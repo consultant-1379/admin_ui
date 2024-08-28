@@ -1,0 +1,346 @@
+<HTML>
+<HEAD>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css"> <link rel="shortcut icon" href="../img/eric.ico">
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+    #if ($addMode)
+        <title>Ericsson Network IQ :: Security Administration :: User Management :: Add User</title>
+    #else
+        <title>Ericsson Network IQ :: Security Administration :: User Management :: Edit User</title>
+    #end
+    
+            <script type="text/javascript" src="../javascript/userValidation.js">
+            </script>
+            <script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+            <script language="JavaScript">
+            var pwdFocusGained = false;
+            var confPwdFocusGained = false;
+    
+    
+    
+     
+              function Validator() {
+                    var max = 30;
+    
+        
+
+    			addUser.organization.value=trimRightLeftSpace(addUser.organization.value);
+
+    			addUser.email.value=trimRightLeftSpace(addUser.email.value);
+
+    			addUser.phone.value=trimRightLeftSpace(addUser.phone.value);
+
+    			addUser.firstName.value=trimRightLeftSpace(addUser.firstName.value);
+
+    			addUser.lastName.value=trimRightLeftSpace(addUser.lastName.value);
+
+        
+                if ( ! hasSelection(addUser.userRoles, "role") )
+                        return false;
+    
+                #if ($addMode)
+                ## verify only if adding new item, otherwise Name can't be changed
+                    if ( ! validateValue(addUser.userId.value, "User Id", false) )
+                        return false;
+                #end
+    
+                    
+                ##
+                ## validate pwd, only if NEW user or PASSWORD is CHANGED
+                ##
+                #if ( $addMode ) 
+                    pwdFocusGained = true;      ## always validate if new user
+                #end
+                if ( pwdFocusGained ) {
+                        if (!validateFormPassword(addUser.password.value,max)) {
+                            return false;
+                        } // if
+                } // if
+    
+    
+                    if ( addUser.confirmPassword.value != addUser.password.value ) {
+                        alert ("Passwords don't match");
+                        return false;
+                    }
+    
+    
+                    if ( ! validateValue(addUser.firstName.value, "First Name", true) )
+                        return false;
+    
+                    if ( ! validateValue(addUser.lastName.value, "Last Name", true) )
+                        return false;
+    
+                    if ( ! validateOptionalValue(addUser.organization.value, "Organization", true) )
+                        return false;
+    
+                    if ( addUser.email.value!="" && ! emailCheck(addUser.email.value) ) {
+                        alert ("Please specify a valid email");
+                        return false;
+                    }
+    
+                    if ( addUser.phone.value!= "" && ! phoneCheck(addUser.phone.value) ) {
+                        alert ("Please specify a valid phone number.\nPhone number must contain numbers only");
+                        return false;
+                    }
+                    
+                    	return (true && filterFields());
+     
+                    }
+    
+           </script>
+</Head>
+<BODY onload="sortList(addUser.userRoles);">
+<TABLE border="0">
+    <tr valign=top>
+        <!-- main menu -->
+        <td width=220>
+        #parse( "main_menu.vm" )
+        </td>
+        
+        
+        <!-- the body -->       
+        #if ($addMode)
+            #set($formAction = "$servletPath/UserManagement?action=addUser" )
+        #else
+            #set($formAction = "$servletPath/UserManagement?action=editUser" )
+        #end
+
+
+<FORM id= "addUser" name="addUser" METHOD="POST" ACTION="$formAction" onsubmit="return Validator();" >
+    <td width=800>
+        #if ($addMode)
+            Security Administration&nbsp;&gt;&gt;&nbsp;User Management&nbsp;&gt;&gt;&nbsp;<font color="#333399"> Add User</font>
+        #else
+            Security Administration&nbsp;&gt;&gt;&nbsp;User Management&nbsp;&gt;&gt;&nbsp;<font color="#333399"> Edit User</font>
+        #end
+        <hr />
+        <br>
+        
+        #if ($addMode)
+            Please enter the following details to create a new user account
+        #else
+            Modify/edit user information
+        #end
+        <br><br>
+        
+        ##
+        ## nonPredefAdminSelfEdit=true  if a non predefined user edits herself
+        ## disableText=true,            non predefined user can't change her roles and name details
+        
+        #set($nonPredefAdminSelfEdit=false)
+        #set ($disableText=false)
+        #if ( ! $loggedUserPredef && $userData.userId == $theuser )
+            #set ($nonPredefAdminSelfEdit=true)
+            #set ($disableText=true)
+        #end    
+
+        
+        $!_debug
+        
+        <br>
+ <TABLE align="left" >
+    <tr>
+      <td>
+  
+  <TABLE align="left">
+    <tr>
+      <td><input name="formValid" type="hidden" id="formValid" size="20" maxlength="30" value="yes">
+      
+      <TABLE  align="left">
+        <tr>
+          <td valign="middle"><br>User ID*</td>
+          <td><br>
+            #if ($addMode)
+                <input type="text" name="userId" id="userId" size="25" maxlength="30" value="$userData.userId" onblur="changeToLowerCase(this);"  title="Enter User ID here (Example: 'test1')"/>
+            #else
+                $userData.userId
+                <input type="hidden" name="userId" id="userId"  value="$userData.userId" > ## repost name
+            #end
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="middle">
+           #if ($addMode)
+                Password*
+            #else
+                New Password*
+            #end
+          </td>
+          <td>
+               <input type="password"  name="password" id="password" value="$userData.password" title="Enter Password here. Password must contain minimum of 8 characters, one lower case letter, one upper case letter and one number."  size="25" maxlength="30"
+                #if ( ! $addMode)
+                    onclick="  if ( pwdFocusGained==false ) { addUser.password.value=''; } pwdFocusGained=true; "
+                #end
+                </input>
+         </td>
+        </tr>
+
+        <tr>
+          <td>Confirm Password*</td>
+          <td>
+             <input type="password" name="confirmPassword" id="confirmPassword" value="$userData.password"  title="Please Confirm Password" size="25" maxlength="30"
+                #if ( ! $addMode)
+                    onclick="  if ( confPwdFocusGained==false ) { addUser.confirmPassword.value=''; } confPwdFocusGained=true; "
+                #end
+             </input>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="middle">First Name*</td>
+          <td>
+          #if($disableText)
+          		$userData.fname
+          		<input type="hidden" name="firstName" id="firstName"  value="$userData.fname" >
+          #else
+                <input type="text" name="firstName" id="firstName" title="Enter First Name here" size="25" maxlength="30"  value="$userData.fname" />
+          #end
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="middle">Last Name*</td>
+          <td>
+          #if($disableText)
+          		$userData.lname
+          		<input type="hidden" name="lastName" id="lastName"  value="$userData.lname" >
+          		
+          #else
+                <input type="text" name="lastName" size="25" maxlength="30"  value="$userData.lname" title="Enter Last Name here"/>
+          #end 
+       </tr>
+
+
+        <tr>
+          <td valign="middle">Email</td>
+          <td>
+                <input type="text" name="email" id="email" title="Enter Email here" size="25" maxlength="256"  value="$userData.email"/>
+        </tr>
+
+        <tr>
+          <td valign="middle">Phone</td>
+          <td>
+                <input type="text" name="phone" id="phone" size="25" maxlength="30"  value="$userData.phone"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="middle">Organization</td>
+          <td>
+          
+          #if($disableText)
+          		$userData.org
+          		<input type="hidden" name="organization" id="organization"  value="$userData.org" >          		
+          #else
+                <input type="text" name="organization" id="organization"  size="25" maxlength="30"  value="$userData.org" title="Enter Organization here"/>
+          #end  
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" valign="bottom"><br>* indicates mandatory input</td>
+        </tr>
+
+        <tr>
+          <td colspan="2" align="left" valign="bottom"><br><br>
+                <input type="submit" name="submit" value="Save" title="Save Details"/>
+                <input type="reset" name="Reset" value="Reset" title="Reset Form"/>
+                <input type="button"  name="Cancel" onClick="window.location.href='$servletPath/UserManagement'" value="Cancel" title="Cancel and return to previous page"/>
+          </td> 
+        </tr>
+      </TABLE></td>
+      
+      <td valign="top">
+      <TABLE cellspacing=8 >
+        <tr>
+          <td valign="top"><b>User Role(s)*:</b></td>
+        </tr>
+        
+        <tr>
+          <td>
+             #set ($hidden="")
+             #set ($listRole=false)
+             #if ( $userData.isPredefined() || $nonPredefAdminSelfEdit)
+                ##
+                ## roles can't change 
+                ##          if user being edited is predefined  OR
+                ##          non-predef user editing herself
+                ##
+                #set ($disableSelect="visibility:hidden;display:block;display:none;")
+                #set ($listRole=true)
+             #end
+				
+				#if($listRole)
+					#foreach( $roleName in $userData.roles )
+            			$roleName<br>
+        			#end				
+				#end
+				 
+	             <select MULTIPLE  name="userRoles" id="userRoles" size="10" style="width:auto;$disableSelect" title="List of available user roles"  >
+	                 ##
+	                 ## check all roles and select ones assigned to user
+	                 ##
+	                 #foreach( $role in $availRoles )
+	                     #set ($assigned=false)
+	
+	                     #foreach ( $assignedRole in $userData.roles )
+	                         #if ( $role.roleName == $assignedRole )
+	                                #set ($assigned=true)
+	                                ## #break;
+	                         #end ## if
+	                     #end ## for
+	
+	                     #if ( ! $loggedUserPredef && $role.roleName == "sysadmin" && $userData.userId != $theuser )
+	                        ##
+	                        ## A) logged user is not a predefined admin, so 'sysadmin' role can't be assigned by her -> hide role from list
+	                        ## B) for ANY admin editing herself, we allow sysadmin role as it's been already assigned
+	                        ##
+	                        ## -- disabling option item would be a better way, but the disabled attribute is supported in all major 
+	                        ##    browsers, except Internet Explorer. --
+	                        
+	                     #else
+	                           #if ( $assigned )
+	                              <option value="$role.roleName" selected="true">$role.roleName</option>
+	                           #else
+	                              <option value="$role.roleName">$role.roleName</option>
+	                           #end
+	                     #end
+	
+	                 #end ## for
+	            </select>	            
+	           </div>
+	          </td>
+	        </tr>
+	
+	        <tr>
+                #if ( ! $listRole  )
+	                <td valign="bottom">Press 'Crtl+Role to select<br>more than one user role</td>      
+	            #end
+	        </tr>	
+		
+      </TABLE></td>
+    </tr>
+    <tr align="left" valign="middle">
+  </Table>
+        </td>
+    </tr>
+          ##
+          ## Place for error message
+          ##
+    <tr>
+        <td valign="top" class="errormessage"> $!errorMessage</td>
+    </tr>
+</Table>
+</FORM>
+
+
+
+
+
+#parse( "footer.vm" )
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

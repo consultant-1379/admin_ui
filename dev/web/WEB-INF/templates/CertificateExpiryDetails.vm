@@ -1,0 +1,62 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: Certificate Expiry Details</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff">
+	<table border=0>
+		<tr valign=top>
+			<td width=220>#parse( "main_menu.vm" )</td>
+			<td width=800><font size="1" face="Verdana, Helvetica, Arial">Certificate Expiry&nbsp;&gt;&gt;&nbsp;Certificate Expiry Details             
+            <hr/>
+			<h2>Platform Certificate Details:</h2>
+			<table border="1" class="users">
+	            <tr>
+	                <th class="users">Certificate Alias</th>
+					<th class="users">Purpose</th>
+					<th class="users">Expiry Date</th>
+	                <th class="users">Days To Expire</th>
+				</tr>
+				#foreach($certificate in $certificateDetails) 
+					<tr>
+						<td class="users">$certificate.getAlias()</td>
+						<td class="users">$certificate.getPurpose()</td>
+						<td class="users">$certificate.getExpiryDate()</td>
+						<td class="users">$certificate.getExpiryDays()</td>
+					</tr>
+				#end	
+			</table>
+			#if(!$otherCerfiticateDetails.isEmpty())
+				<br><br>
+				#foreach($tableData in $otherCerfiticateDetails.keySet())
+					#set($eachCertificateDetails = $otherCerfiticateDetails.get($tableData))
+					<h2>$tableData Certificate Details:</h2>
+					<table border="1" class="users">
+						<tr>
+							<th class="users">Certificate Alias</th>
+							<th class="users">Purpose</th>
+							<th class="users">Expiry Date</th>
+							<th class="users">Days To Expire</th>
+						</tr>
+						#foreach($certificate in $eachCertificateDetails)
+							<tr>
+								<td class="users">$certificate.getAlias()</td>
+								<td class="users">$certificate.getPurpose()</td>
+								<td class="users">$certificate.getExpiryDate()</td>
+								<td class="users">$certificate.getExpiryDays()</td>
+							</tr>
+						#end	
+					</table>
+					<br><br>
+				#end
+			#end
+			</td>
+		</tr>
+		#parse( "footer.vm" )
+		</font>
+	</table>
+</body>
+</html>

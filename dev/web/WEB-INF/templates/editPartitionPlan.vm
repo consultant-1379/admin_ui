@@ -1,0 +1,224 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: DWH Configuration</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+
+<script type="text/javascript">
+
+    function checkNumeric() {
+        var strValidChars = "0123456789";
+        var strChar;
+        var blnResult = true;
+
+        var strString = document.getElementById("defaultStorageTime").value;
+
+        if (strString != "-1")    {
+            //  test strString consists of valid characters listed above
+            for (i = 0; i < strString.length && blnResult == true; i++) {
+                  strChar = strString.charAt(i);
+
+                if (strValidChars.indexOf(strChar) == -1) {
+                    blnResult = false;
+                }
+            }
+        }
+
+        if (strString == "")
+            blnResult = false;
+
+        if (blnResult == false) {
+            alert("Storage time value is not numeric.");
+            return false;
+        }
+
+        if(parseInt(strString) > parseInt(document.getElementById("maxStorageTimeValue").value)) {
+            alert("Storage time has to be smaller than maximum storage time.");
+            return false;
+            }
+
+            if(parseInt(strString) < 1) {
+            alert("Storage time has to be larger than zero.");
+            return false;
+            }
+
+        document.getElementById("editPartitionPlanForm").submit();
+        return (true && filterFields());
+    }
+
+</script>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td>
+<td width=800>
+
+<form name="editPartitionPlanForm" method=post onsubmit="return checkNumeric();" action="$req.getContextPath()/servlet/EditPartitionPlan">
+<input type="hidden" name="action" value="save" />
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a hrefShowPartitionPlan">DWH Configuration</a></font>
+<hr />
+
+
+<table class="myt" style="width:550;">
+    <tr>
+        <td>
+            <font size="1" face="Verdana, Helvetica, Arial">
+            <br>
+            Edit the details of a partition plan. Also active measurement types that uses this specific partition plan are shown.
+            <br>
+            #if($partitionType.toString() != "1" )
+                #set( $var = "Time" )
+            #else
+                #set( $var = "Volume" )
+            #end 
+            <FONT color="red"> Note!</FONT> When reducing Storage $var, Partitions that are no longer needed will be deleted. Please consult the documentation for further information. 
+            <br>
+            <br>
+            </font>
+        </td>
+    </tr>
+</table>
+
+
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+
+<table class="myt" style="width:550;">
+
+#if ($errorMessage && $errorMessage != "")
+<tr>
+    <td><font size="1" face="Verdana, Helvetica, Arial" color="red">$errorMessage</font></td>
+<tr>
+#end
+</table>
+    #if($partitionType.toString() != "1" )
+<table border=1>
+        <tr>
+            <td height="22" class="basic" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Partition plan</strong></font></td>
+            <td>
+                <font face="Verdana,Helvetica,Arial" size="1">$partitionPlanName</font>
+                <input type="hidden" name="partitionPlan" id="partitionPlan" value="$partitionPlanName" />
+            </td>
+        </tr>
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Storage time</strong></font></td>
+            <td>
+                <input type="text" name="defaultStorageTime" id="defaultStorageTime" value="$defaultStorageTime" size="3" maxLength="4" />
+                <font face="Verdana,Helvetica,Arial" size="1"> days</font>
+            </td>
+        </tr>
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Maximum storage time</strong></font></td>
+            <td>
+                <font face="Verdana,Helvetica,Arial" size="1">$maxStorageTime days</font>
+                <input type="hidden" name="maxStorageTimeValue" id="maxStorageTimeValue" value="$maxStorageTime" />
+            </td>
+        </tr>
+
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Partition size</strong></font></td>
+            <td>
+                <font face="Verdana,Helvetica,Arial" size="1">$defaultPartitionSize hours</font>
+            </td>
+        </tr>
+        <tr>
+            <td height="22" width="100" nowrap></td>
+            <td><input type="submit" name="submitButton" id="submitButton" value="Save" /></td>
+        </tr>
+</table>
+#else
+<table border=1>
+        <tr>
+            <td height="22" class="basic" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Partition plan</strong></font></td>
+            <td>
+                <font face="Verdana,Helvetica,Arial" size="1">$partitionPlanName</font>
+                <input type="hidden" name="partitionPlan" id="partitionPlan" value="$partitionPlanName" />
+            </td>
+        </tr>
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Storage volume</strong></font></td>
+            <td>
+                <input type="text" name="defaultStorageTime" id="defaultStorageTime" value="$defaultStorageTime" size="12" maxLength="10" />
+                <font face="Verdana,Helvetica,Arial" size="1"> rows</font>
+            </td>
+        </tr>
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Maximum storage volume</strong></font></td>
+            <td>
+                <font face="Verdana,Helvetica,Arial" size="1">$maxStorageTime rows</font>
+                <input type="hidden" name="maxStorageTimeValue" id="maxStorageTimeValue" value="$maxStorageTime" />
+            </td>
+        </tr>
+
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Partition size</strong></font></td>
+            <td>
+                <font face="Verdana,Helvetica,Arial" size="1">$defaultPartitionSize rows</font>
+            </td>
+        </tr>
+        <tr>
+            <td height="22" width="100" nowrap></td>
+            <td><input type="submit" name="submitButton" id="submitButton" value="Save" /></td>
+        </tr>
+</table>
+
+#end
+<br />
+<br />
+
+#if($typeActivations.size() > 0)
+
+<table class="myt" style="width:550;" border="1" cellpadding="2">
+    <tr>
+        <td class="basichdr"><font size="1" face="Verdana, Helvetica, Arial"><b>Tech Pack name</b></font></td>
+        <td class="basichdr"><font size="1" face="Verdana, Helvetica, Arial"><b>Typename</b></font></td>
+        <td class="basichdr"><font size="1" face="Verdana, Helvetica, Arial"><b>Level</b></font></td>
+        <td class="basichdr"><font size="1" face="Verdana, Helvetica, Arial"><b>Status</b></font></td>
+        <td class="basichdr"><font size="1" face="Verdana, Helvetica, Arial"><b>Type</b></font></td>
+    </tr>
+
+    #foreach($typeActivation as $typeActivations)
+    <tr>
+        <td class="basic"><font face="Verdana,Helvetica,Arial" size="1">$typeActivation.getTechpack_name()</font></td>
+        <td class="basic"><font face="Verdana,Helvetica,Arial" size="1">$typeActivation.getTypename()</font></td>
+        <td class="basic"><font face="Verdana,Helvetica,Arial" size="1">$typeActivation.getTablelevel()</font></td>
+        <td class="basic"><font face="Verdana,Helvetica,Arial" size="1">$typeActivation.getStatus()</font></td>
+        <td class="basic"><font face="Verdana,Helvetica,Arial" size="1">$typeActivation.getType()</font></td>
+    </tr>
+    #end
+</table>
+
+#else
+
+
+<table class="myt" style="width:550;">
+    <tr>
+        <td class="basic">
+            <font size="1" face="Verdana, Helvetica, Arial">
+            <br>
+            <b>No active measurement types use this partition plan.</b><br>
+            <br>
+            </font>
+        </td>
+    </tr>
+</table>
+
+
+
+#end
+
+</form>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

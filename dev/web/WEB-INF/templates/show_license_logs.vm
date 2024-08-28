@@ -1,0 +1,48 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: License Log Details</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css" />
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font class="toplink" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="$servletPath/LoaderStatusServlet">System Status</a> 
+&nbsp;&gt;&gt;&nbsp;<a href="#">Show License Logs</a></font>
+
+<hr />
+
+<FORM METHOD=POST ACTION="ReadLicenseLog" onsubmit="return filterFields();">
+
+<table border="0">
+#if (!$error)
+<tr><td class="basic" colspan="2">Select date from which you wish to fetch the licensing logs.</td></tr>
+<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+<tr><td class="basic">Date:</td><td>#parse( "cal_select_1.vm" )</td></tr>
+#if ($fault_message && $fault_message != "")
+<tr><td colspan="2" class="basic" style="color: red;"> $fault_message </td></tr>
+#end
+<tr><td colspan="2"><INPUT value="Search" style="font-size: 11;" TYPE="submit"></FORM></td></tr>
+#else
+<tr><td colspan="2" class="basic" style="color: red;"> Error occured. Database connection might be down. Check the System Status again. <a href="$servletPath/LoaderStatusServlet"> System Status </a></td></tr>
+#end
+</table>
+
+
+<br/>
+</td>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<html>
+<head><title>Ericsson Network IQ :: System Monitoring :: Monitoring Commands</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css"></head>
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="CommandLine">Monitoring Commands</a></font>
+<hr />
+<form action="$req.getContextPath()/servlet/CommandLine" method="post" onsubmit="return filterFields();">
+<table border="0">
+	<tr>
+		<td>
+		<font size=-1><b>Select command from list</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td valign=top><font size=-1>
+		<select name="command" style="font-size: 9;">
+			<option selected>$theCommand</option>
+			#foreach($cmd in $commands)
+			<option>$cmd
+			#end
+		</select>
+		</font></td>
+	</tr>
+	<tr>
+		<td valign=top colspan=4><font size=-1>
+		<input type=submit style="font-size: 11;" value="Start">
+		</font></td>
+	</tr>
+</table>
+</form>
+
+<BR />
+
+#if ($theResult)
+<table border="1" cellpadding="2" cellspacing="0">
+<tr>
+<td><font size="-1" face="Courier">$theResult</font></td>
+</tr>
+</table>
+#end
+
+#if ($instTps.equalsIgnoreCase("getInstalledTechPacks"))
+
+	<table border="1">
+		<tr><td colspan="6" class="basic">Active Tech Packs</td></tr>
+		<tr><td class="midhdr">Tech pack name</td><td class="midhdr">Product number</td><td class="midhdr">R-State</td><td class="midhdr">Type</td><td class="midhdr">Status</td><td class="midhdr">DWH Creation date</td></tr>
+		#foreach($set in $activeTps)
+			<tr>
+			#foreach ($rs in $set)
+			<td class="basic">$rs</td>
+			#end
+			</tr>
+		#end
+
+		<tr>
+			<td colspan="6" class="basic">&nbsp;</td>
+		</tr>
+			
+		<tr><td colspan="6" class="basic">Not active Tech Packs</td></tr>
+		<tr><td class="midhdr">Tech pack name</td><td class="midhdr">Product number</td><td class="midhdr">R-State</td><td class="midhdr">Type</td><td class="midhdr">Status</td><td class="midhdr">DWH Creation date</td></tr>
+		#foreach($set in $inactiveTps)
+			<tr>
+			#foreach ($rs in $set)
+			<td class="basic">$rs</td>
+			#end
+			</tr>
+		#end
+	</table>
+
+#end
+
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<html>
+<head>
+        <link rel="stylesheet" type="text/css" href="../css/admin.css">
+        <link rel="shortcut icon" href="../img/eric.ico">
+        <title>Ericsson Network IQ :: Change Password</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+
+<script>
+
+function myFunction() {
+  var x = document.getElementById("np");
+  var y = document.getElementById("cnp");
+  if (x.type === "password" && y.type === "password") {
+    x.type = "text";
+    y.type = "text";
+  } else {
+    x.type = "password";
+    y.type = "password";
+  }
+}
+function onChange() {
+  const password = document.querySelector('input[name=newpassword]');
+  const confirm = document.querySelector('input[name=cnfnewpassword]');
+  if (confirm.value === password.value) {
+    confirm.setCustomValidity('');
+  } else {
+    confirm.setCustomValidity('Passwords do not match');
+  }
+}
+function restartAfterSomeTime() {
+	#if($passChangedSuccessfully)
+		var url = window.location.href
+		setTimeout( function() {
+			window.location.href = url;
+		}, 100)
+	#end
+}
+</script>
+
+</head>
+<body bgcolor="#ffffff" onLoad="restartAfterSomeTime()">
+<table border=0>
+	<tr valign=top>
+        <td width=220>#parse( "main_menu.vm" )</td>
+        <td width=800><font size="1" face="Arial">
+			<form method=post id="changepassword" autocomplete="off" action="$req.getContextPath()/servlet/ChangePassword">Change Password
+			&nbsp;&gt;&gt;&nbsp;<a href="ChangePassword">Change Password</a>
+			<hr/>
+				<div class="passmainheading">
+					<p class="headstyletomcat" align="center">Change Password</p>
+
+					#if($errorOccured)
+						<p class="errormsgfortomcat" >Unable to change password. Please try again.</p>
+					#end
+					#if($passChangedSuccessfully)
+						<p style="color:green; font-size:15;" >Password successfully changed. Restarting webserver...</p>
+					#elseif($scriptErrorMessageFlag)
+						<p class="errormsgfortomcat" >$scriptErrorMessage</p>
+					#elseif($anotherInstanceRunning)
+						<p class="errormsgfortomcat" >Another user is changing its password. Please try again after some time...</p>
+					#end
+					<input class="oldpasswordtomcat" type="password" align="center" placeholder="Old password" id="op" autocomplete="new-password" name="oldpassword" required >
+						#if($wrongOldPass==false)
+							<p class="errormsgfortomcat" >Old password does not match. Please try again.</p>
+						#end						
+					<input class="newpasswordtomcat" type="password" align="center" placeholder="New Password" id="np" onChange="onChange()" autocomplete="false" name="newpassword" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,64}" required >
+						#if($passComplianceFailed)
+							<p class="errormsgfortomcat" >Please enter new password according to rule.</p>
+						#end
+					<input class="newpasswordtomcat" type="password" align="center" placeholder="Confirm New Password" id="cnp" onChange="onChange()" autocomplete="false" name="cnfnewpassword" required>
+					<div class="showpasscheckbox">
+					      <input type="checkbox" align="center" onclick="myFunction()">Show Password
+				    </div >
+				    <br>
+				        <button class="ChangeTomcatPassSubmit" type="submit">Submit</button>
+				        <button class="ChangeTomcatPassCancel" type="button" onclick="window.location.href='$req.getContextPath()/servlet/LoaderStatusServlet'">Cancel</button>    
+				</div>
+				<br><br><br>
+				<table style="margin: 120px 0px 0px 85px;">
+					<tr>
+						<td>
+							<p style="font-size:18px;font-family:Arial;font-weight: Bold";>Note:</p>
+							<ul style="font-size:18px;font-family:Arial;font-weight: Regular;">
+								<li>Alphanumeric characters are permitted</li>
+								<li>The following special characters are not permitted & < > ' " / \</li>
+								<li>Spaces are not permitted</li>
+								<li>Minimum password length is 8 characters</li>
+								<li>Password should contain atleast one uppercase and one lowercase letter</li>
+								<li>Webserver will be restarted after clicking the Submit button</li>
+							</ul>
+						</td>
+					</tr>							
+				</table>
+			</form>
+		#parse( "footer.vm" )	
+                </font>
+            </td>
+            </tr>
+        </table>
+</body>
+</html>

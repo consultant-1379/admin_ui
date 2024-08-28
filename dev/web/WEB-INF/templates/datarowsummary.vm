@@ -1,0 +1,151 @@
+#if (!$search_days)
+#set ($search_days = "31")
+#end
+#if (!$year_1)
+#set ($year_1 = "2015")
+#end
+#if (!$month_1)
+#set ($month_1 = "01")
+#end
+#if (!$day_1)
+#set ($day_1 = "01")
+#end
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Verification :: Data Row Summary</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+
+<body bgcolor="#ffffff">
+<table border="0">
+        <tr valign=top>
+                <td width=220>#parse( "main_menu.vm" )</td>
+                <td width=800><font size="1" face="Verdana, Helvetica, Arial">Data
+                Verification&nbsp;&gt;&gt;&nbsp;<a href="DataRowSummary">Data Row
+                Summary</a>             
+                <hr />
+		<form method=post action=$req.getContextPath()/servlet/DataRowSummary onSubmit="return filterFields();">
+                 <table border=0>
+                 <tr>
+                <td class="basichlp" colspan="5">
+                                        Data Row Summary shows information from selected session. <br />
+                                        <li>Start Date(From which date data is shown)</li>
+                                        <li>Tech Pack name</li>
+                                        <li>Level</li>
+                                        <li>Search Days searches the value of row count and number of rops available of particular Measurement type of a tech
+pack for the  selected number of Search days </li>
+                                        <li>Search Direction is set to search the previous dates or Forward dates.</li>
+                                  Note:The value outside the bracket is Row Count and value inside the bracket is number of ROP counts. <br />
+								A list of all measurement types with the row and rop count value will be displayed. For those Measurement type which doesn't have data loaded, for particular date, will display as 0(0) </td>
+                        </tr></font> 
+                        <tr>
+                                <td class="basichdr">Tech Pack</td>
+                                <td class="basichdr">Start Date</td>
+                                <td class="basichdr">Search Days</td>
+                                <td class="basichdr">Level</td>
+                                <td class="basichdr">Search Direction</td>
+                        </tr>
+                        <tr>
+                                <td valign="top" style="font-size: 9;">#set($nlist = $twoLevelSelectionBuilder.getNameList())
+                                <select name="search_string" style="font-size: 9;">
+                                #foreach($grp in $techpacks)
+                                        #if ($grp == $selectedTechpack)
+                                                <option selected value="$grp">$grp</option>
+                                        #else
+                                                <option value="$grp">$grp</option>
+                                        #end
+                                #end
+                                </select></td>
+                                <td valign=top>#parse( "cal_select_1.vm" )</td>
+                                <td valign=top><select name="search_days" style="font-size: 9;">
+                                        <option selected value="$search_days">$search_days</option>
+                                #foreach($n in [1..31])
+                                        <option value="$n">$n</option>
+                                #end
+								
+							<td class="basic" valign=top>
+							<select name=dlevel style="font-size: 9;">
+							#foreach($loc in $theLevels)
+										#if ($loc == $level)
+                                                <option selected value="$loc">$loc</option>
+                                        #else
+                                                <option value="$loc">$loc</option>
+                                        #end
+							#end
+							</select>
+							</td>
+	
+                               							</td>    
+								<td class="basic" valign="top"><input type="radio"
+                                        name="search_direction" value="backward" $backward> Backward<br>
+                                <input type="radio" name="search_direction" value="forward" $forward>
+                                Forward</td>
+
+                        </tr>
+                        <tr>
+						<td class="basic" valign=top colspan=5><input type="hidden" name="search_done" value="true">
+						<input type="submit" style="font-size: 11;" name="value" value="Get Information" onSubmit="return filterFields();">
+						</td>
+						</tr>
+				</table>
+		</form>
+<p>
+<hr size="1">
+<p>
+#*Changes are done for EQEV-12110*#  
+			#if($measArray.size()>0)
+			#set ($search_done = "true")              
+			#elseif($measArray.size() == 0)
+			#set ($search_done = "false")
+			#end
+
+#if($search_done == "true")
+                <table border=1 cellpadding=1 cellspacing=1>
+                        <tr>
+                        <td class="basic" align="center" width="250"><b>Measurement Type</b></td>
+                        #foreach ($day in $daysArray)
+                            <td class="basic" align="center" width="85"><b>$day</b></td>
+                        #end
+						</tr>
+						#set ($measurementCounter = 0)
+                        #foreach ($meas in $measArray)
+                        <!-- measurementCounter = $measurementCounter<br> -->
+                        <tr>
+                                <td class="basic" width="250" align="left" valign="top">$meas</td>
+                                #set ($lineCount = $lineCountArray.get($measurementCounter))
+                                #set ($counter_max = $lineCount.size() - 1)
+                   				#foreach ($counter in [0..$counter_max])
+      							#set ($ropCount = $countrow.get($measurementCounter))
+								#set ($day = $daysArray.get($counter)) 							
+								<td class="basic" align="center" width="85"> 
+								<a href="$req.getContextPath()/servlet/DataRowSummary?dayStr=$day&search_str=$selectedTechpack&meastype=$meas&dlevel=$level&request_type=counts">$lineCount.getLine($counter)($ropCount.getLine($counter))</a>
+								</td>
+								#end
+   						#set ($measurementCounter = $measurementCounter + 1)
+						#end
+						</tr>
+ 					</table>
+#elseif($search_done == "false")
+	<table>		
+			<tr>
+				<td>
+				<font size="1" face="Verdana, Helvetica, Arial" color="red">
+				<br>Mesurement Type is not available for the Tech pack<br>
+				</font>
+				</td>
+			</tr>
+	</table>
+#end</td>
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+
+

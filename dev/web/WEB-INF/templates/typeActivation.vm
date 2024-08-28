@@ -1,0 +1,235 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: Type Configuration</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script>
+	function openWindow(link){
+		newWin = window.open(link, 'Generator', 
+		'location=0,directories=0,menubar=0,scrollbars=0,'
+		+'status=1,toolbar=0,resizable=0,width=500,height=250');
+	}
+	
+	function refreshPage (selectedTechpack, tablelevel) {
+	
+		window.location.href = "$req.getContextPath()/servlet/TypeActivation?tp="+selectedTechpack+"&level="+tablelevel; 
+	
+	}
+	
+	function checkUncheckAll(theElement) {
+     var theForm = theElement.form, z = 0;
+	 for(z=0; z<theForm.length;z++){
+      if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+	  theForm[z].checked = theElement.checked;
+	  }
+     }
+    }
+    
+	function selectAll(formObj, isInverse) {
+   		for (var i=0;i < formObj.length;i++) {
+      		fldObj = formObj.elements[i];
+      		
+      		if (fldObj.type == 'checkbox')
+      		{ 
+         		if(isInverse)
+         			fldObj.checked = (fldObj.checked) ? false : true;
+         		else fldObj.checked = true; 
+       		}
+       	}
+	}
+	
+</script>
+
+</head>
+
+<body>
+<table border="0">
+	<tr valign=top>
+		<td width=220>#parse( "main_menu.vm" )</td>
+		<td width=800 class="toplink">
+		<form name=f1 method=post action=$req.getContextPath()/servlet/TypeActivation onsubmit="return filterFields();">Configuration&nbsp;&gt;&gt;&nbsp;<a href="TypeActivation">Type Configuration</a>
+		<hr />
+		<table style="width:550;">
+			<tr>
+				<td class="basichlp">Using Type Configuration you can choose which
+				types are active or inactive. Also storage time for partition can be
+				edited. <br>
+				<br>
+				</td>
+			</tr>
+			#if ($errorMessage && $errorMessage != "")
+			<tr>
+				<td class="error">$errorMessage</td>
+			</tr>
+			#end
+		</table>
+
+		<table width="350" cellspacing="0">
+			<tr>
+				<td class="midhdr">Tech Pack</td>
+				<td class="midhdr">Tablelevel</td>
+
+			</tr>
+
+			<tr>
+				<td valign="top"><select
+					onChange="javascript:refreshPage(this.form.type.value, this.form.level.value);"
+					name="type" style="font-size: 9;">
+					<option selected value="$tp">$tp</option>
+					#foreach($grp in $distinctTechPacks) #if ($grp != $tp)
+					<option value="$grp">$grp</option>
+					#end #end #if ($tp != "-")
+					<option value="-">-</option>
+					#end
+				</select></td>
+				<td><select
+					onChange="javascript:refreshPage(this.form.type.value, this.form.level.value);"
+					name="level" style="font-size: 9;">
+
+					#if ($selectedlevel != "")
+					<option selected value="$selectedlevel">$selectedlevel</option>
+					#end
+					<option value="-">-</option>
+					#foreach($tbl in $tablelevels)
+					<option value="$tbl">$tbl</option>
+					#end
+
+				</select></td>
+			</tr>
+		</table>
+		#if($tpInfo)
+		<table>
+			<tr>
+				<td>
+				<table>
+					<tr>
+						<td class="basic"><strong>Status: </strong>$tpInfo.getStatus()</td>
+					</tr>
+					<tr>
+						<td class="basic"><strong>Version: </strong>$tpInfo.getVersionid()</td>
+					</tr>
+					<tr>
+						<td class="basic"><strong>Type: </strong>$tpInfo.getType()</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+		#end
+		<table style="width:550;">
+			<tr>
+				<td colspan="3" class="note">
+				#if ($typeSaved != "" && $tp != "" && $tp != "-") <br>
+				<font color=red>Note!</font> Set StorageTimeUpdate of the selected Techpack to be executed after the changes are made.
+				Please consult the documentation for further information. <br>
+				<br>
+				#else &nbsp; 
+				#end
+				</td>
+			</tr>
+		</table>
+		<table border=1>
+			#if($timeBasedMeasTypes.size() > 0)
+			<tr>
+				<td colspan="6" height="30">
+					<font face="Verdana, Helvetica, Arial" size="2">
+						Time/Volume Based Partition</a> 
+					</font>
+				</td>
+			</tr>
+			<tr>
+				<td width="*" nowrap class="basichdr"><input type="checkbox"
+					name="checkall" onclick="checkUncheckAll(this);" /></td>
+				<!-- Select all -->
+				<td width="*" nowrap class="basichdr">Typename</td>
+				<td width="100" nowrap class="basichdr">Level</td>
+				<td width="100" nowrap class="basichdr"><strong>Status</td>
+				<td width="100" nowrap class="basichdr">Storage time(days)/<br>
+				Storage Volume(rows)</td>
+				<td width="100" nowrap class="basichdr"><strong>Type</td>
+			</tr>
+			#foreach ($oneset in $timeBasedMeasTypes)
+			#if( $oneset.get(5).toString().equalsIgnoreCase("true") )
+		    	#set( $rowColor = "#FFFFFF" )
+			#else
+				#set( $rowColor = "#E7EBFC" )
+			#end
+				
+			<tr style="background-color: $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+				onmouseout="this.style.background='$rowColor';">
+				<td><input type="checkbox"
+					name="chk:$!oneset.get(1):$!oneset.get(2)"></td>
+				<td class="basiclist"><a
+					href="$req.getContextPath()/servlet/TypeActivationEdit?tp=$tp&tpn=$oneset.get(1)&level=$oneset.get(2)&status=$oneset.get(0)&st=$oneset.get(3)&type=$oneset.get(4)">$oneset.get(1)</a></font></td>
+				<td class="basiclist">$oneset.get(2)</td>
+				<td class="basiclist">$oneset.get(0)</td>
+				<td class="basiclist">$oneset.get(3)</td>
+				<td class="basiclist">$oneset.get(4)</td>
+			</tr>
+			#end
+			#end
+		</table>
+		<table border=1>
+			#if($volumeBasedMeasTypes.size() > 0)
+			<tr>
+				<td colspan="6" height="30">
+					<font face="Verdana, Helvetica, Arial" size="2">
+						Volume Based Partition</a> 
+					</font>
+				</td>
+			</tr>
+			<tr>
+				<td width="*" nowrap class="basichdr"><input type="checkbox"
+					name="checkall" onclick="checkUncheckAll(this);" /></td>
+				<!-- Select all -->
+				<td width="*" nowrap class="basichdr">Typename</td>
+				<td width="100" nowrap class="basichdr">Level</td>
+				<td width="100" nowrap class="basichdr"><strong>Status</td>
+				<td width="100" nowrap class="basichdr">Storage time<br>
+				</td>
+				<td width="100" nowrap class="basichdr"><strong>Type</td>
+			</tr>
+			#foreach ($oneset in $volumeBasedMeasTypes)
+			#if( $oneset.get(5).toString().equalsIgnoreCase("true") )
+		    	#set( $rowColor = "#FFFFFF" )
+			#else
+				#set( $rowColor = "#E7EBFC" )
+			#end
+				
+			<tr style="background-color: $rowColor;" onmouseover="this.style.background='#C0C0C0';"
+				onmouseout="this.style.background='$rowColor';">
+				<td><input type="checkbox"
+					name="chk:$!oneset.get(1):$!oneset.get(2)"></td>
+				<td class="basiclist"><a
+					href="$req.getContextPath()/servlet/TypeActivationEdit?tp=$tp&tpn=$oneset.get(1)&level=$oneset.get(2)&status=$oneset.get(0)&st=$oneset.get(3)&type=$oneset.get(4)">$oneset.get(1)</a></font></td>
+				<td class="basiclist">$oneset.get(2)</td>
+				<td class="basiclist">$oneset.get(0)</td>
+				<td class="basiclist">$oneset.get(3)</td>
+				<td class="basiclist">$oneset.get(4)</td>
+			</tr>
+			#end
+			#end
+		</table>
+		<table border=0>
+			<tr>
+				<input type="hidden" name="tp" value="$tp">
+				<td colspan="2">&nbsp;</td>
+				<td colspan="4"><input type="submit" name="activateSelected"
+					value="Activate selected"> &nbsp; <input type="submit"
+					name="inActivateSelected" value="Inactivate selected"></td>
+			</tr>
+		</table>
+		</form>
+		#parse( "footer.vm" ) </font></td>
+	</tr>
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

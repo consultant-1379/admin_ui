@@ -1,0 +1,29 @@
+		<select name="week_2" style="font-size: 9;" onChange="populate_2(this.form,this.selectedIndex);">
+			<option selected value="$week_2">$week_2</option>
+			#foreach ($iweek in [1..53])
+			<option value="$iweek">$iweek</option>
+
+			#end
+		</select>
+
+		<select name="year_2" style="font-size: 9;" onChange="populate_2(this.form,this.form.month_2.selectedIndex);">
+			<option selected value=$year_2>$year_2</option>
+			#if($validYearRange)
+				#foreach( $validYear in $validYearRange )
+					#if($validYear != $year_2)
+					<option value=$validYear>$validYear</option>
+					#end
+				#end
+			#elseif($futureYearRange)
+				#foreach ( $futureYear in $futureYearRange )
+					#if($futureYear != $year_2)
+					   <option value=$futureYear>$futureYear</option>
+					#end
+				#end
+			#else
+				#foreach ( $iyear in [2005..2015] )
+					<option value="$iyear">$iyear</option>		
+				#end
+			#end
+		</select>
+

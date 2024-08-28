@@ -1,0 +1,160 @@
+AdminUI version 5.0.1
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+1. General information
+-----------------------
+
+Admin Ui has been tested and developed using tomcat version 4.1.30. 
+
+Admin UI application needs dc5000 installation on the same host, as the adminui application is installed. Everything that needs to be 
+configured are llocated in web application DD(web.xml). In that dd-file, one is able to define rmi-url and database size etc.
+
+Distributed version is made with a single .war(Web archive) -file. It includes all information needed by the webapp. If there is a need to
+make configuration changes in web application, e.g. need to monitor different ETLC -engine, or to change parameters that are used to indicate 
+disk space usage, all the changes are made in application web.xml. One has to install application and start web server. After startup, war 
+file is extracted under tomcat-directory. web.xml can be found at [TOMCAT_HOME]/webapps/../../WEB-INF -directory.
+
+Every database connection is made via Torque, so all the configuration to databases should be done in that file. Used Torque.properties is 
+the same as in dc5000 installation. More information in section 3.
+
+-----------------------
+2. DD - file parameters
+-----------------------
+
+In web.xml, one is able to define following environment entrys. Explanations are included.
+
+	<!--Sets time backwards that etl-data are shown in gui.(In months)-->
+    <env-entry>
+		<env-entry-name>etlShowAge</env-entry-name>
+		<env-entry-value>16</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+    
+	<!--Path were logs are stored that are read for detailed information-->
+	<env-entry>
+		<env-entry-name>logfile</env-entry-name>
+		<env-entry-value>/dc/dcdata/log/dc5000/</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>	
+	
+	<!-- directory that is under webapp root that defines name of the folder that conf files are stored -->
+	<env-entry>
+		<env-entry-name>conffiles</env-entry-name>
+		<env-entry-value>conf</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+	
+	<!-- Torque location-->
+	<env-entry>
+		<env-entry-name>torque</env-entry-name>
+		<env-entry-value>/dc/dc5000/conf/Torque.properties</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry> 
+
+	<env-entry> 
+		<!-- the limit of db size in % -->
+		<env-entry-name>intDbSize</env-entry-name>
+		<env-entry-value>80</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<!-- the limit of other versions in %-->
+		<env-entry-name>intOtherVersions</env-entry-name>
+		<env-entry-value>10</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>		
+
+	<env-entry>
+		<!-- backup delay in days -->
+		<env-entry-name>intBackupDelay</env-entry-name>
+		<env-entry-value>3</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<!-- rmi url -->
+		<env-entry-name>rmiurl</env-entry-name>
+		<env-entry-value>@IP@:1200</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<!-- etl url -->
+		<env-entry-name>etlurl</env-entry-name>
+		<env-entry-value>@IP@</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>	
+
+	<env-entry>
+		<!-- etl port -->
+		<env-entry-name>etlport</env-entry-name>
+		<env-entry-value>1200</env-entry-value>
+		<env-entry-type>java.lang.String</env-entry-type>
+	</env-entry>
+
+---------------------
+3. Torque.properties
+---------------------
+
+Torque.properties, which is used by web app, is the same that dc5000 installation uses. So, there has to be link in WEB-INF directory to 
+that file(usually link is made somewhat like this: ln -s /dc/dc5000/conf/Torque.properties webapps/dc5000_management/WEB-INF/Torque.properties) 
+Installation script makes this link, but if one wishes to use different torque.properties file, he/she has to make link as shown above.
+
+--------------------
+4. Configuration
+--------------------
+
+******************************************************************
+***                                                            ***
+*** IMPORTANT NOTE: Installation must be done as DCUSER:DC5000 ***
+***                                                            ***
+******************************************************************
+
+1) After installation of this package you should check and configure the following files:
+
+=====================
+- /dc/dc5000/tomcat/conf/server.xml
+- /dc/dc5000/tomcat/conf/tomcat-users.xml
+- /dc/dc5000/tomcat/webapps/dc5000_management/WEB-INF/Torque.properties
+- /dc/dc5000/tomcat/webapps/dc5000_management/WEB-INF/InfoHtmlGenerator.xml
+- /dc/dc5000/tomcat/webapps/dc5000_management/WEB-INF/cellSelectionGenerator.xml
+Parameters are explained in the files
+
+2) torque.properties
+=====================
+
+In /dc/dc5000/tomcat/webapps/dc5000_management/WEB-INF/ -directory, there is a link to Torque.properties -file. This link is used as for 
+Torque -configuration.
+
+3) Other xml files
+=====================
+These files have similar contents: 
+/dc/dc5000/tomcat/webapps/dc5000_management/WEB-INF/CellSelectorGeneration.xml
+/dc/dc5000/tomcat/webapps/dc5000_management/WEB-INF/InfoHtmlGeneration.xml
+Parameters an configuring them are explained in the files
+
+4) tomcat-users.xml
+=====================
+If you have previous AdminUI installation, you might need to set
+a new role for Tomcat - see that file /dc/dc5000/tomcat/conf/tomcat-users.xml 
+contains role definition:
+  <user username="eniq" password="eniq" roles="eniq"/>
+
+If it does not exist, add one.
+
+5) other information
+=====================
+a)
+===
+You can monitor the starting by watching the Tomcat log in the
+tomcat directory (/dc/tomcat/logs/). Check the catalina.log.
+Check any problems from there.
+
+b)
+===
+The base url of the AdminUI is the host ip and port and "path"
+/dc5000_management/ for example: 
+http://server.distocraft.com/dc5000_management/
+
+

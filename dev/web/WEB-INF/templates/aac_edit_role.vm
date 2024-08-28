@@ -1,0 +1,191 @@
+<HTML>
+<HEAD>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	#if ($addMode)
+		<title>Ericsson Network IQ :: Security Administration :: Role Management :: Add Role</title>
+	#else
+		<title>Ericsson Network IQ :: Security Administration :: Role Management :: Edit Role</title>
+	#end	
+		
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	
+	        <script type="text/javascript" src="../javascript/userValidation.js"></script>
+	        <script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+	        <script language="JavaScript">
+	              
+
+	        
+	        function Validator() {
+	        
+
+	        editRole.roleTitle.value=trimRightLeftSpace(editRole.roleTitle.value);
+
+	        editRole.roleDesc.value=trimRightLeftSpace(editRole.roleDesc.value);
+
+	        
+
+	        if ( ! hasSelection(editRole.rolePermGroups, "Permission Group") )
+	                    return false;
+	
+	        #if ($addMode)
+	        ## verify only if adding new item, otherwise roleName can't be changed
+	                if ( ! validateValue(editRole.roleName.value, "Role Name", false) )
+	                    return false;
+	        #end                    
+	                if ( ! validateValue(editRole.roleTitle.value, "Role Title", true) )
+	                    return false;
+	
+	                if ( editRole.roleDesc.value != "" && maxLength(editRole.roleDesc.value,200) ) {
+	                    alert ("Description can only be 200 characters in length");
+	                    return false;
+	                }
+	                return (true && filterFields());
+	            }
+	        </script>
+</HEAD>
+
+<BODY bgcolor="#ffffff" onload="sortList(editRole.rolePermGroups);">
+<TABLE border="0" >
+	<tr valign=top>
+		<!-- main menu -->
+		<td width=220>
+		    #parse( "main_menu.vm" )
+		</td>		
+		
+		<!-- the body -->
+		<td width=800>
+			#if ($addMode)
+			    Security Administration&nbsp;&gt;&gt;&nbsp;Role Management&nbsp;&gt;&gt;&nbsp;<font color="#333399"> Add Role</font>
+			#else
+			    Security Administration&nbsp;&gt;&gt;&nbsp;Role Management&nbsp;&gt;&gt;&nbsp;<font color="#333399"> Edit Role</font>
+			#end
+		<hr /><br> 
+		
+			#if ($addMode)
+			   	Please enter the following details to create a new role
+			#else
+			    Modify/edit role information
+			#end
+			<br><br>
+			
+			#if ($addMode)
+			    #set($formAction = "$servletPath/RoleManagement?action=addRole" )
+			#else
+			    #set($formAction = "$servletPath/RoleManagement?action=editRole" )
+			#end
+			
+			$!_debug
+
+<FORM id= "editRole" name="editRole" METHOD="POST" ACTION="$formAction" onsubmit="return Validator();" >
+<TABLE>
+	<tr>	
+	 <td>
+<TABLE class="editTableTemplate">
+	<tr>	
+	 <td valign="middle">
+      <TABLE class="leftTable" >
+        <tr>
+          <td valign="middle">Name*</td>
+          <td>
+           	#if ($addMode)
+                <input type="text" name="roleName" id="roleName" size="25" value="$roleData.roleName" maxlength="30" onblur="changeToLowerCase(this);"  Title="Enter Role Name here (Example: 'rolename1')"/>
+            #else
+                $roleData.roleName  
+                <input type="hidden" name="roleName" id="roleName"  value="$roleData.roleName" > ## repost name
+            #end
+			</td>
+		 </tr>
+        
+        <tr>
+          <td>Title*</td>
+		  <td>
+                <input type="text" name="roleTitle" id="roleTitle" size="25" maxlength="30" value="$roleData.title" Title="Enter Role Title here  (Example: 'RoleTitle1')"/>
+		  </td>
+		</tr>
+		
+        <tr>
+          <td>Description</td>
+          <td>
+             	<textarea  name="roleDesc" id="roleDesc"  maxlength="200" cols="25" rows="5" type="text" Title="Enter Role Description here">$roleData.description</textarea>
+		  </td>
+       </tr>
+            
+        <tr>
+          <td colspan="2"><br>* indicates mandatory input<br><br></td>
+        </tr>
+          
+        <tr>
+		  <td colspan="2" align="left" valign="bottom">
+				<input type="submit" name="submit" value="Save" title="Save Details"/>
+				<input type="reset" name="Reset" value="Reset" title="Reset Form"/>
+				<input type="button" name="Cancel" value="Cancel" onClick="window.location.href='$servletPath/RoleManagement'" title="Cancel and return to previous page"/>
+			   <br>
+	 	  </td>
+		</tr>
+    </TABLE>
+    </td>
+    
+    <td rowspan="10" valign="top">
+    <TABLE class="rightTable">
+		<tr>
+		    <td valign="top"><br><b>Permission Group(s)*:</b></td>
+		</tr>
+		      
+		<tr>
+		    <td>
+		    	<select MULTIPLE name="rolePermGroups" size="6" style="min-width:180px;" Title="List of available Permission Groups">
+		   		##
+                ##  check all permission groups, and select those which are assigned to role
+                ##
+                #foreach( $permGroup in $availPermGroups )
+                    #set ($assigned=false)
+      					#foreach ( $assignedPermGrp in $roleData.permissionGroups )
+                           	#if ( $permGroup.permissionGroupName == $assignedPermGrp )
+		                                #set ($assigned=true)
+		                                #break;
+			                         #end ## if
+			                #end ## for
+
+			               	#if ( $assigned )
+                                    <option value="$permGroup.permissionGroupName" selected="true" > $permGroup.permissionGroupName </option>
+                            #else
+                                     <option value="$permGroup.permissionGroupName" > $permGroup.permissionGroupName </option>
+			                #end
+			                     
+                       	#end ## foreach
+				</select>
+			</td>
+		</tr>
+		      
+		<tr>
+			<td valign="bottom">Press 'Crtl+Permission Group' to<br>select more than one permission group</td>
+            <td><input name="formValid" type="hidden" id="formValid" value="yes">
+		</tr>
+	</TABLE></td></tr>				
+	
+	<tr align="left" valign="middle">		
+	<tr>
+		<td>
+     
+</TABLE></td></tr>
+
+    <tr>
+	    <td valign="top"  class="errormessage">$!errorMessage</td>
+	</tr>
+
+</TABLE>
+</FORM>     
+	
+	#parse( "footer.vm" )
+
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+
+
+
+
+

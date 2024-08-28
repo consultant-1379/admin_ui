@@ -1,0 +1,83 @@
+<html>
+<head><title>Ericsson Network IQ :: System Monitoring :: Monitoring Commands</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<script type="text/javascript">
+function changeVisibility(element) {
+	if (document.layers)
+	{
+		current = (document.layers[element].display == 'none') ? 'block' : 'none';
+		document.layers[element].display = current;
+	}
+	else if (document.all)
+	{
+		current = (document.all[element].style.display == 'none') ? 'block' : 'none';
+		document.all[element].style.display = current;
+	}
+	else if (document.getElementById)
+	{
+		vista = (document.getElementById(element).style.display == 'none') ? 'block' : 'none';
+		document.getElementById(element).style.display = vista;
+	}
+}
+</script>
+
+
+<link rel="shortcut icon" href="../img/eric.ico">
+
+</head>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font class="toplink" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="/adminui/servlet/LoaderStatusServlet">System Status</a> 
+&nbsp;&gt;&gt;&nbsp;Installed Licenses</font>
+<hr />
+<font face="Verdana,Helvetica,Arial" size="2"><center><b>Installed licenses</b></font>
+	#set( $counter = 1 )
+	#foreach ( $col in $Packs )
+		<table border="1">
+			<tr><td colspan="6" class="basic"><center><b>$col</b><center></td></tr>
+			<tr><td class ="midhdr">Suite</td><td class ="midhdr">Suite Feature Identity</td><td class="midhdr">Feature Description</td><td class="midhdr">License information</td></tr>
+			#set($flag = false)
+			#set($dummy = "")
+			#foreach($currlic in $licenses)
+				#if( $currlic.get(1).equals($col))
+				<tr>
+					#if( !$flag && $currlic.get(2) != $dummy)
+						<td class="basic" rowspan=$rowcount.get($currlic.get(2)) scope="rowgroup">$currlic.get(0)</td>
+						<td class="basic" rowspan=$rowcount.get($currlic.get(2)) scope="rowgroup">$currlic.get(2)</td>
+						#set( $flag = false)					
+					#end
+					<td class="basic">$currlic.get(4)</td>
+					<td class="basic">$currlic.get(5)<br />
+					
+						#if( !$currlic.get(6).equals(""))
+							<a href="#" onClick="changeVisibility('div$counter'); return false;">Show related interfaces</a><br />
+							<div id="div$counter" style="display: none;">$currlic.get(6)</div>
+						#set( $counter = $counter + 1 )
+						#end
+					#if( !$currlic.get(7).equals(""))
+							<a href="#" onClick="changeVisibility('div$counter'); return false;">Show related tech packs</a><br />
+							<div id="div$counter" style="display: none;">$currlic.get(7)</div>
+							#set( $counter = $counter + 1 )
+						#end
+					</td>
+					#set ($dummy = $currlic.get(2))
+				</tr>
+				#end
+			#end
+		</table>
+		<br><br>
+	#end	
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

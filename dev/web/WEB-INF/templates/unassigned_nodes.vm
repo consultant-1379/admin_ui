@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Node Assignment Tool</title>
+
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Node Assignment Tool&nbsp;&gt;&gt;&nbsp;<a href="UnAssignedNodes">Unassigned Nodes</a></font>
+<hr />
+
+<!-- Node Table Snapshot -->
+<br><br>
+#if($nodeSnap.size() > 0)
+<table name="ttable" id="ttable" border="1" width="100%" cellpadding="1" cellspacing="1">
+		<tr bgcolor="#B3B3FF">
+
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>FDN</strong></font></td> <!-- version -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>NeType</strong></font></td> <!-- NeType -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>ENMHostname</strong></font></td> <!-- ENMHostname -->
+		#foreach($set in $nodeSnap)
+				<tr>
+					#foreach($i in $set)
+					<td class="basic">$i</td>
+					#end
+					#end
+				</tr>
+				</tr>
+</table>
+#else
+<table border = "0">
+<tr><td><font face="Verdana,Helvetica,Arial" size="2"><center><b>There are no unassigned nodes.</b></center></font></td></tr>
+</table>
+#end
+<br><br>
+
+#parse( "footer.vm" )
+</table>
+
+</body>
+</html>

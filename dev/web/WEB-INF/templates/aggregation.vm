@@ -1,0 +1,226 @@
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Reaggregation</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<body bgcolor="#ffffff">
+<body bgcolor="#ffffff">
+
+<script language="javaScript">
+<!-- Begin
+
+function check()
+{
+	var checkBoxLength = document.f1.aggregated.length, z=0;
+	
+	var returnValue = false;
+
+  if((typeof checkBoxLength == 'undefined') && (document.f1.aggregated.checked == 1)) {
+	    returnValue = true;
+    }
+
+  else{
+         for(z=0;z<checkBoxLength;z++){
+     	    if(document.f1.aggregated[z].checked == 1){
+                   returnValue = true;
+            }
+         }
+    }
+
+	if(returnValue == false){
+	alert("Please choose atleast one MeasurementType for reaggregation.");
+	return false;
+	}
+	return true;
+}
+
+function LevelChanged()
+{
+  document.f1.timelevel_changed.value="yes"; 
+  document.f1.submit();
+}
+
+function AggregationSelected()
+{
+  document.f1.action[0].disabled=false;
+  document.f1.action[0].value="List";
+  document.f1.action[0].click();
+}
+
+function checkUncheckAll(theElement) {
+     var theForm = theElement.form, z = 0;
+	 for(z=0; z<theForm.length;z++){
+	      if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+		  	theForm[z].checked = theElement.checked;
+		  }
+     }
+}
+    
+function selectAll(formObj, isInverse) {
+   	for (var i=0;i < formObj.length;i++) {
+     fldObj = formObj.elements[i];
+      		
+      	if (fldObj.type == 'checkbox')
+      	{ 
+         	if(isInverse)
+         		fldObj.checked = (fldObj.checked) ? false : true;
+         	else fldObj.checked = true; 
+       	}
+    }
+}
+
+
+//-->
+</script>
+#include( "calendar_js.txt" )
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="Aggregation">Reaggregation</a></font>
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td>
+<hr />
+									  <font size="1" face="Verdana, Helvetica, Arial">
+									  ReAggregation display allows user to manually request aggregation. Following parameters has to be defined:<br /><br />
+									  <li>Aggregation level.(DAY, WEEK, MONTH)</li>
+									  									<li>Depending on timelevel, user is able to choose date, week or month to aggregate.</li>
+  <li>Tech Pack name</li>
+  <br />
+  <u>Filtering aggregations:</u><br>
+  Aggregations which are listed are filtered using Tech Pack name, scope and selected time scale. User is able to select which manual aggregation 
+  requests shall be made.
+  <br /><br />
+  <u>Different time scopes:</u><br>
+   * DAY-scope aggregations are issued for time between start and end date. Current date is not valid for aggregation.<br />
+   * WEEK-scope aggregations are issued for first day of the week <br />
+   * MONTH-scope aggregations are issued for first day of the month.<br /><br />
+  <u>Start time & end time.</u> <br />
+   * AdminUI issues reaggregation request for each moment of time between start and end time.
+</font></td></tr>
+</table>
+</br>
+<form name=f1 action=$req.getContextPath()/servlet/Aggregation method=post onsubmit="return filterFields();">
+<table border="0" cellpadding="4" cellspacing="0">
+	<tr>
+		<td class="pt_b_top_100">
+		<font size="-1" face="Verdana, Helvetica, Arial"><b>Time level</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td class="pt_b_text_100" valign=top ><font size=-1>
+		<input type=hidden name="timelevel_changed" value="">
+		<select name="level" value="DAY" style="font-size: 9;" onChange=LevelChanged()>
+		  <option selected value="$!level">$!level</option>
+		#foreach($unit in $scopes)
+		  #if ($unit != "COUNT")
+		  <option value="$unit">$unit</option>
+		  #end
+		#end
+		</select>
+		</font></td>
+	</tr>
+</table>
+<br />
+#if($error && $error != "null")
+  <b><font color="red" size=+1 face="Verdana, Helvetica, Arial">$error</font></b>
+  <br />
+#end
+#if( $!level != "")
+  <table border="0" cellpadding="0" cellspacing="0">
+	  <tr>
+		  <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>Start time</b></font></td>
+		  <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>End time</b></font></td>
+		  <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>Tech Pack name</b></font></td>
+	  </tr>
+	  <tr>
+  #if($level=="DAY")
+
+		    <td class="white_row" valign="top" class="basic"><font size=-1>
+		    #parse( "cal_select_1.vm" )
+		    </font></td>
+		    <td class="white_row" valign="top" class="basic"><font size=-1>
+		    #parse( "cal_select_2.vm" )
+	    	</font></td>
+  #end
+		
+  #if($level=="WEEK")
+	    	<td class="white_row" valign="top"><font size=-1>
+		    #parse( "cal_select_week_1.vm" )
+		    </font></td>
+			    <td class="white_row" valign="top"><font size=-1>
+		    #parse( "cal_select_week_2.vm" )
+		    </font></td>
+  #end
+		
+  #if($level=="MONTH")
+		    <td class="white_row" valign="top"><font size=-1>
+		    #parse( "cal_select_month_1.vm" )
+		    </font></td>		
+		    <td class="white_row" valign="top"><font size=-1>
+		    #parse( "cal_select_month_2.vm" )
+		    </font></td>
+  #end		
+		  <td class="white_row" valign=top><font size=-1>
+		  <select name="batch_name" style="font-size: 9;">
+		  $batch_name
+			  #foreach($pack in $techpacks)
+			    <option value="$pack.getValue()&$pack.getParam()">$pack.getParam()</option>
+		  	#end
+		  </select>
+  </td>
+	  </tr>
+	  <tr>
+    <td ><input class="submit_list" type="submit" value="List" name="list"/></td>
+  </tr>
+	  </td>
+	  	<td>&nbsp;
+	  </td>
+		  <td>&nbsp;
+	  </td>
+	  </tr>
+  </table>
+  #if($aggregations != 'null' || $aggregations.size() > 0)
+   <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+		     <td width="*" class="pt_b_top_10" nowrap><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/></td> <!-- Select all -->
+		     <td class="pt_b_top_300"><font size=-1 face="Verdana, Helvetica, Arial"><b>Aggregation</b></font></td>
+		     <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>Date</b></font></td>
+    </tr>
+    <!-- iteration starts -->
+    #foreach($aggro in $aggregations)
+      <tr>
+      	<td class="white_row_10"><input type="checkbox" name="aggregated" value="$aggro.getParam()&$aggro.getValue()"></td>
+        <td class="white_row" nowrap>$aggro.getParam()</td>
+        <td class="white_row">$aggro.getValue()</td>
+      </tr>
+    #end
+    <!-- iteration ends -->
+    <tr>
+      <td colspan="2"><input class="submit" OnClick="return check();" type="submit" value="Aggregate" name="aggregate"/></td>
+       
+    </tr>
+   </table>
+  #end
+  <br>
+#end
+</form>
+
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

@@ -1,0 +1,306 @@
+package com.distocraft.dc5000.etl.gui.systemmonitor;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.ericsson.eniq.common.RemoteExecutor;
+import com.ericsson.eniq.repository.DBUsersGet;
+import com.jcraft.jsch.JSchException;
+
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.Template;
+import org.apache.velocity.context.Context;
+
+import com.distocraft.dc5000.etl.gui.common.EtlguiServlet;
+import com.distocraft.dc5000.etl.rock.Meta_databases;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public  class ReportExtraction extends EtlguiServlet
+{
+	private static final String EXTRACT_REPORT_PACKAGE_TEMPLATE = "reportextraction.vm";
+	private static String scriptPath = "/usr/bin/bash /eniq/sw/installer/extract_reports.bsh";
+	private static String swLocateAddress = "/eniq/installation/config/eniq_sw_locate";
+	private static final String UPGRADE_PATH = "/var/tmp/FFU_upgrade_path_file";
+	private static final File UPGRADE_PATH_FILE = new File(UPGRADE_PATH);
+	private static final String DCUSER = "dcuser";
+	protected static final String HOST_ADD = "webserver";
+	final String service_name = "scheduler";
+	private String systemCommandString = "";
+	public String UpgradePath= "";
+	public String configpath = "";
+	
+	private static String ConfigPath = "cd";
+	
+	final Log log = LogFactory.getLog(this.getClass());
+	
+	
+	private String defaultPath = "";
+	private File file ;
+	private FileReader stream;
+	private BufferedReader buf;
+	private String upgradePath = "";
+	
+	
+	@Override
+	public Template doHandleRequest(HttpServletRequest request, HttpServletResponse response, Context ctx)
+			throws Exception {
+		
+		String featurePath = request.getParameter("featurepath");
+		String Path = request.getParameter("submitPath");
+		String extract = request.getParameter("Extract Package");
+		
+		log.info("The featurepath is " +featurePath);
+		log.info("The path is" +Path);
+		log.info("The extract is" +extract);
+		
+		
+		//ReportExtraction reportextraction = new ReportExtraction(); 
+		
+		
+		this.defaultPath=getDefaultMWSPath();
+				ctx.put("defaultPath", defaultPath);
+				
+		
+		//log.info("upgrade path - " + getUpgradePath());
+		if (defaultPath!=null && !defaultPath.isEmpty()) 
+		{
+			if(featurePath != null && !featurePath.isEmpty() )  
+			{
+				writeUserPath(featurePath);
+				setUpgradePath(featurePath);
+				log.info("Set1 is executed");
+				//extractor();
+				
+				File file = new File (featurePath);
+				if(file.exists())
+				{
+					File Pathfile = new File(UpgradePath);
+			        File[] files = Pathfile.listFiles();
+			        String pattern = "(Report_Package)a?";
+			        Pattern r = Pattern.compile(pattern);
+			        for(File f: files)
+			        {
+			        	//log.info(f.getName());
+			        	//ArrayList  al = new ArrayList<>();
+			            //al.add(f.getName());
+			            //log.info("The packages inside the folder are " +al);
+			            
+			            
+			            Matcher m = r.matcher(f.getName());
+			            if (m.find( )) 
+			             {
+			               ctx.put("undetermined_path",false); 
+			             }
+			            
+					//log.info("The upgrade path in set1 is" + upgradePath );
+					//ctx.put("emptyConfigPath", true);
+				}	
+				}
+				else
+				{
+					 ctx.put("undetermined_path",true);
+					 	writeUserPath(defaultPath);
+						setUpgradePath(defaultPath);
+					 
+				}
+					
+			}
+		
+			else 
+			{
+				
+				log.info("set2 is executed");
+				writeUserPath(defaultPath);
+				setUpgradePath(defaultPath);
+				if(Path!=null)
+				{
+				ctx.put("emptyConfigPath", true);
+				log.info("path not equal to null");
+				}
+				else
+				{
+					log.info("path equal to null");
+					ctx.put("emptyConfigPath", false);
+					
+				}
+			}
+			
+		}
+		
+			else {
+				if(!UPGRADE_PATH_FILE.exists()){
+					log.info("The file dows not exists");
+					writeUserPath(getUpgradePath());
+					setUpgradePath(defaultPath);
+					
+					
+				}else{
+					stream = new FileReader(UPGRADE_PATH_FILE);
+					buf = new BufferedReader(stream);
+					String line = "";
+					log.info("set4 is executed");
+					while ((line = buf.readLine()) != null) {
+						setUpgradePath(line);
+						
+						
+					}
+				}
+		}
+		
+		
+		//log.info("The upgrade path 1 outside set1 is" + upgradePath ); 
+		UpgradePath = getUpgradePath();
+		//log.info("The upgrade path 2 is " +UpgradePath);
+		ctx.put("upgradePath", UpgradePath);
+		//log.info("The upgrade path is " + getUpgradePath());
+		if (extract!= null) {
+            executor();
+            ctx.put("successful", true);
+           }
+		
+		
+
+		
+		return getTemplate(EXTRACT_REPORT_PACKAGE_TEMPLATE);
+}
+	
+	
+	private void writeUserPath(String featurePath) {
+		try{
+		    PrintWriter writer = new PrintWriter(UPGRADE_PATH, "UTF-8");
+		    writer.println(featurePath);
+		    writer.close();
+		} catch (IOException e) {
+		   log.warn("Exception in writing user entered path to " + UPGRADE_PATH + " due to " + e.getMessage());
+		}	
+	}
+	private String getUpgradePath() {
+		return upgradePath;
+		}
+	private void setUpgradePath(String upgradePath) {
+		this.upgradePath = upgradePath;
+		
+	}
+
+	String getDefaultMWSPath() 
+	{
+		
+
+		file = new File(swLocateAddress);
+
+		try {
+			String defaultPath = "";
+			
+			stream = new FileReader(file);
+
+			buf = new BufferedReader(stream);
+			
+			String line = "";
+			
+			while ((line = buf.readLine()) != null) {
+				
+				String str[] = line.split("/");
+				
+				String mwsServerIP = str[0].substring(0, (str[0].length() - 1));
+				String UpgradeTrack = str[4];
+				log.debug("Upgrade track is: " + UpgradeTrack);
+				String[] strn = UpgradeTrack.split("\\.");
+
+				String eniqTrack = strn[0];
+
+				if (strn[1].equals("0")) {
+					eniqTrack = eniqTrack.concat("A");
+				} else if (strn[1].equals("2")) {
+					eniqTrack = eniqTrack.concat("B");
+				}
+				log.debug("ENIQ track is: "+eniqTrack);
+
+				defaultPath = "/net/" + mwsServerIP + "/JUMP/ENIQ_STATS/ENIQ_STATS/Features_" + eniqTrack + "_"
+						+ UpgradeTrack + "/eniq_reports";
+				log.info("The default path is " + defaultPath); 
+			}
+			
+			return defaultPath;
+			
+
+		} catch (FileNotFoundException e) {
+			log.warn("File at " + swLocateAddress + "not found " + e.getMessage() );
+			return null;
+		} catch (IOException e) {
+			log.warn("Unable to read "+ swLocateAddress + e.getMessage() );
+			return null;
+		} catch (Exception e){
+			log.warn("Exception while determining the track " + e.getMessage());
+			return null;
+		}	
+	}
+	private static String getPwd(String userName, String servicename) throws Exception {
+		List<Meta_databases> mdList = DBUsersGet.getMetaDatabases(userName,servicename);
+		if (mdList.isEmpty()) {
+			mdList = DBUsersGet.getMetaDatabases(userName, servicename);
+			if (mdList.isEmpty()) {
+				throw new Exception("Could not find an entry for " + userName + ":"
+						+ servicename + " in repdb! (was is added?)");
+			}
+		}
+		return mdList.get(0).getPassword();
+	}
+	private  void executor() throws Exception{
+		systemCommandString = scriptPath + " "+UpgradePath;
+		String getPassword = getPwd(DCUSER,ReportExtraction.HOST_ADD);
+		
+		try {
+			//ProcessBuilder pb = new ProcessBuilder("/bin/bash /eniq/sw/installer/extract_reports.bsh",  "systemCommandString");
+			 String result = RemoteExecutor.executeComand(DCUSER,getPassword,HOST_ADD,systemCommandString);
+			log.info("DCUSER is " + DCUSER);
+			log.info("DCUSERPWD is " + getPassword);
+			log.info("Service name is " + service_name);
+			log.info("The systemCommandString is " + systemCommandString);
+			log.info("The upgraded path is " + UpgradePath);
+			log.info("Executed result "+ result);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			log.info("IOException is there" + e);
+		} catch (JSchException e) {
+			e.printStackTrace();
+			log.warn("JSchException is there" + e);
+		}
+	   }
+	
+		
+	
+	
+	   
+	
+}
+	
+
+	
+
+
+	
+
+	
+		
+
+
+

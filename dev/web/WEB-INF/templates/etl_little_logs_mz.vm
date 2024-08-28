@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>ETLC Session Logs</TITLE>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</HEAD>
+
+<BODY>
+
+<TABLE width="500"  cellspacing="0" cellpadding="1">
+<TR>
+	<TD width="20"><b><a href="#" onclick="window.close()">Close</a></b></TD>
+	<TD width="100" align="left"></TD>
+</TR>
+<TR>
+	<TD bgcolor="#B3B3FF" width="30%"><font face="Verdana,Helvetica,Arial"><b>Row info</b></font></TD>
+	<TD width="70%">&nbsp;</TD>
+</TR>
+<TR>
+	<TD bgcolor="#B3B3FF">&nbsp;</TD>
+	<TD>&nbsp;</TD>
+</TR>
+</table>
+<br>
+		#if($logger.size() > 1)
+			#set($typeNameColor = "white")
+		#else
+			#set($typeNameColor = "silver")
+		#end
+		#set($index = 0)
+		#foreach($vektor in $logger)
+			<TABLE width="100%"  cellspacing="0" cellpadding="1" border=1>
+			
+			
+			#foreach($ent in $vektor)
+				#if($rowindex % 2 == 0 )
+				#set($color = "white")
+				#else
+				#set($color = "silver")
+				#end
+				#if($index == 0)
+					<TR>
+					<td bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Session ID</strong></font></td>	
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+				#end
+				#if($index == 1)
+					<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Source Name</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+
+				#end
+				#if($index == 2)
+				<TR>
+					<td   bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Batch ID</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+				</TR>
+				#end
+				#if($index == 3)
+					<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>File Processed Date</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+
+				#end
+				#if($index == 4)
+					<TR>
+					<td   bgcolor="#B3B3FF"nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Source FileName</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					<TR>
+
+				#end
+				#if($index == 5)
+				<TR>
+					<td   bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Parsing Starttime</strong></font></td>
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+
+				#end
+				#if($index == 6)
+				<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Parsing EndTime</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+
+				#end
+				#if($index == 7)
+					<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Type Name</strong></font></td> 
+					<TD bgcolor="$typeNameColor" nowrap>$ent</TD>
+					</TR>
+				#end
+				#if($index == 8)
+					<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>InputFile Starttime</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+
+				#end
+				#if($index == 9)
+					<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Valid Events</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+				#end
+				#if($index == 10)
+				<TR>
+					<td   bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Processing</strong></font></td>
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					</TR>
+
+				#end
+				#if($index == 11)
+				<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Workflow Name</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+					<TR>
+
+				#end
+				#if($index == 12)
+				<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Corrupted Events</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+				</TR>
+				#end
+
+				#if($index == 13)
+				<TR>
+					<td  bgcolor="#B3B3FF" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>InputFile Endtime</strong></font></td> 
+					<TD bgcolor="$color" nowrap>$ent</TD>
+				</TR>
+				#end
+				#set($index = $index + 1)
+			#end
+			#set($index = 0)
+			</TABLE>
+			<hr />
+		#end
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

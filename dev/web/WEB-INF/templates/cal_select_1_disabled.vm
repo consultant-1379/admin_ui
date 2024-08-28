@@ -1,0 +1,113 @@
+		<select name=year_1 style="font-size: 9;" onchange="this.selectedIndex=0;">
+			<option selected value=$year_1>$year_1</option>
+			#if($validYearRange)
+				#foreach( $validYear in $validYearRange )
+					#if($validYear != $year_1)
+					<option value=$validYear>$validYear</option>
+					#end
+				#end
+			#elseif($futureYearRange)
+				#foreach ( $futureYear in $futureYearRange )
+					#if($futureYear != $year_1)
+					   <option value=$futureYear>$futureYear</option>
+					#end
+				#end
+			#else
+				#foreach ( $iyear in [2005..2015] )
+					<option value="$iyear">$iyear</option>		
+				#end
+			#end
+		</select>
+		<select name=month_1 style="font-size: 9;" onchange="this.selectedIndex=0;">
+			#if( $month_1 == "1" ||  $month_1 == "2" || $month_1 == "3" ||  $month_1 == "4" || $month_1 == "5" ||  $month_1 == "6" || $month_1 == "7" ||  $month_1 == "8" || $month_1 == "9" )
+				<option selected value=0$month_1>0$month_1</option>
+			#else
+				<option selected value=$month_1>$month_1</option>
+			#end
+			<option value=01>01</option>
+			<option value=02>02</option><option value=03>03</option>
+			<option value=04>04</option><option value=05>05</option>
+			<option value=06>06</option><option value=07>07</option>
+			<option value=08>08</option><option value=09>09</option>
+			<option value=10>10</option><option value=11>11</option>
+			<option value=12>12</option>
+		</select>
+		<select name=day_1 style="font-size: 9;" onchange="this.selectedIndex=0;">
+			#if( $day_1 == "1" || $day_1 == "2" || $day_1 == "3" || $day_1 == "4" || $day_1 == "5" || $day_1 == "6" || $day_1 == "7" || $day_1 == "8" || $day_1 == "9" )
+				<option selected value=0$day_1>0$day_1</option>
+			#else
+				<option selected value=$day_1>$day_1</option>
+			#end
+			
+			#if ($month_1 == "04" || $month_1 == "06" || $month_1 == "09" || $month_1 == "11")
+				<option value=01>01</option>
+				<option value=02>02</option><option value=03>03</option>
+				<option value=04>04</option><option value=05>05</option>
+				<option value=06>06</option><option value=07>07</option>
+				<option value=08>08</option><option value=09>09</option>
+				<option value=10>10</option><option value=11>11</option>
+				<option value=12>12</option><option value=13>13</option>
+				<option value=14>14</option><option value=15>15</option>
+				<option value=16>16</option><option value=17>17</option>
+				<option value=18>18</option><option value=19>19</option>
+				<option value=20>20</option><option value=21>21</option>
+				<option value=22>22</option><option value=23>23</option>
+				<option value=24>24</option><option value=25>25</option>
+				<option value=26>26</option><option value=27>27</option>
+				<option value=28>28</option><option value=29>29</option>
+				<option value=30>30</option>
+						
+			#elseif ($month_1 == "02")
+				#if ( $year_1 % 4 == 0 )
+					<option value=01>01</option>
+					<option value=02>02</option><option value=03>03</option>
+					<option value=04>04</option><option value=05>05</option>
+					<option value=06>06</option><option value=07>07</option>
+					<option value=08>08</option><option value=09>09</option>
+					<option value=10>10</option><option value=11>11</option>
+					<option value=12>12</option><option value=13>13</option>
+					<option value=14>14</option><option value=15>15</option>
+					<option value=16>16</option><option value=17>17</option>
+					<option value=18>18</option><option value=19>19</option>
+					<option value=20>20</option><option value=21>21</option>
+					<option value=22>22</option><option value=23>23</option>
+					<option value=24>24</option><option value=25>25</option>
+					<option value=26>26</option><option value=27>27</option>
+					<option value=28>28</option><option value=29>29</option>
+				#else
+					<option value=01>01</option>
+					<option value=02>02</option><option value=03>03</option>
+					<option value=04>04</option><option value=05>05</option>
+					<option value=06>06</option><option value=07>07</option>
+					<option value=08>08</option><option value=09>09</option>
+					<option value=10>10</option><option value=11>11</option>
+					<option value=12>12</option><option value=13>13</option>
+					<option value=14>14</option><option value=15>15</option>
+					<option value=16>16</option><option value=17>17</option>
+					<option value=18>18</option><option value=19>19</option>
+					<option value=20>20</option><option value=21>21</option>
+					<option value=22>22</option><option value=23>23</option>
+					<option value=24>24</option><option value=25>25</option>
+					<option value=26>26</option><option value=27>27</option>
+					<option value=28>28</option>
+				#end
+			#else 
+				<option value=01>01</option>
+				<option value=02>02</option><option value=03>03</option>
+				<option value=04>04</option><option value=05>05</option>
+				<option value=06>06</option><option value=07>07</option>
+				<option value=08>08</option><option value=09>09</option>
+				<option value=10>10</option><option value=11>11</option>
+				<option value=12>12</option><option value=13>13</option>
+				<option value=14>14</option><option value=15>15</option>
+				<option value=16>16</option><option value=17>17</option>
+				<option value=18>18</option><option value=19>19</option>
+				<option value=20>20</option><option value=21>21</option>
+				<option value=22>22</option><option value=23>23</option>
+				<option value=24>24</option><option value=25>25</option>
+				<option value=26>26</option><option value=27>27</option>
+				<option value=28>28</option><option value=29>29</option>
+				<option value=30>30</option><option value=31>31</option>
+			#end
+
+		</select>

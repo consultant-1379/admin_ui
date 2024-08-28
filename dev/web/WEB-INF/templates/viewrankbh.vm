@@ -1,0 +1,148 @@
+#if (!$search_string)
+#set ($search_string = "-")
+#end
+
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	    <link rel="shortcut icon" href="../img/eric.ico">
+		<title>Ericsson Network IQ :: Data Verification :: RANKBH Information</title>
+		#include( "calendar_js.txt" )
+		<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+		
+		<script type="text/javascript">
+			<!--
+			
+			function check() {
+			
+			   var strString = "";
+			
+			   var strValidChars = "0123456789";
+			   var strChar;
+			   var blnResult = true;
+			
+			   strString = document.f1.row_limit.value;
+				
+				//  test strString consists of valid characters listed above
+				for (i = 0; i < strString.length && blnResult == true; i++) {
+		      
+					strChar = strString.charAt(i);
+		      
+					if (strValidChars.indexOf(strChar) == -1) {
+						blnResult = false;
+						e = "Number of rows is not numeric.\n";
+					}
+				}
+				
+			   if (blnResult == false) {
+				alert(e);
+				return false;
+			   } else {
+				document.f1.submit();
+				return (true && filterFields());
+			   }
+			
+			 }
+			  // -->
+			</SCRIPT>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<table border="0">
+			<tr valign=top>
+				<td width=220>
+					#parse( "main_menu.vm" )
+				</td>
+				<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Verification&nbsp;&gt;&gt;&nbsp;<a href="ViewRankBH">RANKBH Information</a></font>
+<hr />
+					<form name=f1 action=$req.getContextPath()/servlet/ViewRankBH method=post onsubmit="var b = filterFields();check();return b">
+						<table border=1>
+							<tr>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>RANKBH Tables</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>Start Date</b></font>
+								</td>
+								<td class="basichdr" align="center">
+									<font size="-1"><b>Search<br>End Date</b></font>
+								</td>
+							</tr>
+							<tr>
+								<td valign=top>
+									<font size="-1">
+										<select name="search_string" style="font-size: 9;">
+											<option selected>$search_string</option>
+											#foreach ( $item in $initialArray)
+											<option>$item</option>
+											#end
+										</select>
+									</font>
+								</td>
+								<td valign=top>
+									#parse( "cal_select_1.vm" )
+								</td>
+								<td valign=top>
+									#parse( "cal_select_2.vm" )
+								</td>
+							</tr>
+							<tr>
+								<td valign=top colspan=1>
+									<input type="hidden" name="search_done" value="true">
+									<input type=submit style="font-size: 11;" value="Get Information" onclick="getInputValue();" id="submitbtn">
+								</td>
+								<td class="basic" valign=top colspan=2>
+								Number of rows <input type="number" id="inputTxt" maxlength="3" name="row_limit" value=$row_limit min="0" max="500" >
+								</td>
+							</tr>
+						</table>
+					</form>
+					
+					<p><hr size="1"><p>
+
+#if ($search_done == "true")
+
+	
+	#if ($row_limit == 0)
+	<table>
+	 <tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Selected number of rows should be greater than 0</font></b>
+		</tr>
+	 <tr><td>&nbsp;</td></tr>
+	</table>
+	#end
+	<!-- if number of rows > row limit by 1, then there is more rows in database -->
+	
+	
+	#if($row_limit != 0)
+	<table border="1">
+		#foreach($row in $resultArray)
+			<tr>
+			#foreach($col in $row)
+			<td class="basic" valign="top"><font face="Verdana,Helvetica,Arial" size="1">
+			$col
+			</font></td>
+			#end
+			</tr>
+		#end
+	</table>
+	#end
+#end
+				</td>
+			</tr>
+			#parse( "footer.vm" )
+		</table>
+	</body>
+</html>
+
+<script>
+        function getInputValue(){
+          var inputVal = document.getElementById("inputTxt").value;
+            if (inputVal > 500 || inputVal < 0){
+            alert("The number of row should range between 0 and 500");
+            $("#submitbtn").attr("disabled", true);
+  }
+     }
+    </script>

@@ -1,0 +1,23 @@
+var C7=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">7 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_fjvs\"></a><a name=\"CHAPTER7\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Changing the LDAP Administrator Password</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"This chapter describes how to modify the LDAP Administrator password\n" +
+"in ENIQ Events (if required).</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Login to Coordinator server as <tt class=\"file-path\">root</tt>.<p>\n" +
+" <tt class=\"output\">[coordinator]</tt> <tt class=\"output\">{root}</tt><tt class=\"output\">#:</tt> <tt class=\"input\"><b>bash /eniq/admin/bin/change_LDAP_password.bsh\n" +
+"&ndash;n &lt;<i class=\"var\">new password</i>></b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">[coordinator]</tt> <tt class=\"output\">{root}</tt><tt class=\"output\">#:</tt> <tt class=\"input\"><b>exit</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Login to presentation server as <tt class=\"file-path\">dcuser</tt>.<p>\n" +
+"<tt class=\"output\">[presentation]</tt> <tt class=\"output\">{dcuser}</tt><tt class=\"output\">#:</tt> <tt class=\"input\"><b>glassfish restart</b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"output\">[presentation]</tt> <tt class=\"output\">{dcuser}</tt><tt class=\"output\">#:</tt> <tt class=\"input\"><b>exit</b></tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Contact Ericsson Local Support if any issues seen while executing\n" +
+"the script.</dd></dl><br /></li></ol>\n" +
+"\n"+
+"</div>\n";
+

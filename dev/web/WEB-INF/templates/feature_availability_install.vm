@@ -1,0 +1,470 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: Feature Version Manager :: Install Features</title>
+		<!-- This is for evaluation..-->
+		<link rel="stylesheet" type="text/css" href="../css/admin.css">
+		<link rel="shortcut icon" href="../img/eric.ico">
+		<script>
+		/*window.confirm = function()
+	{
+    return true;
+	}*/
+#if($update_alert)
+	window.onload = function(){
+	alert("Features cannot be installed while update/commit/rollback is ongoing.");
+}
+#end
+
+</script>
+</head>
+<style type='text/css'>
+</style>
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+	<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<form name=f2 autocomplete="off" method=post action=$req.getContextPath()/servlet/InstallFeatures onsubmit="return filterFields();">Feature Version Manager&nbsp;&gt;&gt;&nbsp;<a href="InstallFeatures">Install Features</a>
+<hr />
+#if(!$no_features_for_installation)
+	#if($UPGRADE_RESULT == "NO UPGRADE")
+	<script>
+	var count = 0;
+	function countCheckboxes(id){
+		if(document.getElementById(id).type=="checkbox" && document.getElementById(id).checked===true){
+			count++;	
+		}
+	}
+	function hideNoValidFeatureMessage(){
+		 document.getElementById('NovalidFeatures').style.display = 'none';
+	}
+	#if ($undetermined_path)
+	window.onload = function(){
+		alert("Default Path is selected since configured path is incorrect.");
+	}
+	#end
+	#if ($emptyConfigPath)
+	alert("Default Path is selected since configured path is empty.");
+	#end
+	#if ($undeterminedPathWithNoDefault)
+	window.onload = function(){
+		alert("Please enter appropriate path.");
+	}
+	#end
+	#if($mws_unreachable)
+	alert("Configured MWS is unreachable. Please check.")
+	#end
+	</script>
+
+<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Software Path</b></font>
+<table border="1">
+<tr valign=top><td style="background-color: #B3B3FF;">
+#if($upgradePath == "NA")
+	<b>DEFAULT PATH</b></td><td style="color:red" ><center>UNABLE TO SET UP DEFAULT PATH.PLEASE CONFIGURE APPROPRIATE PATH.<center></td></tr>
+	<tr valign=top><td style="background-color: #B3B3FF;">
+	<b>CONFIGURED PATH</b></td><td><input type="text" style="width: 550px;font-size: 10;" name="featurepath" value="">
+	<input OnClick="return check();" type="submit" style="font-size: 11;float: right;" name="submitPath" value="Submit">
+	</td></tr>
+	#elseif($defaultPath == "NA")
+	<b>DEFAULT PATH</b></td><td ><center>NO VALID DEFAULT PATH<center></td></tr>
+	<tr valign=top><td style="background-color: #B3B3FF;">
+	<b>CONFIGURED PATH</b></td><td><input type="text" style="width: 550px;font-size: 10;" name="featurepath" value="$upgradePath">
+	<input OnClick="return check();" type="submit" style="font-size: 11;float: right;" name="submitPath" value="Submit">
+	</td></tr>
+	#else
+		<b>DEFAULT PATH</b></td><td >$defaultPath</td></tr>
+		<tr valign=top><td style="background-color: #B3B3FF;">
+		<b>CONFIGURED PATH</b></td><td><input type="text" style="width: 550px;font-size: 10;" name="featurepath" value="$upgradePath">
+		<input OnClick="return check();" type="submit" style="font-size: 11;float: right;" name="submitPath" value="Submit">
+#end
+	</td></tr>
+	</table>
+	<br><br>
+	#if($licensed_featurelist.size() != 0)
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Availability Summary for Install of Teckpack Features</b></font>
+	<br><br>
+	<table border="1">
+		
+		<tr><td class="midhdr" style="text-align:center">Feature</td>
+		<td class="midhdr" style="text-align:center">Node type</td>
+		<td class="midhdr" style="text-align:center">Node Version - MWS</td>
+		##To be availed if asked for<td class="midhdr" style="text-align:center">Install Available</td>
+		<td class="midhdr" style="text-align:center">OSS Alias</td>
+		##<td class="midhdr" style="text-align:center">Install Priority</td></tr>
+	
+		#set($dummy = "")
+		#foreach ( $features in $licensed_featurelist.keySet())
+		#set($featureSize = $licensed_featurelist.get($features).size())
+		#set($flag = false)
+		#if($featureSize != 0)
+			#foreach ( $nodeType in $licensed_featurelist.get($features).keySet())
+			<tr>
+				#if( !$flag && $features != $dummy)
+					<td nowrap class="basic" size="1" rowspan=$featureSize>$features</td>
+					#set( $flag = true)
+					#set( $rowFlag=false)				
+				#end
+				#if($licensed_featurelist.get($features).get($nodeType).get("NODE_TYPE").equals("NA"))
+					<td class="basic"  style="padding: 10px;" bgcolor="silver"></td>
+					<td class="basic"  style="padding: 10px;"></td>
+				#else
+					<td class="basic">$licensed_featurelist.get($features).get($nodeType).get("NODE_TYPE")</td>
+					<td class="basic">$licensed_featurelist.get($features).get($nodeType).get("NODE_VERSION_SW_GW")</td>
+				#end
+				#if(!$rowFlag)
+				#set( $rowFlag=true)
+				#set($cxc=$licensed_featurelist.get($features).get($nodeType).get("CXCNUMBER"))
+				##Install available to be availed if required <td class="basic" rowspan=$featureSize style="text-align: center;vertical-align: middle;" ><input type="checkbox"></td>
+				<td class="basic" rowspan=$featureSize style="text-align: center;vertical-align: middle;"><ul style="list-style-type:none">
+				#foreach($oss in $ossalias)
+				<li style="font-size : 12;"><input type="checkbox" name="featureOSS" value="$cxc::$features::$oss" onclick="countCheckboxes(this.id);hideNoValidFeatureMessage();" id="$cxc">&nbsp$oss</li>	
+				#end
+				</ul></td> 	
+				##<td class="basic" rowspan=$featureSize></td>			
+				#end
+			</tr>
+			</tr>
+			#end
+			#set($dummy = $features )
+			#else
+			<tr><td class="basic" >$features</td>
+			<td></td>
+			<td></td>
+			##<td class="basic" style="text-align: center; vertical-align: middle;"><input type="checkbox"></td>
+			<td></td>
+			##<td></td>
+			</tr>
+			#end		
+		#end
+		
+	</table>
+<br><br>
+<table class="myt" style="width:1000;">
+<tr><td><font size="2">
+	<p><b>Note : </b>Shared-CNF Node-Type is applicable for all the Cloud Native Network Functions</p>
+	</font>
+</td></tr>
+</table>
+<br><br>
+#if($isAdminExist)
+<font face="Verdana,Helvetica,Arial" size="2"><p style="margin-right:60px;text-align:right;font-weight: bold">Enter ENIQ-S Admin Username:</font>
+<input type="text" id="username" name="userName">
+<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S Admin Password:</font>
+<input type="password" style="display:none;">
+<input type="password" name="rootPassword" id="installpwd">
+#else
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S root password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="installpwd">
+#end
+
+	<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" name="Install" id="install" value="Install"/>
+	#if($wrong_pwd)
+	 #if($isAdminExist)
+		 <font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect Username or password</font>
+	 #else
+		 <font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect password</font> 
+	#end
+	<font size="1" face="Verdana, Helvetica, Arial">
+			<br><br>
+			   If ENIQ Statistics node hardening procedure has been applied, account lockout policy might be configured to provide 
+			   Brute force protection. Please refer to the “ENIQ Node hardening Guide” for further details in case of logon issues.
+			<br><br>
+    </font>
+#end
+
+	#if($empty_feat)
+		<div id="NovalidFeatures">
+			<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">No valid features selected</font>
+		</div>
+	#end
+	#end
+	#elseif($UPGRADE_RESULT == "FEATURE COMMIT IN PROGRESS" || $UPGRADE_RESULT == "FEATURE COMMIT FAILED" || $UPGRADE_RESULT == "FEATURE COMMIT SUCCESSFUL")
+	#if($UPGRADE_RESULT == "FEATURE COMMIT IN PROGRESS")
+	<script language="JavaScript">
+	setTimeout(function(){
+		window.location = window.location.href;
+		//location.reload();
+	},$REFRESH_PERIOD)
+	</script>
+	#end
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Commit Overview</b> - $UPGRADE_RESULT</center></font>
+	<br><br>
+	<table border="1" align="center">
+	<tr><td class="midhdr" style="width:140px">COMMIT STAGE</td><td class="midhdr" style="width:140px">CURRENT STATUS</td></tr>
+	#foreach($eachStage in $stageList)
+	#if($stageMap.get($eachStage)=="COMPLETED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#047e01"><font color="white">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="IN PROGRESS")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#90ee90"><font color="black">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="QUEUED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#00ffff"><font color="black">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="FAILED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#CC0000"><font color="white">$stageMap.get($eachStage)</font></td></tr>
+		#else
+			<tr><td class="basic">$eachStage</td><td class="basic">$stageMap.get($eachStage)</td></tr>
+		#end
+	#end
+	</table>
+	<br><br>
+	#if($UPGRADE_RESULT == "FEATURE COMMIT FAILED")
+		<font size="1" face="Verdana, Helvetica, Arial">
+		If commit fails,trigger the commit again from CLI on ENIQ Statistics server.
+	#end
+	#elseif($UPGRADE_RESULT == "FEATURE ROLLBACK IN PROGRESS" || $UPGRADE_RESULT == "FEATURE ROLLBACK FAILED" || $UPGRADE_RESULT == "FEATURE ROLLBACK SUCCESSFUL")
+	<!--#if($UPGRADE_RESULT == "FEATURE ROLLBACK IN PROGRESS")
+	<script language="JavaScript">
+	setTimeout(function(){
+		window.location = window.location.href;
+		//location.reload();
+	},$REFRESH_PERIOD)
+	</script>
+	#end-->
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Rollback Overview</b> - $UPGRADE_RESULT</center></font>
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><b>Note:</b>ENIQ Services will be stopped during the rollback process - this page will not be available at that time</font>
+	<br>
+	##<font face="Verdana,Helvetica,Arial" size="2">Please monitor progress of rollback in the logs in directory '/eniq/local_logs/rollback/'</font>
+	<br>
+	<font face="Verdana,Helvetica,Arial" size="2">Please refresh this page and login after the ENIQ Services have been restarted</font>
+	<br><br>
+	<table border="1" align="center">
+	<tr><td class="midhdr" style="width:140px">ROLLBACK STAGE</td><td class="midhdr" style="width:140px">CURRENT STATUS</td></tr>
+	#foreach($eachStage in $stageList)
+	#if($stageMap.get($eachStage)=="COMPLETED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#047e01"><font color="white">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="IN PROGRESS")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#90ee90"><font color="black">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="QUEUED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#00ffff"><font color="black">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="FAILED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#CC0000"><font color="white">$stageMap.get($eachStage)</font></td></tr>
+		#else
+			<tr><td class="basic">$eachStage</td><td class="basic">$stageMap.get($eachStage)</td></tr>
+		#end
+	#end
+	</table>
+	<br><br>
+	<!-- <font face="Verdana,Helvetica,Arial" size="2"><b>Commit Status -</b> $UPGRADE_RESULT</font> -->
+	#else
+	<script language="JavaScript">
+	function rlbk_msg() {
+	    alert("ENIQ Services will be stopped during rollback - this page will not be available at that time!");
+	}
+	</script>
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Installation Overview</b> - $UPGRADE_RESULT</center></font>
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><b>Feature Installation Stages</b></font>
+	<table border="1">
+	<tr><td class="midhdr" style="width:140px">UPDATE STAGE</td><td class="midhdr" style="width:140px">CURRENT STATUS</td></tr>
+	#foreach($eachStage in $stageList)
+	#if($stageMap.get($eachStage)=="COMPLETED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#047e01"><font color="white">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="IN PROGRESS")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#90ee90"><font color="black">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="QUEUED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#00ffff"><font color="black">$stageMap.get($eachStage)</font></td></tr>
+		#elseif($stageMap.get($eachStage)=="FAILED")
+			<tr><td class="basic">$eachStage</td><td class="basic" bgcolor="#CC0000"><font color="white">$stageMap.get($eachStage)</font></td></tr>
+		#else
+			<tr><td class="basic">$eachStage</td><td class="basic">$stageMap.get($eachStage)</td></tr>
+		#end
+	#end
+	</table>
+	<!--<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><b>Installation Status -</b> $UPGRADE_RESULT</font>-->
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Feature Installation Status</b></center></font>
+	<br><br>
+	<table border="1">
+	<tr>
+	<td class="midhdr">Feature</td>
+	<td class="midhdr">Feature Installation Status</td>
+	<td class="midhdr">OSS Alias</td>
+	<td class="midhdr">Interface Activation Status</td>
+	</tr>
+	#set ($seq = 0)
+	#foreach ( $featuresSelect in $featureListFile)
+	#if($statusMap.get($featuresSelect)=="COMPLETED")
+			<tr><td class="basic">$featuresSelect</td><td class="basic" bgcolor="#047e01"><font color="white">$statusMap.get($featuresSelect)</font></td><td class="basic">$ossForFeatures.get($seq)</td>
+		#elseif($statusMap.get($featuresSelect)=="IN PROGRESS")
+			<tr><td class="basic">$featuresSelect</td><td class="basic" bgcolor="#90ee90"><font color="black">$statusMap.get($featuresSelect)</font></td><td class="basic">$ossForFeatures.get($seq)</td>
+		#elseif($statusMap.get($featuresSelect)=="QUEUED")
+			<tr><td class="basic">$featuresSelect</td><td class="basic" bgcolor="#00ffff"><font color="black">$statusMap.get($featuresSelect)</font></td><td class="basic">$ossForFeatures.get($seq)</td>
+		#elseif($statusMap.get($featuresSelect)=="FAILED")
+			<tr><td class="basic">$featuresSelect</td><td class="basic" bgcolor="#CC0000"><font color="white">$statusMap.get($featuresSelect)</font></td><td class="basic">$ossForFeatures.get($seq)</td>
+		#else
+			<tr><td class="basic">$featuresSelect</td><td>$statusMap.get($featuresSelect)</td><td class="basic">$ossForFeatures.get($seq)</td>
+		#end
+		#if($statusMapOSS.get($cxc_oss.get($seq))=="COMPLETED")
+		<td class="basic" bgcolor="#047e01"><font color="white">$statusMapOSS.get($cxc_oss.get($seq))</font></td></tr>
+		#elseif($statusMapOSS.get($cxc_oss.get($seq))=="IN PROGRESS")
+		<td class="basic" bgcolor="#90ee90"><font color="black">$statusMapOSS.get($cxc_oss.get($seq))</font></td></tr>
+		#elseif($statusMapOSS.get($cxc_oss.get($seq))=="QUEUED")
+		<td class="basic" bgcolor="#00ffff"><font color="black">$statusMapOSS.get($cxc_oss.get($seq))</font></td></tr>
+		#elseif($statusMapOSS.get($cxc_oss.get($seq))=="FAILED")
+		<td class="basic" bgcolor="#CC0000"><font color="white">$statusMapOSS.get($cxc_oss.get($seq))</font></td></tr>
+		#else
+		<td>$statusMapOSS.get($cxc_oss.get($seq))</td></tr>
+		#end
+		#set ($seq = $seq + 1)
+	#end
+	</table>
+	#if($UPGRADE_RESULT == "INSTALLATION SUCCESSFUL")
+	#if($wrong_pwd)
+	#if($isAdminExist)
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect Username or password</font>
+	#else
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect password</font> 
+	#end
+	<font size="1" face="Verdana, Helvetica, Arial">
+	<br><br>
+	If ENIQ Statistics node hardening procedure has been applied, account lockout policy might be configured to provide 
+	Brute force protection. Please refer to the “ENIQ Node hardening Guide” for further details in case of logon issues.
+	<br><br>
+	</font>
+	#end
+
+	#if($isAdminExist)
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="margin-right:145px;text-align:right;font-weight: bold">Enter ENIQ-S Admin Username:</font>
+	<input type="text" id="username" name="userName"><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S Admin Password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="installcompletepwd">
+	#else
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S root password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="installcompletepwd">
+	#end
+	##<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" name="UpdateMore" value="Install Other Features" />
+	<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;" name="Commit" id="commit" value="Commit"/>
+	<input onclick="rlbk_msg()" type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;" name="Rollback" value="Rollback"/>
+	#elseif($UPGRADE_RESULT == "FAILED DURING FEATURE INSTALLATION" || 
+			$UPGRADE_RESULT == "FAILED DURING PARSERS INSTALL" ||
+			$UPGRADE_RESULT == "FAILED DURING ENGINE, DWHDB RESTART" ||
+			$UPGRADE_RESULT == "FAILED DURING DWHDB RESTART" ||
+			$UPGRADE_RESULT == "FAILED DURING INTERFACE ACTIVATION")
+#if($wrong_pwd)
+	#if($isAdminExist)
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect Username or password</font>
+	#else
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect password</font> 
+	#end
+	<font size="1" face="Verdana, Helvetica, Arial">
+	<br><br>
+	If ENIQ Statistics node hardening procedure has been applied, account lockout policy might be configured to provide 
+	Brute force protection. Please refer to the “ENIQ Node hardening Guide” for further details in case of logon issues.
+	<br><br>
+	</font>
+	#end
+
+
+	#if($isAdminExist)
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="margin-right:60px;text-align:right;font-weight: bold">Enter ENIQ-S Admin Username:</font>
+	<input type="text" id="username" name="userName"><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S Admin Password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="failpwd">
+	#else
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S root password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="failpwd">
+	#end
+	<input onclick="rlbk_msg()" type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" name="Rollback" id="Rollback" value="Rollback"/>
+	<br><br>
+	##<font face="Verdana,Helvetica,Arial" size="2"><p style="font-weight: bold">Please refer logs in '/eniq/local_logs/upgrade_feature_only/' directory for details</font>
+	#elseif($UPGRADE_RESULT == "FAILED DURING CREATE SNAPSHOT")
+	#if($wrong_pwd)
+	#if($isAdminExist)
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect Username or password</font>
+	#else
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect password</font> 
+	#end
+	<font size="1" face="Verdana, Helvetica, Arial">
+	<br><br>
+	If ENIQ Statistics node hardening procedure has been applied, account lockout policy might be configured to provide 
+	Brute force protection. Please refer to the “ENIQ Node hardening Guide” for further details in case of logon issues.
+	<br><br>
+	</font>
+	#end
+#if($isAdminExist)
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="margin-right:60px;text-align:right;font-weight: bold">Enter ENIQ-S Admin Username:</font>
+	<input type="text" id="username" name="userName" required ><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S Admin Password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="snapshotfailpwd" required>
+	#else
+	<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:right;font-weight: bold">Enter ENIQ-S root password:</font>
+	<input type="password" style="display:none;">
+	<input type="password" name="rootPassword" id="snapshotfailpwd">
+	#end
+	<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" name="Resume" id="Resume" value="Resume" />
+	<input type="submit" style="font-size: 12;float: left;font-weight: bold; background-color: #B3B3FF;" name="Cancel" value="Cancel" />
+	<!--<input type="submit" style="font-size: 12;float: right;font-weight: bold; background-color: #B3B3FF;" name="Rollback" value="Rollback"/>-->
+	<br><br>
+	##<font face="Verdana,Helvetica,Arial" size="2"><p style="font-weight: bold">Please refer logs in '/eniq/local_logs/upgrade_feature_only/' directory for details</font>
+	#else
+	<script language="JavaScript">
+	setTimeout(function(){
+		window.location = window.location.href;
+		//location.reload();
+	},$REFRESH_PERIOD)
+	</script>
+	#end
+	#if($rlbk_invalid)
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">No valid snapshots found for rollback</font>
+	#end
+	#end
+	#else
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:center;font-weight: bold;">There are no features for installation</font>
+	#end
+	<br><br>
+	</form>
+	#parse( "footer.vm" )
+	</table>
+	<script>
+	/*function delay(){	
+	setTimeout(function() {
+        	f2.submit();
+    	}, 1000); 
+}*/
+
+	document.getElementById("installcompletepwd")
+	    .addEventListener("keyup", function(event) {
+	    event.preventDefault();
+	    if (event.keyCode == 13) {
+	        document.getElementById("commit").click();
+	    }
+	});
+
+	document.getElementById("snapshotfailpwd")
+	    .addEventListener("keyup", function(event) {
+	    event.preventDefault();
+	    if (event.keyCode == 13) {
+	        document.getElementById("Resume").click();
+	    }
+	});
+
+	document.getElementById("failpwd")
+	    .addEventListener("keyup", function(event) {
+	    event.preventDefault();
+	    if (event.keyCode == 13) {
+	        document.getElementById("Rollback").click();
+	    }
+	});
+
+	document.getElementById("installpwd")
+	    .addEventListener("keyup", function(event) {
+	    event.preventDefault();
+	    if (event.keyCode == 13) {
+	        document.getElementById("install").click();
+	    }
+	});
+
+	</script>
+	</body>
+	</html>

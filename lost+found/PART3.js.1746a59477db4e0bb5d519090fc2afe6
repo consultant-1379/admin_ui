@@ -1,0 +1,51 @@
+var C3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_5jrj\"></a><a name=\"CHAPTER3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Starting, Stopping and Restarting Glassfish</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the procedures for starting, stopping and\n" +
+"restarting GlassFish.</p>\n" +
+"\n" +
+"<p>\n" +
+"This is applicable for ENIQ Events only.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C3_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_y870\"></a><a name=\"CHAPTER3.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Starting GlassFish</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To start GlassFish:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">Log in to the presentation server as <tt class=\"file-path\">dcuser</tt>  with SSH.</li><li class=\"STEPLIST\" id=\"THSSTYLE2\">Enter the following command:<br /><tt class=\"input\"><b>[presentation]{dcuser}:#\n" +
+"glassfish start </b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C3_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">3.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_b4kr\"></a><a name=\"CHAPTER3.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Stopping GlassFish</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To stop GlassFish:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">On the presentation server as user <tt class=\"file-path\">dcuser</tt>:<br /> <tt class=\"input\"><b>[presentation]{dcuser}:# glassfish stop</b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C3_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"chl2-restartingGlassfish\"></a><span class=\"CHAPNUMBER\">3.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_15e1\"></a><a name=\"CHAPTER3.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Restarting GlassFish</a></span></h2>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE2\">On the presentation server as <tt class=\"file-path\">dcuser</tt>.<p>\n" +
+"<tt class=\"input\"><b>[pres]{dcuser}:# glassfish restart </b></tt></p>\n" +
+"</li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

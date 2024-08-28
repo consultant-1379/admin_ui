@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>Toolbar</title>
+<style type="text/css">
+<!--
+body {
+background-color:#e5e5e5;
+margin-left:0px;
+margin-right:0px;
+}
+input:focus {
+outline:none;
+}
+td {
+color:#000000;
+height:30px;
+vertical-align:middle;
+white-space:nowrap;
+}
+div#search_field {
+background-color:#ffffff;
+border-bottom-color:#aaaaaa;
+border-bottom-style:solid;
+border-bottom-width:1px;
+border-left-color:#aaaaaa;
+border-left-style:solid;
+border-left-width:1px;
+border-right-color:#aaaaaa;
+border-right-style:solid;
+border-right-width:1px;
+border-top-color:#aaaaaa;
+border-top-style:solid;
+border-top-width:1px;
+margin-left:0px;
+margin-right:12px;
+position:relative;
+width:300px;
+}
+.search_but {
+background-color:transparent;
+border-bottom-style:none;
+border-left-style:none;
+border-right-style:none;
+border-top-style:none;
+margin-bottom:0px;
+margin-left:4px;
+margin-right:2px;
+margin-top:0px;
+position:absolute;
+right:0px;
+top:0px;
+width:20px;
+}
+.search_input {
+border:0px;
+color:#b0b0b0;
+font-family:verdana,helvetica,arial,sans-serif;
+font-size:10pt;
+font-style:italic;
+height:18px;
+margin-left:2px;
+padding:1px;
+width:273px;
+}
+.search_td {
+padding-left:8px;
+}
+.tbar_but {
+background-color:#e5e5e5;
+border:0px;
+height:22px;
+padding:0px;
+width:27px;
+}
+.tbar_sep {
+border:0px;
+height:22px;
+width:10px;
+}
+-->
+</style>
+<script type="text/javascript">
+<!--
+var search_info = "Search help set content";
+var search_value = "";
+var check = false;
+window.history.forward(+1);
+var canUpdate = true;
+var isPDFView = true;
+function startSearch() {
+  if (document.tbar.dhs_search_inp.value == search_info) {
+    emptySearchField();
+    document.tbar.dhs_search_inp.focus();
+  }
+  document.tbar.submit();
+}
+
+function resetSearchBlur() {
+  check = false;
+  if (document.tbar.dhs_search_inp.value == "") { resetSearchField(); }
+  document.getElementById("search_field").style.borderBottomColor="#aaaaaa";
+  document.getElementById("search_field").style.borderLeftColor="#aaaaaa";
+  document.getElementById("search_field").style.borderRightColor="#aaaaaa";
+  document.getElementById("search_field").style.borderTopColor="#aaaaaa";
+}
+
+function resetSearchField() {
+  document.getElementById("search_field").style.borderBottomColor="#aaaaaa";
+  document.getElementById("search_field").style.borderLeftColor="#aaaaaa";
+  document.getElementById("search_field").style.borderRightColor="#aaaaaa";
+  document.getElementById("search_field").style.borderTopColor="#aaaaaa";
+  document.tbar.dhs_search_inp.style.background = "#ffffff";
+  document.tbar.dhs_search_inp.style.color = "#b0b0b0";
+  document.tbar.dhs_search_inp.style.fontStyle = "italic";
+  document.tbar.dhs_search_inp.value = search_info;
+}
+
+function reloadSearchField() {
+  if (document.tbar.dhs_search_inp.value != search_info) {
+    document.tbar.dhs_search_inp.style.background = "#fffff5";
+    document.tbar.dhs_search_inp.style.color = "#000000";
+    document.tbar.dhs_search_inp.style.fontStyle = "normal";
+  }
+}
+
+function emptySearchField() {
+  check = true;
+  if (document.tbar.dhs_search_inp.value == search_info) {
+    document.tbar.dhs_search_inp.style.background = "#fffff5";
+    document.tbar.dhs_search_inp.style.color = "#000000";
+    document.tbar.dhs_search_inp.style.fontStyle = "normal";
+    document.tbar.dhs_search_inp.value = "";
+    search_value = "";
+  }
+  document.getElementById("search_field").style.borderBottomColor="#6699cc";
+  document.getElementById("search_field").style.borderLeftColor="#6699cc";
+  document.getElementById("search_field").style.borderRightColor="#6699cc";
+  document.getElementById("search_field").style.borderTopColor="#6699cc";
+}
+
+function enableBut(e) {
+  document.getElementById(e.id).disabled = false;
+  document.getElementById(e.id).style.filter = "alpha(opacity=100)";
+  document.getElementById(e.id).style.opacity = "1";
+  document.getElementById(e.id).style.background = "#e5e5e5";
+}
+
+function disableBut(e) {
+  document.getElementById(e).disabled = true;
+  document.getElementById(e).style.filter = "alpha(opacity=30)";
+  document.getElementById(e).style.opacity = "0.3";
+  document.getElementById(e).style.background = "#e5e5e5";
+}
+
+function mouseOverBut(e) {
+  document.getElementById(e.id).style.background = "#f5f5f5";
+  document.getElementById(e.id).style.filter = "alpha(opacity=80)";
+  document.getElementById(e.id).style.opacity = "0.8";
+}
+
+function mouseDownBut(e) {
+  document.getElementById(e.id).style.background = "#d5d5d5";
+  document.getElementById(e.id).style.filter = "alpha(opacity=100)";
+  document.getElementById(e.id).style.opacity = "1";
+}
+
+function mouseOutBut(e) {
+  document.getElementById(e.id).style.background = "";
+  document.getElementById(e.id).style.filter = "alpha(opacity=100)";
+  document.getElementById(e.id).style.opacity = "1";
+}
+
+function checkPDF(e){
+setTimeout("",5000);
+if(parent.hlexmain.parallelPDF == undefined){disableBut(e);}
+}
+
+// -->
+</script>
+</head>
+<body onload="resetSearchField();disableBut('b3');checkPDF('b6');">
+<form method='post' name='tbar' action='javascript:parent.startDocumentSearch(document.tbar.dhs_search_inp.value)' autocomplete='on'>
+<table width='100%' cellpadding='0' cellspacing='0'>
+<tr>
+<td class='search_td'><div id='search_field'><input id='search_inp' name='dhs_search_inp' class='search_input' type='text' onfocus='emptySearchField()' onblur='resetSearchBlur()' value='' title='Search help set content' /><button id='b0' class='search_but' type='button' onmouseup='mouseOverBut(this);javascript:document.tbar.submit()' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Search'><img src='search.gif' /></button></div></td>
+<td><button id='b8' class='tbar_but' type='button' onmouseup='mouseOverBut(this);javascript:document.tbar.submit()' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Next search hit'><img src='searchnext.gif' /></button></td>
+<td><img class='tbar_sep' src='pipe.gif' /></td>
+<td><button id='b1' class='tbar_but' type='button' onmouseup='mouseOverBut(this);parent.goBack()' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Go back'><img src='prev.gif' /></button></td>
+<td><button id='b2' class='tbar_but' type='button' onmouseup='mouseOverBut(this);parent.goForward()' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Go forward' ><img src='next.gif' /></button></td>
+<td><img class='tbar_sep' src='pipe.gif' /></td>
+<td><button id='b3' class='tbar_but' type='button' onmouseup='mouseOverBut(this);javascript:parent.showTreePage();disableBut(this.id);enableBut(b4)' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Switch to tree view'><img src='tree_view.gif' /></button></td>
+<td><button id='b4' class='tbar_but' type='button' onmouseup='mouseOverBut(this);javascript:parent.showIndex();disableBut(this.id);enableBut(b3)' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Switch to index view'><img src='index_view.gif' /></button></td>
+<td><img class='tbar_sep' src='pipe.gif' /></td>
+<td><button id='b6' class='tbar_but' type='button' onmouseup='mouseOverBut(this);javascript:parent.showParallelPDF()' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Show help set in PDF'><img src='pdf.gif' /></button></td>
+<td><button id='b5' class='tbar_but' type='button' onmouseup='mouseOverBut(this);javascript:parent.printDocument()' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Print this help topic'><img src='print.gif' /></button></td>
+<td><img class='tbar_sep' src='pipe.gif' /></td>
+<td><button id='b7' class='tbar_but' type='button' onmouseup='mouseOverBut(this);parent.showHelp();' onmousedown='mouseDownBut(this)' onmouseover='mouseOverBut(this)' onmouseout='mouseOutBut(this)' title='Show help'><img src='help.gif' /></button></td>
+<td align='right' width='100%'><img width='115' height='22' src='ericsson.gif' /></td>
+</tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>ETLC Session Logs</TITLE>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</HEAD>
+
+<BODY>
+
+#if($logger.size() == 0)
+<TABLE width="500"  cellspacing="0" cellpadding="1">
+<TR>
+	<TD width="20"><b><a href="#" onclick="window.close()">Close</a></b></TD>
+	<TD width="100" align="left"></TD>
+</TR>
+<TR>
+	<TD colspan="2">&nbsp;</TD>
+</TR>
+<TR>
+	<TD colspan="2"><b>File did not contain tech pack related or parseable data.</b></TD>
+</TR>
+</TABLE>
+#else
+<TABLE width="500"  cellspacing="0" cellpadding="1">
+<TR>
+	<TD width="20"><b><a href="#" onclick="window.close()">Close</a></b></TD>
+	<TD width="100" align="left"></TD>
+</TR>
+<TR>
+	<TD bgcolor="#B3B3FF" width="30%"><font face="Verdana,Helvetica,Arial"><b>Row info</b></font></TD>
+	<TD width="70%">&nbsp;</TD>
+</TR>
+<TR>
+	<TD bgcolor="#B3B3FF">&nbsp;</TD>
+	<TD>&nbsp;</TD>
+</TR>
+</table>
+<TABLE width="800"  cellspacing="0" cellpadding="1" border=1>
+			<tr bgcolor="#B3B3FF"><!--condition panel with Typename Datatime Timelevel Rowcount SessionStartTime SessionEndTime Source Status -->
+		<td width="200"><font face="Verdana,Helvetica,Arial" size="1"><strong>Typename</strong></font></td> 
+		<td width="160"><font face="Verdana,Helvetica,Arial" size="1"><strong>Datatime</strong></font></td> 
+		<td width="60"><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel</strong></font></td> 
+				<td width="50"><font face="Verdana,Helvetica,Arial" size="1"><strong>Rowcount</strong></font></td> 
+				<td width="140"><font face="Verdana,Helvetica,Arial" size="1"><strong>SessionStartTime</strong></font></td> 
+		<td width="140"><font face="Verdana,Helvetica,Arial" size="1"><strong>SessionEndTime</strong></font></td> 
+						<td width="30"><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> 
+		</tr>
+#set($index = 0)
+#set($rowindex = 0)
+#foreach($vektor in $logger)
+  #set($rowindex = $rowindex + 1)
+ #foreach($ent in $vektor)
+  #if($rowindex % 2 == 0 )
+    #set($color = "white")
+  #else
+    #set($color = "silver")
+  #end
+				  #if($index == 0)
+		<TR>
+	<TD bgcolor="$color" nowrap>$ent</TD>
+  #end
+				  #if($index == 1)
+
+	<TD bgcolor="$color" nowrap>$ent</TD>
+  #end
+				  #if($index == 2)
+	<TD bgcolor="$color" nowrap>$ent</TD>
+  #end
+				  #if($index == 3)
+
+	<TD bgcolor="$color" nowrap>$ent</TD>
+
+  #end
+				  #if($index == 5)
+
+	<TD bgcolor="$color" nowrap>$ent</TD>
+
+  #end
+				  #if($index == 4)
+
+	<TD bgcolor="$color" nowrap>$ent</TD>
+
+  #end
+				  #if($index == 7)
+
+	<TD bgcolor="$color" nowrap>$ent</TD>
+</tr>
+  #end
+
+  #set($index = $index + 1)
+ #end
+#set($index = 0)
+#end
+</ form>
+</TABLE>
+#end
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

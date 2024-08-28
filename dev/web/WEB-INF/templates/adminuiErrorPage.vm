@@ -1,0 +1,35 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Show Loadings</title>
+#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff">
+  
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<hr />
+
+<table>
+<tr>
+<td>
+<font size="1" face="Verdana, Helvetica, Arial" color="red">
+Error processing page...
+
+<br><br>
+
+$!tr
+
+###if ($tr != "")
+##$tr
+###end
+
+</font>
+</td></tr>
+
+</table>
+</body>
+</html>

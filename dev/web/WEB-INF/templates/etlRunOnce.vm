@@ -1,0 +1,141 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: System Monitoring :: ETLC Set Scheduling</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script language="JavaScript">
+
+function refreshPage(settype) {
+	
+	var s = settype;
+	window.location.href = "$req.getContextPath()/servlet/ETLRunSetOnce?st="+s; 	
+}
+
+function getSetNames(p,s) {
+	window.location.href = "$req.getContextPath()/servlet/ETLRunSetOnce?package="+p+"&st="+s; 	
+}
+
+</script>
+</head>
+
+<body bgcolor="#ffffff" >
+<form name="f1" method=post onsubmit="return filterFields();">
+<table border="0">
+
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+
+
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ETLRunSetOnce">ETLC Set Scheduling</a></font>
+<hr />
+
+<table width="70%">
+<tr>
+	<td>
+		<font size="1" face="Verdana, Helvetica, Arial">From scheduling, all active sets can be started. First select set type and then select 
+		package. If set type is not selected then all the different packages are listed in the Package drop down menu. 
+		After selection sets are listed. Clicking "Start" link will start the set. Please note that executing a set this way will not change the "Last Scheduling" date.<br><br>
+		</font>
+	</td>
+</tr>
+</table>
+<table>
+	<tr>
+		<td>
+		  <font size="1" face="Verdana, Helvetica, Arial">
+		  Set type:
+		  </font>
+		</td>
+		<td>
+		  <font size="1" face="Verdana, Helvetica, Arial">
+		  Package:
+		  </font>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select onchange="javascript:refreshPage(this.form.settype.value=form.settype.value);" name="settype">
+			#if ($st && $st != "")
+			    <option selected value="$st">$st</option>
+			    <option value="-">-</option>
+			#else
+				<option selected value="-">-</option>
+			#end
+			#foreach ($key in $settypes)
+				<option value="$key">$key</option>
+			#end
+			</select>
+		</td>
+		<td>
+			<select onchange="javascript:getSetNames(this.form.packageSets.value, this.form.settype.value);" name="packageSets">
+			#if ($package && $package != "")
+			    <option selected value="$package">$package</option>
+			    <option value="-">-</option>
+			#else
+				<option selected>-</option>
+			#end
+			#foreach ($key in $etlsets)
+				<option value="$key">$key</option>
+			#end
+			</select>
+		</td>
+	</tr>
+</table>
+<table name="ttable" id="ttable" border="1" width="100%" cellpadding="1" cellspacing="1">
+		<tr bgcolor="#B3B3FF">
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1"><strong>Name</strong></font></td> <!-- name -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>Version</strong></font></td> <!-- version -->
+<!-- ID		<td width="200"><font face="Verdana,Helvetica,Arial" size="1"><strong>ID</strong></font></td> -->
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>Type</strong></font></td> <!-- type -->
+		<td width="30"><font face="Verdana,Helvetica,Arial" size="1"><strong>Susp.</strong></font></td> <!-- hold flag -->
+		<td width="30"><font face="Verdana,Helvetica,Arial" size="1"><strong>Start</strong></font></td>
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>Scheduling Type</strong></font></td>
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1"><strong>Description</strong></font></td>
+		<td width="180"><font face="Verdana,Helvetica,Arial" size="1"><strong>Last Scheduling</strong></font></td>
+		</tr>
+#if ($package != " " && $package != "-")
+	#foreach ($key in $packageSets.keySet())
+		#foreach ($oneset in $packageSets.get($key))	
+		#if($oneset.get(5) != "Count" && $oneset.get(5) != "Backup")
+		<tr onmouseover="this.style.background='#C0C0C0';" onmouseout="this.style.background='#FFFFFF';">
+			<!-- <td><font face="Verdana,Helvetica,Arial" size="1">$key</font></td> -->
+			<td><font face="Verdana,Helvetica,Arial" size="1">$oneset.get(4)</font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$oneset.get(2)</font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$oneset.get(5)</font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$oneset.get(6)</font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1"><a href="$req.getContextPath()/servlet/ETLRunSetOnce?colName=$key&setName=$oneset.get(4)">Start</a></font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(7)</font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get(8)</font></td>
+			<td><font face="Verdana,Helvetica,Arial" size="1">
+			#set( $lastScheduling = $!oneset.get(9))
+			#if ($!lastScheduling.startsWith("1970-01-01"))
+			  Not Executed
+			#else
+			  $!lastScheduling
+			#end
+			</font></td>
+		</tr>
+		#end
+		#end
+	#end
+
+#end
+</table>
+<input type="hidden" name="st" value="$st">
+<input type="hidden" name="package" value="$package">
+</td>
+
+#parse( "footer.vm" )
+</form>
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

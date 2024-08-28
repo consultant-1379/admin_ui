@@ -1,0 +1,228 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Network Elements Log</title>
+<link rel="stylesheet" type="text/css"
+href="../css/admin.css" />
+#include( "calendar_js.txt" )
+
+<script language="JavaScript">
+	
+		
+            function validateDate(frmLog) {
+            
+             var fromDate = new Date();
+             var toDate   = new Date();
+             
+             
+             fromDate.setFullYear(frmLog.year_1.value);
+             fromDate.setMonth(frmLog.month_1.value-1);   // month-1
+             fromDate.setDate(frmLog.day_1.value);
+             fromDate.setHours(frmLog.start_hour.value);
+             fromDate.setMinutes(frmLog.start_min.value);
+             fromDate.setSeconds(00);
+             
+             toDate.setFullYear(frmLog.year_2.value);
+             toDate.setMonth(frmLog.month_2.value-1);    //month -1
+             toDate.setDate(frmLog.day_2.value);
+             toDate.setHours(frmLog.end_hour.value);
+             toDate.setMinutes(frmLog.end_min.value);
+             toDate.setSeconds(00);
+
+		
+		
+	     //alert('fromdate '+fromDate.toString());	
+	     //alert('todate '+toDate.toString());
+	     
+	       if(toDate < fromDate)
+		  {
+		      alert("Start date cannot be greater than end date");
+		      return false;
+		   } 
+               
+                var milli_d1 = fromDate.getTime();
+   		var milli_d2 = toDate.getTime();
+   		var diff = milli_d2 - milli_d1;
+   		var num_days = (((diff / 1000) / 60) / 60) / 24;
+
+	       if(num_days>14)
+		  {
+		      alert("Time range should be less than or equal to two weeks");
+		      return false;
+		   } 
+		               
+	       if(num_days<0)
+		  {
+		      alert("Please select a valid time range");
+		      return false;
+		   } 
+
+	     
+
+	     
+             return true;
+        }
+        </script>
+</head>
+
+<body bgcolor="#ffffff" onload="">
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+	<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="NELog">Datasource Log</a></font>
+	<hr width="675" align="left"/>
+	  <font size="1" face="Verdana, Helvetica, Arial">Display datasources with no data received for selected time range:<br /><br />
+	<br>
+	</font>
+
+	<FORM name="frmLog" METHOD=POST ACTION="NELog" onSubmit="return validateDate(this);">
+		<br>
+		<input name="submitted" type="hidden" id="submitted" value="true">
+		<input name="flag" type="hidden" id="flag" value="0">		
+		<table border=0>
+		<tr><td class="basic" colspan="4">Select time range :</td></tr>
+		<tr><td class="basic" colspan="4">&nbsp;</td></tr>
+		<tr><td class="basic">Start date:</td><td class="basic">#parse( "cal_select_1.vm" )</td><td class="basic">hour:</td><td>
+		<select style="font-size: 9;" name="start_hour">
+		#set ($counter = [0..23])
+		#foreach( $index in $counter )
+		   #if("$start_hour"== "$index" )
+		    	<option selected>$index</option>
+		   #else
+		  	<option >$index</option> 
+		   #end		   
+		  
+		#end
+		</select>
+		</td>
+		<td class="basic">minute:</td><td>
+		<select style="font-size: 9;" name="start_min" id="start_min">
+		
+		#set ($counter = [0..59])
+		#foreach( $index in $counter )
+		   #if("$start_min"=="$index" )
+		    	<option selected>$index</option>
+		   #else
+		  	<option >$index</option> 
+		   #end		   
+
+		#end   
+		</select>
+		</td>
+		</tr>
+
+		<tr>
+		<td class="basic">End date:</td><td class="basic">#parse( "cal_select_2.vm" )</td>
+		<td class="basic">hour:</td><td>
+		<select style="font-size: 9;" name="end_hour">
+		#set ($counter = [0..23])
+		#foreach( $index in $counter )
+		   #if("$end_hour"=="$index" )
+		    	<option selected>$index</option>
+		   #else
+		  	<option >$index</option> 
+		   #end		   
+		#end   
+		</select>
+		</td>
+
+		<td class="basic">minute:</td><td>
+		<select  style="font-size: 9;" name="end_min" id="end_min">
+		#set ($counter = [0..59])
+		#foreach( $index in $counter )
+		   #if("$end_min"=="$index" )
+		    	<option selected>$index</option>
+		   #else
+		  	<option >$index</option> 
+		   #end		   
+		#end   
+		</select>
+		</td>
+		</tr>
+		<tr><td colspan="4">&nbsp;</td></tr>
+		<tr><td colspan="4"><INPUT name="search" value="Search" style="font-size: 11;" TYPE="submit"  ></td></tr>
+		</table>
+	</FORM>
+	<hr width="675" align="left"/>
+#if ($notification!=' ')
+	<table border="1" width="500" cellpadding="1" cellspacing="1">
+	<tr>
+		<td colspan="1"><font face="Verdana,Helvetica,Arial" size="1" color="red"><b>$notification</b></font>
+	</tr>
+	</table>
+#else		
+
+	<table style="border:1px solid #B3B3FF;" width="500" cellpadding="0" cellspacing="0">
+	#if ($submitted)
+		#if ($toomany!=0)
+			<tr>
+				<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+				<font face="Verdana,Helvetica,Arial" size="2"><b>Row select count exceeded $toomany -rows. Please, redefine your search parameters.</font></b>
+			</tr>
+		#end
+	#end		
+		#if ($results.size() > 0)
+			 <tr bgcolor="#FFFFFF">
+				<td bgcolor="#B3B3FF" style="border:1px solid #B3B3FF;"  align="center" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Source</strong></font></td>
+				
+				<td bgcolor="#B3B3FF" style="border:1px solid #B3B3FF;" align="center" width="150"  nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Unavailable minutes</strong></font></td> 
+				
+				<td bgcolor="#B3B3FF" style="border:1px solid #B3B3FF;"  align="center" width="250">
+				    <table>
+					<tr>
+					   <td align="center" colspan="2" width="400" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Period</strong></font></td> 
+					</tr>
+					<tr>
+					   <td width="150" align="center"  nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>From</strong></font></td> 
+					   <td width="150" align="center"  nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>To</strong></font></td> 
+					</tr>
+				    </table>		
+				</td>
+			</tr>
+		#else
+			#if ($submitted)
+				<tr>
+					<td colspan="7">
+					   <font face="Verdana,Helvetica,Arial" size="2"><b>No records retrieved for this time range</b></font>
+					</td>
+				</tr>
+			#end	
+		#end
+		#foreach ($oneNE in $results.keySet())
+			#set( $listTimes = $results.get($oneNE) ) 
+				
+			#foreach ($oneTime in $listTimes)
+				<tr >
+					<td  style="border-bottom:1px solid #B3B3FF;border-left:1px solid #B3B3FF;" align="center" nowrap><font face="Verdana,Helvetica,Arial" size="1">$oneNE</font></td>
+					
+					<td  style="border-bottom:1px solid #B3B3FF;" align="center"  nowrap><font face="Verdana,Helvetica,Arial" size="1">$oneTime.lengthInMinutes()</font></td>
+					
+					<td  style="border-bottom:1px solid #B3B3FF;border-right:1px solid #B3B3FF;" align="center" ><table align="center">
+						<tr>
+						<td align="center" nowrap><font face="Verdana,Helvetica,Arial" size="1">${oneTime.getStartForDisplay()}&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</font></td>
+						<td  align="center" nowrap><font face="Verdana,Helvetica,Arial" size="1">$oneTime.getEndForDisplay()</font></td>
+						</tr>
+					    </table>		
+					</td>
+				</tr>
+			#end
+			
+		#end
+
+	</table>
+	<br />
+#end	
+
+</td>
+
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Installed modules=sh ${RT_DIR}/tomcat/webapps/adminui/conf/module_versions.sh
+Installed tech packs=getInstalledTechPacks
+Disk space information=sh ${RT_DIR}/tomcat/webapps/adminui/conf/disk_space.sh
+Most active processes=sh ${RT_DIR}/tomcat/webapps/adminui/conf/most_active_processes.sh
+ENIQ software version=sh ${RT_DIR}/tomcat/webapps/adminui/conf/inst_version.sh
+Installed Features= cat /eniq/sw/installer/installed_features

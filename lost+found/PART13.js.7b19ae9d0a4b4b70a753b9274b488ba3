@@ -1,0 +1,250 @@
+var C13=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">13 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_gssy\"></a><a name=\"CHAPTER13\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Resizing NAS File System</a></span></h1>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Before running this script, backup the data as snapshots\n" +
+"get deleted during the script execution.</dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+
+var C13_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">13.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_idf9\"></a><a name=\"CHAPTER13.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Disabling ENIQ Statistics Services</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To disable the ENIQ services across the deployment, run the following\n" +
+"command on the mentioned server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li></ul>\n" +
+"<p>\n" +
+"As <tt class=\"file-path\">root</tt> user perform the following:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_deployment_services.bsh -a stop\n" +
+"-s ALL</b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C13_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">13.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_rhx9\"></a><a name=\"CHAPTER13.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Stopping\n" +
+"ENIQ Statistics Rolling Snapshot Service</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Disable the rolling snapshot service. This is performed on each\n" +
+"blade in the deployment in the following order:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Reader Servers</li></ul>\n" +
+"<p>\n" +
+"As <tt class=\"file-path\">root</tt> user perform the following: </p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/systemctl stop eniq-roll-snap.service</b></tt><p>\n" +
+"<tt class=\"input\"><b># /usr/bin/systemctl disable eniq-roll-snap.service</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">If the service exists, use the following command to check\n" +
+"if it is stopped or is inactive:<p>\n" +
+"<tt class=\"input\"><b># services -s eniq-roll-snap.service</b></tt></p>\n" +
+"</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C13_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">13.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_74mx\"></a><a name=\"CHAPTER13.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Listing Snapshots</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Use the following commands to get the list of snapshots:</p>\n" +
+"\n" +
+"<p><tt class=\"input\"><b># cd /eniq/bkup_sw/bin</b></tt></p>\n" +
+"<p>\n" +
+"Run these commands on the following server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ (Standalone)</li>\n" +
+"<li class=\"UNORD\">ENIQ Coordinator</li></ul>\n" +
+"<p>\n" +
+"As <tt class=\"file-path\">root</tt> user perform the following: </p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_nas_snapshots.bsh -a list -f ALL\n" +
+"-t</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_san_snapshots.bsh -a list -f ALL\n" +
+"-t</b></tt><p>\n" +
+"Run the command in step 3 on each Blade in the deployment.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_fs_snapshots.bsh -a list -f ALL\n" +
+"-t</b></tt></li></ol>\n" +
+"<p>\n" +
+"This gives an output similar to the following syntax:</p>\n" +
+"\n" +
+"<p><tt class=\"output\">&lt;fs_name&gt; &lt;snapshot_name&gt; &lt;create_date&gt; &lt;create_time&gt;</tt></p>\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;fs_name&gt;</tt> refers to the name of the\n" +
+"filesystem.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;snapshot_name&gt;</tt> refers to the name\n" +
+"of the snapshot.</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;create_date&gt;</tt> refers to the snapshot\n" +
+"creation date</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"file-path\">&lt;create_time&gt;</tt> refers to the snapshot\n" +
+"creation time.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C13_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">13.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_s4y9\"></a><a name=\"CHAPTER13.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Deleting Snapshots</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Delete the snapshots listed in the previous step by following these\n" +
+"steps:</p>\n" +
+"\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/bkup_sw/bin</b></tt></p>\n" +
+"\n" +
+"<p>\n" +
+"Run these commands on the following server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ (standalone)</li>\n" +
+"<li class=\"UNORD\">ENIQ Coordinator</li></ul>\n" +
+"<p>\n" +
+"As <tt class=\"file-path\">root</tt> user perform the following: </p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_nas_snapshots.bsh -a delete -f\n" +
+"ALL -n <i class=\"var\">snapshot-label</i></b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_san_snapshots.bsh -a delete -f\n" +
+"ALL -n <i class=\"var\">&lt;snapshot-label&gt;</i></b></tt><p>\n" +
+"Run the command in step 3 on each Blade in the deployment.</p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_fs_snapshots.bsh -a delete -f ALL=<i class=\"var\">&lt;snapshot-label&gt;</i></b></tt></li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C13_5=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">13.5 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_dpmi\"></a><a name=\"CHAPTER13.5\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Resizing NAS File System</a></span></h2>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\">Verify that the ENIQ services are inactive on all servers:\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Reader Servers</li></ul><p>\n" +
+"<tt class=\"input\"><b># services -s eniq</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">Resize the NAS FS by running the following command on\n" +
+"these server types:\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ (standalone)</li>\n" +
+"<li class=\"UNORD\">ENIQ Coordinator</li></ul><p>\n" +
+"As a <tt class=\"file-path\">root</tt> user, perform the following:</p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># cd /eniq/admin/bin </b></tt></p>\n" +
+"<p>\n" +
+"<tt class=\"input\"><b># bash ./resize_nas_fs.bsh -a [auto|manual] [-l <i class=\"var\">&lt;path_to_logfile&gt;</i>]</b></tt></p>\n" +
+"</li></ol>\n" +
+"<p>\n" +
+"When NAS resizes <strong class=\"MEDEMPH\">automatically</strong>, the\n" +
+"script checks the deployment type of the system and resizes the filesystems\n" +
+"only if they are smaller than the recommended size.</p>\n" +
+"\n" +
+"<p>\n" +
+"After a <strong class=\"MEDEMPH\">manual</strong> resize, the user is prompted\n" +
+"with a list of all filesystems on the system:</p>\n" +
+"\n" +
+"<p><tt class=\"output\">List of all NAS FS, with current FS size.</tt></p>\n" +
+"<p><tt class=\"output\">----------------------------------------</tt></p>\n" +
+"<p><tt class=\"output\">FS Name                 FS Size</tt></p>\n" +
+"<p><tt class=\"output\">-------------------------------</tt></p>\n" +
+"<p><tt class=\"output\">1) admin                     2g</tt></p>\n" +
+"<p><tt class=\"output\">2) archive                   8g</tt></p>\n" +
+"<p><tt class=\"output\">3) backup                   10g</tt></p>\n" +
+"<p><tt class=\"output\">4) etldata                  10g</tt></p>\n" +
+"<p><tt class=\"output\">5) etldata_/00              10g</tt></p>\n" +
+"<p><tt class=\"output\">6) etldata_/01              10g</tt></p>\n" +
+"<p><tt class=\"output\">7) etldata_/02              10g</tt></p>\n" +
+"<p><tt class=\"output\">...</tt></p>\n" +
+"<p>\n" +
+"The user is prompted with a question to resize the NAS FS.</p>\n" +
+"\n" +
+"<p><tt class=\"output\">Please enter an FS to re-size using the following format [n,n,n-n,n...n],\n" +
+"eg. 1,3,7-11)</tt></p>\n" +
+"<p>\n" +
+"Enter the filesystem the user wants to increase. The user is prompted\n" +
+"to enter the preferred size:</p>\n" +
+"\n" +
+"<p><tt class=\"output\">Enter new filessytem size for admin, the current size is 2g</tt></p>\n" +
+"<p><tt class=\"output\">(Recommended size for deployment is 20g ('g = gb' 'use m for\n" +
+"mb' and 'use k for kb'))</tt></p>\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>Enter a value followed by a single character either g(gigabyte),\n" +
+"m(megabyte), or k(kilobyte).</dd></dl><br />\n" +
+"<p>\n" +
+"After entering the value, the script checks the available space\n" +
+"on the NAS and compares it with the entry. If there is enough space,\n" +
+"the selected NAS FS is resized.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C13_6=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">13.6 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_0v29\"></a><a name=\"CHAPTER13.6\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Starting ENIQ Statistics Rolling\n" +
+"Snapshot Service</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"Start the rolling snapshot service. This is performed on each Blade\n" +
+"in the deployment in the following order:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Engine Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Reader Servers</li></ul>\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># /usr/bin/systemctl start eniq-roll-snap.service</b></tt><p>\n" +
+"<tt class=\"input\"><b># /usr/bin/systemctl enable eniq-roll-snap.service</b></tt></p>\n" +
+"</li><li class=\"STEPLIST\" id=\"THSSTYLE0\">If the service exists, check that the service has started(active)\n" +
+"by using the following command:<p>\n" +
+"<tt class=\"input\"><b># services -s eniq-roll-snap.service</b></tt></p>\n" +
+"</li></ol>\n" +
+"\n"+
+"</div>\n";
+
+var C13_7=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"restartEniqServices\"></a><span class=\"CHAPNUMBER\">13.7 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_c6wx\"></a><a name=\"CHAPTER13.7\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Restarting\n" +
+"ENIQ Services</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"To restart ENIQ services across the deployment, run the following\n" +
+"command on these server types:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">ENIQ Statistics (Standalone) Server</li>\n" +
+"<li class=\"UNORD\">ENIQ Statistics Coordinator Server</li></ul>\n" +
+"<p>\n" +
+"As <tt class=\"file-path\">root</tt> user, perform the following:</p>\n" +
+"\n" +
+"\n" +
+"<ol class=\"STEPLIST\"><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># cd /eniq/admin/bin</b></tt></li><li class=\"STEPLIST\" id=\"THSSTYLE0\"><tt class=\"input\"><b># bash ./manage_deployment_services.bsh -a restart\n" +
+"-s ALL</b></tt></li></ol>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

@@ -1,0 +1,14 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript" language="JavaScript">
+<!--
+   window.history.forward(+1);
+   document.write('<bo');
+   document.write('dy bgcolor="#FFFFFF">');
+   document.write('</body>');
+   document.close();
+// -->
+</script>
+</head>
+</html>

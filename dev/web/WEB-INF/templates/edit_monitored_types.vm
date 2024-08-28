@@ -1,0 +1,68 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<title>Ericsson Network IQ :: Web Portal :: Edit Monitored Types</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form>
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="MonitoredTypes">Edit Monitored Types</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+<table border=1>
+	 <tr bgcolor="#B3B3FF">
+		<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Typename</strong></font></td> <!-- Typename -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel</strong></font></td> <!-- Timelevel -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> <!-- Status -->
+		</tr>
+	<tr>
+	  <td>
+	    <font face="Verdana,Helvetica,Arial" size="1">
+		$editType
+		</font>
+      </td>
+      <td>
+        <select name="newTimelevel" style="font-size: 9;">
+		#if ($selectedTimelevel != "")
+		<option selected value="$selectedTimelevel">$selectedTimelevel</option>
+		#end
+		#foreach($tlevel in $distinctTimelevels)
+		<option value="$tlevel">$tlevel</option>
+		#end
+      </td>
+      <td>
+        <select name="status" style="font-size: 9;">
+        #if ($selectedStatus != "")
+		<option selected value="$selectedStatus">$selectedStatus</option>
+		#end
+		<option value="ACTIVE">ACTIVE</option>
+		<option value="INACTIVE">INACTIVE</option>
+      </td>
+    </tr>
+    <tr>
+	  <td colspan="3">
+	   <input type="submit" name="update" value="Save changes">
+	 </td>
+    </tr>
+    <input type="hidden" name="timelevel" value=$selectedTimelevel>
+    <input type="hidden" name="techPack" value=$techPack>
+    <input type="hidden" name="editType" value=$editType>
+</table>
+</form>
+
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

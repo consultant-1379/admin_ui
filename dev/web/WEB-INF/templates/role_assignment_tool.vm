@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Role Assignment Tool</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body bgcolor="#ffffff" >
+<script>
+#if ($ERROR)
+window.onload = function(){	
+	alert("This is a SECONDARY server");
+	#if ($servername)
+		window.location.href = "https://"+"$servername"+":8443/adminui/";
+	#end
+}
+#else
+</script>
+	<table border="0">
+	<tr valign=top>
+	<!-- main menu -->
+	<td width=220>
+	#parse( "main_menu.vm" )
+	</td>
+	<!-- the body -->
+	<td width=800>
+	<font size="1" face="Verdana, Helvetica, Arial">ENM Interworking &nbsp;&gt;&gt;&nbsp;<a href="RoleAssignmentTool">Role Assignment Tool</a></font>
+	<hr />
+	<!-- Start of Role Table Snapshot -->
+	<br><br>
+	<table border="1" cellpadding="1" cellspacing="1">
+		<tr bgcolor="#B3B3FF"><td colspan ="3"><font face="Verdana,Helvetica,Arial" size="4"><b>ENIQ-S Server Roles</b></font></td></tr>
+		<tr><td class="midhdr">ENIQ Identifier</td><td class="midhdr">IP Address</td><td class="midhdr">Role Assigned</td></tr>
+		#if($ROLE == "MASTER")
+		#foreach($set in $roleTable)
+				<tr>
+				#foreach ($rs in $set)
+					#if($rs=="MASTER")
+						<td class="basic">PRIMARY</td>
+					#elseif($rs=="SLAVE")
+						<td class="basic">SECONDARY</td>
+					#else
+						<td class="basic">$rs</td>	
+					#end
+				#end
+			
+				</tr>
+		#end
+		#elseif($ROLE == "UNASSIGNED")
+		<tr>
+		#foreach($set in $roleTable)
+			<td class="basic">$set</td>
+		#end
+		</tr>
+		#end		
+	</table>
+	<br><br>
+	<!-- End of Role Table Snapshot -->
+	<br><br>
+	<font face="Verdana,Helvetica,Arial"><center><b>Note: Please enter IP Address of Engine blade when connecting to Multi Blade Servers</b></center></font>
+	<br><br>
+	<!-- IP Address Input -->
+	<form name=f1 method=post action=$req.getContextPath()/servlet/RoleAssignmentTool onsubmit="return filterFields();">
+	#if($ROLE == "MASTER")
+	<br><br>
+	<input type="text" name="slaveIP" value="">
+	<br><br>
+	<input type="submit" style="font-size: 11;" name="ipaddress" value="Add SECONDARY IP Address">
+	#elseif($ROLE == "UNASSIGNED")
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Server currently UNASSIGNED. Adding valid SECONDARY ENIQ-S IP will assign current server as PRIMARY</b></center></font>
+	<br><br>
+	<input type="text" name="slaveIP" value="">
+	<br><br>
+	<input type="submit" style="font-size: 11;" name="ipaddress" value="Add SECONDARY IP Address">
+	#else
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>$ROLE</b></center></font>
+	<br><br>
+	#end
+	</form>
+	<!-- End of IP Address Input -->
+	<!-- Input results -->
+	#if($invalidIP)
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2" color="red"><center><b>Invalid IP Address. Please enter again.</b></center></font>
+	<br><br>
+	#end
+	#if($RESULT == "ASSIGNED")
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2" color="red"><center><b>Server has already been assigned role</b></center></font>
+	<br><br>
+	#elseif($RESULT == "FAIL")
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2" color="red"><center><b>SECONDARY update failed.</b></center></font>
+	<br><br>
+	#elseif($RESULT == "UPDATED")
+	<br><br>
+	<font face="Verdana,Helvetica,Arial" size="2"><center><b>Update was successful!</b></center></font>
+	<br><br>
+	#end
+	<!-- End of Input results -->
+	#parse( "footer.vm" )
+	</table>
+<script>
+#end
+</script>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

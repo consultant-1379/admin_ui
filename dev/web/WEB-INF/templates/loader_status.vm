@@ -1,0 +1,1120 @@
+#set ($appPath = $req.getContextPath()) 
+#set ($servletPath = "$appPath/servlet")
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script>
+#if ($transferEngine.isYellow())
+window.onload = function(){
+
+	alert("Engine is set to NoLoads");
+}
+#end
+#if ($unassignedNodes > 0 )
+window.onload = function(){
+	alert("There are $unassignedNodes Unassigned nodes! Click on Node Assignment Tool to view the unassignedNodes.");
+}
+#end
+function disableLink(id){
+	document.getElementById(id).disabled = true;
+	console.log(id)
+	setTimeout(function(){document.getElementById(id).disabled = false;},3000);
+	}
+	function myOverFunction(id) {
+  document.getElementById(id).style.textDecoration='underline';
+	}
+function myLeaveFunction(id){
+document.getElementById(id).style.textDecoration='none';
+}
+</script>
+</head>
+<body bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0">
+<tr valign=top><td width=220>
+#parse( "main_menu_system_status.vm" )
+</td><td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;</font><a href="$servletPath/LoaderStatusServlet">
+<button id="system_status" style="background: none;border: none;padding: 0;color:#000099;font-family: Verdana, Helvetica, Arial;cursor: pointer; "  onmouseover="myOverFunction(this.id)" onmouseleave="myLeaveFunction(this.id)" onClick="disableLink(this.id)">System Status</button></a>
+
+<hr />
+
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">HARDWARE</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+	<tbody>#set($count=0)
+             #foreach($monitorInformation in $hardwareInformation)
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="1" width="10">
+			#if ($monitorInformation.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($monitorInformation.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			
+			#elseif($monitorInformation.isRed())
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#else
+				<IMG SRC="../img/gray_bulp.gif" WIDTH="30" height="30" border="0" ALT="Gray">
+				
+			#end
+			
+            </td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">
+				#if($count == 0)
+					Host Information 
+				#end
+				#set($count=$count+1)
+				</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+					<tr>
+						<td height="10"><font face="Verdana, Helvetica, Arial"
+							size="2"><!--<a class="a_bold" href="#">Show status details</a>--></font></td>
+					</tr>
+					#if(!$monitorInformation.isGray())
+					
+					
+					<tr>
+						<td height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="1">Host name:                $monitorInformation.getHostname()</a></font></br> <!--<font
+						 face="Verdana, Helvetica, Arial" size="1">-->Operating system version: $monitorInformation.getOsversion() 
+																	  Hardware:                 $monitorInformation.getHwversion() 
+																	  Uptime:                   $monitorInformation.getUptime()<!--</font>--></td>
+				   </tr>
+				   <tr>
+						<td height="30" valign="top">Services Running:
+						#foreach($serviceStatus in $monitorInformation.getServiceStatusList())
+							#foreach($key in $serviceStatus.keySet())
+								#if($serviceStatus.get($key) == "Online")
+									&nbsp;&nbsp;<font color="green" face="Verdana, Helvetica, Arial" size="1">
+									<img src="../img/green_bulp.gif" width="10px" height="10px" border="0" ALT="On">&nbsp;$key
+									</font>
+								#elseif($serviceStatus.get($key) == "Offline")
+									&nbsp;&nbsp;<font color="red" face="Verdana, Helvetica, Arial" size="1">
+									<img src="../img/red_bulp.gif" width="10px" height="10px" border="0" ALT="Off">&nbsp;$key
+									</font>
+								#elseif($serviceStatus.get($key) == "StatusYellow")
+									&nbsp;&nbsp;<font color="orange" face="Verdana, Helvetica, Arial" size="1">
+									<img src="../img/yellow_bulp.gif" width="10px" height="10px" border="0" ALT="Yellow">&nbsp;$key
+									</font>
+								#else
+									&nbsp;&nbsp;<font color="gray" face="Verdana, Helvetica, Arial" size="1">
+									<img src="../img/gray_bulp.gif" width="10px" height="10px" border="0" ALT="Gray">&nbsp;$key
+									</font>
+								#end
+							#end
+						#end
+						</td>
+						
+				   </tr>
+				  #else
+						<tr>      
+						<td align="left" style="font-size: 9;" nowrap><font color='red' font face="Verdana,Helvetica,Arial" size="2"><b>Unable to retrieve host details.Please refer to logs.</b></font></td>
+					    </tr>
+					    #end
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		#end
+	</tbody>
+</table>
+<table border="0" width="100%" border="0" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">DATABASE</font></td>
+	    <td class="systemstatustab">&nbsp;</td>
+	</tr>
+
+	<tbody>
+		<!-- Starts-->
+		
+		#foreach($datainfo in $databases) #set ($detail = $datainfo.isDetails())
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+			#if ($datainfo.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($datainfo.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#elseif	 ($datainfo.isGray())
+				<IMG SRC="../img/gray_bulp.gif" WIDTH="30" height="30" border="0" ALT="Gray">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="2">$datainfo.getName()
+			</font> #if($datainfo.isWarning() == true) <br>
+			<br>
+			<br>
+			<br>
+			<font face="Verdana, Helvetica, Arial" size="1"><b>$datainfo.getWarningText()</b></font>
+			#end</td>
+			#if( $datainfo.getName() == "ENIQ DWH" )
+			  <td valign="top" width="72%" bgcolor="#eef9fd">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					
+					<tr>
+						<td colspan="3" height="30" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial"
+							size="2"> <a class="a_bold" target="_blank"
+							href="StatusDetails?ds=$datainfo.getDetailUrl()">Show status
+						details</a>&nbsp;&nbsp; <a class="a_bold" target="_blank"
+							href="ConnectionStatusDetails?connection=$datainfo.getDetailUrl()">Show
+						connection status details</a> </font></td>
+					</tr>
+					
+					
+					<tr>
+						<td colspan="3" height="30" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial"
+							size="2"> <a class="a_bold" target="_blank"
+							href="ReaderStatusDetails?ds=$datainfo.getDetailUrl()"> IQ Multiplex status Details
+						</a>&nbsp;&nbsp; </font></td>
+					</tr>
+					
+					
+					<tr>
+					
+					</tr>
+					<tr>
+
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">$datainfo.getAllInfo()
+							<br /><br />
+							</font>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+			</td>
+			#else
+			  <td valign="top" width="72%" bgcolor="#eef9fd">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					
+					<tr>
+						<td colspan="3" height="30" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial"
+							size="2"> <a class="a_bold" target="_blank"
+							href="StatusDetails?ds=$datainfo.getDetailUrl()">Show status
+						details</a>&nbsp;&nbsp; <a class="a_bold" target="_blank"
+							href="ConnectionStatusDetails?connection=$datainfo.getDetailUrl()">Show
+						connection status details</a> </font></td>
+					</tr>
+					
+					
+					<tr>
+					   <td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">$datainfo.getAllInfo()
+							<br /><br />
+							</font>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+			</td>
+			#end
+			
+		</tr>
+		<!-- Ends-->
+		#end
+</table>
+
+
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">ETLC</font></td>
+			<td class="systemstatustab">&nbsp;</td>
+	</tr>
+	
+
+	<tbody>
+		<!-- Starts-->
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+			#if ($transferEngine.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($transferEngine.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+            </td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="2">$transferEngine.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					<tr>
+						<td colspan="3" height="30"><font
+							face="Verdana, Helvetica, Arial" size="2">
+						#if($transferEngine.isGreen() || $transferEngine.isYellow())
+							<a class="a_bold" href="EngineStatusDetails" target="_blank">Show status details</a> 
+						#elseif($transferEngine.isRed())
+						    $transferEngine.EtlcServerStatus
+						#end
+						
+						</font></td>
+					</tr>
+					<tr>
+						#if($transferEngine.isDetails() == false)
+						<td colspan="3" height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1"> $transferEngine.getUptime()<br>
+						$transferEngine.getTotMem()<br>
+						$transferEngine.getCurrProfile()<br>
+						$transferEngine.getSize()<br>
+						</font></td>
+						#else 
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+						$transferEngine.getMessage() 
+						</font></td>
+						#end 
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		
+		#*
+		##FRH related code
+		#if($frhStatus)
+			<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10">
+			#if ($frh.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($frh.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#elseif($frh.isRed())
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#else
+				<IMG SRC="../img/gray_bulp.gif" WIDTH="30" height="30" border="0" ALT="Gray">
+
+			#end
+            </td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">FRH<br>
+			<br>
+			<br>
+			<br>
+			</font> <font face="Verdana, Helvetica, Arial" size="1"> <!--<b>! WARNING: Low on database size !</b>-->
+			</font></td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+					<tr>
+
+						<td colspan="3" height="30"><font
+							face="Verdana, Helvetica, Arial" size="2">
+							#if($frh.isGreen() || $frh.isYellow())
+							<a class="a_bold" href="FrhStatusDetails" target="_blank">Show status details</a> 
+															</font></td>
+							#elseif($frh.isRed() || $frh.isGray())
+						   $frh.EtlcServerStatus
+						#end
+
+					</tr>
+					<tr>
+						#set($showFrhDetail = $frh.isDetails())
+						
+						#if($showFrhDetail)
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+						$frh.getMessage()
+                                          $frh.getUptime() 
+						</font></td>
+						#else 
+						<td colspan="3" height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1"></font></td>
+						#end
+						
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+					#end
+		*#
+		
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10">
+			#if ($scheduler.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($scheduler.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+            </td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">$scheduler.getFieldName()<br>
+			<br>
+			<br>
+			<br>
+			</font> <font face="Verdana, Helvetica, Arial" size="1"> <!--<b>! WARNING: Low on database size !</b>-->
+			</font></td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+					<tr>
+
+						<td colspan="3" height="30"><font
+							face="Verdana, Helvetica, Arial" size="2">
+						#if($scheduler.isGreen() || $scheduler.isYellow())
+							<a class="a_bold" href="SchedulerStatusDetails" target="_blank">Show status details</a> 
+						#elseif($scheduler.isRed())
+						   $scheduler.EtlcServerStatus
+						#end
+						</font></td>
+					</tr>
+					<tr>
+						#set($showSchedulerDetail = $scheduler.isDetails())
+						#if($showSchedulerDetail == true)
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+						$scheduler.getMessage() 
+						</font></td>
+						#else 
+						<td colspan="3" height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+						$scheduler.getPollInterval() 
+						</font></td>
+						#end
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		#foreach($monitorInformation in $hardwareInformation)
+		#foreach($serviceStatus in $monitorInformation.getServiceStatusList())
+			#foreach($key in $serviceStatus.keySet())
+				#if ($key == "fls")
+					<tr>
+					<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+					#if ($fls.isGreen())
+						<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+					#elseif	 ($fls.isYellow())
+						<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+					#else
+						<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+					#end
+					</td>
+					<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+						width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="2">FLS</font>
+					</td>
+					<td valign="top" width="72%">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%"
+						bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+					<tbody>
+						<tr>
+							<td colspan="3" height="30"><font
+								face="Verdana, Helvetica, Arial" size="2">
+							#if($fls.isGreen() || $fls.isYellow())
+								<a class="a_bold" href="FLSStatusDetails" target="_blank">Show status details</a> 
+							#elseif($fls.isRed())
+								$fls.EtlcServerStatus
+							#end
+						
+							</font></td>
+						</tr>
+						<tr>
+							<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+							$fls.getMessage() 
+							</font></td>
+						</tr>
+						<tr>
+							<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+						</tr>
+					</tbody>
+					</table>
+					</td>
+					</tr>
+				#end
+			#end
+		#end
+		#end
+	</tbody>
+</table>
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">License info</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+
+	<tbody>
+		<!-- Starts-->
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+			#if ($licSrv.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($licSrv.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+            </td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="2">$licSrv.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					<tr>
+						<td colspan="3" height="30">
+							
+							<font face="Verdana, Helvetica, Arial" size="2">
+								<a class="a_bold" href="ShowInstalledLicenses">Show installed licenses</a> 
+							</font>
+							
+						</td>
+					</tr>
+					<tr>
+						
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+						$licSrv.getLicServerStatusMsg() 
+						</font></td>
+					</tr>
+					<tr>
+					    <td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="1" width="10">
+			#if ($licMgr.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($licMgr.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">$licMgr.getFieldName()<br>
+			<br>
+			<br>
+			<br>
+			</font> <font face="Verdana, Helvetica, Arial" size="1"> 
+			</font></td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+					
+					<tr>
+						<td colspan="3" height="30">
+							
+							<font face="Verdana, Helvetica, Arial" size="2">
+								<a class="a_bold" href="LicenseLogsViewer">Show license logs</a> 
+							</font>
+							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+							$licMgr.getLicManagerStatusMsg() 
+							</font></td>
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+#if ($mediatorInfo)
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">Mediator Service</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+	<tbody>
+
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="1" width="10">
+			#if ($mediatorInfo.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($mediatorInfo.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#elseif	 ($mediatorInfo.isGray())
+				<IMG SRC="../img/gray_bulp.gif" WIDTH="30" height="30" border="0" ALT="Gray">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">$mediatorInfo.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+				<tr>
+					<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+							$mediatorInfo.getMessage()  </font></td>
+				</tr>
+				<tr>
+					<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+				</tr>
+				#set($statusMessages=$mediatorInfo.getmediatorStatusStatusMessage())		
+		          #foreach ($message in $statusMessages)
+					<tr>      
+						<td align="left" style="font-size: 9;" nowrap><font face="Verdana,Helvetica,Arial" size="1">$message</font></td>
+					</tr>
+					#end
+				<tr>
+					<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+				</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+#end
+#if ($mzInformation)
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mediation GW</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+	<tbody>
+
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="1" width="10">
+			#if ($mzInformation.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($mzInformation.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#elseif	 ($mzInformation.isGray())
+				<IMG SRC="../img/gray_bulp.gif" WIDTH="30" height="30" border="0" ALT="Gray">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">$mzInformation.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+				  <tr>
+				     <td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+							$mzInformation.getMessage()
+							MG Host Address: $mzInformation.getHostname() 
+						</font></td>
+			       </tr>
+				  #set($statusMessages=$mzInformation.getMediationGatewayStatusMessage())		
+		          #foreach ($message in $statusMessages)
+					<tr>      
+						<td align="left" style="font-size: 9;" nowrap><font face="Verdana,Helvetica,Arial" size="1">$message</font></td>
+					</tr>
+					#end
+		        </tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+#end
+
+#if ($glassFishInfo)
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">Application Server</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+	<tbody>
+
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="1" width="10">
+			#if ($glassFishInfo.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($glassFishInfo.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#elseif	 ($glassFishInfo.isGray())
+				<IMG SRC="../img/gray_bulp.gif" WIDTH="30" height="30" border="0" ALT="Gray">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			#end
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200"><font face="Verdana, Helvetica, Arial" size="2">$glassFishInfo.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+				<tbody>
+				<tr>
+					<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1">
+							$glassFishInfo.getMessage() Application Server Host Name :
+					     	$glassFishInfo.getHostname() </font></td>
+				</tr>
+				<tr>
+					<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+				</tr>
+				#set($statusMessages=$glassFishInfo.getglassfishStatusStatusMessage())		
+		          #foreach ($message in $statusMessages)
+					<tr>      
+						<td align="left" style="font-size: 9;" nowrap><font face="Verdana,Helvetica,Arial" size="1">$message</font></td>
+					</tr>
+					#end
+				<tr>
+					<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+				</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+#end
+
+
+#if ($CounterVolumeDisplay.equalsIgnoreCase("YES"))
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">Counter Volume</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+
+	<tbody>
+		<!-- Starts-->
+		<tr>
+			
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+			#if ($counterVolume.isGreen())
+				<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+			#elseif	 ($counterVolume.isYellow())
+				<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+			#else
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+				
+			#end
+            </td>
+			
+			<td valign="center" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="1">#if($counterVolume.isRed()) <br>
+					<b>Counter volume exceeded permissible limit</b></font>
+					#end
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+				<!-- FIX FOR HU57014 -->
+					#if (!$counterVolume.isYellow())
+					<tr>
+						
+						<td colspan="3" height="30">
+							
+							<font face="Verdana, Helvetica, Arial" size="2" color="#000099" font-weight="bold">
+								<a class="a_bold" href="CounterVolumeDetails">Counter Volume Information</a> 
+							</font>
+							
+						</td>
+
+
+					</tr>
+					#end
+
+
+					<tr>
+			
+						<!-- FIX FOR HU57014 -->
+						#if ($counterVolume.isYellow())
+							<td colspan="3" height="30" valign="top" bgcolor="#eef9fd">
+							<font face="Verdana, Helvetica, Arial" size="2">
+							<h> Unable to retrieve counter volume information. <h> <br> 
+							</font>
+							</td>
+						#else 
+							<td colspan="3" height="30" valign="top" bgcolor="#eef9fd"><font face="Verdana, Helvetica, Arial" size="1">
+							<h>Maximum counter volume supported : $maxCountVol Million <h> <br>
+							<h>Average counter volume for last 24 hours(15 Minute Equivalent) : $countVol Million  <h> <br> <br> <br>
+							<h><b>Note: The counter volume displayed here is an average of all counters received to their 15min ROP equivalents <h></b> <br>
+							</font>
+							</td>
+						#end
+					</tr>
+					<tr>
+					    <td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+#end
+
+#if ($RollingSnapshot.isRed() && $OMBSBackup.isRed())
+<table border="0" width="100%" cellpadding="0"
+	cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+	<tr>
+
+		<td class="systemstatustab" align="center" colspan="2"><font
+			face="Verdana, Helvetica, Arial" size="3">Alarm</font></td>
+		<td class="systemstatustab">&nbsp;</td>
+	</tr>
+	<tbody>
+	<!-- Show Rolling Snapshot details-->
+	
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="2">$RollingSnapshot.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					<tr>
+						<td colspan="3" height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1"> <br> <b>Status</b> : $RollingSnapshot.getAlarmStatus() <br>
+						</font></td>
+						
+						<td colspan="3" height="50" valign="top">  </td>
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+		</tr>
+		<!-- Show OMBS Backup details-->
+		<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;"><font face="Verdana, Helvetica, Arial" size="2">$OMBSBackup.getFieldName()</font>
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					<tr>
+						<td colspan="3" height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> <font
+							face="Verdana, Helvetica, Arial" size="1"> <br> <b>Status</b> : $OMBSBackup.getAlarmStatus() <br>  
+						</font></td>
+						
+						<td colspan="3" height="50" valign="top"> </td>
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+		</tr>
+	</tbody>
+</table>
+#elseif ($RollingSnapshot.isRed() || $OMBSBackup.isRed())
+	<table border="0" width="100%" cellpadding="0"
+		cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+		<tr>
+
+			<td class="systemstatustab" align="center" colspan="2"><font
+				face="Verdana, Helvetica, Arial" size="3">Alarm</font></td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+		
+		<tbody>
+			<tr>
+			<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+				<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+			</td>
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200" style="border-bottom : 1px solid #FFFFFF;">
+				#if ($OMBSBackup.isRed())
+					<font face="Verdana, Helvetica, Arial" size="2">$OMBSBackup.getFieldName()</font>
+				#else
+					<font face="Verdana, Helvetica, Arial" size="2">$RollingSnapshot.getFieldName()</font>
+				#end
+			</td>
+			<td valign="top" width="72%">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd" style="border-bottom : 1px solid #FFFFFF;">
+				<tbody>
+					<tr>
+						<td colspan="3" height="30" valign="top"><font
+							face="Verdana, Helvetica, Arial" size="2"></font> 
+							#if ($OMBSBackup.isRed())
+								<font face="Verdana, Helvetica, Arial" size="1"> <br> <b>Status</b> : $OMBSBackup.getAlarmStatus() <br>  
+							#else
+								<font face="Verdana, Helvetica, Arial" size="1"> <br> <b>Status</b> : $RollingSnapshot.getAlarmStatus() <br> 
+							#end
+						</font></td>
+						
+						<td colspan="3" height="50" valign="top"> </td>
+					</tr>
+					<tr>
+						<td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td>					
+					</tr>
+				</tbody>
+			</table>
+		</tr>
+		</tbody>
+	</table>
+#end
+<table border="0" width="100%" cellpadding="0"
+		cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+		<tr>
+			<td class="systemstatustab" align="center" colspan="2"><font
+				face="Verdana, Helvetica, Arial" size="3">Certificate Expiry</font></td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+		<tbody>
+		<tr>
+		<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+		#if($colour == -1)
+			<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+		#elseif($colour == 0)
+			 <IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+		#else
+			 <IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+		#end
+		</td>
+		
+			<td valign="top" align="center" bgcolor="#eef9fd" height="30"
+				width="200">
+			</td>
+			<td valign="top" width="72%" bgcolor="#eef9fd">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"
+				bgcolor="#eef9fd">
+			<tbody>
+			<tr>
+			<td colspan="3" height="30">
+							
+							<font face="Verdana, Helvetica, Arial" size="2" color="#000099" font-weight="bold">
+								<a class="a_bold" href="$servletPath/CertificateExpiryDetails">Certificate Expiry Details</a> 
+							</font>
+							
+						</td>
+					</tr>
+				<!--	<tr><td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td></tr>  -->
+				    #if($colour == -1)
+					<tr>
+					<td><b><font face="Verdana, Helvetica, Arial" size="1">One or more certificates expires in next 30 days or have already expired.</font></b></td>
+					</tr>
+					#elseif($colour == 0)
+					<tr>
+					<td><b><font face="Verdana, Helvetica, Arial" size="1">One or more certificates expires in next 180 days.</font></b></td>
+					</tr>
+					#else
+					<tr>
+					<td><b><font face="Verdana, Helvetica, Arial" size="1">No certificate expires in next 180 days.</font></b></td>
+					</tr>
+					#end
+			</tbody>
+            <tr><td colspan="3"><font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font></td></tr>			
+			</table>
+			
+			</td>
+	</tr>		
+	</tbody>
+	</table>
+
+#if(!($errorMessage || $areUsersPresent))
+	<table border="0" width="100%" cellpadding="0" cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+		<tr>
+			<td class="systemstatustab" align="left" style="padding-left: 40px;" colspan="2">
+				<font face="Verdana, Helvetica, Arial" size="3">Database Users</font>
+			</td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+		<tbody>
+			<tr>
+				<td bgcolor="#adc0e6" align="center" height="30" width="10" style="border-bottom : 1px solid #FFFFFF;">
+				#if($color==-1 )
+					<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+				#elseif($color==0 )
+					<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+				#else
+					<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green"> 
+				#end
+				</td>
+				#if($exceptionForCustomUser)
+					<td  style="background-color:#eef9fd" >
+						<b><font face="Verdana, Helvetica, Arial" size="2">Error while fetching the Customized Database Users details.</font></b>
+					</td>
+				#else
+					<td valign="top" align="center" bgcolor="#eef9fd" height="30" width="200">
+					</td>
+					<td valign="top" width="72%">
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#eef9fd">
+							<tbody>
+								<tr>
+									<td height="10">
+										<font face="Verdana, Helvetica, Arial" size="2">
+											<a class="a_bold" href="$servletPath/UserDetails">Customized Database User Details</a>
+										</font>&nbsp;
+										<img src="../img/yellow_bulp.gif" width="10px" height="10px" border="0" ALT="On">&nbsp;Password is about to expire &nbsp; 
+										<img src="../img/red_bulp.gif" width="10px" height="10px" border="0" ALT="Off">&nbsp;Password has expired&nbsp; 
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<font face="Verdana, Helvetica, Arial" size="1">&nbsp;</font>
+									</td>
+								</tr>
+								<tr>
+									#if($Empty)
+										<td>
+											<b><font face="Verdana, Helvetica, Arial" size="1">Passwords are up-to date for all customized users.</font></b>
+										</td>
+									#else
+										<td height="30" valign="top">
+											<ul style="list-style: none; padding:0;">
+											#foreach($monitorInformation in $userNames)
+												<li>
+													#if($monitorInformation.getStatus()==-1)
+														&nbsp;&nbsp;<font color="" face="Verdana, Helvetica, Arial" size="1">
+														<img src="../img/red_bulp.gif" width="10px" height="10px" border="0" ALT="Off">&nbsp; 
+														<font size="1" color="#000099" >$monitorInformation.getUsername() </font> &nbsp;
+														</font>
+													#elseif($monitorInformation.getStatus()==0)
+														&nbsp;&nbsp;<font color="" face="Verdana, Helvetica, Arial" size="1">
+														<img src="../img/yellow_bulp.gif" width="10px" height="10px" border="0" ALT="Yellow">&nbsp; 
+														<font size="1" color="#000099" >$monitorInformation.getUsername() (expires in $monitorInformation.getDaysToExpire() days that is $monitorInformation.getActualExpiryDate()) </font> &nbsp; 
+														</font>
+													#end
+												</li>
+											#end
+											</ul>
+										</td>
+									#end
+								</tr>  
+							</tbody>
+						</table>
+					</td>
+				#end
+			</tr>
+		</tbody>
+	</table>
+#end
+#if($isPassAgingApplied)
+	<table border="0" width="100%" cellpadding="0"
+		cellspacing="0" style="border-bottom : 1px solid #FFFFFF;">
+		<tr>
+			<td class="systemstatustab" align="center" colspan="2"><font
+				face="Verdana, Helvetica, Arial" size="3">OS Users Detail</font></td>
+			<td class="systemstatustab">&nbsp;</td>
+		</tr>
+		<tbody>
+			<tr>
+				<td bgcolor="#adc0e6" align="center" height="10" width="10">
+					#if($passAgingColor == -1)
+						<IMG SRC="../img/red_bulp.gif" WIDTH="30" height="30" border="0" ALT="Red">
+					#elseif($passAgingColor == 0)
+						<IMG SRC="../img/yellow_bulp.gif" WIDTH="30" height="30" border="0" ALT="Yellow">
+					#else
+						<IMG SRC="../img/green_bulp.gif" WIDTH="30" height="30" border="0" ALT="Green">
+					#end
+				</td>
+				<td valign="top" align="center" bgcolor="#eef9fd" height="10"
+					width="200"><font face="Verdana, Helvetica, Arial" size="2">&nbsp;
+				</td>
+				<td valign="top" width="72%" bgcolor="#eef9fd">
+				<br>
+					#foreach ($monitorInformation in $monitorInformationOSList)
+						<li style="list-style-type:none">
+							#if($monitorInformation.getStatus()==1)
+								<img src="../img/green_bulp.gif" width="10px" height="10px" border="0" ALT="On">
+								$monitorInformation.getUsername()&nbsp;password expires on
+							#elseif($monitorInformation.getStatus()==0)
+								<img src="../img/yellow_bulp.gif" width="10px" height="10px" border="0" ALT="On">
+								$monitorInformation.getUsername()&nbsp;password expires on
+							#else
+								<img src="../img/red_bulp.gif" width="10px" height="10px" border="0" ALT="Off">
+								$monitorInformation.getUsername()&nbsp;password expired on
+							#end
+							$monitorInformation.getPassExpiryDate()&nbsp;
+						</li>
+						<br>
+					#end			
+				</td>
+			</tr>
+		</tbody>
+	</table>
+#end
+</td></tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>
+

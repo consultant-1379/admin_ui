@@ -1,0 +1,118 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Web Portal :: Add Monitored Type</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script>
+
+function LevelChanged()
+	{
+  		document.f1.timelevel_changed.value="yes"; 
+  		document.f1.submit();
+	}
+
+</script>
+#include( "calendar_js.txt" )
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<form method=post onSubmit="return filterFields();">
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="MonitoredTypes">Monitored Types</a></font>
+<hr />
+<font face="Verdana, Helvetica, Arial" size=-1>
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			Select measurement type, timelevel and activation day. Click "Add new type" button. There can be only 
+			one measurement type and timelevel pair to be monitored.
+			<br><br>
+			</font>
+		</td>
+</tr>
+
+#if ($errorMsg && $errorMsg != "")
+<table>
+<tr>
+	<td><font size="1" face="Verdana, Helvetica, Arial" color="red">$errorMsg</font></td>
+<tr>
+</table>
+#end
+
+#if ($tp != "" && $distinctMeaTypes.size() > 0 && $distinctTimelevels.size() > 0)
+<table border=1>
+	 <tr bgcolor="#B3B3FF">
+		<td width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Measurement type</strong></font></td> <!-- Measurement type -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Timelevel</strong></font></td> <!-- Timelevel -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Status</strong></font></td> <!-- Status -->
+		<td width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Activation day</strong></font></td> <!-- Activation day -->
+		</tr>
+	<tr>
+	  
+	  <td>
+		<select onChange="refreshPage(this.form.type.value);" name="type" style="font-size: 9;">
+			#foreach($meaType in $distinctMeaTypes)
+			<option value="$meaType">$meaType</option>
+			#end
+	  </td>
+      <td>
+        <select name="timelevel" style="font-size: 9;">
+		#foreach($tlevel in $distinctTimelevels)
+		<option value="$tlevel">$tlevel</option>
+		#end
+      </td>
+      <td>
+        <select name="status" style="font-size: 9;">
+        #if ($selectedStatus && $selectedStatus != "")
+		<option selected value="$selectedStatus">$selectedStatus</option>
+		#end
+		<option value="ACTIVE">ACTIVE</option>
+		<option value="INACTIVE">INACTIVE</option>
+      </td>
+      </td> <!-- -->
+			
+			<td valign="top" class="basic"><font size=-1>
+		    	#parse( "cal_select_1.vm" )
+		    	</font>
+			</td>
+		
+    </tr>
+    <tr>
+	  <td colspan="4">
+	   <input type="submit" name="save" value="Add new type">
+	 </td>
+    </tr>
+    <input type="hidden" name="timelevel" value=$selectedTimelevel>
+    <input type="hidden" name="tp" value=$tp>
+ </table>  
+#else
+<table>	
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial" color="red">
+			Measurement types not found for this tech pack or timelevels are not defined.
+			<br><br>
+			</font>
+		</td>
+	</tr>
+</table>
+#end    
+
+
+</form>
+
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

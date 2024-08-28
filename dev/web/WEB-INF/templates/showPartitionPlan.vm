@@ -1,0 +1,141 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Configuration :: DWH Configuration</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href=ShowPartitionPlan>DWH Configuration</a></font>
+<hr />
+
+
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			<br>
+			DWH Configuration page shows the partition sizes of partition plans. Partition plan values can be changed by clicking on the name of the partition plan.<br>
+			<br>
+			<br>
+			</font>
+		</td>
+	</tr>
+</table>
+
+<font face="Verdana, Helvetica, Arial" size=-1>
+
+#if ($message)
+<table>
+	<tr>
+		<td colspan="3" class="note">$message<br/><br/>
+		
+		#if ($pp_saved != "")
+		<font color=red>Note!</font> Before changes takes effect you have to execute StorageTime actions for every tech pack that uses this partition plan.<br />
+		#end
+		
+		<br />
+		</td>
+	</tr>
+</table>
+#end
+
+#set($timebasedtitle = "0")
+#foreach ($currentPartitionPlan as $partitionPlans)
+#if($currentPartitionPlan.getPartitiontype().toString() != "1" )
+#if($timebasedtitle == "0")
+<table class="myt" style="width:550;" border="1">
+<tr>
+	<td colspan="3" height="30">
+	     <font face="Verdana, Helvetica, Arial" size="2">
+			 Time Based Partition</a> 
+	</font></td>
+</tr>
+<tr>
+	<td class="basichdr">
+		<font size="1" face="Verdana, Helvetica, Arial"><b>Partition plan</b></font>
+	</td>
+	<td class="basichdr">
+		<font size="1" face="Verdana, Helvetica, Arial"><b>Storage time</b></font>
+	</td>
+	<td class="basichdr">
+		<font size="1" face="Verdana, Helvetica, Arial"><b>Partition size</b></font>
+	</td>
+</tr>
+#set($timebasedtitle = "1")
+#end
+<tr>
+	<td class="basic">
+		<font size="1" face="Verdana, Helvetica, Arial"><a href="EditPartitionPlan?pp=$currentPartitionPlan.getPartitionplan().toString()">$currentPartitionPlan.getPartitionplan().toString()</a></font>
+	</td>
+	<td class="basic">
+		<font size="1" face="Verdana, Helvetica, Arial">$currentPartitionPlan.getDefaultstoragetime().toString() days</font>
+	</td>
+	<td class="basic">
+		<font size="1" face="Verdana, Helvetica, Arial">$currentPartitionPlan.getDefaultpartitionsize().toString() hours</font>
+	</td>
+</tr>
+#end
+#end
+#set($volumebasedtitle = "0")
+#foreach ($currentPartitionPlan as $partitionPlans)
+#if($currentPartitionPlan.getPartitiontype().toString() != "0" )
+#if($volumebasedtitle == "0")
+<tr>
+	<td colspan="3" height="30">
+	     <font face="Verdana, Helvetica, Arial" size="2">
+			 Volume Based Partition</a> 
+	</font></td>
+</tr>
+<tr>
+	<td class="basichdr">
+		<font size="1" face="Verdana, Helvetica, Arial"><b>Partition plan</b></font>
+	</td>
+	<td class="basichdr">
+		<font size="1" face="Verdana, Helvetica, Arial"><b>Storage Volume</b></font>
+	</td>
+	<td class="basichdr">
+		<font size="1" face="Verdana, Helvetica, Arial"><b>Partition Volume</b></font>
+	</td>
+</tr>
+#set($volumebasedtitle = "1")
+#end
+<tr>
+	<td class="basic">
+		<font size="1" face="Verdana, Helvetica, Arial"><a href="EditPartitionPlan?pp=$currentPartitionPlan.getPartitionplan().toString()">$currentPartitionPlan.getPartitionplan().toString()</a></font>
+	</td>
+	<td class="basic">
+		<font size="1" face="Verdana, Helvetica, Arial">$currentPartitionPlan.getDefaultstoragetime().toString() rows</font>
+	</td>
+	<td class="basic">
+		<font size="1" face="Verdana, Helvetica, Arial">$currentPartitionPlan.getDefaultpartitionsize().toString() rows</font>
+	</td>
+</tr>
+#end
+#end
+</table>
+
+#if ($errorMessage && $errorMessage != "")
+<table class="myt" style="width:550;">
+<tr>
+	<td class="error">$errorMessage</td>
+</tr>
+</table>
+#end
+
+<br>
+#parse( "footer.vm" )
+</font>
+</td></tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

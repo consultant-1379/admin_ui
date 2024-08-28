@@ -1,0 +1,165 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: Configuration :: Node Version Update :: Delta Results</title>
+  <!-- This is for evaluation..-->
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="shortcut icon" href="../img/eric.ico">
+	
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+
+<td width=800>
+
+<font size="1" face="Verdana, Helvetica, Arial">Configuration &nbsp;&gt;&gt;&nbsp;<a href="AfjShowAfjTechPacks">Node Version Update</a></font>
+<hr />
+
+#parse( "afj_message.vm" )
+
+<table class="myt" width="97%">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			<br/>
+			Delta generation displays the new measurement types and/or new counters that will be added from the selected PM MIM xml.
+			<br/>
+			<br/>
+			The table, Summary of the Impacts shows how the database will change after update has been executed. 
+			Tables below that list the detail level impacts.
+			<br/>
+			<br/>
+			<list>
+				<li>New/Modified Measurement Type: Lists the names of the impacted measurement types.</li>
+				<li>Ratio: Gives the number of new counters and the number of existing counters for a measurement type present in the ENIQ Repository.</li>
+				<li>MOC Name: Refers to the moc tag defined in the PM MIM xml.</li>
+				<li>Counter: Refers to the measurement counter.</li>
+			</list>
+			<br/>
+			<br/>
+			Clicking the Run Update button commits the delta changes listed below to the database. During the update loading will be stopped and Engine/Scheduler will be restarted.<br/><br/>Please take the snapshot of the ENIQ Repository before clicking Run Update.
+			<br/>
+			<br/>
+			</font>
+		</td>
+	</tr>
+</table>
+
+<form action="$servletPath/AfjShowDeltaResults" method="post">
+<table border="0" width="97%" cellpadding="1" cellspacing="1">
+<tr><td align="left" colspan="2"><strong>Delta for $afjtechpack</strong></td></tr>
+<tr>
+<td align="left">Has ENIQ Repository snapshot been created&nbsp;?&nbsp;<input type="checkbox" name="confirm" value="confirm" /></td>
+<td align="right">
+#if ( $afjdeltaexist == false || $afjupgradeallowed == false)
+	<input type="submit" value="Run Update" name="runupgrade.$afjtechpack" align="right" disabled/>
+#else	
+	<input type="submit" value="Run Update" name="runupgrade.$afjtechpack" align="right"/>
+#end
+</td>	
+</tr>
+<tr>
+</tr>
+</table>
+<br />
+<table border="1" width="97%" cellpadding="1" cellspacing="1">
+<tr bgcolor="#B3B3FF"><th align="left">Summary of the Impacts</th></tr>
+<tr><td>$newtypecount new measurement types having $newtypecountercount new counters.</td></tr>
+<tr><td>$modtypecount modified measurement types having $modtypecountercount new counters.</td></tr>
+<tr><td>Total number of impacted tables will be $tottypecount.</td></tr>
+</table>
+<br />
+
+<input type="hidden" name="afjtechpack" value="$afjtechpack" />
+
+<table border="1" width="97%" cellpadding="1" cellspacing="1">
+      <tr bgcolor="#B3B3FF">
+        <th align="left" colspan="2">New Measurement Type</th>
+		<th align="left">MOC Name</th>
+        <th align="left">Counter</th>
+      </tr>
+      #set ( $prev_mtype = '' )
+      #set ( $prev_tag = '' )
+	  #if ( $afjdeltaexist == true )
+		#foreach( $afjmeastype in $afjdelta.getMeasurementTypes() )
+          #if ( $afjmeastype.isTypeNew() == true )
+			#set ( $taglist = $afjmeastype.getTags() )
+			#foreach ( $tag in $taglist )
+			  #set ( $counterlist = $tag.getNewCounters() )
+			  #foreach ( $afjcounter in $counterlist )
+				<tr>
+				#if( $prev_mtype != $afjmeastype.getTypeName() )
+				  <td align="left" valign="top" colspan="2">$afjmeastype.getTypeName()</td>
+				#else  
+				  <td align="left" valign="top" colspan="2">&nbsp;</td>
+				#end
+				#if( $prev_tag != $tag.getTagName() )
+				  <td align="left" valign="top">$tag.getTagName()</td>
+				#else  
+				  <td align="left" valign="top">&nbsp;</td>
+				#end
+				<td align="left">$afjcounter.getCounterName()</td>
+				</tr>
+		        #set ( $prev_tag = $tag.getTagName() )
+		        #set ( $prev_mtype = $afjmeastype.getTypeName() )
+			  #end
+			#end
+		  #end	
+		#end
+      #end
+      <tr><td colspan="4">&nbsp;</td></tr>
+      <tr bgcolor="#B3B3FF">
+        <th align="left">Modified Measurement Type</th>
+        <th align="left">Ratio</th>
+		<th align="left">MOC Name</th>
+        <th align="left">Counter</th>
+      </tr>
+      #set ( $prev_mtype = '' )
+      #set ( $prev_tag = '' )
+	  #if ( $afjdeltaexist == true )
+		#foreach( $afjmeastype in $afjdelta.getMeasurementTypes() )
+          #if ( $afjmeastype.isTypeNew() == false )
+			#set ( $taglist = $afjmeastype.getTags() )
+			#foreach ( $tag in $taglist )
+			  #set ( $counterlist = $tag.getNewCounters() )
+			  #foreach ( $afjcounter in $counterlist )
+				<tr>
+				#if( $prev_mtype != $afjmeastype.getTypeName() )
+				  <td align="left" valign="top">$afjmeastype.getTypeName()</td>
+				  <td align="left" valign="top">$afjmeastype.getRatio()</td>
+				#else  
+				  <td align="left" valign="top">&nbsp;</td>
+				  <td align="left" valign="top">&nbsp;</td>
+				#end
+				#if( $prev_tag != $tag.getTagName() )
+				  <td align="left" valign="top">$tag.getTagName()</td>
+				#else  
+				  <td align="left" valign="top">&nbsp;</td>
+				#end
+				<td align="left">$afjcounter.getCounterName()</td>
+				</tr>
+		        #set ( $prev_tag = $tag.getTagName() )
+		        #set ( $prev_mtype = $afjmeastype.getTypeName() )
+			  #end
+			#end
+		  #end	
+		#end
+      #end
+      <tr><td colspan="4">&nbsp;</td></tr>
+</table>
+</form>
+</td>
+
+#parse( "footer.vm" )
+</tr>
+</table>
+</body>
+</html>

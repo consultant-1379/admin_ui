@@ -1,0 +1,30 @@
+<project name="admin_ui" default="test_all">
+	<property name="module.name" value="admin_ui" />
+	<property file="${user.home}/EniqBuild/BH/build.properties" />
+	<property name="ant.common" value="${cc.base}/tools/ant_common" />
+	<property file="${ant.common}/common.properties" />
+	<property name="module.base" value="${module.admin_ui.base}" />
+	<property name="module.build" value="${module.admin_ui.build}" />
+	<property name="module.dependants" value="${module.admin_ui.dependants}" />
+	<import file="${ant.common}/common.xml" />
+	<property name="tests.to.run" value="**/*Test.class" />
+	<property name="tests.to.exclude"
+            value="**/com/distocraft/dc5000/etl/gui/systemmonitor/StatusDetailsTest.class"/>
+			
+	<property name="mods.needed" value="afj_manager, common_utilities, repository, engine, scheduler, licensing" />
+
+	<path id="admin_ui.lib.classpath">
+		<path refid="plaform.lib.classpath" />
+		<path refid="servlet_api" />
+		<path location="${module.afj_manager.pkg}" />
+		<path location="${module.engine.pkg}" />
+		<path location="${module.repository.pkg}" />
+		<path location="${module.scheduler.pkg}" />
+		<path location="${module.licensing.pkg}" />
+		<path location="${module.common_utilities.pkg}" />
+	</path>
+	<path id="admin_ui.test.classpath">
+		<path refid="platform.test.classpath" />
+		<path refid="admin_ui.lib.classpath" />
+	</path>
+</project>

@@ -1,0 +1,199 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Data Verification :: Show Reference Tables</title>
+
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script type="text/javascript">
+	<!--
+	
+	function check() {
+	
+	   var strString = "";
+	
+	   var strValidChars = "0123456789";
+	   var strChar;
+	   var blnResult = true;
+	
+	   strString = document.f1.row_limit.value;
+		
+		//  test strString consists of valid characters listed above
+		for (i = 0; i < strString.length && blnResult == true; i++) {
+      
+			strChar = strString.charAt(i);
+      
+			if (strValidChars.indexOf(strChar) == -1) {
+				blnResult = false;
+				e = "Number of rows is not numeric.\n";
+			}
+		}
+		
+	   if (blnResult == false) {
+		alert(e);
+		return false;
+	   } else {
+		document.f1.submit();
+		return (true && filterFields());
+	   }
+	
+	 }
+	  // -->
+	</SCRIPT>
+
+  
+
+</head>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Verification&nbsp;&gt;&gt;&nbsp;<a href="ShowRefType">Show Reference Tables</a></font>
+<hr />
+<form name="f1" action="$req.getContextPath()/servlet/ShowRefType" method="post" onsubmit="var b = filterFields();check();return b">
+<table border="1">
+	<tr>
+		<td class="basichdr">
+		<font size="-1"><b>Select table</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td class="basic" valign="top"><font size="-1">
+			<select name="rtype" style="font-size: 9;">
+			<option selected>$thetype</option>
+			#foreach ( $item in $reftypes)
+			<option>$item</option>
+			#end
+			</select>
+		</font></td>
+	</tr>
+</table>
+<br>
+#if("$!thetable"=="")
+  #set($disabled="disabled")
+#else
+  #set($disabled="")
+#end
+<table border="1">
+	<tr>
+		<td class="basichdr" colspan="1">
+		<font size="-1"><strong>Filter</strong></font>
+        </td>
+		<td class="basichdr" valign=top colspan=2>
+		Number of rows <input type="number" maxlength="3" min="0" max="500" id="inputTxt" name="row_limit" value=$row_limit>
+		</td>
+    </tr>
+    <tr>
+    	<td class="basichdr"> 
+		  <font size="-1">Column</font>
+        </td>
+		<td class="basichdr">
+		  <font size="-1">Type</font>
+		</td>
+		<td class="basichdr">
+		  <font size="-1">Value</font>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		    <select $disabled name="f_column" style="font-size: 9;">
+			  <option selected>$fcolumn</option>
+    		  <option></option>
+			  #set($r=1)
+              #foreach($onerow in $thetable)
+                #if($r==1)
+        		#foreach($col in $onerow) 
+		      	  <option>$col</option>
+			    #end
+			    #set($r=2)
+			    #end
+			  #end
+		    </select>
+		 </td>
+		 <td>
+		    <select $disabled name="f_type" style="font-size: 9;">
+			  <option selected>$ftype</option>
+			  <option></option>
+			  <option>=</option>
+			  <option>< (string)</option>
+			  <option><= (string)</option>
+			  <option>> (string)</option>
+			  <option>>= (string)</option>
+			  <option>< (integer)</option>
+			  <option><= (integer)</option>
+			  <option>> (integer)</option>
+			  <option>>= (integer)</option>
+			  <option>begins</option>
+			  <option>ends</option>
+			  <option>contains</option>
+			</select>
+		</td>
+		<td>
+		   <font size="-1">
+		   <input $disabled type=text name="f_value" style="font-size: 9;" value=$fvalue>  			
+		   </font>
+		</td>
+	</tr>
+</table>
+<br>
+<input type="submit" onclick="getInputValue();" id="submit" style="font-size: 11;" name="send" value="Show">
+<br>
+<br />
+#if ("$!errormsg" != "")
+<br /><br />
+<font size="2" color="#FF0000" face="Verdana,Helvetica,Arial">Error occurred when fetching data<BR />$errormsg</font>
+#else
+#if($row_limit == 0)
+<table>
+	 <tr>
+		<td colspan="7"><font face="Verdana,Helvetica,Arial" size="2" color="red"><b>NOTE!</b></font>
+		<font face="Verdana,Helvetica,Arial" size="2"><b>Please Select Number of Rows.</font></b>
+		</tr>
+	</table>
+#else
+#if( $thetype != "-" )
+<table border="1">
+	<tr class="basichdr">
+		<td colspan="1">
+		<font size="-1"><strong>Contents of table $thetype</strong></font>
+		</td>
+		
+	</tr>
+	#foreach( $onerow in $thetable)
+		<tr>
+		#foreach( $col in $onerow) 
+		<td class="basic" valign="top"><font size="-1">
+		#if ($col)  		
+		$col&nbsp;
+		#else
+		&nbsp;
+		#end
+		#set($col = " ")
+		</font></td>
+		#end
+		</tr>
+	#end
+</table>
+</form>
+<br>
+#end
+#end
+#end
+</td></tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>
+
+
+ <script>
+        function getInputValue(){
+          var inputVal = document.getElementById("inputTxt").value;
+            if (inputVal > 500 || inputVal < 0){
+            alert("The number of row should range between 0 and 500");
+            $("#submit").attr("disabled", true);
+  }
+     }
+    </script>

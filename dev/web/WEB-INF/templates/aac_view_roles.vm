@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css"></link>
+	<link rel="shortcut icon" href="../img/eric.ico"></link>
+	<title>Ericsson Network IQ :: Security Administration :: Role Management</title>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css"></link>
+	<script type="text/javascript" src="../javascript/sorttable.js"> </script>
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</HEAD>
+
+<BODY bgcolor="#ffffff" > 
+
+<TABLE border="0">
+	<tr valign=top>
+	<!-- main menu --> 
+		<td width=220>
+			#parse( "main_menu.vm" ) 
+		</td>
+
+	<!-- the body -->
+		<td width=800>
+		Security Administration&nbsp;&gt;&gt;&nbsp;<font color="#333399">Role Management</font>
+		<hr />
+$!_debug
+
+<FORM name="viewRoles">
+	Click button to create New Role<br><br>
+	<button class="addButton" type="button" onclick="window.location.href='$req.getContextPath()/servlet/RoleManagement?action=addRole'" >Add Role</button>
+	<br><br><br>
+
+	* denotes predefined entity<br><br>
+	List of all roles<br><br>
+
+<TABLE class="sortable">
+<TBODY>
+	<tr class="viewTableHeader">
+	    <td>&nbsp;&#x21A8; <strong> Name</strong></td>
+	    <td>&nbsp;&#x21A8; <strong> Title</strong></td>
+	    <td width="160px" class="sorttable_nosort"><strong> Operations</strong></td>
+	    <td>&nbsp;&#x21A8; <strong> Remarks</strong></td>
+	</tr>
+	
+	<tr>
+		#foreach( $role in $allRoles )
+	    #set ($predef = "")
+	    #if ( $role.isPredefined() )
+	        #set ($predef = "*")
+		#end
+	
+		<td class="viewTableBorder">$role.roleName$predef</td>
+		<td class="viewTableBorder">$role.title</td>
+	
+		##
+		##                           OPERATIONS START
+		##
+		<td class="viewTableBorder" width="160px">
+		    <a href="$req.getContextPath()/servlet/RoleManagement?rid=$role.roleName&action=viewRolePermGroups" >View Details&nbsp;</a>|&nbsp;
+		  
+			#if ($role.isPredefined() )
+				<font color="#666666" >Edit&nbsp;</font>|&nbsp;
+				<font color="#666666" >Delete</font>
+			#else
+				<a href="$req.getContextPath()/servlet/RoleManagement?rid=$role.roleName&action=editRole">Edit&nbsp;</a>|&nbsp;
+				<a href="$req.getContextPath()/servlet/RoleManagement?rid=$role.roleName&action=deleteRole"
+				            onClick="return confirm('Are you sure you want to delete $role.roleName?')">Delete</a>
+			#end
+		</td>
+		##
+		##                           OPERATIONS END
+		##
+	
+		<td class="viewTableBorder"> $role.remarks &nbsp;</td>
+
+	</tr>
+	#end
+	##foreach	
+</TBODY>
+</TABLE>
+
+	<br>$notification <span class="errormessage"> $!errorMessage 
+
+	<!-- the footer -->
+	#parse( "footer.vm" )
+	</td></tr>
+</TABLE>
+</FORM>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+
+
+
+
+

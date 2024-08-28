@@ -1,0 +1,70 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Security Administration :: Permission Groups :: View Permissions</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script language="JavaScript">
+      function confirmAction(arg)
+      {
+        return confirm("Are you sure you want to "+arg+" the selected permission group?");
+      }
+</script>
+</head>
+
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+</style>
+</head>
+ 
+<!-- the body -->
+<FORM METHOD=POST ACTION="viewPermissions" >
+<td width=800>
+Security Administration &gt;&gt; Permission Groups &gt;&gt;<font color="#333399"> View Permissions</font>
+<hr />
+$!debug
+<br>List of all permission(s) assigned to the selected permission group.<br><br>
+
+<input type="hidden" id="viewpermissions" name="action" value="viewpermissions"/>
+<br>
+
+<table style="width=350px;border:1px solid #99F;" cellpadding="0" cellspacing="12">
+<tbody>
+      <tr>
+        <td align="left" valign="top" width=35%><b>Permission Group:</b></td>
+        <td align="left" valign="top">$permGroupData.permissionGroupName</td>
+      </tr>
+      <tr>
+        <td align="left"  valign="top"><b>Title:</b></td>
+        <td align="left"  valign="top">$permGroupData.title</td>
+      </tr>
+      <tr>
+       <td align="left"  valign="top"><b>Permission(s):</b></td>
+        <td align="left"  valign="top">
+        
+        #foreach( $permission in $permGroupData.permissions )
+		      $permission<br> 
+		#end	
+		
+    	</td>
+	</tr>
+</table>
+<br>
+<br>
+<a href="$req.getContextPath()/servlet/PermissionGroupManagement" target="_parent"><< Permission Group Management</a>
+</FORM>
+
+
+#parse( "footer.vm" )
+
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

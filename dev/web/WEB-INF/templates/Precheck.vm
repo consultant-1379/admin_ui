@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: Feature Version Manager :: PreCheck</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+<body bgcolor="#ffffff">
+<table border="0">
+<tr valign=top>
+<td width=220>
+	#parse( "main_menu.vm" )
+</td>
+<td width=800>
+<form id="precheck_mainForm" name=precheck_form autocomplete="off" method=post action="$req.getContextPath()/servlet/Precheck" onsubmit="return filterfields();">
+Feature Version Manager&nbsp;&gt;&gt;&nbsp;<a href="Precheck">PreCheck</a>
+<hr />
+
+<table class="myt" style="width:550;">
+	<tr>
+		<td>
+			<font face="Verdana,Helvetica,Arial" size="1">Pre Check</font>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			 - Enables users to check if ENIQ system is stable before any major activity is being performed.
+  			<br><br>
+			</font>
+		</td>
+</tr>
+
+</table>
+
+#if($result == "START")
+		#if($isAdminExist)
+		<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold">Enter ENIQ-S Admin Username:</font>
+			<input type="text" id="username" name="userName"><br>
+			<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold">Enter ENIQ-S Admin Password:</font>
+			<input type="password" style="display:none;">
+			<input type="password" name="rootPassword" id="precheckpassword">
+		#else
+			<font face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold">Enter ENIQ-S root Password:</font>
+			<input type="password" style="display:none;">
+			<input type="password" name="rootPassword" id="precheckpassword">
+		#end
+		<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;" name="precheck" value="Start"/>
+		
+#elseif($result == "IN PROGRESS")
+	#if($consoleLog.size() > 0)
+		<table border="1"  border-width="50%" cellpadding="0" cellspacing="0"><tr><td>
+		#foreach($line in $consoleLog)
+			$line
+			<br>
+		#end
+		</td></tr>
+		</table>
+	#else
+		<font face="Vedana, Helvetica, Arial" size="2px" color="blue"><p style="text-align:center;">Console log will be displayed shortly....</font>	
+	#end
+	#if((!$pid_alive) && ($NoConsoleLog))
+		<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Pre check execution failed.Could not display console log.</font>
+		<br><br>
+		<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;float: left" name="cancel" value="Cancel"/>
+	#end
+	<script language="JavaScript">
+		setTimeout(function(){
+			window.location = window.location.href;
+		},$REFRESH_PERIOD)
+	</script>
+
+#elseif($result == "SUCCESS")	
+	#if($precheckSummary.size() > 0)
+		<font face="Verdana,Helvetica,Arial" size="2" style="float: left;"><b>PreCheck Summary Report</b></font>
+		<br><br>
+		#if(($report_executed_date) && ($report_executed_time))
+			<font face="Verdana,Helvetica,Arial" size="2" style="float: left;">PreCheck executed on <i>$report_executed_date</i> at <i>$report_executed_time</i></font>
+			<br>
+		#end
+		<br>
+		<table border="1" cellpadding="0" cellspacing="0">
+		<tr><td style="font-size:110%">
+		#foreach($line in $precheckSummary)
+			#if((!$line.contains("SERVER")) &&($line.contains("SUCCESS")))
+				#set($start_index=$line.indexOf("SUCCESS"))
+				#set($end_index=$start_index+7)
+				#set($pre_str=$line.substring(0,$start_index))
+				#set($str=$line.substring($start_index,$end_index))
+				#set($post_str=$line.substring($end_index))
+				<pre>$pre_str<font color="#047e01">$str</font>$post_str</pre>
+				
+			#elseif((!$line.contains("SERVER")) &&($line.contains("FAILURE")))
+				#set($start_index=$line.indexOf("FAILURE"))
+				#set($end_index=$start_index+7)
+				#set($pre_str=$line.substring(0,$start_index))
+				#set($str=$line.substring($start_index,$end_index))
+				#set($post_str=$line.substring($end_index))
+				<pre>$pre_str<font color="#CC0000">$str</font>$post_str</pre>
+
+			#elseif((!$line.contains("SERVER")) &&($line.contains("WARNING")))
+				#set($start_index=$line.indexOf("WARNING"))
+				#set($end_index=$start_index+7)
+				#set($pre_str=$line.substring(0,$start_index))
+				#set($str=$line.substring($start_index,$end_index))
+				#set($post_str=$line.substring($end_index))
+				<pre>$pre_str<font color="#ff8000">$str</font>$post_str</pre>
+
+			#elseif((!$line.contains("SERVER")) &&($line.contains("NO RUN")))
+				#set($start_index=$line.indexOf("NO RUN"))
+				#set($end_index=$start_index+6)
+				#set($pre_str=$line.substring(0,$start_index))
+				#set($str=$line.substring($start_index,$end_index))
+				#set($post_str=$line.substring($end_index))
+				<pre>$pre_str<font color="#ff8000">$str</font>$post_str</pre>
+
+			#else
+				<pre>$line</pre>
+				
+			#end
+		#end
+		</td></tr>
+		</table>
+	#else
+		<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Could not display summary report.</font>
+		##<br><br>
+		##<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;float: left" name="cancel" value="Cancel"/>
+	#end
+	#if($success-finish)
+		<br><br>
+		<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;float: left" name="finish" value="Finish"/>
+	#end
+	
+#elseif($result == "ABORTED")
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Could not initiate precheck.</font>
+	<br><br>
+	<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;float: left" name="cancel" value="Cancel"/>
+	
+#else
+	##failed case
+	<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Pre check execution failed.</font>
+	<br><br>
+	#if($failed-cancel)
+		<input type="submit" style="font-size: 12;font-weight: bold; background-color: #B3B3FF;float: left" name="cancel" value="Cancel"/>
+	#end
+#end
+#if($wrongPwd)
+			#if($isAdminExist)
+				<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect Username or password</font>
+			#else
+				<font color="red" face="Verdana,Helvetica,Arial" size="2"><p style="text-align:left;font-weight: bold;">Incorrect password</font> 
+			#end
+			<font size="1" face="Verdana, Helvetica, Arial">
+			<br><br>
+			If ENIQ Statistics node hardening procedure has been applied, account lockout policy might be configured to provide 
+			Brute force protection. Please refer to the “ENIQ Node hardening Guide” for further details in case of logon issues.
+			<br><br>
+			</font>
+	#end
+
+</form>
+</td>
+</tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

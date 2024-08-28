@@ -1,0 +1,291 @@
+<html>
+    
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/admin.css">
+        <link rel="shortcut icon" href="../img/eric.ico">
+        <title>
+            Ericsson Network IQ :: User Administration :: Add User
+        </title>
+        <script type="text/javascript" src="../javascript/userValidation.js">
+        </script>
+        <script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+        <script language="JavaScript">
+        
+        if(!('${notification}'=='' || '${notification}'==' ')) {
+          alert('${notification}');
+        }     	
+        
+        
+            function Validator() {
+                var number = '0123456789';
+                var invalid = ',';
+                var lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+                var upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                var specialCharacter = '£()-_><@#$%^&=+-%';
+                var error = " ";
+                var count = 0;
+                for (var i = 0; i < document.AddUser.Account_Type.length; i++) {
+                    if (AddUser.Account_Type[i].selected) {
+                        count++;
+                    }
+                }
+                if (count <= 0) {
+                    error += " Please select a type of Account \n ";
+                    }
+                    if (AddUser.First_Name.value != "") {
+                        
+                        if (maxLength(AddUser.First_Name.value, 25)) {
+                            error += " First Name can only be " + 25 + " characters in length \n ";
+                        }
+
+                        if (!validateCharsWithSpace(AddUser.First_Name.value)) {
+                            error += " First Name contains invalid charatcers \n ";
+                        }
+                        
+                        
+                    }
+                    else {
+                        error += " Please fill in the First Name \n ";
+                    }
+
+                    if (AddUser.Last_Name.value != "") {
+
+                        if (maxLength(AddUser.Last_Name.value, 25)) {
+                            error += " Last Name can only be " + 25 + " characters in length \n ";
+                        }
+
+                        if (!validateCharsWithSpace(AddUser.Last_Name.value)) {
+                            error += " Last Name contains invalid charatcers \n ";
+                        }
+                        
+                        
+                        
+
+                    }
+                    else {
+                        error += " Please fill in a Last Name.\n ";
+
+                    }
+                    if (AddUser.Login_Name.value != "") {
+                        if (maxLength(AddUser.Login_Name.value, 25)) {
+                            error += " Login name can only be " + 25 + " characters in length \n ";
+                        }
+                        if (isComma(AddUser.Login_Name.value)) {
+                            error += " No ',' allowed in Login Name \n ";
+
+                        }
+
+
+                        if (AddUser.Login_Name.value.length < 4) {
+                            error += " Login name should be at least 4 characters in length \n ";
+                        }
+
+                    }
+                    else {
+                        error += " Please fill in a Login Name.\n ";
+                    }
+
+                    if (AddUser.Password.value != "") {
+                        if (maxLength(AddUser.Password.value, 25)) {
+                            error += "Password can only be " + 25 + " characters in length \n ";
+                        }
+                        
+                        if (!validatePwd(AddUser.Password.value)) {
+                           
+                           error += " Password should have a upper case letter, number and minimum length of 8 \n ";
+                        }
+                        
+                    }
+                    else {
+                        error += " Please fill in a Password.\n ";
+                    }
+                    if (AddUser.Confirm.value != "") {
+                        if (maxLength(AddUser.Confirm.value, 25)) {
+                            error += " Confirm Password can only be " + 25 + " characters in length \n ";
+                        }
+                    }
+                    else {
+                        error += " Please fill in Confirm Password.\n ";
+                    }
+                    if (AddUser.Password.value != AddUser.Confirm.value) {
+
+                        error += " Password and Confirm Password are not same.\n ";
+
+                    }
+                    
+                    if(AddUser.Email.value!="")
+                    {
+                    
+                        if (maxLength(AddUser.Email.value, 50))
+                         {
+                            error += " Email can only be " + 50 + " characters in length \n ";
+                        }
+                        if (!emailCheck(AddUser.Email.value)) 
+                        {
+                            error += " Not a valid email address \n ";
+                        }
+                    
+                    }
+                   
+                    if (maxLength(AddUser.Phone.value, 20)) {
+                        error += " Phone can only be " + 20 + " characters in length \n ";
+                    }
+                    if (!compare(AddUser.Phone.value, number)) {
+                        error += " Not a valid phone number \n ";
+
+                    }
+                    if (maxLength(AddUser.Organization.value, 30)) {
+
+                        error += " Organization can only be " + 30 + " characters in length \n ";
+                    }
+
+                    if (error != " ") {
+                        alert(error);
+                        return false;
+                    }
+                    return (true && filterFields());
+                }
+        </script>
+    </head>
+    <body bgcolor="#ffffff">
+        #set($formSubmitted = "")
+        <table border="0">
+            <tr valign=top>
+                <!-- main menu -->
+                <td width=220>
+                    #parse( "main_menu.vm" )
+                </td>
+                <!-- the body -->
+                <td width=800>
+                    <font size="1" face="Verdana, Helvetica, Arial">
+                        User Administration&nbsp;&gt;&gt;&nbsp;
+                        <a href="$servletPath/UserManagement?action=adduser">Add User</a>
+                    </font>
+                    <hr />
+                    <font size="1" face="Verdana, Helvetica, Arial">
+                        Please enter the following details to create a new user account
+                        <br />
+                        <br />
+                    </font>
+                    <br>
+                    <FORM name="AddUser" METHOD=POST ACTION="$servletPath/UserManagement?action=adduser"
+                    "" onSubmit="return Validator(this);">
+                        <table style="border:1px solid #B3B3FF;">
+                            <td>
+                                <input name="formSubmitted" type="hidden" id="hidden" size="20" maxlength="30"
+                                value="$formSubmitted">
+                            </td>
+                            <tr>
+                                <td class="basic">
+                                    Roles*
+                                </td>
+                                <td>
+                                    <select MULTIPLE  name="Account_Type" id="Account_Type" style="font-size: 10;" size="3">
+						#foreach( $entry in $listOfRoles )
+				    			<option value="$entry.roles">$entry.roles</option>
+				    		$entry.roles #end	
+				    /select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    First Name*
+                                </td>
+                                <td>
+                                    <input name="First_Name" type="text" id="First_Name" size="20" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Last Name*
+                                </td>
+                                <td>
+                                    <input name="Last_Name" type="text" id="Last_Name" size="20" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Login Name*
+                                </td>
+                                <td>
+                                    <input name="Login_Name" type="text" id="Login_Name" size="20" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Password*
+                                </td>
+                                <td>
+                                    <input name="Password" type="password" id="Password" size="20" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Confirm*
+                                </td>
+                                <td>
+                                    <input name="Confirm" type="password" id="Confirm" size="20" maxlength="25">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Email
+                                </td>
+                                <td>
+                                    <input name="Email" type="text" id="Email" size="20" maxlength="50">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Phone
+                                </td>
+                                <td>
+                                    <input name="Phone" type="text" id="Phone" size="20" maxlength="30">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="basic">
+                                    Organization
+                                </td>
+                                <td>
+                                    <input name="Organization" type="text" id="Organization" size="20" maxlength="30">
+                                </td>
+                            </tr>
+				<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+				
+				<tr>
+				    <td class="basic" colspan="2">
+					* indicates mandatory input 
+				    </td>
+				</tr>
+				<tr><td class="basic" colspan="2">&nbsp;</td></tr>
+				
+                        </table>
+                        <table border="0">
+                            <tr>
+                                <td>
+                                    <input type="submit" name="Submit" value="Submit" style="font-size: 11;">
+                                </td>
+                                <td>
+                                    <input name="Reset" type="reset" id="Reset" value="Reset" style="font-size: 11;">
+                                </td>
+				<td>
+				    <input name="Cancel" type="button" id="Cancel" value="Cancel" style="font-size: 11;" onClick="submitForm(eval('AddUser'),'$servletPath/UserManagement')">
+				</td>                         
+			    </tr>
+
+                        </table>
+                        
+                    <table style="width: 600px; height: 29px;" border="0" cellpadding="1" cellspacing="2">
+		    	<tr><td><font size="1" face="Verdana, Helvetica, Arial"></font></td></tr>
+		    </table>
+
+                    </FORM>
+                    
+                    
+                    #parse( "footer.vm" )
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

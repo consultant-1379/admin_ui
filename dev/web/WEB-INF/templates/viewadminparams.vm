@@ -1,0 +1,191 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: Admin Configuration :: System Properties</title>
+
+</head>
+
+<body bgcolor="#ffffff" >
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="EditAdminProperties">Admin Configuration</a></font>
+<hr />
+<br><br>
+	<font size="1" face="Verdana, Helvetica, Arial">Manage system properties</font>
+
+<br><br>
+	
+<FORM name="modifyParam" METHOD=POST ACTION="$servletPath/EditAdminProperties?action=modifyparam" onSubmit="return validateForm(this);">
+<table style="width: 75px; height: 15px;border:1px solid #B3B3FF;" cellspacing="1">
+
+<tbody>
+<tr bgcolor="#B3B3FF">
+<td style="width: 60px; height: 20px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Name</strong></font></td> <!-- Name -->
+<td style="width: 40px; height: 20px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Value</strong></font></td> <!-- UserId -->
+</tr>
+<tr>
+#foreach( $entry in $adminparams)
+
+	<td width="*"><font face="Verdana,Helvetica,Arial" size="1"> $entry.get(0)</font></td>
+	
+	#if($entry.get(0).equals("ENIQ_EVENTS_LOCK_USERS"))
+	<td width="*">
+	   <select width="*" name="$entry.get(0)" id="$entry.get(0)" style="font-size: 10;height:20px;">
+		  #if($entry.get(1)=="true")
+			<option value="true" selected="true">true</option>
+			<option value="false" >false</option>
+		  #else
+		  	<option value="false" selected="true">false</option>
+		  	<option value="true" >true</option>
+		  #end      
+		  
+	    </select>
+	</td>
+	#else	
+		#if($entry.get(0).equals("ENIQ_EVENTS_MAX_USER_SESSIONS"))
+			<td width="*">
+			<INPUT name="$entry.get(0)" id="$entry.get(0)" value="$entry.get(1)" onKeyPress="return digitsOnly(this,event);" size="4" maxlength="3">
+			</td>
+		#end
+		#if($entry.get(0).equals("ENIQ_EVENTS_BANNER_MESSAGE"))
+			<td width="*">
+			<TEXTAREA name="$entry.get(0)" id="$entry.get(0)" value="$entry.get(1)" onKeyUp="return characterLimitReached(this,255);" onkeypress="event.returnValue=validCharacters(event);"  style="height:50px;"  COLS=30 ROWS=3>$entry.get(1)</TEXTAREA>
+		  </td>
+		#end
+		#if($entry.get(0).equals("ENIQ_EVENTS_LAST_LOGIN_THRESHOLD"))
+			<td width="*">
+			<INPUT name="$entry.get(0)" id="$entry.get(0)" value="$entry.get(1)" onKeyPress="return digitsOnly(this,event);" size="3" maxlength="3">
+		  </td>
+		#end
+	#end
+</tr>
+#end
+</tbody>
+</table>
+<br><br>
+<table border="0">
+   <tr>
+      <td>
+          <input type="submit" name="Submit" value="Submit" style="font-size: 11;">
+      </td>
+      <td>
+          <input name="Reset" type="reset" id="Reset" value="Reset" style="font-size: 11;">
+      </td>
+	</tr>
+</table>
+<br>
+<table style="width: 600px; height: 29px;" border="0" cellpadding="1" cellspacing="2">
+	<tr><td><font size="1" face="Verdana, Helvetica, Arial">$notification</font></td></tr>
+</table>
+</FORM>
+#parse( "footer.vm" )
+<script type="text/javascript" src="../javascript/userValidation.js"></script>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script type="text/javascript">
+<!--
+function digitsOnly(myfield, e) {
+    var key;
+    var keychar;
+
+    var key = window.event ? e.keyCode : e.which;
+    keychar = String.fromCharCode(key);
+    // numbers
+    if ((("0123456789").indexOf(keychar) > -1)) {
+        return true;
+    } // control keys
+    else if ((key == null) || (key == 0) || (key == 8) ||
+             (key == 9) || (key == 13) || (key == 27)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function characterLimitReached(field, maxlimit) {
+    if (field.value.length > maxlimit) {
+        field.value = field.value.substring(0, maxlimit);
+        alert('Textarea value can only be 255 characters in length.');
+        return false;
+    } else {
+        //countfield.value = maxlimit - field.value.length;
+        return true ;
+    }
+}
+
+
+function validCharacters(e) {
+    var unicode = e.charCode ? e.charCode : e.keyCode
+    if (unicode == 13) {
+        alert('carriage return is not accepted');
+        return false;
+    }
+    return true;
+}
+
+function isValidInteger(value)  {
+    //remove all leading and trailing spaces
+    value = value.replace(/^\s+|\s+$/g, '');
+
+    //create Regular Expression object
+    var regEx = /^[0-9]+$/;
+
+    //validate the data
+    return regEx.test(value);
+}
+	                
+function validateForm() {
+
+    var error = "";
+	
+	var field = document.getElementById('ENIQ_EVENTS_MAX_USER_SESSIONS');
+	var fval = trim(field.value);
+    if (fval.length > 0) {
+        if (fval > 150 || fval < 0) {
+            error += 'Invalid value {'+fval+'} for '+field.name+', should be less than or equal to 150\n';
+        }
+    } else {
+        error += 'Value required for '+field.name+'\n';
+    }
+
+	field = document.getElementById('ENIQ_EVENTS_LAST_LOGIN_THRESHOLD');
+	fval = trim(field.value);
+    if (fval.length > 0) {
+        if (fval > 182 || fval < 0) {
+            error += 'Invalid value {'+fval+'} for '+field.name+', should be less than or equal to 182\n';
+        }
+    } else {
+        error += 'Value required for '+field.name+'\n';
+    }
+
+	field = document.getElementById('ENIQ_EVENTS_BANNER_MESSAGE');
+	fval = field.value;
+	var maxLen = 1000;
+    if (fval.length > 0) {
+        if (maxLength(fval, maxLen)) {
+            error += field.name+' can only be '+maxLen+' characters in length\n';
+        }
+    }
+
+    if (error.length > 0) {
+        alert(error);
+        return false;
+    }
+
+	return (true && filterFields());
+}
+// -->
+</script>
+</body>
+</html>
+
+
+
+
+

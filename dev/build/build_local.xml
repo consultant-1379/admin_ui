@@ -1,0 +1,399 @@
+	<project name="adminui" default="create_war">
+
+	<!-- property overrides for your local system go here -->
+	<property file="local.properties" value="local.properties" />
+
+
+	<!-- Tomcat config -->
+
+	<property name="tomcat.port" value="8080" />
+
+
+	<property name="tomcat.server" value="localhost" />
+	<property name="tomcat.home" value="/Program Files/Apache Software Foundation/Tomcat 7.0"/>
+
+	<property name="adminui.webapps" value="${tomcat.home}/webapps/adminui" />
+	<property name="adminui.web.inf" value="${adminui.webapps}/WEB-INF" />
+
+
+	<!-- Java home -->
+	<property name="java.home" value="/Program Files/Java/jdk1.6.0_11/bin" />
+
+	<!-- (optional) this maps to dc5000management templates directory -->
+	<property name="local.vm" value="${adminui.web.inf}/templates" />
+
+	<!-- (optional) this maps to dc5000management templates directory -->
+	<property name="local.css" value="${adminui.webapps}/css" />
+
+
+	<!-- Vob locations -->
+	<property name="vob.home" value="C:/your/local/vob/home" />
+	<!-- this needs to be changed to where you have the vobs -->
+
+
+	<property name="eniq.home" value="${vob.home}" />
+	<property name="3pp.home" value="${vob.home}/eniq_3pp" />
+	<property name="project.home" value="${eniq.home}/admin_ui/dev/admin_ui" />
+
+
+	<!-- ENIQ Jars -->
+	<property name="eniq.engine.dir" value="${eniq.home}/etl_controller/build/engine" />
+	<property name="eniq.repository.dir" value="${eniq.home}/installer/build/repository" />
+	<property name="eniq.scheduler.dir" value="${eniq.home}/etl_controller/build/scheduler" />
+	<property name="eniq.licensing.dir" value="${eniq.home}/licensing/build/licensing" />
+	<property name="eniq.common.dir" value="${eniq.home}/common_utilities/build/common_utilities" />
+	<property name="eniq.symboliclinkcreator.dir" value="${eniq.home}/etl_controller/build/symboliclinkcreator" />
+
+	<!-- 3PP Jars -->
+	<property name="3pp.commons_configuration.dir" value="${3pp.home}/apache/configuration/v1_1/prod" />
+	<property name="3pp.commons_dbcp.dir" value="${3pp.home}/apache/dbcp/v1_0/prod" />
+	<property name="3pp.commons_lang.dir" value="${3pp.home}/apache/comm_lang/v1_0/prod" />
+	<property name="3pp.commons_logging.dir" value="${3pp.home}/apache/comm_logging/v1_2/prod" />
+	<property name="3pp.sybase.dir" value="${3pp.home}/sybase/sybase_iq" />
+	<!-- jconn.jar -->
+	<property name="3pp.log4j.dir" value="${3pp.home}/apache/log4j/v1_2_11/prod" />
+	<property name="3pp.velocity.dir" value="${3pp.home}/apache/jakarta_velocity/v1_5/prod" />
+	<property name="3pp.servlet.dir" value="${3pp.home}/apache/tomcat/v7_0_14/prod"/>
+	<property name="3pp.junit.dir" value="${3pp.home}/junit/v4_5/prod" />
+	<!-- junit.jar -->
+	<property name="3pp.jsch.dir" value="${3pp.home}/jsch_ssh2/jsch_ssh2/v0_1_23/prod" />
+
+	<!--====================================================================
+ 	 Task: copy_resources
+	=====================================================================-->
+	<target name="copy_resources">
+		<copy file="${project.home}/src/com/distocraft/dc5000/etl/gui/commandline/commands.txt" todir="${project.home}/bin/com/distocraft/dc5000/etl/gui/commandline/" />
+	</target>
+
+
+	<!--====================================================================
+ 	 Task: create_war
+	=====================================================================-->
+
+	<target name="create_war" depends="compile_java">
+
+		<mkdir dir="${project.home}/3pp" />
+
+		<copy todir="${project.home}/3pp">
+			<fileset dir="${eniq.engine.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${eniq.common.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${eniq.repository.dir}">
+				<include name="**/*.jar" />
+
+
+
+
+
+
+			</fileset>
+			<fileset dir="${eniq.scheduler.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${eniq.symboliclinkcreator.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${eniq.licensing.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.commons_configuration.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.commons_dbcp.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.commons_lang.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.commons_logging.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.sybase.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.log4j.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.velocity.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${3pp.jsch.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+
+		<!-- Copy resources to classpath root -->
+		<copy todir="${project.home}/bin">
+			<fileset dir="${project.home}/web/conf">
+				<include name="general.properties" />
+			</fileset>
+		</copy>
+
+		<war destfile="${project.home}/install/adminui.war" webxml="${project.home}/web/WEB-INF/web.xml">
+			<classes dir="${project.home}/bin" />
+			<fileset dir="${project.home}/web">
+				<exclude name="WEB-INF/web.xml" />
+				<exclude name="conf/general.properties" />
+			</fileset>
+			<lib dir="${project.home}/3pp" excludes="servlet.jar" />
+		</war>
+		<delete dir="${tomcat.home}/webapps/adminui/" />
+		<delete>
+			<fileset dir="${tomcat.home}/webapps/">
+				<filename name="adminui.war" />
+			</fileset>
+		</delete>
+		<copy todir="${tomcat.home}/webapps">
+			<!--fileset dir="${project.home}\build"-->
+			<fileset dir="${project.home}\install">
+				<include name="adminui.war" />
+			</fileset>
+		</copy>
+		<!-- Start Tomcat -->
+		<antcall target="start">
+		</antcall>
+
+	</target>
+
+	<!-- Application classpath -->
+	<path id="application.classpath">
+		<pathelement path="${classpath}" />
+		<fileset dir="${eniq.engine.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${eniq.common.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${eniq.repository.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${eniq.scheduler.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${eniq.licensing.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.commons_configuration.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.commons_dbcp.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.commons_lang.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.commons_logging.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.sybase.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.log4j.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.velocity.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.servlet.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.jsch.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${3pp.junit.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+
+	<!--====================================================================
+ 	 Task: compile
+	=====================================================================-->
+	<target name="compile">
+		<delete>
+			<fileset dir="${project.home}/bin">
+				<exclude name="CVS" />
+			</fileset>
+			<fileset dir="${adminui.webapps}">
+				<exclude name="CVS" />
+			</fileset>
+		</delete>
+		<javac srcdir="${project.home}/java" destdir="${project.home}/bin" failonerror="true" debug="off" optimize="off" deprecation="off">
+			<classpath>
+				<path refid="application.classpath" />
+			</classpath>
+		</javac>
+		<copy todir="${adminui.webapps}">
+			<fileset dir="${project.home}/web/">
+				<exclude name="CVS" />
+			</fileset>
+		</copy>
+		<copy todir="${adminui.web.inf}/lib">
+			<fileset dir="${3pp.servlet.dir}">
+				<exclude name="CVS" />
+				<exclude name="servlet.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${adminui.web.inf}/classes">
+			<fileset dir="${project.home}/bin">
+				<exclude name="CVS" />
+			</fileset>
+		</copy>
+	</target>
+
+
+	<!--====================================================================
+ 	 Task: compile_java
+	=====================================================================-->
+	<target name="compile_java">
+		<!-- Stop Tomcat -->
+		<antcall target="stop">
+		</antcall>
+
+		<delete>
+			<fileset dir="${project.home}/bin">
+				<exclude name="CVS" />
+			</fileset>
+		</delete>
+		<javac srcdir="${project.home}/src" destdir="${project.home}/bin" failonerror="true" debug="on" optimize="off" deprecation="off">
+			<classpath>
+				<path refid="application.classpath" />
+			</classpath>
+
+		</javac>
+	</target>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--====================================================================
+ 	 Task: create_zip
+	=====================================================================-->
+	<target name="create_zip" depends="create_war">
+		<zip destfile="${project.home}/build/${pack.name}_${build.number}.zip">
+			<fileset dir="${project.home}/build/" includes="adminui.war" />
+		</zip>
+	</target>
+
+	<!--====================================================================
+ 	 Task: clean
+	=====================================================================-->
+	<target name="clean">
+		<delete>
+			<fileset dir="${project.home}/bin">
+				<exclude name="CVS" />
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- ================================ -->
+	<!-- start/stop tomcat servlet engine -->
+	<!-- ================================ -->
+
+	<!-- check whether server is already running -->
+	<target name="-started">
+		<condition property="server.started">
+			<and>
+				<socket port="${tomcat.port}" server="${tomcat.server}" />
+			</and>
+		</condition>
+	</target>
+
+	<!-- start tomcat -->
+	<target name="start" depends="-started" description="start tomcat server" unless="server.started">
+		<echo message="Starting tomcat servlet engine..." />
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+			<jvmarg value="-Djava.endorsed.dirs=${tomcat.home}/common/endorsed" />
+			<jvmarg value="-Dcatalina.base=${tomcat.home}" />
+			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
+			<jvmarg value="-Djava.io.tmpdir=${tomcat.home}/temp" />
+			<jvmarg value="-DCONF_DIR=${conf.dir}" />
+			<jvmarg value="-DRT_DIR=${rt.dir}" />
+			<jvmarg value="-DLOG_DIR=${log.dir}" />
+
+			<arg value="start" />
+			<classpath>
+				<pathelement location="${java.home}/../lib/tools.jar" />
+				<pathelement location="${tomcat.home}/bin/bootstrap.jar" />
+			</classpath>
+		</java>
+		<echo message="Started tomcat servlet engine..." />
+	</target>
+
+	<!-- check whether server is still running -->
+	<target name="-stopped">
+		<condition property="server.stopped">
+			<and>
+				<socket port="${tomcat.port}" server="${tomcat.server}" />
+				<not>
+					<isset property="server.started" />
+				</not>
+			</and>
+		</condition>
+	</target>
+
+	<!-- stop tomcat -->
+	<target name="stop" depends="-stopped" description="stop tomcat server" if="server.stopped">
+		<echo message="Stopping tomcat servlet engine..." />
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+			<jvmarg value="-Djava.endorsed.dirs=${tomcat.home}/common/endorsed" />
+			<jvmarg value="-Dcatalina.base=${tomcat.home}" />
+			<jvmarg value="-Dcatalina.home=${tomcat.home}" />
+			<jvmarg value="-Djava.io.tmpdir=${tomcat.home}/temp" />
+			<arg value="stop" />
+			<classpath>
+				<pathelement location="${java.home}/../lib/tools.jar" />
+				<pathelement location="${tomcat.home}/bin/bootstrap.jar" />
+			</classpath>
+		</java>
+		<sleep seconds="2" />
+		<echo message="Stopped tomcat servlet engine..." />
+	</target>
+</project>

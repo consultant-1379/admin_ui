@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Ericsson Network IQ :: System Monitoring :: Policy Re-assignment</title>
+<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script type="text/javascript">
+function LevelChanged()
+{		
+  document.f1.submit();
+  
+}
+#if ($invalidNaming)
+window.onload = function(){
+	alert("Invalid Naming Convention!! Please check the character entered ");
+}
+#end
+#if ($invalidCombination)
+window.onload = function(){
+	alert("This Policy already exists!!");
+}
+#end
+</script>	
+</head>
+<body>
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td>
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Configuration&nbsp;&gt;&gt;&nbsp;<a href="PolicyAssignment">Policy Re-assignment</a></font>
+<hr />
+<br>
+<table class="myt" style="width:550;">
+    <tr>
+        <td>
+            <font size="1" face="Verdana, Helvetica, Arial">
+            <br>
+            Edit the details of a policy table. 
+            <br>
+            <FONT color="red">  </FONT>
+            <br>
+            <br>
+            </font>
+        </td>
+    </tr>
+</table>
+#if ($invalidNaming)
+<form name="f1" action="$req.getContextPath()/servlet/PolicyReassignment?pc=$pc" method="post" onsubmit="return filterFields();">
+#else
+<form name="f1" action="$req.getContextPath()/servlet/PolicyReassignment" method="post" onsubmit="return filterFields();">
+<input type="hidden" name="action" value="save" />
+#end
+
+<table border=1>
+        <tr>
+            <td height="22" class="basic" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Technology</strong></font></td>
+            <td valign=top><font size=-1>
+			<select name="technology" style="width: 200px" style="font-size: 15;">
+				<option selected>$technology</option>
+				#foreach($alltech in $allTechnologies)
+					#if($alltech != $technology)
+					<option>$alltech
+					#end
+				#end
+			</select>
+				</font></td>
+		</tr>
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>Naming Convention</strong></font></td>
+            <td>
+			#if ($inputstring.getValue() && $inputstring.getValue() != "")
+				<input type="text" name="inputstring" value="$inputstring"></p>
+			#else
+				<input type="text" name="inputstring" value="$inputstring"></p>
+			#end
+			</td>
+        </tr>
+		<tr>
+            <td height="22" class="basic" width="*" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>ENM_Hostname</strong></font></td>
+            <td valign=top><font size=-1>
+			<select name="enmHostname" style="width: 200px" style="font-size: 15;">
+				<option selected>$enmHostname</option>
+				#foreach($enm in $allENMHostnames)
+					#if($enm != $enmHostname)
+					<option>$enm
+					#end
+				#end
+			</select>
+			</font></td>
+		</tr>
+        <tr>
+            <td height="22" class="basic" width="100" nowrap><font face="Verdana,Helvetica,Arial" size="1"><strong>ENIQ-S Servers</strong></font></td>
+            <td valign=top><font size=-1>
+			<select name="identifier" style="width: 300px" style="font-size: 15;">
+			<option selected>$identifier</option>
+			#foreach($key in $allRoles)
+				#if($key != $identifier)
+				<option>$key
+				#end
+			#end
+			</select>
+			</font></td>
+        </tr>
+        <tr>
+			<td valign=top colspan=4><font size=-1>
+			<input type=submit name="submitButton" style="font-size: 11;" value="Submit">
+			</font></td>
+		</tr>
+</table>
+</form>
+#parse( "footer.vm" )
+</table>
+
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

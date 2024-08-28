@@ -1,0 +1,252 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: Add Custom Nodes</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+<script>
+function showPMInputBox(dataType) {
+	var selectedValue = dataType.options[dataType.selectedIndex].value;
+	var txtOther = document.getElementById("pmDataTypeOthers");
+	if(selectedValue == "Others"){
+		txtOther.disabled = false;
+		txtOther.hidden = false;
+	}else{
+		txtOther.disabled = true;
+		txtOther.hidden = true;
+	}
+	
+	if (!txtOther.disabled) {
+		txtOther.focus();
+	}
+}
+function showHelp(){
+	var p = document.getElementById("topoDataHelpButton");
+	if(p.hidden == false){
+		p.hidden = true;
+	}else{
+		p.hidden = false;
+	}
+}
+#if($dataSucessfullyEntered)
+	setTimeout(function(){
+		window.location = '$req.getContextPath()/servlet/CustomNodes';
+	},3000)
+#end
+</script>
+<body bgcolor="#ffffff" >
+	<table border=0>
+		<tr valign=top>
+			<td width=220>#parse( "main_menu.vm" )</td>
+			<td width=800><font size="1" face="Verdana, Helvetica, Arial">
+			<form method=post id="customFlsForm" action="$req.getContextPath()/servlet/AddCustomNodes" >Add Custom Nodes&nbsp;&gt;&gt;&nbsp;<a href="AddCustomNodes">Add Custom Nodes</a>             
+            <hr/>
+			#set( $session = $req.getSession())
+			#set( $NODE_TYPE = $session.getAttribute("nodeType"))
+			#set( $TECHNOLOGY = $session.getAttribute("technology"))
+			#set( $TOPO_DATA_TYPE = $session.getAttribute("topoDataType"))
+			#set( $TOPO_NODE_TYPE_DIR = $session.getAttribute("topoNodeTypeDir"))
+			#set( $TOPO_SUB_DIR = $session.getAttribute("topoSubDir"))
+			#set( $PM_DATA_TYPE_OTHERS = $session.getAttribute("pmDataTypeOthers"))
+			#set( $PM_DATA_TYPE = $session.getAttribute("pmDataType"))
+			#set( $PM_NODE_TYPE_DIR = $session.getAttribute("pmNodeTypeDir"))
+			#set( $FILE_FILTER = $session.getAttribute("fileFilter"))
+			#set( $NUM_OF_NODES = $session.getAttribute("numberOfNodes"))
+			<h2>Add New Custom FLS Configuration</h2>
+
+			#if($continueButtonClicked)
+				<table class="displayCustomnodesTable" style="width:50%;">
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">Node Type:</td>
+					<td class="table-body-cell">$NODE_TYPE</td>
+					<input style="display: none" name="nodeType" value="$NODE_TYPE">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">Technology:</td>
+					<td class="table-body-cell">$TECHNOLOGY</td>
+					<input style="display: none" name="technology" value="$TECHNOLOGY">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">PM Data Type:</td>
+					<td class="table-body-cell">$PM_DATA_TYPE</td>
+					<input style="display: none" name="pmDataType" value="$PM_DATA_TYPE">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">PM NodeTypeDir:</td>
+					<td class="table-body-cell">$PM_NODE_TYPE_DIR</td>
+					<input style="display: none" name="pmNodeTypeDir" value="$PM_NODE_TYPE_DIR">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">Number of Nodes:</td>
+					<td class="table-body-cell">$NUM_OF_NODES</td>
+					<input style="display: none" name="numberOfNodes" value="$NUM_OF_NODES">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">File Filter:</td>
+					<td class="table-body-cell">$FILE_FILTER</td>
+					<input style="display: none" name="fileFilter" value="$FILE_FILTER">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">Topology Data Type:</td>
+					<td class="table-body-cell">$TOPO_DATA_TYPE</td>
+					<input style="display: none" name="topoDataType" value="$TOPO_DATA_TYPE">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">Topology NodeTypeDir:</td>
+					<td class="table-body-cell">$TOPO_NODE_TYPE_DIR</td>
+					<input style="display: none" name="topoNodeTypeDir" value="$TOPO_NODE_TYPE_DIR">
+				</tr>
+				<tr class="resp-table-row">
+					<td class="table-body-cell" style="font-weight:bold;">Topology SubDir:</td>
+					<td class="table-body-cell">$TOPO_SUB_DIR</td>
+					<input style="display: none" name="topoSubDir" value="$TOPO_SUB_DIR">
+				</tr>
+				</table><br>
+				<div class="addCustomNodes">
+					<input type="submit" name="Back" value="Back" />
+					<input style="margin-left:20px" type="submit" name="Submit" value="Submit" />
+				</div>
+			#else
+				<div class="addCustomNodes">
+					<label>Node Type<font style="color:red;">*</font>:</label>
+					<input type="text" id="nodeType" name="nodeType" value="$NODE_TYPE" required>
+					#if($wrongNodeType)
+						<br><font style="color:red;font-size:12px">Node Type should start with an alphabet.</font><br>
+					#end
+					#if($emptyNodeType)
+						<br><font style="color:red;font-size:12px">Node Type cannot be empty.</font><br>
+					#end
+					<br>
+					<label>Technology<font style="color:red;">*</font>:</label>
+					<select id="technology" name="technology" required>
+						<option value=""></option>
+						#foreach ($tech in $technologyList)
+							#if($tech == $TECHNOLOGY)
+								<option selected value="$tech" >$tech</option>
+							#else
+								<option value="$tech" >$tech</option>
+							#end
+						#end
+					</select>
+					#if($wrongTechnologyValue)
+						<font style="color:red;font-size:12px">Technology value annot be empty.</font><br>
+					#end
+					<h3> PM Details: </h3>
+					<label>PM Data Type<font style="color:red;">*</font>:</label>
+					<select id="pmDataType" name="pmDataType" onchange="showPMInputBox(this)" required>
+						<option value=""></option>
+						#foreach ($pmDataType in $pmDataTypes)
+							#if( $pmDataType == $PM_DATA_TYPE)
+								<option selected value="$pmDataType">$pmDataType</option>
+							#else
+								<option value="$pmDataType">$pmDataType</option>
+							#end
+						#end
+					</select>
+					#if($emptyPmDataType)
+						<font style="color:red;font-size:12px">PM DataType cannot be empty.</font>
+					#end
+					<input style="margin-left:20px" type="text" id="pmDataTypeOthers" name="pmDataTypeOthers" value="$PM_DATA_TYPE_OTHERS" hidden="true" disabled="true" required>
+					#if($emptyPmDataTypeOthers)
+						<font style="color:red;font-size:12px">PM DataType cannot have spaces.</font><br>
+					#end
+					#if($wrongPmDataTypeOthers)
+						<font style="color:red;font-size:12px">PM DataType should start with an alphabet.</font><br>
+					#end
+					<br>
+					<script>
+						var tag = document.getElementById("pmDataType");
+						var selectedVal = tag.options[tag.selectedIndex].text;
+						var txtOther = document.getElementById("pmDataTypeOthers");
+						if(selectedVal == "Others"){
+							txtOther.disabled = false;
+							txtOther.hidden = false;
+						}else{
+							txtOther.disabled = true;
+							txtOther.hidden = true;
+						}
+						
+						if (!txtOther.disabled) {
+							txtOther.focus();
+						}
+					</script>
+					<label>PM NodeTypeDir<font style="color:red;">*</font>:</label>
+					<input type="text" id="pmNodeTypeDir" name="pmNodeTypeDir" value="$PM_NODE_TYPE_DIR" required>
+					#if($emptyPmNodeTypeDir)
+						<br><font style="color:red;font-size:12px">PM NodeTypeDir cannot have spaces.</font><br>
+					#end
+					#if($wrongPmNodeTypeDir)
+						<br><font style="color:red;font-size:12px">PM NodeTypeDir should start with an alphabet.</font><br>
+					#end
+					#if($customPmNodeTypeDirMatches || $pmNodeTypeDirMatches)
+						<br><font style="color:red;font-size:12px">PM NodeTypeDir value already exists.</font><br>
+					#end
+					<br>
+					<label>Number of Nodes<font style="color:red;">*</font>:</label>
+					<input type="number" id="numberOfNodes" name="numberOfNodes" min="1" value="$NUM_OF_NODES" required><br>
+
+					<label id="labelOfFileFilter">File Filter:</label>
+					<input type="text" id="fileFilter" name="fileFilter" value="$FILE_FILTER">
+					#if($invalidRegexPattern)
+						<br><font style="color:red;font-size:12px">Invalid File Filter.</font>
+					#end
+
+					<h3> Topology Details: </h3>
+					<label>Topology Data Type<font style="color:red;">*</font>:</label>
+					<input type="text" id="topoDataType" name="topoDataType" value="$TOPO_DATA_TYPE" required>
+					<button type="button" style="background-color:white;border:none;font-size:15px;cursor:pointer;" onclick="showHelp()">?</button>
+					<span id="topoDataHelpButton" hidden="true" >"Ex:TOPOLOGY_&lt;TECHNOLOGY&gt;"</span>
+					<br>
+					#if($topologyDataTypeEmpty)
+						<font style="color:red;font-size:12px">Topology DataType cannot have spaces.</font><br><br>
+					#end
+					#if($wrongTopologyDataType)
+						<font style="color:red;font-size:12px">Topology DataType should start with TOPOLOGY and have the selected technology value.</font><br><br>
+					#end
+
+					<label>Topology NodeTypeDir<font style="color:red;">*</font>:</label>
+					<input type="text" id="topoNodeTypeDir" name="topoNodeTypeDir" value="$TOPO_NODE_TYPE_DIR" required>
+					<br>
+					#if($emptyTopoNodeTypeDir)
+						<font style="color:red;font-size:12px">Topology NodeTypeDir cannot have spaces.</font><br>
+					#end
+					#if($wrongTopoNodeTypeDir)
+						<font style="color:red;font-size:12px">Topology NodeTypeDir should start with alphabet.</font><br>
+					#end
+					#if($topoNodeTypeDirMatches)
+						<font style="color:red;font-size:12px">Topology NodeTypeDir already exists.</font><br>
+					#end
+
+					<label>Topology SubDir:</label>
+					<input type="text" id="topoSubDir" name="topoSubDir" value="$TOPO_SUB_DIR">
+					<br>
+					#if($wrongTopoSubDir)
+						<font style="color:red;font-size:12px">Topology NodeTypeDir should start with alphabet.</font><br>
+					#end
+
+					#if($sameNodeTypeDir)
+						<font style="color:red;font-size:12px">Topology and PM NodeTypeDir cannot be same.</font><br>
+					#end
+
+					#if($ifSuccessfullyCreatedDirectoriesAndFiles)
+						<font style="color:red;font-size:12px">Error while creating the custom files.</font><br>
+					#end
+
+					#if($dataSucessfullyEntered)
+						<font style="color:green;font-size:12px">Data has been successfully written in the custom files.</font><br>
+					#end
+
+					<br><br>
+					<button type="reset" name="reset" onclick="window.location.href='$req.getContextPath()/servlet/AddCustomNodes'">Reset</button>
+					<input style="margin-left:20px" type="submit" name="Continue" value="Continue" >
+				</div>
+			#end
+			</form>
+			#parse( "footer.vm" )
+			</font>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

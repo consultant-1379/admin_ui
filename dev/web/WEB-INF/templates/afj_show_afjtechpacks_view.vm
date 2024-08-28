@@ -1,0 +1,81 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: Configuration :: Node Version Update</title>
+  <!-- This is for evaluation..-->
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="shortcut icon" href="../img/eric.ico">
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+
+<td width=800>
+
+<font size="1" face="Verdana, Helvetica, Arial">Configuration &nbsp;&gt;&gt;&nbsp;<a href="AfjShowAfjTechPacks">Node Version Update</a></font>
+<hr />
+
+#parse( "afj_message.vm" )
+
+<table class="myt" width="97%">
+	<tr>
+		<td>
+			<font size="1" face="Verdana, Helvetica, Arial">
+			<br/>
+			Table below lists all the Tech Packs which can be Node Version Updated. Show Delta button is enabled if there is a PM MIM xml file available for that Tech Pack. 
+			<br/>
+			<br/>
+			<list>
+				<li>Tech Pack: Name of the Tech Pack that can be upgraded using Node Version Update.</li>
+				<li>MIM File: Refers to the file available in the Node Version Update directory. </li>
+			</list>
+			<br/>
+			<br/>
+			Clicking the Show Delta button starts the delta comparison between the Tech Pack and the PM MIM xml file. The ENIQ database will not be updated yet.
+			<br/>
+			<br/>
+			</font>
+		</td>
+	</tr>
+</table>
+
+<form action="$servletPath/AfjShowAfjTechPacks" method="post">
+<table border="0" width="97%" cellpadding="1" cellspacing="1">
+<tr>
+<td align="left">Configured Node Version Update Tech Packs</td>
+</tr>
+</table>
+<table border="1" width="97%" cellpadding="1" cellspacing="1">
+	
+      <tr bgcolor="#B3B3FF">
+        <th align="left">Tech Pack</th>
+        <th align="left" colspan="2">MIM File</th>
+      </tr>
+      #foreach( $afjtechpack in $afjtechpacklist )
+		<tr>
+			<td align="left">$afjtechpack.getTechPackName()</td>
+			#if ($afjtechpack.isMomFilePresent())
+				<td align="left">$afjtechpack.getFileName()</td>
+				<td align="center"><input type="submit" value="Show Delta" name="showdelta.$afjtechpack.getTechPackName()" /></td>	
+			#else
+				<td align="left">&nbsp;</td>
+				<td align="center"><input type="submit" value="Show Delta" name="showdelta.$afjtechpack.getTechPackName()" disabled /></td>	
+			#end
+		</tr>
+      #end
+</table>      
+</form>
+</td>
+
+#parse( "footer.vm" )
+</tr>
+</table>
+</body>
+</html>

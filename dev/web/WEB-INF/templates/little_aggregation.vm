@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Aggregation</TITLE>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script type="text/javascript">
+<!--
+
+function formsubmit(doAggregate){
+	opener.focus();
+	document.aggre.doaggregate.value = doAggregate;
+	document.aggre.action = "MakeAggregation";
+	document.aggre.submit();
+	setTimeout('opener.location.reload(true)', 1500);
+	
+	setTimeout('self.close()', 1500);
+}
+//-->
+</script>
+</HEAD>
+
+<BODY>
+<TABLE width="500"  cellspacing="0" cellpadding="1">
+<font face="Verdana,Helvetica,Arial" size="1">
+#if ($aggregateinfo != "")
+<TR>
+	<TD bgcolor="yellow" >&nbsp;</TD>
+	<TD bgcolor="yellow" ><font face="Verdana,Helvetica,Arial" size="1"><b>$aggregateinfo&nbsp;</b></font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#else
+<TR>
+	<TD width="20">&nbsp;</TD>
+	<TD width="100" align="left"></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+<TR>
+	<TD bgcolor="#B3B3FF" width="30%"><font face="Verdana,Helvetica,Arial" size="1"><b>Row info</b></font></TD>
+	<TD width="70%">&nbsp;</TD>
+	<TD>&nbsp;</TD>
+</TR>
+<TR>
+	<TD bgcolor="#B3B3FF">&nbsp;</TD>
+	<TD>&nbsp;</TD>
+	<TD>&nbsp;</TD>
+</TR>
+
+#set($index = 0)
+#foreach($ent in $fieldvalues)
+				#if($index == 0)
+		<TR>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1"><b>AGGREGATION</b></font></TD>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+				#if($index == 1)
+<TR>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1"><b>TYPENAME</b></font></TD>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+				#if($index == 2)
+<TR>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1"><b>TIMELEVEL</b></font></TD>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+				#if($index == 3)
+<TR>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1"><b>DATADATE</b></font></TD>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+				#if($index == 4)
+<TR>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1"><b>STATUS</b></font></TD>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+#if($index == 5)
+<TR>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1"><b>INITIAL AGGREGATION</b></font></TD>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+#if($index == 6)
+<TR>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1"><b>LAST AGGREGATION</b></font></TD>
+	<TD bgcolor="silver"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+				#if($index == 7)
+<TR>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1"><b>DESCRIPTION</b></font></TD>
+	<TD bgcolor="white"><font face="Verdana,Helvetica,Arial" size="1">$ent</font></TD>
+	<TD>&nbsp;</TD>
+</TR>
+#end
+</font>
+#set($index = $index + 1)
+#end
+<form name="aggre" method="post">
+<input type="hidden" name="datadate" value="$datadate">
+<input type="hidden" name="aggregation" value="$aggregation">
+<input type="hidden" name="tname" value="$tname">
+<input type="hidden" name="timestamp" value="$timestamp">
+<input type="hidden" name="year_1" value="$year_1">
+<input type="hidden" name="month_1" value="$month_1">
+<input type="hidden" name="day_1" value="$day_1">
+<input type="hidden" name="type" value="$type">
+<input type="hidden" name="doaggregate" value="ok">
+<tr>
+	<td bgcolor="#B3B3FF" colspan="3">&nbsp;</td>
+</tr>
+<TR>
+	<TD bgcolor="#B3B3FF" colspan="3"><INPUT TYPE="button" 
+	#if($disableAggregateButtonStatus.equalsIgnoreCase("true"))
+	  disabled="true"
+	#end
+	 onClick="javascript:formsubmit('aggregate')" name="aggregate" value="Aggregate">&nbsp;&nbsp;
+	<INPUT TYPE="button" onClick="javascript:formsubmit('ignore')" name="ignore" value="Do not aggregate">&nbsp;&nbsp;
+	<INPUT TYPE="button" onClick="javascript:window.close()" name="close" value="Close">
+	</TD>
+</TR>
+</form>
+</TABLE>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

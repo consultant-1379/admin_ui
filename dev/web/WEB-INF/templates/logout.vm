@@ -1,0 +1,37 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css"><title>Ericsson Network IQ</title></head>
+<link rel="shortcut icon" href="../img/eric.ico">
+<body bgcolor="#ffffff">
+
+<table border="0" width="100%">
+<tr valign=top>
+<td align="center" valign="middle">
+<br />
+<img src="../eniq_blue_banner.jpg" /><br/>
+<br /><br />
+
+#if($session_value)
+<font face="Verdana, Helvetica, Arial" size=4>
+
+Maximum session limit for $theuser has exceeded.<br />
+
+Please login with another user or logout from other $theuser session<br />
+
+<a href="$req.getContextPath()/servlet/LoaderStatusServlet">Login</a>
+#else
+<font face="Verdana, Helvetica, Arial" size=2>
+
+You have logged out.<br />
+
+$!notification <br />
+
+<a href="$req.getContextPath()/servlet/LoaderStatusServlet">Login</a>
+#end
+</td>
+</tr>
+
+#parse( "footer_for_session_handling.vm" )
+</table>
+</body>
+</html>

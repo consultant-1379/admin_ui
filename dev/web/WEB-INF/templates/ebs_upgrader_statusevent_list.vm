@@ -1,0 +1,45 @@
+##This template shows statusEvents if they exist
+
+<p>Current status : 
+
+  <i>
+  #if($setStatusTO.getSetStatus() == '')
+    Running...
+  #else
+    Not running. ( $setStatusTO.getSetStatus() )
+  #end
+  </i>
+
+</p>
+
+#set ($statuslist = $setStatusTO.getStatusEvents() )
+
+#if( $statuslist.size()>0 )
+<p>Status events</p>
+<table border="0" width="100%" cellpadding="5" cellspacing="5">
+      <th align="left">Number</th>
+      <th align="left">Timestamp</th>
+      <th align="left">Message</th>     
+
+      #foreach( $statusEvent in $statuslist )
+        #set ($eventTime = $statusEvent.getTime() )
+        <tr>
+          <td align="left">$velocityCount .</td>
+          <td align="left">$eventTime.toString()</td>
+          <td align="left">$statusEvent.getMessage()</td>
+        </tr>
+      #end
+      
+</table>      
+ #else
+   <!-- NO STATUS EVENTS -->
+ #end
+<br/>
+<br/>
+#*Refresh-button*#
+<form action="$servletPath/EbsUpgradeManager" method="post">
+<input type="hidden" name="action" value="action_get_details" />
+<input type="hidden" name="upgradeId" value="$upgradeId" />
+<input type="submit" value="refresh status">
+</form>
+

@@ -1,0 +1,116 @@
+#*included for EQEV-5565*#
+<html>
+	<head>
+		<title>Ericsson Network IQ Show Raw  Measurement type</title>
+		<link rel="stylesheet" type="text/css" href="../css/admin.css">
+		<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<table border="0">
+			<tr valign=top><td width=220>
+					#parse( "main_menu.vm" )
+				</td>
+				<td width=800>
+					<table border=1>
+						<tr>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									<b>Type Name</b>
+								</font>
+							</td>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+								$meastype	
+								</font>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									<b>Time Level</b>
+								</font>
+							</td>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+							$mlevel
+								</font>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									<b>Data Time</b>
+								</font>
+							</td>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									$datatime
+								</font>
+							</td>
+						</tr>
+					</table>
+<br>
+Note: For combined views, the count will be equal or higher as shown in searched page.
+<br>
+<font face="Verdana,Helvetica,Arial" size="1"><a href="javascript:history.go(-1)"><font face="Verdana,Helvetica,Arial" size="1">Back</font></a>&nbsp;
+<br>
+					<br>
+				#if ($sourcedata.size() > 0)
+					<table border=1>
+						<tr>
+							<td bgcolor=#B3B3FF>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									<b>DataTime</b>
+								</font>
+							</td>
+							<td bgcolor=#B3B3FF>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									<b>Row Count</b>
+								</font>
+							</td>
+							<td bgcolor=#B3B3FF>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									<b>Element Count</b>
+								</font>
+							</td>
+							
+						</tr>
+						#foreach ($row in $sourcedata)
+							<tr onmouseover="this.style.background='#C0C0C0';" onmouseout="this.style.background='#FFFFFF';">
+								<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									$row.get(0)
+								</font>
+							</td>
+		<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									$row.get(1)
+								</font>
+							</td>
+							<td>
+								<font face="Verdana,Helvetica,Arial" size="1">
+									$row.get(2)
+								</font>
+							</td>
+						</tr>
+						#end
+					</table>
+#else
+<table>
+	<tr>
+				<td>
+				<font size="1" face="Verdana, Helvetica, Arial" color="red">
+				 Data is not available.   
+				</font>
+				</td>
+			</tr>				
+#end
+	</td>
+			</tr>
+		</table>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

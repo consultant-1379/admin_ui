@@ -1,0 +1,228 @@
+<HTML>
+<HEAD>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css"></link>
+	<link rel="shortcut icon" href="../img/eric.ico"></link>
+	<title>Ericsson Network IQ :: Security Administration :: User Management</title>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css"></link>
+	<script type="text/javascript" src="../javascript/sorttable.js"> </script>
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</HEAD>
+
+<BODY bgcolor="#ffffff" >
+
+<TABLE>
+	<tr valign=top>
+	<!-- main menu -->
+		<td class="mainMenu">
+			#parse( "main_menu.vm" )
+		</td>
+
+	<!-- the body -->
+		<td class="body">Security Administration&nbsp;&gt;&gt;&nbsp;<font color="#333399">User Management</font>
+		<hr />
+	$!_debug
+
+<FORM name="ViewUsers">
+	
+	Click button to create New User Account<br><br>
+	<button class="addButton" type="button" style="width:150px" onclick="window.location.href='$req.getContextPath()/servlet/UserManagement?action=addUser'" >Add User</button>
+
+	<div id="key">
+		<p>* denotes predefined entity</p>
+		<p>** denotes non-predefined user with sysadmin role</p>
+		<p><strong>[bold]</strong> denotes the currently logged user</p>
+	</div>
+	<h3 class="tableHeading">List of all user accounts</h3>
+	<div class="tableButtons">
+		<button title="Export unused users (days since last login &ge; $lastLoginThreshold)" class="addButton" type="button" onclick="window.location.href='$req.getContextPath()/servlet/UserManagement?action=exportUnused'">Export Unused</button>
+	</div>
+	
+##
+##  User list
+##
+<TABLE class="sortable">
+<TBODY>
+	<tr class="viewTableHeader">
+	    <td>&nbsp;&#x21A8; <strong>User ID</strong> </td>
+	    <td>&nbsp;&#x21A8; <strong>Name</strong></td>
+	    <td>&nbsp;&#x21A8; <strong>Remarks</strong></td>
+	    <td class="rightAlignedNarrow">&nbsp;&#x21A8; <strong>Days Since Last Login</strong></td>
+	    <td width="220" class="sorttable_nosort"><strong>Operations</strong></td>
+	</tr>
+
+	##
+	## check if logged user is predef -- it's admin anyway as he could log in / TODO: get predef from java
+	##
+	#set ($predefSysAdmin = "not_init")
+	#foreach( $user in $allUsers )
+	     #if ($user.userId == $theuser)
+	        #set ($predefSysAdmin = $user.isPredefined() )
+	     #end ## if
+	#end ## for
+
+
+	##
+	##  show all users
+	##
+	#foreach( $user in $allUsers )
+	    #set ( $Integer = 0 )
+	    #if ( $user.DaysSinceLastLogin == "-" )
+	    	#set ( $numDaysSinceLastLogin = 0 )
+	    #else
+	    	#set ( $numDaysSinceLastLogin = $Integer.parseInt($user.DaysSinceLastLogin) )
+	    #end
+	    #if ( $numDaysSinceLastLogin >= $lastLoginThreshold )
+		#set ($rowStyle = ' class="thresholdHighlight"')
+	    #else
+		#set ($rowStyle = "" )
+	    #end 
+	<tr$rowStyle>
+
+	    #set ($predefMarker = "")
+	    #if ( $user.isPredefined() )
+	        ##
+	        ## show predef item
+	        ##
+	        #set ($predefMarker = "*")
+	    #end
+
+	    #set ($selfMarker = "")
+	    #if ($user.userId == $theuser)
+	        ##
+	        ## highlight self user
+	        ##
+	        #set ($selfMarker = "font-weight:bold;")
+	    #end
+
+	    ##
+	    ## is user a non-predef sysadmin?
+	    ##
+	    #set ($sysAdminMarker = "")
+	    #foreach ( $assignedRole in $user.roles )
+	       #if ( ! $user.isPredefined() && $assignedRole == "sysadmin" )
+	           #set ($sysAdminMarker = "**")
+	           ## #break
+	        #end
+	    #end ## for
+
+	    <td class="viewTableBorder" style="$selfMarker">$user.userId$predefMarker$sysAdminMarker</td>
+	    <td class="viewTableBorder">$user.Fname $user.Lname</td>
+	    <td class="viewTableBorder">$user.userState.getMessage() &nbsp; </td>
+	    <td class="rightAlignedNarrow viewTableBorder">$user.DaysSinceLastLogin</td>
+
+	    ##
+	    ##                           OPERATIONS START
+	    ##
+	    <td class="viewTableBorder">
+		    <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=viewUserDetails">View Details&nbsp;</a>|&nbsp;
+
+			#if ($user.userId == $theuser)
+			      ##
+			      ## Displaying the currently logged user,
+			      ##
+
+			         ## show warning if editing herself [ANY admin]
+			        <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=editUser"
+			            onclick="alert('Please note that you will be automatically logged out if you change your password')">Edit&nbsp;</a>|&nbsp;
+
+			      ## disable Delete
+			      <font color="#666666">Delete&nbsp;</font>|&nbsp;
+
+			#else
+			      ##
+			      ## Not the currently logged user, apply rules:
+			      ##
+			      ##      logged user               predefined items          NON predefined items      NON predefined items with sysadmin role
+			      ##
+			      ##    predefined admin             edit  (no delete)               all                        all
+			      ## 	NON-predef. admin            ???                           	 all                        none - only self edit
+			      ##
+			      ##
+
+			      #if ( $user.isPredefined() )
+			          ##
+			          ## Predef user is listed
+			          ##
+			          #if ( $predefSysAdmin )
+			            ##
+			            ## logged user is predef admin -> edit ok; delete is disabled
+			            <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=editUser" >Edit&nbsp;</a>|&nbsp;
+			            <font color="#666666" >Delete&nbsp;</font>|&nbsp;
+			          #else
+			            ##
+			            ## logged user is NOT predef admin -> no access to predef. user
+			            <font color="#666666" >Edit&nbsp;</font>|&nbsp;
+			            <font color="#666666" >Delete&nbsp;</font>|&nbsp;
+			          #end ## #if ( $predefSysAdmin )
+			      #else
+			          ##
+			          ## NON-Predef user is listed
+			          ##
+			          #if ( $predefSysAdmin )
+			            ##
+			            ## logged user is predef admin -> allow everything
+			            <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=editUser" >Edit&nbsp;</a>|&nbsp;
+			            <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=deleteUser"
+			                    onClick="return confirm('Are you sure you want to delete $user.userId?');">Delete&nbsp;</a>|&nbsp;
+			          #else
+			            ##
+			            ## logged user is NOT predef admin -> check listed user if it's sysadmin
+			            #if ( $sysAdminMarker == "**")
+			                ##
+			                ## listed user is sysadmin-> no operation
+			                <font color="#666666" >Edit&nbsp;</font>|&nbsp;
+			                <font color="#666666" >Delete&nbsp;</font>|&nbsp;
+			            #else
+			                <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=editUser" >Edit&nbsp;</a>|&nbsp;
+			                <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=deleteUser"
+			                        onClick="return confirm('Are you sure you want to delete $user.userId?');">Delete&nbsp;</a>|&nbsp;
+			            #end ## if marker
+
+			          #end ##  if
+
+			      #end ## #if ( $user.isPredefined() )
+
+			#end  ## if user.userId == theuser
+
+			    #if ( $user.userState.getCode() != 100 )
+			        <font color="#666666" >Unlock</font></td>
+			    #else
+			         ## user's locked.. check if we can unlock that
+			         #if ( $predefSysAdmin )
+			            ## predef admin can do anything
+			            <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=unlockUser" >Unlock</a>
+			         #else
+			            ## non-predef admin can unlock only non-admins
+                        #if ( $sysAdminMarker == "**")
+                            ## logged user is admin-> no unlock
+                            <font color="#666666" >Unlock</font></td>
+			            #else
+			                <a href="$req.getContextPath()/servlet/UserManagement?uid=$user.userId&action=unlockUser" >Unlock</a>
+			            #end ## if
+
+			         #end ## if
+			    #end
+		##
+	    ##                           OPERATIONS END
+	    ##
+
+
+	</tr>
+	#end
+	##foreach
+
+</TBODY>
+</TABLE>
+
+	<br>$notification <span class="errormessage"> $!errorMessage
+
+	<!-- the footer -->
+	#parse( "footer.vm" )
+	</td></tr>
+</TABLE>
+</FORM>
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

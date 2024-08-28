@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		This web.xml is used for adminui configuration. Some parts of this is
+		copied from busyhourcfg web.xml during installation.
+		JNLP related files are copied from ebsmanager during ebsmanager installation.
+	-->
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>Ericsson Network IQ Management</display-name>
+	<servlet>
+		<servlet-name>EngineStatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.EngineStatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FLSStatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.FLSStatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LoadersDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.LoadersDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GlassfishStatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.GlassfishStatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>NELog</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.DataSourceLog</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EditAdminProperties</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.EditAdminProperties</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SchedulerStatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.SchedulerStatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CounterVolumeDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.CounterVolumeDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EditPartitionPlan</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.EditPartitionPlan</servlet-class>
+	</servlet>
+	<servlet>
+        <servlet-name>LoaderSetsInfo</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.LoaderSetsInfo</servlet-class>
+    </servlet>
+	<servlet>
+		<servlet-name>ShowPartitionPlan</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.ShowPartitionPlan</servlet-class>
+	</servlet>
+	<servlet>
+        <servlet-name>UserDetails</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.UserDetails</servlet-class>
+    </servlet>
+<servlet>
+        <servlet-name>CertificateExpiryDetails</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.CertificateExpiryDetails</servlet-class>
+    </servlet>
+
+	<servlet>
+		<servlet-name>ServerStatusServlet</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.ServerStatus</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SystemMonitorsDetailsServlet</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.SystemMonitorsDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LoaderStatusServlet</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.LoaderStatus</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SystemMonitorsServlet</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.SystemMonitors</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>InfoWriterServlet</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.webportal.InfoWriterServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowLoadStatus</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.ShowLoadings</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UsercheckLogging</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.UsercheckLogging</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EditLogging</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.EditLogging</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UsercheckDWH</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.UsercheckDWH</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>INTFPollingDelayConf</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.INTFPollingDelayConf</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>TypeActivation</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.activation.TPActivation</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UsercheckActivation</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.activation.UsercheckActivation</servlet-class>
+	</servlet>
+	<servlet>
+        <servlet-name>FMAlarm</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.etl.FMAlarmHandling</servlet-class>
+    </servlet>
+	<servlet>
+		<servlet-name>TypeActivationEdit</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.activation.TypeActivationEdit</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EbsUpgradeManager</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.ebsupgrade.EbsUpgradeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AfjShowAfjTechPacks</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.afjupgrade.AfjShowAfjTechPacksServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AfjStartGenerateDelta</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.afjupgrade.AfjStartGenerateDeltaServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AfjShowProcessStatus</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.afjupgrade.AfjShowProcessStatusServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AfjShowDeltaResults</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.afjupgrade.AfjShowDeltaResultsServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AfjStartUpgradeTechPack</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.afjupgrade.AfjStartUpgradeTechPackServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>DataRowInfo</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.DataRowInfo</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ViewRankBH</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.ViewRankBH</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DataRowSummary</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.DataRowSummary</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DataRowRawInfo</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.DataRowRawInfo</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ViewPhysicalTable</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.ViewPhysicalTable</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ViewPhysicalTableEntry</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.ViewPhysicalTableEntry</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ViewBHInformation</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.ViewBHInformation</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Aggregation</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.aggregation.ReAggregationServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AggregationEniqEvents</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.aggregation.ReAggregationServletEniqEvents</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CommandLine</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.commandline.CommandLineServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowRefType</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.dataflow.ShowRefrenceType</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowLoadings</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.ShowDataHoles</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowAggregations</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.ShowAggregations</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowLogMonitoringStatus</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.ShowLogMonitoringStatus</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ETLShow</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.ShowSet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ETLDetail</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.EtlDetail</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EniqMonitoring</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.EniqMonitoring</servlet-class>
+	</servlet>
+	<servlet>
+        <servlet-name>TPInstallation</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.etl.TPInstallation</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>RoleAssignmentTool</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.RoleAssignmentTool</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCustomNodes</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.AddCustomNodes</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>DisplayCustomNodes</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.DisplayCustomNodes</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>FLSGranularityConfiguration</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.FlsGranularityConfiguration</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>NodeAssignmentTool</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.NodeAssignmentTool</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>FlsMonitoring</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.FlsMonitoring</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>PolicyAssignment</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.PolicyRefinementTool</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>AssignedNodes</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.AssignedNodes</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnAssignedNodes</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.UnAssignedNodes</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>PolicyReassignment</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.enminterworking.PolicyReassignment</servlet-class>
+    </servlet>
+	<servlet>
+		<servlet-name>AlarmDetail</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.AlarmDetail</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ETLHistory</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.ShowHistorySet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ETLRunSetOnce</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.RunOnce</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Manual</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.manual.Manual</servlet-class>
+	</servlet>
+	 <servlet>
+        <servlet-name>ChangePassword</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.common.ChangePassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateLegalNotice</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.common.UpdateLegalNotice</servlet-class>
+    </servlet>
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.common.Logout</servlet-class>
+	</servlet>
+	
+	<!-- Session Checking -->
+    <servlet>
+        <servlet-name>MaxSessionHandling</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.common.MaxSessionHandling</servlet-class>
+    </servlet>
+<!-- Session Checking -->
+	
+	<servlet>
+		<servlet-name>ETLSessionLog</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.ETLSessionLog</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowAlarmLogs</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.etl.ShowAlarmLogs</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>StatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.StatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ReaderStatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.ReaderStatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ConnectionStatusDetails</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.ConnectionStatusDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MakeAggregation</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.Aggregation</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UnknownCells</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.ucells.UnknownCells</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>MonitoringRules</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.MonitoringRules</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MonitoredTypes</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.MonitoredTypes</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AddMonitoredType</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.AddMonitoredType</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AddMonitoringRule</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.AddMonitoringRule</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LicenseLogsViewer</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.LicenseLogsViewer</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ReadLicenseLog</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.ReadLicenseLog</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowInstalledLicenses</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.ShowInstalledLicenses</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UserManagement</servlet-name>
+		<servlet-class>com.distocraft.dc5000.etl.gui.usermanagement.UserManagement</servlet-class>
+	</servlet>
+    <servlet>
+        <servlet-name>RoleManagement</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.rolemanagement.RoleManagement</servlet-class>
+    </servlet>
+ 	<servlet>
+        <servlet-name>PermissionGroupManagement</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.permissiongroupmanagement.PermissionGroupManagement</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateFeatures</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.UpdateFeatures</servlet-class>
+    </servlet>
+	   <servlet>
+        <servlet-name>InstallFeatures</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.InstallFeatures</servlet-class>
+    </servlet>
+	<servlet>
+        <servlet-name>ReportExtraction</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.ReportExtraction</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Precheck</servlet-name>
+        <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.Precheck</servlet-class>
+    </servlet>
+    
+<!-- <servlet> -->
+<!-- 		<servlet-name>MoAggregation</servlet-name> -->
+<!-- 		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.MoAggregation</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- <servlet> -->
+<!-- 		<servlet-name>CounterFiltering</servlet-name> -->
+<!-- 		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.CounterFiltering</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- <servlet> -->
+<!-- 		<servlet-name>CounterFilteringDetails</servlet-name> -->
+<!-- 		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.CounterFilteringDetails</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- <servlet> -->
+<!-- 		<servlet-name>NodeAssignment</servlet-name> -->
+<!-- 		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.NodeAssignment</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>TechPackSelection</servlet-name> -->
+<!-- 		<servlet-class>com.distocraft.dc5000.etl.gui.monitor.TechPackSelection</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- <servlet> -->
+<!--         <servlet-name>FrhStatusDetails</servlet-name> -->
+<!--         <servlet-class>com.distocraft.dc5000.etl.gui.systemmonitor.FrhStatusDetails</servlet-class> -->
+<!--     </servlet> -->
+
+	<listener>
+		<description>Listens initialisation of the application.</description>
+		<display-name>AdminuiListener</display-name>
+		<listener-class>com.distocraft.dc5000.etl.gui.EniqAdminuiListener</listener-class>
+	</listener>
+  <listener>
+    <description>Listens initialisation of the session.</description>
+    <display-name>AdminuiSessionListener</display-name>
+    <listener-class>com.distocraft.dc5000.etl.gui.EniqAdminuiSessionListener</listener-class>
+  </listener>
+	<servlet-mapping>
+		<servlet-name>NELog</servlet-name>
+		<url-pattern>/servlet/NELog</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoadersDetails</servlet-name>
+		<url-pattern>/servlet/LoadersDetails</url-pattern>
+	</servlet-mapping>
+	 <servlet-mapping>
+        <servlet-name>LoaderSetsInfo</servlet-name>
+        <url-pattern>/servlet/LoaderSetsInfo</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserManagement</servlet-name>
+		<url-pattern>/servlet/UserManagement</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RoleManagement</servlet-name>
+		<url-pattern>/servlet/RoleManagement</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>PermissionGroupManagement</servlet-name>
+		<url-pattern>/servlet/PermissionGroupManagement</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServerStatusServlet</servlet-name>
+		<url-pattern>/public_servlet/ServerStatusServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditPartitionPlan</servlet-name>
+		<url-pattern>/servlet/EditPartitionPlan</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EngineStatusDetails</servlet-name>
+		<url-pattern>/servlet/EngineStatusDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FLSStatusDetails</servlet-name>
+		<url-pattern>/servlet/FLSStatusDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SchedulerStatusDetails</servlet-name>
+		<url-pattern>/servlet/SchedulerStatusDetails</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>CounterVolumeDetails</servlet-name>
+		<url-pattern>/servlet/CounterVolumeDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowPartitionPlan</servlet-name>
+		<url-pattern>/servlet/ShowPartitionPlan</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SystemMonitorsServlet</servlet-name>
+		<url-pattern>/servlet/SystemMonitorsServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SystemMonitorsDetailsServlet</servlet-name>
+		<url-pattern>/servlet/SystemMonitorsDetailsServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>InfoWriterServlet</servlet-name>
+		<url-pattern>/servlet/InfoWriterServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowLoadStatus</servlet-name>
+		<url-pattern>/servlet/ShowLoadStatus</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsercheckLogging</servlet-name>
+		<url-pattern>/servlet/UsercheckLogging</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditLogging</servlet-name>
+		<url-pattern>/servlet/EditLogging</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsercheckDWH</servlet-name>
+	<url-pattern>/servlet/UsercheckDWH</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>INTFPollingDelayConf</servlet-name>
+		<url-pattern>/servlet/INTFPollingDelayConf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TypeActivation</servlet-name>
+		<url-pattern>/servlet/TypeActivation</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>UsercheckActivation</servlet-name>
+		<url-pattern>/servlet/UsercheckActivation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>FMAlarm</servlet-name>
+        <url-pattern>/servlet/FMAlarm</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TypeActivationEdit</servlet-name>
+		<url-pattern>/servlet/TypeActivationEdit</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EbsUpgradeManager</servlet-name>
+		<url-pattern>/servlet/EbsUpgradeManager</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AfjShowAfjTechPacks</servlet-name>
+		<url-pattern>/servlet/AfjShowAfjTechPacks</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AfjStartGenerateDelta</servlet-name>
+		<url-pattern>/servlet/AfjStartGenerateDelta</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AfjShowProcessStatus</servlet-name>
+		<url-pattern>/servlet/AfjShowProcessStatus</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AfjShowDeltaResults</servlet-name>
+		<url-pattern>/servlet/AfjShowDeltaResults</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AfjStartUpgradeTechPack</servlet-name>
+		<url-pattern>/servlet/AfjStartUpgradeTechPack</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DataRowInfo</servlet-name>
+		<url-pattern>/servlet/DataRowInfo</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EniqMonitoring</servlet-name>
+		<url-pattern>/servlet/EniqMonitoring</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>TPInstallation</servlet-name>
+        <url-pattern>/servlet/TPInstallation</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>FLSGranularityConfiguration</servlet-name>
+        <url-pattern>/servlet/FLSGranularityConfiguration</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>RoleAssignmentTool</servlet-name>
+        <url-pattern>/servlet/RoleAssignmentTool</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCustomNodes</servlet-name>
+        <url-pattern>/servlet/AddCustomNodes</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>DisplayCustomNodes</servlet-name>
+        <url-pattern>/servlet/CustomNodes</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>NodeAssignmentTool</servlet-name>
+        <url-pattern>/servlet/NodeAssignmentTool</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>PolicyAssignment</servlet-name>
+        <url-pattern>/servlet/PolicyAssignment</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>AssignedNodes</servlet-name>
+        <url-pattern>/servlet/AssignedNodes</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>UnAssignedNodes</servlet-name>
+        <url-pattern>/servlet/UnAssignedNodes</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>PolicyReassignment</servlet-name>
+        <url-pattern>/servlet/PolicyReassignment</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewRankBH</servlet-name>
+		<url-pattern>/servlet/ViewRankBH</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DataRowSummary</servlet-name>
+		<url-pattern>/servlet/DataRowSummary</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DataRowRawInfo</servlet-name>
+		<url-pattern>/servlet/DataRowRawInfo</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewPhysicalTable</servlet-name>
+		<url-pattern>/servlet/ViewPhysicalTable</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewPhysicalTableEntry</servlet-name>
+		<url-pattern>/servlet/ViewPhysicalTableEntry</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewBHInformation</servlet-name>
+		<url-pattern>/servlet/ViewBHInformation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Aggregation</servlet-name>
+		<url-pattern>/servlet/Aggregation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AggregationEniqEvents</servlet-name>
+		<url-pattern>/servlet/AggregationEniqEvents</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CommandLine</servlet-name>
+		<url-pattern>/servlet/CommandLine</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowRefType</servlet-name>
+		<url-pattern>/servlet/ShowRefType</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowLoadings</servlet-name>
+		<url-pattern>/servlet/ShowLoadings</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowAggregations</servlet-name>
+		<url-pattern>/servlet/ShowAggregations</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowLogMonitoringStatus</servlet-name>
+		<url-pattern>/servlet/ShowLogMonitoringStatus</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ETLShow</servlet-name>
+		<url-pattern>/servlet/ETLShow</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ETLDetail</servlet-name>
+		<url-pattern>/servlet/ETLDetail</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AlarmDetail</servlet-name>
+		<url-pattern>/servlet/AlarmDetail</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ETLHistory</servlet-name>
+		<url-pattern>/servlet/ETLHistory</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ETLRunSetOnce</servlet-name>
+		<url-pattern>/servlet/ETLRunSetOnce</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Manual</servlet-name>
+		<url-pattern>/servlet/Manual</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/servlet/Logout</url-pattern>
+	</servlet-mapping>
+	
+	<!-- session testing-->
+<servlet-mapping>
+        <servlet-name>MaxSessionHandling</servlet-name>
+        <url-pattern>/servlet/MaxSessionHandling</url-pattern>
+    </servlet-mapping>
+<!-- session testing-->
+
+	
+	
+	<servlet-mapping>
+		<servlet-name>ETLSessionLog</servlet-name>
+		<url-pattern>/servlet/ETLSessionLog</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowAlarmLogs</servlet-name>
+		<url-pattern>/servlet/ShowAlarmLogs</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>StatusDetails</servlet-name>
+		<url-pattern>/servlet/StatusDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReaderStatusDetails</servlet-name>
+		<url-pattern>/servlet/ReaderStatusDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ConnectionStatusDetails</servlet-name>
+		<url-pattern>/servlet/ConnectionStatusDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MakeAggregation</servlet-name>
+		<url-pattern>/servlet/MakeAggregation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MonitoringRules</servlet-name>
+		<url-pattern>/servlet/MonitoringRules</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UnknownCells</servlet-name>
+		<url-pattern>/servlet/UnmatchedTopologyManager</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>UserDetails</servlet-name>
+        <url-pattern>/servlet/UserDetails</url-pattern>
+    </servlet-mapping>
+<servlet-mapping>
+        <servlet-name>CertificateExpiryDetails</servlet-name>
+        <url-pattern>/servlet/CertificateExpiryDetails</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>MonitoredTypes</servlet-name>
+		<url-pattern>/servlet/MonitoredTypes</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddMonitoredType</servlet-name>
+		<url-pattern>/servlet/AddMonitoredType</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddMonitoringRule</servlet-name>
+		<url-pattern>/servlet/AddMonitoringRule</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoaderStatusServlet</servlet-name>
+		<url-pattern>/servlet/LoaderStatusServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LicenseLogsViewer</servlet-name>
+		<url-pattern>/servlet/LicenseLogsViewer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReadLicenseLog</servlet-name>
+		<url-pattern>/servlet/ReadLicenseLog</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>FlsMonitoring</servlet-name>
+        <url-pattern>/servlet/FlsMonitoring</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowInstalledLicenses</servlet-name>
+		<url-pattern>/servlet/ShowInstalledLicenses</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>GlassfishStatusDetails</servlet-name>
+		<url-pattern>/servlet/GlassfishStatusDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditAdminProperties</servlet-name>
+		<url-pattern>/servlet/EditAdminProperties</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFeatures</servlet-name>
+        <url-pattern>/servlet/UpdateFeatures</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>InstallFeatures</servlet-name>
+        <url-pattern>/servlet/InstallFeatures</url-pattern>
+    </servlet-mapping> 
+	<servlet-mapping>
+        <servlet-name>ReportExtraction</servlet-name>
+        <url-pattern>/servlet/ReportExtraction</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>Precheck</servlet-name>
+        <url-pattern>/servlet/Precheck</url-pattern>
+    </servlet-mapping> 
+	<servlet-mapping>
+        <servlet-name>ChangePassword</servlet-name>
+        <url-pattern>/servlet/ChangePassword</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>UpdateLegalNotice</servlet-name>
+        <url-pattern>/servlet/UpdateLegalNotice</url-pattern>
+    </servlet-mapping>
+<!-- <servlet-mapping> -->
+<!-- 		<servlet-name>MoAggregation</servlet-name> -->
+<!-- 		<url-pattern>/servlet/MoAggregation</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- <servlet-mapping> -->
+<!-- 		<servlet-name>CounterFiltering</servlet-name> -->
+<!-- 		<url-pattern>/servlet/CounterFiltering</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- <servlet-mapping> -->
+<!-- 		<servlet-name>CounterFilteringDetails</servlet-name> -->
+<!-- 		<url-pattern>/servlet/CounterFilteringDetails</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- <servlet-mapping> -->
+<!-- 		<servlet-name>NodeAssignment</servlet-name> -->
+<!-- 		<url-pattern>/servlet/NodeAssignment</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>TechPackSelection</servlet-name> -->
+<!-- 		<url-pattern>/servlet/TechPackSelection</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!-- <servlet-mapping> -->
+<!--         <servlet-name>FrhStatusDetails</servlet-name> -->
+<!--         <url-pattern>/servlet/FrhStatusDetails</url-pattern> -->
+<!--     </servlet-mapping> -->
+<!-- For adding CSP Filter -->
+    <filter>
+         <filter-name>CSPFilter</filter-name>
+         <filter-class>com.distocraft.dc5000.etl.gui.contentSecurityPolicy.CSPFilter</filter-class>
+    </filter>
+    <filter-mapping>
+         <filter-name>CSPFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    
+	<filter>
+        <filter-name>httpHeaderSecurity</filter-name>
+        <filter-class>org.apache.catalina.filters.HttpHeaderSecurityFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>antiClickJackingOption</param-name>
+            <param-value>SAMEORIGIN</param-value>
+        </init-param>
+    </filter>
+	<filter-mapping>
+        <filter-name>httpHeaderSecurity</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+	
+	
+<!-- For adding maximum number of session per user -->	
+	<context-param>
+    <param-name>maxSessions</param-name>
+<param-value>1</param-value>
+  </context-param>
+<!--  -->
+
+<!-- For giving session time out value-->
+  <context-param>
+    <param-name>session_timeout_in_minute</param-name>
+    <param-value>180</param-value>
+  </context-param>
+<!-- -->
+
+
+	<!--
+		Authentication mechanism for ENIQ Events administration.
+	-->
+	<!-- Secure the application    -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Secure All Resources</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<web-resource-collection>
+		 <web-resource-name>Automatic SSL Forwarding</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+		<auth-constraint>
+		    <!-- Events use role Admin Users and Stats use role admin -->
+			<role-name>Admin Users</role-name>
+			<role-name>eniq</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<!--
+		EQEV-129619 : Directory Traversal - Configuration file exposed to browser
+	-->	
+	<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secure Conf</web-resource-name>
+            <url-pattern>/conf/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+	
+	<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secure HTML</web-resource-name>
+            <url-pattern>/colorlegend.html</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+	<!--
+		Unsecure some of the resource required by the login screen images etc
+	-->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Unsecure the login directory</web-resource-name>
+			<description />
+			<url-pattern>/eniq_blue_banner.jpg</url-pattern>
+			<url-pattern>/eniq_logo.gif</url-pattern>
+			<url-pattern>/img/*</url-pattern>
+			<url-pattern>/css/*</url-pattern>
+			<url-pattern>/login.jsp</url-pattern>
+			<url-pattern>/loginError.jsp</url-pattern>
+			<url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/eric.ico</url-pattern>
+            <url-pattern>/javascript/PreventXSS.js</url-pattern>      
+		</web-resource-collection>
+		<user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>Ericsson Network IQ Management Interface Authentication</realm-name>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/loginError.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-role>
+		<role-name>Admin Users</role-name>
+	</security-role>
+	<security-role>
+		<role-name>eniq</role-name>
+	</security-role>
+
+
+	<!--Sets time backwards that etl-data are shown in gui.(In months)-->
+	<env-entry>
+		<env-entry-name>etlShowAge</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>16</env-entry-value>
+	</env-entry>
+	<!--
+		directory that is under webapp root that defines name of the folder
+		that conf files are stored
+	-->
+	<env-entry>
+		<env-entry-name>conffiles</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>conf</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>eniqhosts</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>service_names</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>host_path_mz_ec</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>/usr/sbin/host</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>mzplatformport</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>9000</env-entry-value>
+	</env-entry>
+	<env-entry>
+	    <env-entry-name>mzecport</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>9090</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>mzcommand</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>/eniq/mediation_sw/mediation_gw/bin/mzsh status</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>glassfishcommand</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>source ~/.profile ; /eniq/sw/bin/glassfish status</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- the limit of db size in % -->
+		<env-entry-name>intDbSize</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>80</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- the limit of other versions in %-->
+		<env-entry-name>intOtherVersions</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>10</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- backup delay in days -->
+		<env-entry-name>intBackupDelay</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>3</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- rmi url -->
+		<env-entry-name>rmiurl</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>localhost:1200</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!--
+			if adminui 4 features are used, set value to true. if not, set value
+			to false
+		-->
+		<env-entry-name>adminui4</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>false</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- how many rows are to be shown in history browsing -->
+		<env-entry-name>maxHistoryRows</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>200</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- how many rows are to be shown in session log browsing -->
+		<env-entry-name>maxSessionRows</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>200</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<!-- how many rows are to be shown in session log browsing -->
+		<env-entry-name>maxNERows</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>10000</env-entry-value>
+	</env-entry>
+	<env-entry>
+        <!-- how many rows are to be shown in session log browsing -->
+		<env-entry-name>maxNEDisplayRows</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>500</env-entry-value>
+	</env-entry>
+	<!--Sets the timeout for open db connections -->
+	<env-entry>
+		<env-entry-name>dbConnectionTimeout</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>900000</env-entry-value>
+	</env-entry>
+	<!--Sets the testing period of db connection states -->
+	<env-entry>
+		<env-entry-name>dbConnectionTestPeriod</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>300000</env-entry-value>
+	</env-entry>
+	<!--Reaggregation Scopes -->
+	<env-entry>
+		<env-entry-name>reaggregation_scopes</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>DAY</env-entry-value>
+	</env-entry>
+	<error-page>
+        <error-code>403</error-code>
+        <location>/loginErrorAccessDenied.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/loginError.jsp</location>
+    </error-page>
+	
+	<!-- EQEV-65131,EQEV-65501 -->	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>		
+</web-app>

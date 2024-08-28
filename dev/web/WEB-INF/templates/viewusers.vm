@@ -1,0 +1,107 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<title>Ericsson Network IQ :: User Administration :: View All Users</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script language="JavaScript">
+      /**
+        if(!('${notification}'=='' || '${notification}'==' ')) {
+          alert('${notification}'); 
+          
+          }
+      **/
+      function confirmAction(arg) {
+        return confirm("Are you sure you want to "+arg+" the user?");
+      }
+   
+</script>
+
+</head>
+
+<body bgcolor="#ffffff" >
+
+#set ($activateModify ="")
+#set ($activateDelete ="")
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">User Administration&nbsp;&gt;&gt;&nbsp;<a href="$req.getContextPath()/servlet/UserManagement">User Management</a></font>
+<hr />
+<br><br>
+	<font size="1" face="Verdana, Helvetica, Arial">The list of all user accounts</font>
+
+<br><br>
+	
+<FORM METHOD=POST ACTION="" >
+<table style="width: 775px; height: 29px;border:1px solid #B3B3FF;" cellpadding="0" cellspacing="1">
+
+<tbody>
+<tr bgcolor="#B3B3FF">
+<td style="width: 100px; height: 25px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Name</strong></font></td> <!-- Name -->
+<td style="width: 100px; height: 25px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Login Name</strong></font></td> <!-- UserId -->
+<td style="width: 175px; height: 25px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Role</strong></font></td> <!-- Role -->
+<td style="width: 150px; height: 25px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Operations</strong></font></td> <!-- unlock -->
+<td style="width: 150px; height: 25px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Email</strong></font></td> <!-- Email -->
+<td style="width: 100px; height: 25px;"><font face="Verdana,Helvetica,Arial" size="1"><strong>Remarks</strong></font></td> <!-- Remarks -->
+</tr>
+<tr>
+#foreach( $entry in $listOfAllUsersInLdap )
+<td style="border-bottom:1px solid #B3B3FF;"  width="*"><font face="Verdana,Helvetica,Arial" size="1"> $entry.cn.toString()</font></td>
+<td style="border-bottom:1px solid #B3B3FF;"  width="*"><font face="Verdana,Helvetica,Arial" size="1"> $entry.uid.toString()</font></td>
+<td style="border-bottom:1px solid #B3B3FF;"  width="*"><font face="Verdana,Helvetica,Arial" size="1"> $entry.uid_roles.toString()</font></td>
+
+<td style="border-bottom:1px solid #B3B3FF;"  width="*"><font face="Verdana,Helvetica,Arial" size="1">
+
+#if($entry.uid.toString() == $theuser)
+<a href="$req.getContextPath()/servlet/UserManagement?uid=$entry.uid&action=modifyuser$activateModify" onclick=
+"alert('Please Re Login if you change your own Password !')">Edit</font></a>   | <!-- Modify -->
+<font color= grey face="Verdana,Helvetica,Arial" size="1">Delete</font></a>  |<!-- Delete -->
+#else
+<a href="$req.getContextPath()/servlet/UserManagement?uid=$entry.uid&action=modifyuser$activateModify" >Edit</font></a>   | <!-- Modify -->
+<font face="Verdana,Helvetica,Arial" size="1"><a href="$req.getContextPath()/servlet/UserManagement?uid=$entry.uid&action=deleteuser$activateDelete" onClick="return confirmAction('delete')"> Delete</font></a>  |<!-- Delete -->
+#end
+#if($entry.isPasswordLocked=="true")
+	<font color="red" face="Verdana,Helvetica,Arial" size="1"><a href="$req.getContextPath()/servlet/UserManagement?uid=$entry.uid&action=unlock" >Unlock</font></a></font></td> <!-- Unlock -->
+#else
+	<font color="grey" face="Verdana,Helvetica,Arial" size="1">Unlock</font></td> <!-- Unlock -->
+#end
+<td style="border-bottom:1px solid #B3B3FF;"  width="*"><font face="Verdana,Helvetica,Arial" size="1"><a href="mailto:$entry.mail">$entry.mail</a></font></td> <!-- Email -->
+<td style="border-bottom:1px solid #B3B3FF;"  width="*"><font color="red" face="Verdana,Helvetica,Arial" size="1">
+#if($entry.isPasswordExpired=="true")
+	password expired
+#end
+#if($entry.isPasswordLocked=="true")
+        password locked
+#end
+</font></td></td> <!-- Email -->
+</tr>
+
+ #end
+
+</tbody>
+</table>
+<br><br>
+<table style="width: 600px; height: 29px;" border="0" cellpadding="1" cellspacing="2">
+	<tr><td><font size="1" face="Verdana, Helvetica, Arial">$notification</font></td></tr>
+</table>
+</FORM>
+
+
+#parse( "footer.vm" )
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>
+
+
+
+
+

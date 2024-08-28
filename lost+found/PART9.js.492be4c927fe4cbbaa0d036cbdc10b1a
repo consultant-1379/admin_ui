@@ -1,0 +1,145 @@
+var C9=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">9 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_dlco\"></a><a name=\"CHAPTER9\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Troubleshooting</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"This chapter describes problems that may occur in ENIQ and presents\n" +
+"possible solutions.</p>\n" +
+"\n" +
+"<p>\n" +
+"Contact Ericsson Customer Support for additional assistance.</p>\n" +
+"\n" +
+"\n" +
+"<a name=\"TABLE8\"></a>\n" +
+"<table class=\"tblcnt\" width=\"100%\">\n" +
+"<caption>Table 8 &nbsp;&nbsp; TroubleShooting</caption>\n" +
+"<tr valign=\"top\">\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Description</p></th>\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Cause</p></th>\n" +
+"<th align=\"left\" valign=\"top\">\n" +
+"\n" +
+"<p>Action</p></th></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>A blank page is displayed in the browser when <b class=\"object\">InfoView</b> is launched.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This might be observed when HTTPS is re-enabled as per\n" +
+"instructions in <a href='javascript:parent.parent.parent.showAnchor(\"SSL-re-enable\")' class=\"xref\">Section  4.2.5</a>.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>Clear browser cache and reopen <b class=\"object\">InfoView</b>.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>A certificate error might be displayed in the browser when <b class=\"object\">Infoview </b> or <b class=\"object\">CMC</b>is launched after installing\n" +
+"the certificate.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This might be observed when HTTPS is enabled as per the\n" +
+"instructions in <a href='javascript:parent.parent.parent.showAnchor(\"SSL-default-self-signed-cert\")' class=\"xref\">Section  4.2.2</a>, <a href='javascript:parent.parent.parent.showAnchor(\"SSL-user-self-signed-cert\")' class=\"xref\">Section  4.2.3</a> , <a href='javascript:parent.parent.parent.showAnchor(\"enable\")' class=\"xref\">Section  4.2.6.1</a></p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>Remove the certificates from the browser, restart the <b class=\"object\">BusinessIntelligence Server</b> and reimport the certificates.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>A certificate error might be displayed in the browser when <b class=\"object\">Reports </b> are run in EventsUI.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>This might be observed when HTTPS is enabled for ENIQ Events\n" +
+"as per the instructions in <a href='javascript:parent.parent.parent.showAnchor(\"ENIQEventsHTTPS\")' class=\"xref\">Section  4.3</a></p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p>See <a href='javascript:parent.parent.parent.showAnchor(\"EEReportsSecExceptions\")' class=\"xref\">Section  9.1</a>.</p>\n" +
+"</td></tr>\n" +
+"<tr valign=\"top\">\n" +
+"<td align=\"left\">\n" +
+"<p>The script <tt class=\"file-path\">change_eniq_security.sh</tt> does not work if it contains <tt class=\"file-path\">^M </tt> characters\n" +
+"at the end of the lines.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p><tt class=\"file-path\">^M</tt> is a DOS line break character\n" +
+"which shows up in UNIX files when uploaded from a windows file system.</p>\n" +
+"</td>\n" +
+"<td align=\"left\">\n" +
+"<p><tt class=\"input\"><b># dos2unix change_eniq_security.sh change_eniq_security.sh</b></tt></p>\n" +
+"</td></tr></table>\n" +
+"\n"+
+"</div>\n";
+
+var C9_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><a name=\"EEReportsSecExceptions\"></a><span class=\"CHAPNUMBER\">9.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_8wi6\"></a><a name=\"CHAPTER9.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Security\n" +
+"Exceptions Accessing Reports in ENIQ Events UI</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"With HTTPS enabled, you may encounter security exceptions when\n" +
+"you first try to open a report in the ENIQ Events UI. The exact warning\n" +
+"and solution will vary depending on the browser you are using.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C9_1_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">9.1.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_sjcv\"></a><a name=\"CHAPTER9.1.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Security Exception in Internet Explorer\n" +
+"Browser</a></span></h3>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE22\">[Missing image ie-bis-report-error.png]</a><p align=\"left\"><i>Figure 22 &nbsp; Security Exception in Internet Explorer</i></p></div>\n" +
+"<p>\n" +
+"To resolve the exception in Internet Explorer, click the \"Show\n" +
+"Content\" button. The browser will then refresh the ENIQ Events UI.\n" +
+"Go back to the report and it should now work as expected.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C9_1_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">9.1.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_3a24\"></a><a name=\"CHAPTER9.1.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Security Exception in Firefox Browser</a></span></h3>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE23\">[Missing image ff-bis-report-error.png]</a><p align=\"left\"><i>Figure 23 &nbsp; Security Exception in Firefox</i></p></div>\n" +
+"<p>\n" +
+"To resolve the exception in Firefox, open a new tab and enter the\n" +
+"following url, replacing <tt class=\"input\"><b>&lt;ip of bis&gt;</b></tt> with the IP\n" +
+"address of the BIS server (the IP address will be shown in the original\n" +
+"security warning): <tt class=\"input\"><b>https://&lt;ip of bis&gt;:8443</b></tt>. </p>\n" +
+"\n" +
+"<p>\n" +
+"You will be presented with another security warning. See <a href='javascript:parent.parent.parent.showAnchor(\"ImportCerts\")' class=\"xref\">Section  4.5</a> for details on how to do this. Once you have\n" +
+"accepted the BIS's security warning you can close the tab and return\n" +
+"to the ENIQ Events UI and refresh the page. Go back to the report\n" +
+"and it should now work as expected.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C9_1_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h3><span class=\"CHAPNUMBER\">9.1.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_l63u\"></a><a name=\"CHAPTER9.1.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Security Exception in Chrome Browser</a></span></h3>\n" +
+"\n" +
+"<div style=\"margin-top: 12pt\"><a name=\"FIGURE24\">[Missing image chrome-bis-report-error.png]</a><p align=\"left\"><i>Figure 24 &nbsp; Security Exception in Chrome</i></p></div>\n" +
+"<p>\n" +
+"To resolve the exception in Chrome, open a new tab and enter the\n" +
+"following url, replacing <tt class=\"input\"><b>&lt;ip of bis&gt;</b></tt> with the IP\n" +
+"address of the BIS server (the IP address will be shown in the original\n" +
+"security warning): <tt class=\"input\"><b>https://&lt;ip of bis&gt;:8443</b></tt>. </p>\n" +
+"\n" +
+"<p>\n" +
+"You will be presented with another security warning. See <a href='javascript:parent.parent.parent.showAnchor(\"ImportCerts\")' class=\"xref\">Section  4.5</a> for details on how to do this. Once you have\n" +
+"accepted the BIS's security warning you can close the tab. Return\n" +
+"to the ENIQ Events UI and refresh the page. Go back to the report\n" +
+"and it should now work as expected.</p>\n" +
+"\n" +
+"\n" +
+"\n" +
+"\n" +
+"\n" +
+"<br />\n"+
+"</div>\n";
+

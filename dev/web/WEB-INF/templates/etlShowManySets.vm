@@ -1,0 +1,86 @@
+<html>
+<head>
+
+<title>Ericsson Network IQ :: System Monitoring :: ETLC Monitoring</title>
+	<!-- This is for evaluation..-->
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+</head>
+
+<body bgcolor="#ffffff" >
+
+<table border="0">
+<tr valign=top>
+<!-- main menu -->
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- the body -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ETLShow">ETLC Monitoring</a></font>
+<hr />
+<!-- if For Checking Engine Status -->
+#if($isEngineOnline)
+#set ($showorder = ["Running", "Queued", "Executed", "Failed"] )
+
+#foreach ($key in $showorder)
+<font face="Verdana,Helvetica,Arial" size="2">$key ETL Sets</font>
+<br><br>
+
+<table border="1" cellpadding="1" cellspacing="1">
+	<tr bgcolor="#B3B3FF">
+		<td width="90"><font face="Verdana,Helvetica,Arial" size="1">Tech Pack Name</font></td>
+		<td width="250"><font face="Verdana,Helvetica,Arial" size="1">Set Name</font></td>
+		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">Set Type</font></td>
+		<td width="90"><font face="Verdana,Helvetica,Arial" size="1">Version</font></td>
+		<td width="75"><font face="Verdana,Helvetica,Arial" size="1">Start Time</font></td>
+		<td width="75"><font face="Verdana,Helvetica,Arial" size="1">End Time</font></td>
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1">Status</font></td>
+<!--		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">Reason of Failure</font></td> -->
+		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">Priority</font></td>
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1">Running Slot</font></td>
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1">Scheduling Information</font></td>
+<!--		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">Running Action</font></td> -->
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1">Service Node</font></td>
+	</tr>
+	#foreach ($oneset in $etlsets.get($key))
+	<tr>
+		<td width="90"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("techpackName")&nbsp;</font></td>
+		<td width="250"><font face="Verdana,Helvetica,Arial" size="1">
+		#if($key != 'Running' && $key != 'Queued' )
+		<a href="ETLDetail?starttime=$!oneset.get("startTime")&setname=$!oneset.get("setName")&type=$!oneset.get("setType")&endtime=$!oneset.get("endTime")&techpak=$!oneset.get("techpackName")">$!oneset.get("setName")</a>&nbsp;</font></td>
+		#else
+$!oneset.get("setName")&nbsp;</font></td>
+#end
+		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("setType")&nbsp;</font></td>
+		<td width="90"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("version")&nbsp;</font></td>
+		<td width="75"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("startTime")&nbsp;</font></td>
+		<td width="75"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("endTime")&nbsp;</font></td>
+		<td width="70"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("status")&nbsp;</font></td>
+<!--		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("failureReason")&nbsp;</font></td> -->
+		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("priority")&nbsp;</font></td>
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("runningSlot")&nbsp;</font></td>
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("schedulingInfo")&nbsp;</font></td>
+<!--		<td width="50"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("runningAction")&nbsp;</font></td> -->
+		<td width="*"><font face="Verdana,Helvetica,Arial" size="1">$!oneset.get("serviceNode")&nbsp;</font></td>
+	</tr>
+	#end
+</table>
+
+<br />
+#end
+
+</td>
+<!-- else For Checking Engine Status -->
+#else
+	<font color='red' face='verdana' size='2px'>Engine is offline. Check System Status Page&nbsp;&gt;&gt;&nbsp;</font><a href="$servletPath/LoaderStatusServlet">System Status</a>
+#end
+#parse( "footer.vm" )
+</table>
+
+</body>
+	<script>
+		window.addEventListener('load',replaceBrowserState)
+	</script>
+</html>

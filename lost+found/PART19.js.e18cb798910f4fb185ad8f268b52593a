@@ -1,0 +1,32 @@
+var C19=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1><span class=\"CHAPNUMBER\">19 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_bioq\"></a><a name=\"CHAPTER19\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">External SQL Interface</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"Ericsson Network IQ provides an external SQL interface for third-party\n" +
+"access to database measurement tables. The external SQL interface\n" +
+"is offered as a reporting interface and it contains all available\n" +
+"measurement tables of each measurement type.</p>\n" +
+"\n" +
+"<p>\n" +
+"The external SQL interface is installed automatically during ENIQ\n" +
+"installation. To use it, the user needs the following:</p>\n" +
+"\n" +
+"\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">A database connection tool</li>\n" +
+"<li class=\"UNORD\">A configured connection to database</li></ul>\n" +
+"<p>\n" +
+"Ericsson Network IQ external SQL interface user is always <tt class=\"file-path\">dcpublic</tt>, see <a href='javascript:parent.parent.parent.showAnchor(\"tbl-DatabaseUsers\")' class=\"xref\"> Table 20</a>.\n" +
+"No other users are supported by Ericsson.</p>\n" +
+"\n" +
+"<dl class=\"note\"><dt><b>Note: &nbsp;</b></dt><dd>\n" +
+"<ul class=\"unoL\">\n" +
+"<li class=\"UNORD\">Do not execute stored procedures or large queries that\n" +
+"may affect performance. Executing stored procedures or running large\n" +
+"queries may cause problems with ENIQ and may have an adverse effect\n" +
+"on ENIQ performance.</li>\n" +
+"<li class=\"UNORD\">In a Multi-Blade deployment access, the <tt class=\"file-path\">dwhdb</tt> using <tt class=\"file-path\">dwh_reader_2</tt> Blade. For <tt class=\"file-path\">repdb</tt>, access through the <tt class=\"file-path\">coordinator</tt> Blade.</li></ul></dd></dl><br />\n" +
+"\n"+
+"</div>\n";
+

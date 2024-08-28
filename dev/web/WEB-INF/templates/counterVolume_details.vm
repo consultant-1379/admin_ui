@@ -1,0 +1,152 @@
+<html>
+<head><title>Ericsson Network IQ :: System Monitoring :: Monitoring Commands</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+<script type="text/javascript">
+function LevelChanged()
+{		
+  document.f1.submit();
+}
+</script>
+</head>
+<body bgcolor="#ffffff">
+
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font class="toplink" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="/adminui/servlet/LoaderStatusServlet">System Status</a> 
+&nbsp;&gt;&gt;&nbsp;Counter Volume</font>
+<hr />
+	<form name="f1" action="$req.getContextPath()/servlet/CounterVolumeDetails" method="post" onsubmit="return filterFields();">
+	<table border="1">
+		<tr><td colspan="6" class="basic">Counter Volume</td></tr>
+		<tr><td colspan="6" class="basic" valign="top">
+
+			#if ($counter5min.equals("true"))
+				#if ($counter30min.equals("false"))
+					#if ($counter60min.equals("false"))
+			<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min 
+			<input type="radio" name="search_direction" id="search_direction" value="5min" onclick="LevelChanged()" $rop5> 5Min
+					#end
+				#end
+			#end
+
+			#if ($counter30min.equals("true"))
+				#if ($counter5min.equals("false"))
+					#if ($counter60min.equals("false"))
+			<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min 
+			<input type="radio" name="search_direction" id="search_direction" value="30min" onclick="LevelChanged()" $rop30> 30Min
+					#end
+				#end
+			#end
+			
+			#if ($counter5min.equals("true"))
+				#if ($counter30min.equals("true"))
+					#if ($counter60min.equals("false"))
+			<input type="radio" name="search_direction" id="search_direction" value="5min" onclick="LevelChanged()" $rop5> 5Min
+			<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min 
+			<input type="radio" name="search_direction" id="search_direction" value="30min" onclick="LevelChanged()" $rop30> 30Min
+					#end
+				#end
+			#end
+			
+			#if ($counter5min.equals("true"))
+				#if ($counter30min.equals("false"))
+					#if ($counter60min.equals("true"))
+			<input type="radio" name="search_direction" id="search_direction" value="5min" onclick="LevelChanged()" $rop5> 5Min
+			<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min 
+			<input type="radio" name="search_direction" id="search_direction" value="60min" onclick="LevelChanged()" $rop60> 60Min
+					#end
+				#end
+			#end
+			
+			#if ($counter30min.equals("true"))
+				#if ($counter5min.equals("false"))
+					#if ($counter60min.equals("true"))
+			<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min 
+			<input type="radio" name="search_direction" id="search_direction" value="30min" onclick="LevelChanged()" $rop30> 30Min
+			<input type="radio" name="search_direction" id="search_direction" value="60min" onclick="LevelChanged()" $rop60> 60Min
+					#end
+				#end
+			#end
+			
+			
+			#if ($counter30min.equals("true"))
+				#if ($counter5min.equals("true"))
+					#if ($counter60min.equals("true"))
+			<input type="radio" name="search_direction" id="search_direction" value="5min" onclick="LevelChanged()" $rop5> 5Min
+			<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min 
+			<input type="radio" name="search_direction" id="search_direction" value="30min" onclick="LevelChanged()" $rop30> 30Min
+			<input type="radio" name="search_direction" id="search_direction" value="60min" onclick="LevelChanged()" $rop60> 60Min
+					#end
+				#end
+			#end
+				
+			#if ($counter60min.equals("true"))
+				#if ($counter5min.equals("false"))
+					#if ($counter30min.equals("false"))
+					<input type="radio" name="search_direction" id="search_direction" value="60min" onclick="LevelChanged()" $rop60> 60Min
+					<input type="radio" name="search_direction" id="search_direction" value="15min" onclick="LevelChanged()" $rop15> 15Min
+					#end
+				#end
+			#end
+		</td></tr>
+		#if ($search_direction.equals("15min"))
+		<tr><td class="midhdr">ROP</td><td class="midhdr">CounterVolume(In Million)</td>
+		#foreach ($key in $keys)
+			<tr>
+				<td class="basic">$key</td>
+				<td class="basic">$counterVolume.get($key)</td>
+			</tr>
+		#end
+				</td></tr>
+		#end
+
+		#if ($search_direction.equals("5min"))
+		<tr><td class="midhdr">ROP</td><td class="midhdr">CounterVolume(In Million)</td>
+		#foreach ($key in $keys5)
+			<tr>
+				<td class="basic">$key</td>
+				<td class="basic">$counterVolume5.get($key)</td>
+			</tr>
+		#end
+		#end
+		</td></tr>
+		
+		#if ($search_direction.equals("30min"))
+		<tr><td class="midhdr">ROP</td><td class="midhdr">CounterVolume(In Million)</td>
+		#foreach ($key in $keys30)
+			<tr>
+				<td class="basic">$key</td>
+				<td class="basic">$counterVolume30.get($key)</td>
+			</tr>
+		#end
+				</td></tr>
+		#end
+		
+		#if ($search_direction.equals("60min"))
+		<tr><td class="midhdr">ROP</td><td class="midhdr">CounterVolume(In Million)</td>
+		#foreach ($key in $keys60)
+			<tr>
+				<td class="basic">$key</td>
+				<td class="basic">$counterVolume60.get($key)</td>
+			</tr>
+		#end
+				</td></tr>
+		#end
+	</table><br>
+
+ 	<font face="Verdana,Helvetica,Arial" size="1"><b>Note: Counter volume displayed in this page is sum of counters that are parsed for each ROP. They are not converted to their 15minute ROP equivalents for non 15Min granularity. So, the average value of above counter volumes do not match with the Average counter volume displayed in System Status.</b></font>
+		
+</td>
+<!-- right space -->
+</tr>
+#parse( "footer.vm" )
+</table>
+</form>
+</body>
+</html>

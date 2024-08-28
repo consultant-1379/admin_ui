@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>Help</title>
+<script type="text/javascript" language="JavaScript">window.history.forward(+1);</script>
+<style type="text/css">
+<!--
+  a:link,a:visited{color:#004499;text-decoration:none}
+  a:hover{color:#6699CC;text-decoration:none}
+  body{background-color:#ffffff;color:#000000;font-family:helvetica,arial,sans-serif}
+  th{color:#333333;font-family:helvetica,arial,sans-serif}
+  td{color:#000000;font-family:helvetica,arial,sans-serif}
+  .c0{color:#333333;font-size:xx-small}
+  .c1{color:#333333;font-size:x-small}
+  .c2{color:#666666;font-family:helvetica,arial,sans-serif}
+  .c3{color:#333333}
+  .c4{color:#cc3333}
+  .search-hit{background:#ffeeaa}
+-->
+</style>
+</head>
+<body>
+<table width="100%" border="0" cellspacing="2" cellpadding="0">
+<tr>
+<th colspan="2" bgcolor="#ddeeff" height="30"><small>Help</small></th>
+</tr>
+</table>
+<blockquote>
+
+<b class="c2"><small>Using the Online Help</small></b>
+<table width="90%" border="0" cellpadding="10" cellspacing="0">
+<tr>
+<td><small>
+Online help is shown in a browser window with three separate frames. The toolbar frame on the top
+contains buttons with functions described below. On the left, there is a navigation frame with the help
+topics. The help topics can be shown as a tree structure or as an alphabetically sorted index list.
+The content frame to the right shows the actual help information for chosen topics.
+</small></td>
+</tr>
+</table>
+
+<br />
+<b class="c2"><small>Resizing the Browser Frames</small></b>
+<table width="90%" border="0" cellpadding="10" cellspacing="0">
+<tr>
+<td><small>
+Position the cursor on the vertical border (the cursor shape changes).
+Click and drag the frame border to a new position.
+</small></td>
+</tr>
+</table>
+
+<br />
+<b class="c2"><small>Using the Toolbar Buttons</small></b>
+<table width="90%" border="0" cellpadding="10" cellspacing="0">
+<tr>
+<td valign="top" width="70"><img border="0" src="search.gif" alt="" /></td>
+<td>
+<small>
+Search help contents for a matching string.
+<br />Enter a search string in the search input field and press the <i>Enter</i> key or click the
+<i>Search</i> button to start a full text search. Search is always performed on all topics starting from
+the first one. All search hits found under a topic are highlighted with <span class="search-hit">orange</span>
+background color. The search is <u>not</u> case sensitive. Repeat the search to view the next topic that contains
+search hits.
+</small></td>
+</tr>
+<tr>
+<td valign="top" width="70"><img border="0" src="searchnext.gif" alt="" /></td>
+<td><small>Go to the next topic that contains search hits.</small></td>
+</tr>
+<tr>
+<td valign="top" width="70"><img border="0" src="prev.gif" alt="" /></td>
+<td><small>Go back to the previously shown topic.</small></td>
+</tr>
+
+<tr>
+<td valign="top" width="70"><img border="0" src="next.gif" alt="" /></td>
+<td><small>Go forward to the next topic.</small></td>
+</tr>
+
+<tr>
+<td valign="top" width="70"><img border="0" src="tree_view.gif" alt="" /></td>
+<td>
+<small>Switch to tree view.
+<br />Help topics are shown in a tree structure in the navigation frame.
+Click the (+) and (-) icons to expand and collapse the tree. Click a topic title
+or icon to view the topic content.
+<br />A selected topic can contain sub topics shown together in the content frame.  Thus, to view all help topics,
+select the root topic in the tree. This is useful, for instance, to simultaneously view more than a single help topic or
+to make a printout of selected parts, or of the complete help information.
+</small>
+</td>
+</tr>
+
+<tr>
+<td valign="top" width="70"><img border="0" src="index_view.gif" alt="" /></td>
+<td><small>Switch to index view.
+<br />The help index consists of an alphabetically ordered list of topic titles shown in
+the navigation frame. Click a topic title to show the desired topic content.
+</small></td>
+</tr>
+
+<tr>
+<td valign="top" width="70"><img border="0" src="pdf.gif" alt="" /></td>
+<td><small>Show help set in PDF.
+<br />
+Open the help set as a complete PDF document for high quality printouts, if this button is available.
+</small></td>
+</tr>
+
+<tr>
+<td valign="top" width="70"><img border="0" src="print.gif" alt="" /></td>
+<td><small>Print the help topic content currently shown in this frame.
+</small></td>
+</tr>
+
+<tr>
+<td valign="top" width="70"><img border="0" src="help.gif" alt="" /></td>
+<td><small>Show this help page.</small></td>
+</tr>
+</table>
+
+<br />
+<hr size="1" />
+<div align="center">
+<font size="1" class="c2">Help Set published with&nbsp; DWAXE&nbsp; CRAH 301 1060&nbsp; R44</font>
+</div>
+<br />
+</blockquote>
+<script type='text/javascript' language='JavaScript'>
+var isHelp=true;
+</script>
+</body>
+</html>

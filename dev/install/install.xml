@@ -1,0 +1,157 @@
+<project name="adminui" basedir="." default="install">
+
+	<property name="dcinstall.require.engine" value="> 5-0-0b324" />
+	<property name="dcinstall.require.repository" value="> 5-0-0b184" />
+
+	<target name="install">
+
+		<!-- Shutdown if we have a running webserver -->
+
+		<if>
+			<available file="${dc.bin.dir}/webserver" />
+			<then>
+				<exec dir="${dc.bin.dir}" executable="webserver">
+					<arg line="stop" />
+				</exec>
+			</then>
+		</if>
+
+		<!-- Checks that directories exists -->
+
+		<mkdir dir="${dc.log.dir}/adminui" />
+		<mkdir dir="${dc.log.dir}/common" />
+		<mkdir dir="${dc.runtime.dir}/tomcat/webapps/adminui" />
+
+		<!-- Make sure that there is no WEB-INF/lib directory -->
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/webapps/adminui/WEB-INF/lib" type="dir" />
+			<then>
+				<delete dir="${dc.runtime.dir}/tomcat/webapps/adminui/WEB-INF/lib" failonerror="false" />
+			</then>
+		</if>
+
+		<!-- Extract the war package without web.xml and EniqUserDatabase stuff -->
+		<unwar src="${dc.installer.dir}/tmp/install/adminui.war" dest="${dc.runtime.dir}/tomcat/webapps/adminui" />
+
+		<!-- code to remove favicon.ico  22KB file from ROOT -->
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/webapps/ROOT/favicon.ico" />
+			<then>
+				<delete file="${dc.runtime.dir}/tomcat/webapps/ROOT/favicon.ico" failonerror="false" />
+			</then>
+		</if>
+
+		<!--end of code -->
+		<!-- code to remove favicon.ico 8KB file from img -->
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/webapps/adminui/img/favicon.ico" />
+			<then>
+				<delete file="${dc.runtime.dir}/tomcat/webapps/adminui/img/favicon.ico" failonerror="false" />
+			</then>
+		</if>
+
+		<!--end of code -->
+
+		<!-- if exists then merge web.xml stuff into adminui web.xml -->
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/webapps/adminui/install/WEB-INF/web.xml" />
+			<then>
+				<MergeWebXML sourcefile="${dc.runtime.dir}/tomcat/webapps/adminui/install/WEB-INF/web.xml" targetfile="${dc.runtime.dir}/tomcat/webapps/adminui/WEB-INF/web.xml" />
+			</then>
+			<else>
+				<echo message="busyhourcfg web.xml not found, no merge done" />
+				<echo message="${dc.runtime.dir}/tomcat/webapps/adminui/install/WEB-INF/web.xml" />
+			</else>
+		</if>
+
+		<!-- if LDAP server exists then add adminui.xml to handle LDAP User Database -->
+		<exec executable="/usr/bin/bash" outputproperty="ldapserverHost">
+			<arg value="-c" />
+			<arg value="/usr/bin/cat /etc/hosts | grep ldapserver" />
+		</exec>
+
+		<if>
+			<equals arg1="${ldapserverHost}" arg2="" />
+			<then>
+				<!-- For Stats -->
+				<echo message="Using default ENIQ UserDatabase authentication." />
+			</then>
+			<else>
+				<!-- For Events -->
+				<echo message="Using default LDAP UserDatabase authentication." />
+				<echo message="${ldapserverHost}" />
+				<if>
+					<available file="${dc.runtime.dir}/tomcat/conf/Catalina/localhost/adminui.xml" />
+					<then>
+						<delete file="${dc.runtime.dir}/tomcat/conf/Catalina/localhost/adminui.xml" failonerror="false" />
+					</then>
+				</if>
+
+				<copy file="${dc.installer.dir}/tmp/conf/adminui.xml" toFile="${dc.runtime.dir}/tomcat/conf/Catalina/localhost/adminui.xml" />
+				<if>
+					<available file="${dc.runtime.dir}/tomcat/conf/tomcat-users.xml" />
+					<then>
+						<delete file="${dc.runtime.dir}/tomcat/conf/tomcat-users.xml" failonerror="false" />
+					</then>
+				</if>
+			</else>
+		</if>
+
+		<!-- Insert configuration for status page -->
+
+		<antcall target="run_one_sql">
+			<param name="dbname" value="etlrep" />
+			<param name="statement" value="IF (SELECT count(*) FROM META_SERVERS WHERE hostname='webserver') = 0 BEGIN INSERT INTO META_SERVERS (HOSTNAME,TYPE,STATUS_URL) VALUES ('webserver','LOADER','http://webserver:8080/adminui/public_servlet/ServerStatusServlet') END" />
+		</antcall>
+		<antcall target="run_one_sql">
+			<param name="dbname" value="dwhrep" />
+			<param name="sqlfile" value="adminui_dwhrep_1.sql" />
+		</antcall>
+		<antcall target="run_one_sql">
+			<param name="dbname" value="dwhrep" />
+			<param name="sqlfile" value="adminui_dwhrep_2.sql" />
+		</antcall>
+
+		<!-- Starting up webserver -->
+
+		<exec dir="${dc.bin.dir}" executable="webserver">
+			<arg line="start" />
+		</exec>
+
+	</target>
+
+	<target name="update" depends="moveToObsolete">
+		<!-- Remove the Tomcat JSP cache for Default context. -->
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/work/Catalina/localhost/_/tldCache.ser" />
+			<then>
+				<delete file="${dc.runtime.dir}/tomcat/work/Catalina/localhost/_/tldCache.ser" failonerror="false" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/work/Catalina/localhost/_/org" type="dir" />
+			<then>
+				<delete dir="${dc.runtime.dir}/tomcat/work/Catalina/localhost/_/org" failonerror="false" />
+			</then>
+		</if>
+
+		<!-- Remove the Tomcat JSP cache for AdminUI. -->
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/work/Catalina/localhost/adminui/tldCache.ser" />
+			<then>
+				<delete file="${dc.runtime.dir}/tomcat/work/Catalina/localhost/adminui/tldCache.ser" failonerror="false" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${dc.runtime.dir}/tomcat/work/Catalina/localhost/adminui/org" type="dir" />
+			<then>
+				<delete dir="${dc.runtime.dir}/tomcat/work/Catalina/localhost/adminui/org" failonerror="false" />
+			</then>
+		</if>
+
+		<antcall target="install" />
+	</target>
+
+</project>

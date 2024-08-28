@@ -1,0 +1,112 @@
+#set ($yrs = ${validYearRange[0]})
+
+
+<input type="date" id="enddate" name="enddate" onChange="selectDate1();" onkeydown="return false" />
+<input type="hidden" id="year_2" name="year_2"/>
+<input type="hidden" id="month_2" name="month_2"/>
+<input type="hidden" id="day_2" name="day_2"/>
+
+<SCRIPT>
+document.querySelector("#enddate").valueAsDate = new Date();
+
+	 var currpage    = window.location.href;
+    var lasturl     = sessionStorage.getItem("last_url");
+      var displayItem1 = sessionStorage.getItem("item2");
+    if(lasturl == null || lasturl.length === 0 || currpage !== lasturl ){
+        sessionStorage.setItem("last_url", currpage);
+        document.querySelector("#enddate").valueAsDate = new Date();
+    }else if(displayItem1 == null){
+       document.querySelector("#enddate").valueAsDate = new Date();
+      }else{
+        document.querySelector("#enddate").value = displayItem1;
+    }
+    
+    var inputValue = document.getElementById("enddate").value;
+	var splitdate = inputValue.split("-");
+    year2 = splitdate[0],
+    month2 = splitdate[1],
+    day2 = splitdate[2]
+    document.querySelector("#year_2").value = year2;
+    document.querySelector("#month_2").value = month2;
+    document.querySelector("#day_2").value = day2;
+    
+var now = new Date();
+
+ var month = new Array();
+  month[0] = "00";
+  month[1] = "01";
+  month[2] = "02";
+  month[3] = "03";
+  month[4] = "04";
+  month[5] = "05";
+  month[6] = "06";
+  month[7] = "07";
+  month[8] = "08";
+  month[9] = "09";
+  month[10] = "10";
+  month[11] = "11";
+  month[12] = "12";
+  
+  var day = new Array();
+  day[0] = "00";
+  day[1] = "01";
+  day[2] = "02";
+  day[3] = "03";
+  day[4] = "04";
+  day[5] = "05";
+  day[6] = "06";
+  day[7] = "07";
+  day[8] = "08";
+  day[9] = "09";
+  day[10] = "10";
+  day[11] = "11";
+  day[12] = "12";
+  day[13] = "13";
+  day[14] = "14";
+  day[15] = "15";
+  day[16] = "16";
+  day[17] = "17";
+  day[18] = "18";
+  day[19] = "19";
+  day[20] = "20";
+  day[21] = "21";
+  day[22] = "22";
+  day[23] = "23";
+  day[24] = "24";
+  day[25] = "25";
+  day[26] = "26";
+  day[27] = "27";
+  day[28] = "28";
+  day[29] = "29";
+  day[30] = "30";
+  day[31] = "31";
+
+  
+minDate = $yrs + '-01-01';
+
+var currDay = day[now.getDate()];
+var currMonth = month[now.getMonth()+1];
+var currYear = now.getFullYear();
+
+maxDate = currYear + "-" + currMonth + "-" + currDay; 
+
+var link = document.getElementById("enddate");
+    link.setAttribute("min", minDate);
+	link.setAttribute("max", maxDate);
+
+	function selectDate1(){
+	var inputVal = document.getElementById("enddate").value;
+	var splitdate = inputVal.split("-");
+    year2 = splitdate[0],
+    month2 = splitdate[1],
+    day2 = splitdate[2]
+    document.querySelector("#year_2").value = year2;
+    document.querySelector("#month_2").value = month2;
+    document.querySelector("#day_2").value = day2;
+    pdate = year2 + "-" + month2 + "-" + day2;
+    sessionStorage.setItem('item2',pdate);
+    
+	}
+
+
+</SCRIPT>

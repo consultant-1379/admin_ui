@@ -1,0 +1,123 @@
+<html>
+<head><title>Ericsson Network IQ Sybase IQ Status</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css"></head>
+<link rel="shortcut icon" href="../img/eric.ico">
+<body bgcolor="#ffffff">
+
+
+
+<table border="0">
+<tr valign=top><td width=220>
+#parse( "main_menu.vm" )
+</td><td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">System Monitoring&nbsp;&gt;&gt;&nbsp;<a href="PingDatabase">Sybase IQ Status</a></font>
+<hr />
+
+
+					<form name=f1 action=$req.getContextPath()/servlet/PingDatabase method=post>
+						<table border=1 width="300">
+							<tr>
+								<td align="center">
+									<font size="-1" face="Verdana, Helvetica, Arial"><b>Available Databases</b></font>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top" style="font-size: 9;">
+									<select name="search_string">
+										#set ($idvalue = "-")
+										#foreach ($db in $db_array)
+										#if ($db.getDbName()==$db_name)
+										#set ($idvalue = $db.getDbId())
+										#end
+										#end
+										<option value="$idvalue">$db_name</option>
+										#foreach ($db in $db_array)
+										<option value="$db.getDbId()">$db.getDbName()</option>
+										#end
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td valign=top colspan=4>
+									<input type="hidden" name="search_done" value="true">
+									<input type=submit style="font-size: 11;" value="Ping Database">
+								</td>
+							</tr>
+						</table>
+
+<font size=-1 face="Verdana, Helvetica, Arial">
+<b>Sybase IQ Status</b><br>
+##<b>Command: $theCommand -c $theParams</b><br>
+</font>
+<hr>
+<font size=+1 face="Verdana, Helvetica, Arial">
+$db_name
+</font>
+<hr>
+<table border=1>
+	<tr>
+		<td colspan=3>
+		<font size=-2 face="Verdana, Helvetica, Arial"><b>IQ Status</b></font>
+		</td>
+	</tr>
+	<tr>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">Name</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">Value</font></td>
+	</tr>
+	#foreach( $locCell in $theStatus)
+		<tr>
+		#foreach( $loc in $locCell)
+			<td><font size=-2 face="Verdana, Helvetica, Arial">$loc</font></td>
+		#end
+		</tr>
+	#end
+</table>
+<br>
+<table border=1>
+	<tr>
+		<td colspan=9>
+		<font size=-2 face="Verdana, Helvetica, Arial"><b>IQ Connection</b></font>
+		</td>
+	</tr>
+	<tr>
+		##<td><font size=-2>ConnHandle</font></td>
+		##<td><font size=-2>Name</font></td>
+
+		<td><font size=-2 face="Verdana, Helvetica, Arial">Userid</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">LastReqTime</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">ReqType</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">IQCmdType</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">LastIQCmdTime</font></td>
+
+		##<td><font size=-2>IQCursors</font></td>
+		##<td><font size=-2>LowestIQCursorState</font></td>
+		##<td><font size=-2>IQThreads</font></td>
+		##<td><font size=-2>TxnID</font></td>
+
+		<td><font size=-2 face="Verdana, Helvetica, Arial">ConnCreateTime</font></td>
+
+		##<td><font size=-2>TempTableSpaceKB</font></td>
+		##<td><font size=-2>TempWorkSpaceKB</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">Conn Handle</font></td>
+		##<td><font size=-2>satoiq_count</font></td>
+		##<td><font size=-2>iqtosa_count</font></td>
+
+		<td><font size=-2 face="Verdana, Helvetica, Arial">CommLink</font></td>
+		<td><font size=-2 face="Verdana, Helvetica, Arial">NodeAddr</font></td>
+
+		##<td><font size=-2>LastIdle</font></td>
+	</tr>
+	#foreach( $locCell in $theConnection)
+		<tr>
+		#foreach( $loc in $locCell)
+			<td><font size=-2 face="Verdana, Helvetica, Arial">$loc</font></td>
+		#end
+		</tr>
+	#end
+</table>
+
+</td></tr>
+#parse( "footer.vm" )
+</table>
+</body>
+</html>

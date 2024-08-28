@@ -1,0 +1,10 @@
+var C10=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h1 class=\"glossary\"><span class=\"CHAPTITLE\"><a name=\"CHAPTER10\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Glossary</a></span></h1>\n" +
+"<p>\n" +
+"The OSS Glossary is included in Operations Support System (OSS)\n" +
+"Glossary. See <a href='javascript:parent.parent.parent.showAnchor(\"OSSGlossary\")' class=\"xref\">Reference [1]</a>.</p>\n" +
+"<table class=\"GLOSSARY\"><tr><td class=\"term\" valign=\"top\"><b></b></td></tr><tr><td class=\"expansion\"></td></tr></table>\n" +
+"<br />\n"+
+"</div>\n";
+

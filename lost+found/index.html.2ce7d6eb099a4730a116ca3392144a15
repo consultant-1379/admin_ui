@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv='Pragma' content='no-cache' />
+<meta http-equiv='expires' content='0' />
+<title></title>
+<script type="text/javascript" language="JavaScript">
+<!--
+function parseURL(entryURL) {
+  var webPage = "index.html";
+  var index = entryURL.indexOf(webPage);
+  if(index < 0)
+    return (entryURL + "help.html");
+  var entryPoint = entryURL.substring(0, index);
+  entryPoint += "help.html";
+  var fragIdentifier = entryURL.substring((index+webPage.length), entryURL.length);
+  if (navigator.appName == "Netscape")  {
+    fragIdentifier = fragIdentifier.replace ("#", "##");
+  }
+  entryPoint += fragIdentifier;
+  return entryPoint;
+}
+//-->
+</script>
+</head>
+<body onload='window.location.replace(parseURL(window.location.href));'>
+</body>
+</html>

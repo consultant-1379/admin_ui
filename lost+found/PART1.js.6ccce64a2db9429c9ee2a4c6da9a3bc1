@@ -1,0 +1,62 @@
+var C1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"\n" +
+"<h1><span class=\"CHAPNUMBER\">1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_t43h\"></a><a name=\"CHAPTER1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">About this Document</a></span></h1>\n" +
+"\n" +
+"<p>\n" +
+"This section describes the purpose, scope, prerequisites and typographic\n" +
+"conventions of this document</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C1_1=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">1.1 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_5xl1\"></a><a name=\"CHAPTER1.1\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Purpose</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"This document describes the administration of security features\n" +
+"of Ericsson Network IQ.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C1_2=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">1.2 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_kemx\"></a><a name=\"CHAPTER1.2\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Scope</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The scope of the document is ENIQ Statistics/Events 13B onwards.</p>\n" +
+"\n" +
+"\n"+
+"</div>\n";
+
+var C1_3=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">1.3 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_lgnk\"></a><a name=\"CHAPTER1.3\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Prerequisites</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"It is assumed that the user of this document:</p>\n" +
+"\n" +
+"\n" +
+"<ul>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE0\">Is familiar with Ericsson Network IQ</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Has ENIQ installed</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Has knowledge of Solaris</li>\n" +
+"<li class=\"UNORD\" id=\"THSSTYLE1\">Has a general understanding of Computer Security.</li></ul>\n" +
+"\n"+
+"</div>\n";
+
+var C1_4=
+"<div id=\"content\" class=\"body-content\">\n"+
+"<h2><span class=\"CHAPNUMBER\">1.4 &nbsp; </span><span class=\"CHAPTITLE\"><a name=\"id_lr43\"></a><a name=\"CHAPTER1.4\" href='javascript:parent.parent.sC2(\"TOP\")' class=\"CHAPLINK\">Typographic Conventions</a></span></h2>\n" +
+"\n" +
+"<p>\n" +
+"The typographic conventions for all Customer Product Information\n" +
+"(CPI) in OSS-RC are found in OSS Library Typographic Conventions.\n" +
+"Please see <a href='javascript:parent.parent.parent.showAnchor(\"OSSLibraryTypographicConventions\")' class=\"xref\">Reference [2]</a>.</p>\n" +
+"\n" +
+"\n" +
+"\n"+
+"</div>\n";
+

@@ -1,0 +1,225 @@
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<title>Ericsson Network IQ :: Data Flow Monitoring :: Reaggregation for Eniq Events</title>
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="shortcut icon" href="../img/eric.ico">
+</head>
+<body bgcolor="#ffffff">
+<table border="0">
+<tr valign=top>
+<td width=220>
+#parse( "main_menu.vm" )
+</td>
+<!-- right space -->
+<td width=800>
+<font size="1" face="Verdana, Helvetica, Arial">Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="AggregationEniqEvents">Reaggregation for Eniq Events</a></font>
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td>
+<hr />
+									  <font size="1" face="Verdana, Helvetica, Arial">
+									  Reaggregation for Eniq Events allows users to manually request DAY level aggregation. Following <b>parameters</b> need to be selected :<br /><br />
+									 &nbsp;&nbsp;&nbsp; <li><b>Aggregation level [DAY]</b></li>
+									 &nbsp;&nbsp;&nbsp; <li><b>TechPack Name</b></li> <br />
+   <br />
+   The earliest timestamp available in the raw tables determines the duration available for Reaggregation. &nbsp;<br />
+   So, Reaggregation duration will be from the current immediate previous timestamp to the [ earliest timestamp available in rawtable + a buffer time of 2 days ]. &nbsp;<br />
+  <br />
+   This buffer time is included to take care of any deletion that might be happening. &nbsp;<br />
+  <br />
+   After calculating the Reaggregation duration, The Start times and End times will be populated . 
+   Eg : For DAY level, Reaggregation is possible for data between yesterday and [ minimum time in RAW tables + buffer time ].&nbsp;<br/>
+  <br />
+                                      &nbsp;&nbsp;&nbsp;<li><b>Start time,End time and Scheduling information [ ReAggregate Now/ReAggregate Later ] .</b></li> <br />
+  <br/>
+   When StartTime, EndTime and Scheduling information [ ReAggregate Now/ReAggregate Later ] are selected, AdminUI issues reaggregation request for each time unit between StartTime and EndTime. &nbsp;<br/>
+  <br/>
+   'ReAggregate Now' option will run the Reaggregations immediately without any scheduling.<br/> 
+   'ReAggregate Later' option will schedule the ReAggregation to a later part of the day.&nbsp;<br/> 
+  <br/>
+   Various queues of the Engine will be shown after the Reaggregation request is given. &nbsp;
+									  </font></td></tr>
+</table>
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td>	
+<form name=f1 action="$req.getContextPath()/servlet/AggregationEniqEvents" method="post">
+<table border="0" cellpadding="4" cellspacing="0">
+	<tr>
+		<td class="pt_b_top_100">
+		<font size="-1" face="Verdana, Helvetica, Arial"><b>Aggregation level</b></font>
+		</td>
+		<td class="pt_b_top_100" width=200>
+		<font size="-1" face="Verdana, Helvetica, Arial"><b>Tech Pack Name</b></font>
+		</td>
+	</tr>
+
+#if($showDurationAndTime == "true")
+	<tr>
+	<td class="pt_b_text_100" valign=top ><font size=-1>
+		<select name="level" value="DAY" style="font-size: 9;">
+		  <option selected value="$!level">$!level</option>
+		</select>
+		</font></td>
+		<td class="pt_b_text_100" valign=top ><font size=-1>
+		  <select name="batch_name" style="font-size: 9;">
+		  <option selected value="$!batch_name">$!batch_name</option>
+		</select>
+        </td>		
+</tr>
+<tr>
+ </tr>&nbsp;
+ <tr>
+ </tr>&nbsp;
+<br />
+<table border="0" cellpadding="4" cellspacing="0" >
+	<tr>
+		<td width=800>
+		<font size="-1" face="Verdana, Helvetica, Arial"><b>Re Aggregation Intervals Available : </b>$intervals .&nbsp;Re-Aggregation Scope is &nbsp$level</b></font>
+		</td>
+	</tr>
+</table>
+<br />
+<table border="0" cellpadding="4" cellspacing="0">
+	 <tr>
+		  <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>Start time</b></font></td>
+		  <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>End time</b></font></td>
+	      <td class="pt_b_top_200"><font size=-1 face="Verdana, Helvetica, Arial"><b>ReAgg Now or Later ? </b></font></td> 
+	 </tr>
+	  <tr>
+    <td class="white_row" valign=top><font size=-1>
+		  <select name="startTime" style="font-size: 9;">
+		
+			  #foreach($time in $startTimes)
+			    <option value="$time">$time</option>
+		  	#end
+		  </select>
+    </td>
+	<td class="white_row" valign=top><font size=-1>
+		  <select name="endTime" style="font-size: 9;">
+		
+			  #foreach($time in $startTimes)
+			    <option value="$time">$time</option>
+		  	#end
+		  </select>
+    </td> 
+	<td class="white_row" valign=top><font size=-1>
+		  <select name="ReAggregateNowOrLater" style="font-size: 9;">
+		  
+		  <option value="ReAggregateNow">ReAggregate Now</option>
+		  <option value="ReAggregateLater">ReAggregate Later</option>
+		  </select>
+    </td>
+
+ </tr>
+<tr>
+</tr>&nbsp;
+ </table>
+<br />
+<br />
+<table border="0" cellspacing="0">
+ <tr>
+    <td ><input class="submit_list" type="submit" value="ReAggregate" name="list" onclick="return checkTwo();"/></td>
+ </tr>
+</table>
+#else
+	<tr>
+		<td class="pt_b_text_100" valign=top ><font size=-1>
+		<input type=hidden name="timelevel_changed" value="">
+		<select name="level" value="DAY" style="font-size: 9;">
+		  <option selected value="$!level">$!level</option>
+		#foreach($unit in $scopes)
+		  #if ($unit != "COUNT")
+		  <option value="$unit">$unit</option>
+		  #end
+		#end
+		</select>
+		</font>
+	    </td>
+		<td class="pt_b_text_100" valign=top ><font size=-1>
+		  <select name="batch_name" style="font-size: 9;">
+		  <option selected value="$!batch_name">$!batch_name</option>
+			  #foreach($pack in $techpacks)
+			    <option value="$pack">$pack</option>
+		  	#end
+		  </select>
+        </td>		
+</tr>
+<br />
+<br />
+<tr>
+</tr>&nbsp;
+<tr>
+</tr>&nbsp;
+<tr>
+</tr>&nbsp;
+<table border="0" cellspacing="0">
+ <tr>
+ </tr>&nbsp;
+ <tr>
+ </tr>&nbsp;
+<br />
+ <tr>
+    <td ><input class="submit_list" type="submit" value="ReAggregate" name="list" onclick="return checkOne();"/></td> 
+</tr>
+</table>
+#end
+</table>
+</form>
+</td></tr>
+</table>
+</td>
+</tr>
+<tr>
+#parse( "footer.vm" )
+</tr>
+</table>
+<script type="text/javascript">
+  function checkOne() {
+	 // To check that Time Level and Tech Pack Name not blank 
+	 var reAggScopeName=document.getElementById("level");
+     var reAggTechPackName=document.getElementById("batch_name");
+    
+	 if((reAggScopeName.value === null || reAggScopeName.value.length === 0) )
+	 {
+	    alert('Please select an Aggregation Level to continue');
+        return false;
+     }
+	 if((reAggTechPackName.value === null || reAggTechPackName.value.length === 0) )
+	 {
+	    alert('Please select a Tech Pack Name to continue ');
+        return false;
+     }
+	 if((reAggTechPackName.value === null || reAggTechPackName.value.length === 0) )
+	 {
+	    alert('Please select a Tech Pack Name to continue ');
+        return false;
+     }
+	 if((reAggTechPackName.value === null || reAggTechPackName.value.length === 0) )
+	 {
+	    alert('Please select a Tech Pack Name to continue ');
+        return false;
+     }
+	 
+	 return true;
+  }
+function checkTwo() {
+	 // To check that Start time and End time are not blank 
+	 var reAggStartTime=document.getElementById("startTime");
+     var reAggendTime=document.getElementById("endTime");
+	 if((reAggStartTime.value === null || reAggStartTime.value.length === 0) )
+	 {
+	    alert('Please select a Start time to continue');
+        return false;
+     }
+	 if((reAggendTime.value === null || reAggendTime.value.length === 0) )
+	 {
+	    alert('Please select an end time to continue ');
+        return false;
+     }
+	 return true;
+  }
+</script>
+</body>
+</html>

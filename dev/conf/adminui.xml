@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Defines LDAP User Database for ENIQ Events environment -->
+<Context path="/adminui">
+	<!-- Use the LockOutRealm to prevent attempts to guess user passwords via 
+		a brute-force attack -->
+	<Realm className="org.apache.catalina.realm.LockOutRealm">
+		<!-- This Realm uses the LDAP UserDatabase -->
+		<Realm className="org.apache.catalina.realm.JNDIRealm" 
+			connectionURL="ldap://ldapserver:9001"
+			userPattern="uid={0},ou=users,dc=ericsson,dc=se" roleBase="ou=roles,dc=ericsson,dc=se"
+			roleName="cn" roleSearch="uniqueMember={0}" />
+	</Realm>
+</Context>

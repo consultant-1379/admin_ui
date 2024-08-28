@@ -1,0 +1,40 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: FLS Testing</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff">
+	<table border=0>
+		<tr valign=top>
+			<td width=220>#parse( "main_menu.vm" )</td>
+			<td width=800><font size="1" face="Verdana, Helvetica, Arial">Database Users&nbsp;&gt;&gt;&nbsp;User Details             
+            <hr/>
+			<table border="1" class="users">
+	            <tr>
+	                <th class="users">User Name</th>
+	                <th class="users">Days To Expire</th>
+				</tr>
+				#foreach($userName in $userNames) 
+					<tr>
+						<td class="users">$userName.getUsername()</td>
+						#if($userName.getDaysToExpire()==-1)
+						<td class="users">Never Expires</td>
+						#elseif($userName.getDaysToExpire()==0)
+						<td class="users">Expired</td>
+						#else
+						<td class="users">$userName.getDaysToExpire()</td>
+						#end
+						
+					</tr>
+				#end	
+			</table>
+			</td>
+		</tr>
+		#parse( "footer.vm" )
+		</font>
+	</table>
+</body>
+</html>

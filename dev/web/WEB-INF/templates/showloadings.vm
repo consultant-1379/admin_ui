@@ -1,0 +1,200 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: Data Flow Monitoring :: Show Loadings</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+	#include( "calendar_js.txt" )
+</head>
+<body bgcolor="#ffffff">
+  
+<table border="0">
+	<tr valign=top>
+	<td width=220>#parse( "main_menu.vm" )</td>
+	<td width=800 class="toplink">
+		<form name=f1 method=post action=$req.getContextPath()/servlet/ShowLoadStatus onsubmit="return filterFields();">
+		Data Flow Monitoring&nbsp;&gt;&gt;&nbsp;<a href="ShowLoadStatus">Show Loadings</a>
+		<hr />
+		<table style="width:550;" border=0>
+			<tr>
+				<td class="basichlp" colspan="3">
+					Show loadings shows loading information from selected session. There are three(3) different filters that 
+					one is able to use to sort logs:<br /><br />
+					<li>Date(Which date loadings are shown)</li>
+					<li>Tech Pack name</li>
+					<li>Problematic(If only problematic loadings are to be shown)</li><br /><br />
+				</td>
+			</tr>
+			<tr>
+				<td class="midhdr">Date</td>
+				<td class="midhdr">Tech Pack</td>
+				<td class="midhdr">Filter</td>
+			</tr>
+			<tr>
+		<td valign="top" class="basic">
+		#parse( "cal_select_1.vm" )
+		</td>
+		<td valign="top" class="basic">
+			<select name="techPackName" style="font-size: 9;">
+			#if ($selectedTechPack != "")
+			<option selected value="$selectedTechPack">$selectedTechPack</option>
+			#else
+			<option selected value="">-</option>
+			#end
+
+			#foreach($grp in $distinctTechPacks)
+				#if ($selectedTechPack != $grp)
+				<option value="$grp">$grp</option>
+				#end
+			#end	
+			#if ($selectedTechPack != "-")
+				<option>-</option>
+			#end
+			</select>
+		</td>
+		<td class="ctitle"><input  type="checkbox" align="left" name="problematic" value="problematic" $problematic/>Problematic</td>
+	</tr>
+	<tr><td colspan="3">&nbsp;</td></tr>
+	<tr><td valign="top" colspan=3 class="basic"><input type="submit" style="font-size: 11;" name="getInfoButton" value="Get Information"></td></tr>
+</table>
+</form>
+
+<hr>
+
+
+
+#set ($load_clr = "#047e01")
+#set ($nload_clr = "#ffff00")
+#set ($chk_clr = "#000099")
+#set ($hole_clr = "#CC0000")
+#set ($calc_clr = "#000000")
+#set ($checkLoadStatus = "")
+#set ($restore_clr = "#9633FF")
+
+<table border="0" width="500">
+	<tr><td class="basic" colspan="4"><b>Color symbols:</b></td></tr>
+	<tr><td align="center" class="basic" bgcolor="$load_clr" width=12% height=14><font color="white">Loaded</font></td>
+		<td align="center" class="basic" bgcolor="$nload_clr" width=12% height=14><font color="black">Not Loaded</font></td>
+		<td align="center" class="basic" bgcolor="$chk_clr" width=12% height=14><font color="white">Check failed</font></td>
+		<td align="center" class="basic" bgcolor="$hole_clr" width=12% height=14><font color="white">Hole</font></td>
+		<td align="center" class="basic" bgcolor="$calc_clr" width=12% height=14><font color="white">Calculating</font></td>
+	<!--	<td align="center" class="basic" bgcolor="$restore_clr" width=12% height=14><font color="white">Restored</font></td> -->
+	</tr>
+</table>
+<br>
+#if ($loadStatuses.size() > 0)
+<table>
+	<tr><td class="basichlp">Last update at the loadstatus table is : $latestUpdate</td><tr>
+</table>	
+<br>
+<table border="0" cellsapcing="0" class="datatable">
+	<tr class="datatd">
+		<td class="datatd">&nbsp;</td>
+		<td class="datatd">Hours</td>
+		
+		#foreach ($currHour in $showHours.keySet())
+			#if ($showHours.get($currHour).equalsIgnoreCase("Y") == true)
+    		  <td class="datatd" bgcolor="silver" align="left" width="5" height="14">$currHour</td> 
+			#end
+		#end
+
+	#foreach ($meatype in $loadStatuses)
+		
+		#set ($mt = $meatype.getMeatypeName())
+		#set ($tl = $meatype.getTimelevel())
+		#set ($rc = $meatype.getRowCount())
+		#set ($sc = $meatype.getStatuses().size())
+		#set ($dur = $meatype.getDuration())
+
+		#if ($rc == 48)
+                     #if ($tl == 'HOUR')
+                             #set ($rc = 24)
+                     #end
+                #end 
+		#if ($dur > 0) 
+			#set ($defRows = 1440/$dur)
+		#else
+			#set ($defRows = 1440)
+		#end
+
+		#if ($dur >= 360) 
+			#set ($rows = $defRows)
+			#set ($colspan= $dur/60)
+		#else
+			#set ($rows = 24)
+			#set ($colspan= 1)
+		#end
+
+		<tr class="datatd">
+			<td class="datatd"><a href="$req.getContextPath()/servlet/ShowLoadings?year_1=$year_1&month_1=$month_1&day_1=$day_1&subtype=$mt&details=$tl">$mt</a></td>
+			<td class="datatd">$tl</td>
+
+			#if ($rc != $defRows) 
+				#if  ($checkLoadStatus == "")
+					#set ($checkLoadStatus = "X = Measurement types monitoring is not correct.")
+				#end
+
+				#set($arr = [1..$rows]) 
+				#foreach ( $i in $arr )
+					<td class="datatd" bgcolor="white" align="center" colspan="$colspan">&nbsp;X&nbsp;</td>
+				#end
+			#else
+			    #set ($iterHour = 0)
+				#foreach ($status in $meatype.getStatuses())
+
+					#if ($status.equalsIgnoreCase("LOADED"))
+						#set ($clr = $load_clr)
+					#end
+					
+					#if ($status.equalsIgnoreCase("NOT_LOADED"))
+						#set ($clr = $nload_clr)
+					#end
+
+					#if ($status.equalsIgnoreCase("CHECKFAILED"))
+						#set ($clr = $chk_clr)
+					#end
+
+					#if ($status.equalsIgnoreCase("HOLE"))
+						#set ($clr = $hole_clr)
+					#end
+
+					#if ($status.equalsIgnoreCase("CALC"))
+						#set ($clr = $calc_clr)
+					#end
+					
+				<!--	#if ($status.equalsIgnoreCase("RESTORED"))
+						#set ($clr = $restore_clr)
+					#end -->
+					
+					#if ($showHours.get($iterHour).equalsIgnoreCase("Y") == true)
+						<td class="datatd" bgcolor="$clr" colspan="$colspan">&nbsp;&nbsp;&nbsp;&nbsp;</td>					
+					#end
+					
+					#set ($iterHour = $iterHour + 1)
+				#end
+			
+			#end
+			<!-- <td class="datatd" class="basichlp">$rc rows</td> -->
+		</tr>
+		
+	#end
+	
+</table>
+	#if  ($checkLoadStatus != "")
+		<br>
+		$checkLoadStatus
+	#end
+#else
+
+<font class="basic"><b>No data found.</b></font>
+#end
+
+
+#parse( "footer.vm" )
+</td></tr>
+</table>
+</body>
+	<!-- <script>
+		window.addEventListener('load',replaceBrowserState)
+	</script> -->
+</html>

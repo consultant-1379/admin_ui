@@ -1,0 +1,99 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/admin.css">
+	<link rel="shortcut icon" href="../img/eric.ico">
+	<title>Ericsson Network IQ :: Display All Custom Nodes</title>
+<script language="JavaScript" src="../javascript/PreventXSS.js"></script>
+<script>
+#if($ifFLSSucessfullyRestarted)
+	setTimeout(function(){
+		window.location = '$req.getContextPath()/servlet/CustomNodes';
+	},5000)
+#end
+</script>
+</head>
+<body bgcolor="#ffffff" >
+	<table border=0>
+		<tr valign=top>
+			<td width=220>#parse( "main_menu.vm" )</td>
+			<td width=800><font size="1" face="Verdana, Helvetica, Arial">
+			<form id="customFlsForm" onsubmit="return confirm('Are you sure you want to delete the configuration?');" method=POST action="$req.getContextPath()/servlet/CustomNodes" >Custom Nodes&nbsp;&gt;&gt;&nbsp;<a href="CustomNodes">Custom Nodes</a>             
+            <hr/>
+			#if($noCustomNodesConfigured || $eniqXmlMap.size() == 0)
+				<h2 style="text-align:center;">No Custom node Configuration found.</h2>
+				<button type="button" style="margin-left:310px" name="addCustomNodesRedirect" onclick="window.location.href='$req.getContextPath()/servlet/AddCustomNodes'">Add New CustomNode</button>
+			#else
+				<h2>Existing Custom Nodes Configured:
+					<span>
+						<button type="button" onclick="window.location.href='$req.getContextPath()/servlet/CustomNodes?FLSRestart'" style="margin-right:20%;float:right;cursor:pointer;" name="FLSRestart">FLS Restart</button>
+						<button type="button" style="margin-right:2%;float:right;cursor:pointer;" name="addCustomNodesRedirect" 
+							onclick="window.location.href='$req.getContextPath()/servlet/AddCustomNodes'">Add New CustomNode</button>
+					</span>
+				</h2>
+				<table class="displayCustomnodesTable">
+					<tr id="resp-table-header">
+						<td class="table-header-cell">Technology</td>
+						<td class="table-header-cell">Node Type</td>
+						<td class="table-header-cell">Data Type</td>
+						<td class="table-header-cell">NodeTypeDir</td>
+						<td class="table-header-cell">SubDir</td>
+						<td class="table-header-cell">File Filter</td>
+						<td class="table-header-cell">Delete</td>
+					</tr>
+					#foreach($tech in $eniqXmlMap.keySet())
+						#set($techSize=$rowSpans.get($tech))
+						#set($technology = $tech)
+						#set($techFlag = false)
+						#foreach($node in $eniqXmlMap.get($tech).keySet())
+							#set($nodeType = $node)
+							#set($nodeTypeSize = $eniqXmlMap.get($tech).get($node).size())
+							#set($nodeFlag = false)
+							#foreach($sym in $eniqXmlMap.get($tech).get($node))
+								#set($dataType = $sym.getDataType())
+								#if($dataType.contains("TOPO"))
+									#set($dataType = $sym.getDataType()+"_"+$tech)
+								#end
+								#set($nodeTypeDir = $sym.getNodeTypeDir())
+								#if($sym.getSubDirs().isEmpty() || $sym.getSubDirs().get(0).trim() == "" || $sym.getSubDirs().get(0).trim() == "dir1")	
+									#set($subDir = '-')
+								#else
+									#set($subDir = $sym.getSubDirs().get(0))
+								#end
+								#if($sym.getFileFilter().length() == 0)
+									#set($fileFilter = '-')
+								#else
+									#set($fileFilter = $sym.getFileFilter())
+								#end
+								<tr class="resp-table-row">
+									#if(!$techFlag)
+										<td class="table-body-cell" style="text-align:center" rowspan=$techSize>$technology</td>
+										#set($techFlag=true)
+									#end
+									#if(!$nodeFlag)
+									<td class="table-body-cell" rowspan=$nodeTypeSize>$nodeType</td>
+									#set($nodeFlag=true)
+									#end
+									<td class="table-body-cell">$dataType</td>
+									<td class="table-body-cell">$nodeTypeDir</td>
+									<td class="table-body-cell">$subDir</td>
+									<td class="table-body-cell">$fileFilter</td>
+									<td class="table-body-cell">
+										<button type="submit" name="Delete" value="$technology:::$nodeType:::$dataType:::$nodeTypeDir:::$sym.getSubDirs():::$fileFilter"  style="background:none;border:none;padding:none;text-decoration:underline;cursor:pointer">Delete</button>
+									</td>
+								</tr>
+							#end
+						#end
+					#end
+				</table>
+			#end
+			#if($ifFLSSucessfullyRestarted)
+				<font style="color:green;font-size:12px">Restarting FLS...</font><br>
+			#end
+			</form>
+			#parse( "footer.vm" )
+			</font>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
